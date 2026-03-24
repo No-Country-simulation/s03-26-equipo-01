@@ -14,7 +14,7 @@
     max-width: 210px;
 }
 
-p {
+.logo-container-cms, .logo-container-testimonial {
     font-family: 'Roboto';
     color: var(--primary-color);
 }
