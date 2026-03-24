@@ -1,0 +1,17 @@
+
+
+.form-container {
+    display: grid;
+    place-items: center;
+    width: 90%;
+    height: 100%;
+}
+
+.login-input {
+    width: 100%;
+    font-size: 14px;
+}
+
+.login-input label {
+    font-size: 12px;
+}
