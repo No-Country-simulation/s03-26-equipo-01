@@ -6,9 +6,11 @@ import './login-form-container.css';
 const LoginFormContainer = () => {
     return (
         <section className='login-form'>
-            <FormTitle />
-            <LoginForm />
-            <AuthLinks />
+            <div className='login-form-container'>
+                <FormTitle />
+                <LoginForm />
+                <AuthLinks />
+            </div>
         </section>
     )
 }
