@@ -1,4 +1,5 @@
 import TextInput from '../../../../shared/elements/text-input/TextInput';
+import SubmitButton from '../submit-button/SubmitButton';
 import './form-login.css';
 import inputsData from './input-data';
 
@@ -10,6 +11,7 @@ const LoginForm = () => {
                     key = {inputData.id}
                     inputTextData = {inputData} />
             )}
+            <SubmitButton />
         </form>
     )
 }
