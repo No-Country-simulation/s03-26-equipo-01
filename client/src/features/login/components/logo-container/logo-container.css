@@ -16,7 +16,7 @@
 
 .logo-container-cms, .logo-container-testimonial {
     font-family: 'Roboto';
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 
 .logo-container-cms {
