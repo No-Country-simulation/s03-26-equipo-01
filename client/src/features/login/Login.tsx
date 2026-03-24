@@ -1,8 +1,13 @@
+import LogoContainer from './components/logo-container/LogoContainer';
 import './login.css';
 
 const Login = () => {
     return (
-        <p>a</p>
+        <section className='login-page'>
+            <div className='login-container'>
+                <LogoContainer />
+            </div>
+        </section>
     )
 }
 
