@@ -4,8 +4,10 @@ const LogoContainer = () => {
 
     return (
         <section className='logo-container'>
-            <p className='logo-container-cms'>CMS</p>
-            <p className='logo-container-testimonial'>TESTIMONAL</p>
+            <div>
+                <p className='logo-container-cms'>CMS</p>
+                <p className='logo-container-testimonial'>TESTIMONAL</p>
+            </div>
         </section>
     )
 }
