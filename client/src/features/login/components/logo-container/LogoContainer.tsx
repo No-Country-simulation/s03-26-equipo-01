@@ -6,7 +6,7 @@ const LogoContainer = () => {
         <section className='logo-container'>
             <div>
                 <p className='logo-container-cms'>CMS</p>
-                <p className='logo-container-testimonial'>TESTIMONAL</p>
+                <p className='logo-container-testimonial'>TESTIMONIAL</p>
             </div>
         </section>
     )

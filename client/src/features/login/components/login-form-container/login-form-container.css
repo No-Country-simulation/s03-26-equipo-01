@@ -14,8 +14,8 @@
 .login-form-container {
     display: grid;
     place-items: center;
-    grid-template-rows: 20% 45% 35%;
+    grid-template-rows: 20% 55% 25%;
     width: 90%;
-    height: 80%;
+    height: 90%;
 }
 

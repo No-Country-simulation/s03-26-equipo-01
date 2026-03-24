@@ -9,13 +9,21 @@ interface TextInputProps {
 const TextInput = ({inputTextData}: TextInputProps) => {
     return (
         <TextField 
-            id={inputTextData.id} 
-            name={inputTextData.name}
-            required={inputTextData.required}
-            type={inputTextData.type}
-            label={inputTextData.label}
-            variant='standard' 
-            className="login-input"
+            id = {inputTextData.id} 
+            name = {inputTextData.name}
+            required = {inputTextData.required}
+            type = {inputTextData.type}
+            label = {inputTextData.label}
+            variant = 'standard' 
+            className = "text-input"
+            sx={{
+                '& .MuiInputBase-root': {
+                    marginTop: '22px'
+                },
+                '& .MuiFormLabel-root': {
+                    fontSize: '14px'
+                }
+            }}
         />
     )
 }
