@@ -6,7 +6,9 @@ const LoginForm = () => {
     return (
         <form action="" className='form-container'>
             {inputsData.map(inputData => 
-                <TextInput inputTextData={inputData} />
+                <TextInput 
+                    key = {inputData.id}
+                    inputTextData = {inputData} />
             )}
         </form>
     )
