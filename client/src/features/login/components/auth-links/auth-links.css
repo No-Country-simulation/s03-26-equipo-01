@@ -1,0 +1,35 @@
+
+
+
+.auth-links {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 50%;
+}
+
+.auth-links_password-links-container, .auth-links_helper-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    height: 100%;
+    font-size: 14px;
+    font-family: 'Roboto';
+    text-align: center;
+}
+
+.auth-links_password-links-container p, .auth-links_helper-container p {
+    display: inline;
+    opacity: 0.8;
+    color: #21140F;
+}
+
+.auth-links_password-links-container a, .auth-links_helper-container a {
+    margin-left: 5px;
+    color: var(--link-color);
+}
+
+
+
+
