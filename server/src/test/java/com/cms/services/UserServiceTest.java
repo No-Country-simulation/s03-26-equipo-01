@@ -4,6 +4,7 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Editor;
+import com.cms.persistence.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,9 @@ public class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ResetService resetService;
 
     private User editor;
 
@@ -64,6 +68,6 @@ public class UserServiceTest {
 
     @AfterEach
     public void tearDown(){
-
+        resetService.resetAll();
     }
 }
