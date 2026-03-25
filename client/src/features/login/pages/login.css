@@ -16,4 +16,13 @@
     grid-template-rows: 20% 80%;
 }
 
+@media screen and (min-width: 1200px) {
+    .login-page {
+        position: relative;
+    }
+    .login-container{
+        z-index: 1;
+    }
+}
+
 
