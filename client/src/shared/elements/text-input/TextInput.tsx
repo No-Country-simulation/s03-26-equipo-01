@@ -1,12 +1,8 @@
 import { TextField } from '@mui/material';
-import './text-input.css';
-import type { InputTextData } from '../../types/input-text-data';
-import type { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import './styles/text-input.css';
+import type { FieldValues, Path } from 'react-hook-form';
+import type { TextInputProps } from './text-input-props';
 
-interface TextInputProps<T extends FieldValues> {
-    inputTextData: InputTextData
-    register: UseFormRegister<T>
-}
 
 const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputProps<T>) => {
     return (
@@ -18,13 +14,13 @@ const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputPr
             type = {inputTextData.type}
             label = {inputTextData.label}
             variant = 'standard' 
-            className = "text-input"
-            sx={{
-                '& .MuiInputBase-root': {
-                    marginTop: '22px'
+            className = 'text-input'
+            slotProps={{
+                inputLabel: {
+                    className: 'text-input_label'
                 },
-                '& .MuiFormLabel-root': {
-                    fontSize: '14px'
+                input: {
+                    className: 'text-input_container'
                 }
             }}
         />
