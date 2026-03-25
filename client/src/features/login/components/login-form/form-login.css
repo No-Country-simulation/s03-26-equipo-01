@@ -5,4 +5,5 @@
     place-items: center;
     width: 90%;
     height: 100%;
+    max-height: 200px;
 }
