@@ -5,11 +5,13 @@ import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
 import com.cms.persistence.SQL.UserSQLDAO;
 import com.cms.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
 
@@ -27,7 +29,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         try {
-            return userSQLDAO.save(user);
+            User saved = userSQLDAO.save(user);
+            userSQLDAO.flush();
+            return saved;
+
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateEmailException("El email ya está registrado: " + user.getEmail());
         }
