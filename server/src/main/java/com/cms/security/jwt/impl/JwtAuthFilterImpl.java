@@ -35,6 +35,16 @@ public class JwtAuthFilterImpl extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+
+        if (path.startsWith("/v3/api-docs")
+                || path.startsWith("/swagger-ui")
+                || path.contains("swagger")
+                || path.startsWith("/auth")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String token = recuperarToken(request);
 
         if (token == null) {
@@ -46,7 +56,7 @@ public class JwtAuthFilterImpl extends OncePerRequestFilter {
             autenticarSiCorresponde(token, request);
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
-            throw e;
+            return;
         }
 
         chain.doFilter(request, response);
