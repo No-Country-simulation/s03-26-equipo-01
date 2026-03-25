@@ -17,10 +17,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 
-    public UserDetails loadUserByUsername(String email)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email){
 
-        User user = userService.recuperarUsuarioPorEmail(email).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        User user = userService.findUserByMail(email);
 
         return new UserDetailsImpl(user);
     }
