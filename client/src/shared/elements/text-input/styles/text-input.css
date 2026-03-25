@@ -1,4 +1,18 @@
 
+
+.text-input-container {
+    position: relative;
+    width: 100%;
+}
+
+.text-input-container label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--primary-font);
+    color: var(--dark-text-color);
+}
+
 .text-input {
     width: 100%;
     font-size: 14px;
@@ -9,7 +23,9 @@
     margin-top: 22px;
 }
 
-.text-input .text-input_label {
+.text-input .text-input_placeholder{
     font-size: 14px;
+    opacity: 0.5;
+    color: var(--dark-text-color);
 }
 
