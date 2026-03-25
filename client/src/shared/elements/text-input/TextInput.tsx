@@ -25,7 +25,6 @@ const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputPr
                 slotProps={{
                     inputLabel: {
                         className: onFocus ? 'text-input-placeholder--on-focus' : 'text-input_placeholder',
-                        shrink: false
                     },
                     input: {
                         className: 'text-input_container'
