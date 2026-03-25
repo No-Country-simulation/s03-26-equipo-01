@@ -5,7 +5,7 @@ const inputsData: InputTextData[] = [
         required: true,
         label: 'Ingresa su nombre de usuario',
         id: "1",
-        name: 'username',
+        name: 'userName',
         type: 'text'
     },
     {

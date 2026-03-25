@@ -1,5 +1,5 @@
-import LoginFormContainer from './components/login-form-container/LoginFormContainer';
-import LogoContainer from './components/logo-container/LogoContainer';
+import LoginFormContainer from '../components/login-form-container/LoginFormContainer';
+import LogoContainer from '../components/logo-container/LogoContainer';
 import './login.css';
 
 const Login = () => {
