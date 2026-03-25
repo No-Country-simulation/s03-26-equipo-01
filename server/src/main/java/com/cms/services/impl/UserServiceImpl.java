@@ -7,6 +7,7 @@ import com.cms.persistence.SQL.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -16,9 +17,11 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserSQLDAO userSQLDAO;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserSQLDAO userSQLDAO) {
+    public UserServiceImpl(UserSQLDAO userSQLDAO, PasswordEncoder passwordEncoder) {
         this.userSQLDAO = userSQLDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User saved = userSQLDAO.save(user);
             userSQLDAO.flush();
             return saved;
