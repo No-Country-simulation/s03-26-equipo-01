@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import AuthContext from "./create-auth";
-import type { Auth } from "../types/auth";
+import type { Auth } from "../models/auth";
 import useAuth from "../hooks/use-auth";
 
 

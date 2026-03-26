@@ -1,7 +1,9 @@
 import { TOKEN_KEY } from "../../../core/token-key/token-key";
 
-function tokenService(token: string): void {
+export function setToken(token: string): void {
     localStorage.setItem(TOKEN_KEY, token);
 }
 
-export default tokenService;
+export function getToken(): void {
+    localStorage.getItem(TOKEN_KEY);
+}

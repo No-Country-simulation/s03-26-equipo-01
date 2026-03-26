@@ -4,7 +4,7 @@ import TextInput from '../../../../shared/elements/text-input/TextInput';
 import SubmitButton from '../submit-button/SubmitButton';
 import './styles/form-login.css';
 import inputsData from './input-data';
-import type { UserCredentials } from '../../../../shared/auth/types/user-credentials';
+import type { UserCredentials } from '../../../../shared/auth/models/user-credentials';
 
 const LoginForm = () => {
 
