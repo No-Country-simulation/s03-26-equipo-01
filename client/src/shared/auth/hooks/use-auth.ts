@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { UserCredentials } from "../types/user-credentials";
-import type { User } from "../../types/user";
+import type { User } from "../../types/user/user";
 import loginService from "../service/login.service";
 
 const useAuth = () => {

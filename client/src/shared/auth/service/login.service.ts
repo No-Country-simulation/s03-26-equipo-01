@@ -1,10 +1,10 @@
 import api from "../../../core/api/api";
 import { LOGIN_API } from "../../../core/api/urls";
-import type { User } from "../../types/user";
+import type { User } from "../../types/user/user";
 import type { UserResponse } from "../adapters/dtos/user-response";
-import userResponseAdapter from "../adapters/user-response";
 import type { UserCredentials } from "../types/user-credentials";
 import tokenRepository from "../repository/token.repository";
+import { userResponseAdapter } from "../adapters/user.adapter";
 
 
 async function loginService(credentials: UserCredentials): Promise<User> {
