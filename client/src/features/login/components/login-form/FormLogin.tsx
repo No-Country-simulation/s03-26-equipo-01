@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../../../../shared/auth/context/use-auth';
+import useAuthContext from '../../../../shared/auth/context/use-auth';
 import TextInput from '../../../../shared/elements/text-input/TextInput';
 import SubmitButton from '../submit-button/SubmitButton';
 import './styles/form-login.css';
@@ -8,7 +8,7 @@ import type { UserCredentials } from '../../../../shared/auth/models/user-creden
 
 const LoginForm = () => {
 
-    const {login} = useAuth();
+    const {login} = useAuthContext();
     const {register, handleSubmit} = useForm<UserCredentials>();
     const handleLogin = (data: UserCredentials) => login(data);
 

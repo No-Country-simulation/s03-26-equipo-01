@@ -1,3 +1,5 @@
+import type { CredentialsError } from "../../../core/api/errors/client-error/credentials-error";
+import type { User } from "../../types/user/user";
 import type { UserCredentials } from "./user-credentials";
 
 
@@ -8,4 +10,6 @@ export interface Auth {
             * User Admin o Edit (falta modela este tipo)
     */
     login: (user: UserCredentials) => void 
+    user: User | null
+    error: CredentialsError | null
 }

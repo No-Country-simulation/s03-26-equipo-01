@@ -5,6 +5,7 @@ import type { UserResponse } from "../adapters/dtos/user-response";
 import type { UserCredentials } from "../models/user-credentials";
 import { userResponseAdapter } from "../adapters/user.adapter";
 import { setToken } from "../repository/token.repository";
+import { CredentialsError } from "../../../core/api/errors/client-error/credentials-error";
 
 
 async function loginService(credentials: UserCredentials): Promise<User> {
@@ -15,7 +16,7 @@ async function loginService(credentials: UserCredentials): Promise<User> {
     }
     catch(error: unknown) {
         console.log(error);
-        throw new Error('Error al iniciar sesión');
+        throw new CredentialsError();
     }
 }
 
