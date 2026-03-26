@@ -29,9 +29,10 @@
     font-size: 14px;
     opacity: 0.5;
     color: var(--dark-text-color);
+    transition: opacity 1s;
 }
 
 .text-input .text-input-placeholder--on-focus {
-    display: none;
+    opacity: 0;
 }
 

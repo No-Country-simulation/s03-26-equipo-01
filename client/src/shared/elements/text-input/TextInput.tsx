@@ -8,13 +8,16 @@ import { useState } from 'react';
 const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputProps<T>) => {
 
     const [onFocus, setOnfocus] = useState<boolean>(false);
+    const [contentCount, setContentCount] = useState<number>(0);
 
     return (
         <div className='text-input-container'>
             <label htmlFor={inputTextData.name}>{inputTextData.label}</label>
             <TextField 
                 {...register(inputTextData.name as Path<T>)}
-                onFocus={() => setOnfocus(true)}
+                onFocus = {() => setOnfocus(!onFocus)}
+                onBlur = {() => contentCount === 0 && setOnfocus(!onFocus)}
+                onChange = {() => setContentCount(contentCount + 1)}
                 id = {inputTextData.id} 
                 name = {inputTextData.name}
                 required = {inputTextData.required}
