@@ -7,7 +7,6 @@ import com.cms.model.Category;
 import com.cms.services.CategoryService;
 import jakarta.validation.Valid;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/categories")
-@RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @PostMapping
     public ResponseEntity<CategoryResponseDto> create(@Valid @RequestBody CreateCategoryDto createCategoryDto) {
@@ -51,7 +53,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryResponseDto> update(
             @PathVariable Long id,
-            @RequestBody UpdateCategoryDto updateCategoryDto
+            @Valid @RequestBody UpdateCategoryDto updateCategoryDto
     ) {
         Category updatedCategory = categoryService.update(id, updateCategoryDto);
         return ResponseEntity.ok(toResponseDto(updatedCategory));

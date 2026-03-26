@@ -1,5 +1,6 @@
 package com.cms.controller.exception;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.CategoryNotFoundException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +19,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleCategoryNotFound(
             CategoryNotFoundException exception,
+            HttpServletRequest request
+    ) {
+        return buildError(HttpStatus.NOT_FOUND, exception.getMessage(), request);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleEntityNotFound(
+            EntityNotFoundException exception,
             HttpServletRequest request
     ) {
         return buildError(HttpStatus.NOT_FOUND, exception.getMessage(), request);

@@ -92,7 +92,29 @@ class CategoryControllerIntegrationTest {
 
         mockMvc.perform(get("/categories/{id}", category.getId()))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value("Category not found with id: " + category.getId()));
+                .andExpect(jsonPath("$.message").value("invalid Category #" + category.getId()));
+    }
+
+    @Test
+    @WithMockUser
+    void findAllShouldExcludeDeletedCategories() throws Exception {
+        categoryRepository.save(Category.builder()
+                .name("Visible")
+                .slug("visible")
+                .description("Visible description")
+                .build());
+        categoryRepository.save(Category.builder()
+                .name("Deleted")
+                .slug("deleted")
+                .description("Deleted description")
+                .deleted(true)
+                .build());
+
+        mockMvc.perform(get("/categories"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].name").value("Visible"))
+                .andExpect(jsonPath("$[0].slug").value("visible"));
     }
 
     @Test
@@ -115,6 +137,28 @@ class CategoryControllerIntegrationTest {
                 .andExpect(jsonPath("$.name").value("Original"))
                 .andExpect(jsonPath("$.slug").value("original"))
                 .andExpect(jsonPath("$.description").value("Updated description"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void patchShouldUpdateSlugWhenProvidedForAdmin() throws Exception {
+        Category category = categoryRepository.save(Category.builder()
+                .name("Original")
+                .slug("original-slug")
+                .description("Original description")
+                .build());
+
+        mockMvc.perform(patch("/categories/{id}", category.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "slug": "updated-slug"
+                                }
+                                """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("Original"))
+                .andExpect(jsonPath("$.slug").value("updated-slug"))
+                .andExpect(jsonPath("$.description").value("Original description"));
     }
 
     @Test
@@ -150,6 +194,7 @@ class CategoryControllerIntegrationTest {
 
         Category deletedCategory = categoryRepository.findById(category.getId()).orElseThrow();
         org.junit.jupiter.api.Assertions.assertTrue(deletedCategory.getDeleted());
+        org.junit.jupiter.api.Assertions.assertEquals(category.getId(), deletedCategory.getId());
     }
 
     @Test

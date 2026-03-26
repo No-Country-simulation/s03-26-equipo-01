@@ -2,22 +2,24 @@ package com.cms.services.impl;
 
 import com.cms.controller.dtos.CreateCategoryDto;
 import com.cms.controller.dtos.UpdateCategoryDto;
+import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateResourceException;
-import com.cms.exception.business.impl.CategoryNotFoundException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.CategoryRepository;
 import com.cms.services.CategoryService;
 import jakarta.transaction.Transactional;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public Category create(CreateCategoryDto createCategoryDto) {
@@ -40,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(Long id) {
         return categoryRepository.findByIdAndDeletedFalse(id)
-                .orElseThrow(() -> new CategoryNotFoundException(id));
+                .orElseThrow(() -> new EntityNotFoundException(Category.class.getSimpleName(), id));
     }
 
     @Override

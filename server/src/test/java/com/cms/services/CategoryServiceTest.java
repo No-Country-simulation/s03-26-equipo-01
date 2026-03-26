@@ -2,7 +2,7 @@ package com.cms.services;
 
 import com.cms.controller.dtos.CreateCategoryDto;
 import com.cms.controller.dtos.UpdateCategoryDto;
-import com.cms.exception.business.impl.CategoryNotFoundException;
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.CategoryRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -86,7 +87,7 @@ class CategoryServiceTest {
 
         Category updatedCategory = categoryService.update(
                 createdCategory.getId(),
-                new UpdateCategoryDto("Updated", null, "Updated description")
+                new UpdateCategoryDto("Updated", "Updated description", null)
         );
 
         assertEquals(createdCategory.getId(), updatedCategory.getId());
@@ -96,16 +97,30 @@ class CategoryServiceTest {
     }
 
     @Test
-    void deleteByIdTest() {
+    void findAllShouldExcludeDeletedCategories() {
+        Category createdCategory = categoryService.create(
+                new CreateCategoryDto("Visible", "visible", "Visible description")
+        );
+
+        categoryService.deleteById(createdCategory.getId());
+
+        assertTrue(categoryService.findAll().stream().noneMatch(category -> category.getId().equals(createdCategory.getId())));
+    }
+
+    @Test
+    void deleteByIdShouldSoftDeleteCategory() {
         Category createdCategory = categoryService.create(
                 new CreateCategoryDto("Removable", "removable", "Removable description")
         );
 
         categoryService.deleteById(createdCategory.getId());
 
-        assertEquals(true, categoryRepository.findById(createdCategory.getId()).orElseThrow().getDeleted());
+        Category deletedCategory = categoryRepository.findById(createdCategory.getId()).orElseThrow();
+
+        assertTrue(deletedCategory.getDeleted());
+        assertEquals(createdCategory.getId(), deletedCategory.getId());
         assertFalse(categoryService.findAll().stream().anyMatch(category -> category.getId().equals(createdCategory.getId())));
-        assertThrows(CategoryNotFoundException.class, () -> categoryService.findById(createdCategory.getId()));
+        assertThrows(EntityNotFoundException.class, () -> categoryService.findById(createdCategory.getId()));
     }
 
     @AfterEach
