@@ -3,6 +3,7 @@ import "./newTestimonialForm.css"
 import Box from "@mui/material/Box";
 import Header from "./components/Header";
 import { Input } from "./components/Input";
+import AuthorizationCheckbox from "./components/AuthorizationCheckbox";
 
 export const NewTestimonialForm = () => {
   const { control } = useForm({
@@ -10,7 +11,8 @@ export const NewTestimonialForm = () => {
       name: "",
       email: "",
       testimonial: "",
-      course:""
+      course:"",
+      authorization: false
     }
   });
   return (
@@ -52,6 +54,7 @@ export const NewTestimonialForm = () => {
           placeholder="¿Qué fue lo que más te gustó de tu experiencia?"
         />
 
+        <AuthorizationCheckbox name="authorization" control={control} text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."/>
   
       </form>
     </Box>
