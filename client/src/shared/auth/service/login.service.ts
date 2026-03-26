@@ -4,11 +4,13 @@ import type { User } from "../../types/user";
 import type { UserResponse } from "../adapters/dtos/user-response";
 import userResponseAdapter from "../adapters/user-response";
 import type { UserCredentials } from "../types/user-credentials";
+import tokenService from "./token.service";
 
 
 async function loginService(credentials: UserCredentials): Promise<User> {
     try {
         const user = await api.post<UserResponse>(LOGIN_API, credentials);
+        tokenService(user.data.token);
         return userResponseAdapter(user.data);
     }
     catch(error: unknown) {
