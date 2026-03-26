@@ -2,7 +2,7 @@
 
 export interface UserResponse {
     token: string
-    tokenType: string
+    type: string
     id: number
     email: string 
 }

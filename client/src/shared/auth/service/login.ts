@@ -12,7 +12,7 @@ async function loginService(credentials: UserCredentials): Promise<User> {
         return userResponseAdapter(user.data);
     }
     catch(error: unknown) {
-        console.log(error)
+        console.log(error);
         throw new Error('Error al iniciar sesión');
     }
 }
