@@ -1,5 +1,7 @@
 
 
 export interface User {
-    name: string
+    id: number
+    email: string 
+    // falta el type del usuario
 }

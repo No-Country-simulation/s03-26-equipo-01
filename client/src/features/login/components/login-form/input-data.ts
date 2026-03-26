@@ -6,8 +6,8 @@ const inputsData: InputTextData[] = [
         label: 'Email',
         placeholder: 'Ingresa su nombre de usuario',
         id: "1",
-        name: 'userName',
-        type: 'text'
+        name: 'email',
+        type: 'email'
     },
     {
         required: true,
