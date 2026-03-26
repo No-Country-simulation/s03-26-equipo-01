@@ -15,7 +15,7 @@ const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputPr
             <label htmlFor={inputTextData.name}>{inputTextData.label}</label>
             <TextField 
                 {...register(inputTextData.name as Path<T>)}
-                onFocus = {() => setOnfocus(!onFocus)}
+                onFocus = {() => contentCount === 0 && setOnfocus(!onFocus)}
                 onBlur = {() => contentCount === 0 && setOnfocus(!onFocus)}
                 onChange = {() => setContentCount(contentCount + 1)}
                 id = {inputTextData.id} 
