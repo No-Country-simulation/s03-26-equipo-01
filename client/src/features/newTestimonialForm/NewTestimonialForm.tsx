@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Header from "./components/Header";
 import { Input } from "./components/Input";
 import AuthorizationCheckbox from "./components/AuthorizationCheckbox";
+import SubmitButton from "./components/SubmitButton";
 
 export const NewTestimonialForm = () => {
   const { control } = useForm({
@@ -55,6 +56,8 @@ export const NewTestimonialForm = () => {
         />
 
         <AuthorizationCheckbox name="authorization" control={control} text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."/>
+
+        <SubmitButton isAvailable = {true}/>
   
       </form>
     </Box>
