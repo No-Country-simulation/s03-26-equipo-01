@@ -1,15 +1,10 @@
 
 
 .login-container {
+    z-index: 1;
     width: 90%;
     height: 90vh;
     display: grid;
     place-items: center;
     grid-template-rows: 20% 80%;
-}
-
-@media screen and (min-width: 1200px) {
-    .login-container{
-        z-index: 1;
-    }
 }
