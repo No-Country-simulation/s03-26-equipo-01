@@ -39,7 +39,7 @@ public class AuthServiceTest {
     public void setup() {
         admin = Admin.builder()
                 .email("admin@mail.com")
-                .password(passwordEncoder.encode("password123"))
+                .password("password123")
                 .firstName("John")
                 .lastName("Doe")
                 .build();
@@ -52,9 +52,9 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("admin@mail.com", "password123");
 
-        String tokenresponse = authService.authUser(token);
+        String jwt = authService.authUser(token);
 
-        assertNotNull(tokenresponse);
+        assertNotNull(jwt);
     }
 
     @Test

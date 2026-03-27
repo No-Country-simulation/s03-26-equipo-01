@@ -30,16 +30,9 @@ public class AuthServiceImpl implements AuthService {
 
     public String authUser(UsernamePasswordAuthenticationToken token) {
         String email = token.getPrincipal().toString();
-
         User user = userService.findUserByMail(email);
-
         authenticationManager.authenticate(token);
-
         UserDetails userDetails = new UserDetailsImpl(user);
-
-        String jwt = jwtService.generarToken(userDetails);
-
-        return jwt;
+        return jwtService.generarToken(userDetails);
     }
-
 }
