@@ -6,6 +6,6 @@
 .form-title h2 {
     text-align: center;
     font-family: 'Roboto';
-    font-size: 48px;
+    font-size: clamp(6vh, 0.8197vw + 2.8565rem, 8vh);
     font-weight: 300;
 }

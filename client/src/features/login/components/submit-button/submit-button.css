@@ -1,0 +1,10 @@
+
+
+.submit-button {
+    align-self: 'end';
+    width: 100%;
+    font-size: var(--primary-font);
+    font-weight: 'bold';
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}

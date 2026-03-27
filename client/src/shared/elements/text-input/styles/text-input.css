@@ -15,18 +15,18 @@
 
 .text-input {
     width: 100%;
-    font-size: 14px;
+    font-size: var(--medium-font);
 }
 
 .text-input .text-input_container {
     width: 100%;
     margin-top: 22px;
-    font-size: 14px;
+    font-size: var(--medium-font);
 }
 
 .text-input .text-input_placeholder{
     display: block;
-    font-size: 14px;
+    font-size: var(--medium-font);
     opacity: 0.5;
     color: var(--dark-text-color);
     transition: opacity 1s;
