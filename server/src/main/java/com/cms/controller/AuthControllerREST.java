@@ -1,7 +1,6 @@
 package com.cms.controller;
 
 import com.cms.controller.dto.auth.AuthRequestDTO;
-import com.cms.controller.dto.auth.AuthResponseDTO;
 import com.cms.controller.exception.ErrorResponseDTO;
 import com.cms.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,10 +26,11 @@ public class AuthControllerREST {
     @Operation(summary = "Login de usuario")
     @ApiResponse(
             responseCode = "200",
-            description = "Login exitoso",
-            content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(implementation = AuthResponseDTO.class)
+            description = "Login exitoso - Token en header Authorization",
+            headers = @io.swagger.v3.oas.annotations.headers.Header(
+                    name = "Authorization",
+                    description = "Bearer token",
+                    schema = @Schema(type = "string")
             )
     )
     @ApiResponse(
@@ -41,9 +41,11 @@ public class AuthControllerREST {
                     schema = @Schema(implementation = ErrorResponseDTO.class)
             )
     )
-    public ResponseEntity<AuthResponseDTO> login(@RequestBody AuthRequestDTO authRequestDTO) {
+    public ResponseEntity<Void> login(@RequestBody AuthRequestDTO authRequestDTO) {
 
-        AuthResponseDTO response = authService.authUser(authRequestDTO.aModelo());
-        return ResponseEntity.ok(response);
+        String token = authService.authUser(authRequestDTO.aModelo());
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + token)
+                .build();
     }
 }
