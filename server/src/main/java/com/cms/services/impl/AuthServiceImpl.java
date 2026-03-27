@@ -28,24 +28,11 @@ public class AuthServiceImpl implements AuthService {
         this.userService = userService;
     }
 
-    public AuthResponseDTO authUser(UsernamePasswordAuthenticationToken token) {
+    public String authUser(UsernamePasswordAuthenticationToken token) {
         String email = token.getPrincipal().toString();
-
         User user = userService.findUserByMail(email);
-
         authenticationManager.authenticate(token);
-
         UserDetails userDetails = new UserDetailsImpl(user);
-
-        String jwt = jwtService.generarToken(userDetails);
-
-        return new AuthResponseDTO(
-                jwt,
-                "Bearer",
-                user.getId(),
-                user.getEmail(),
-                user.getRole()
-        );
+        return jwtService.generarToken(userDetails);
     }
-
 }
