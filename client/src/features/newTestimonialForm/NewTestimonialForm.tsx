@@ -5,6 +5,9 @@ import Header from "./components/Header";
 import { Input } from "./components/Input";
 import AuthorizationCheckbox from "./components/AuthorizationCheckbox";
 import SubmitButton from "./components/SubmitButton";
+import { InputWithIcon } from "./components/InputWithIcon";
+import { SquarePlay } from "lucide-react";
+import { alpha } from "@mui/material/styles";
 
 export const NewTestimonialForm = () => {
   const { control } = useForm({
@@ -13,7 +16,8 @@ export const NewTestimonialForm = () => {
       email: "",
       testimonial: "",
       course:"",
-      authorization: false
+      authorization: false,
+      video: ""
     }
   });
   return (
@@ -54,6 +58,8 @@ export const NewTestimonialForm = () => {
           rows={6}
           placeholder="¿Qué fue lo que más te gustó de tu experiencia?"
         />
+
+        <InputWithIcon control={control} label="Link video de Youtube (Opcional)" name="video" placeholder="https://www.youtube.com/watch..." icon = {<SquarePlay color={alpha("#2D2D2D", 0.5)} />} />
 
         <AuthorizationCheckbox name="authorization" control={control} text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."/>
 
