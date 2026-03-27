@@ -1,5 +1,6 @@
 package com.cms.controller.dtos;
 
+import com.cms.model.Category;
 import jakarta.validation.constraints.NotBlank;
 
 public record CreateCategoryDto(
@@ -7,4 +8,11 @@ public record CreateCategoryDto(
         @NotBlank String slug,
         String description
 ) {
+    public Category aModelo() {
+        return Category.builder()
+                .name(this.name())
+                .slug(this.slug())
+                .description(this.description())
+                .build();
+    }
 }

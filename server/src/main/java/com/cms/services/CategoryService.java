@@ -1,12 +1,11 @@
 package com.cms.services;
 
-import com.cms.controller.dtos.CreateCategoryDto;
 import com.cms.controller.dtos.UpdateCategoryDto;
 import com.cms.model.Category;
 import java.util.List;
 
 public interface CategoryService {
-    Category create(CreateCategoryDto createCategoryDto);
+    Category create(Category category); // <-- Ahora recibe la Entidad
 
     List<Category> findAll();
 

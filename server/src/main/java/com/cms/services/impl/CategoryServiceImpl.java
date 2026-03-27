@@ -1,6 +1,5 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dtos.CreateCategoryDto;
 import com.cms.controller.dtos.UpdateCategoryDto;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Category;
@@ -21,13 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category create(CreateCategoryDto createCategoryDto) {
-        Category category = Category.builder()
-                .name(createCategoryDto.name())
-                .slug(createCategoryDto.slug())
-                .description(createCategoryDto.description())
-                .build();
-
+    public Category create(Category category) { // <-- Se limpió el método
         return categorySQLDAO.save(category);
     }
 
