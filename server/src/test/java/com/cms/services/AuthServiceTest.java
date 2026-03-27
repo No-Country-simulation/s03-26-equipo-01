@@ -52,13 +52,9 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("admin@mail.com", "password123");
 
-        AuthResponseDTO response = authService.authUser(token);
+        String tokenresponse = authService.authUser(token);
 
-        assertNotNull(response.token());
-        assertEquals("Bearer", response.type());
-        assertEquals("admin@mail.com", response.email());
-        assertEquals("ADMIN", response.role());
-        assertNotNull(response.email());
+        assertNotNull(tokenresponse);
     }
 
     @Test
