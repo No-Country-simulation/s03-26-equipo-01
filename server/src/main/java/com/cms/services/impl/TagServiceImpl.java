@@ -2,7 +2,7 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Tag;
-import com.cms.persistence.repository.TagRepository;
+import com.cms.persistence.repository.sql.TagSQLDAO;
 import com.cms.services.TagService;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -14,21 +14,21 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 
-    private final TagRepository tagRepository;
+    private final TagSQLDAO tagSQLDAO;
 
     @Override
     public Tag create(Tag tag) {
-        return tagRepository.save(tag);
+        return tagSQLDAO.save(tag);
     }
 
     @Override
     public List<Tag> findAll() {
-        return tagRepository.findAll();
+        return tagSQLDAO.findAll();
     }
 
     @Override
     public Tag findById(Long id) {
-        return tagRepository.findById(id)
+        return tagSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
     }
 
@@ -36,12 +36,12 @@ public class TagServiceImpl implements TagService {
     public Tag update(Long id, Tag tag) {
         Tag tagToUpdate = findById(id);
         tagToUpdate.setName(tag.getName());
-        return tagRepository.save(tagToUpdate);
+        return tagSQLDAO.save(tagToUpdate);
     }
 
     @Override
     public void deleteById(Long id) {
         Tag tag = findById(id);
-        tagRepository.delete(tag);
+        tagSQLDAO.delete(tag);
     }
 }

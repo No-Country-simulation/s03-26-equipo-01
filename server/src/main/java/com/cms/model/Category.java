@@ -31,7 +31,7 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String slug;
 
     private String description;

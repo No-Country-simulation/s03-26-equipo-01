@@ -1,5 +1,6 @@
 package com.cms.controller.dtos;
 
+import com.cms.model.Category;
 import java.time.LocalDateTime;
 
 public record CategoryResponseDto(
@@ -10,4 +11,14 @@ public record CategoryResponseDto(
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
+    public static CategoryResponseDto fromModel(Category category) {
+        return new CategoryResponseDto(
+                category.getId(),
+                category.getName(),
+                category.getSlug(),
+                category.getDescription(),
+                category.getCreatedAt(),
+                category.getUpdatedAt()
+        );
+    }
 }

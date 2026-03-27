@@ -32,21 +32,21 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponseDto> create(@Valid @RequestBody CreateCategoryDto createCategoryDto) {
         Category createdCategory = categoryService.create(createCategoryDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(toResponseDto(createdCategory));
+        return ResponseEntity.status(HttpStatus.CREATED).body(CategoryResponseDto.fromModel(createdCategory));
     }
 
     @GetMapping
     public ResponseEntity<List<CategoryResponseDto>> findAll() {
         List<CategoryResponseDto> categories = categoryService.findAll()
                 .stream()
-                .map(this::toResponseDto)
+                .map(CategoryResponseDto::fromModel)
                 .toList();
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponseDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(toResponseDto(categoryService.findById(id)));
+        return ResponseEntity.ok(CategoryResponseDto.fromModel(categoryService.findById(id)));
     }
 
     @PatchMapping("/{id}")
@@ -56,7 +56,7 @@ public class CategoryController {
             @Valid @RequestBody UpdateCategoryDto updateCategoryDto
     ) {
         Category updatedCategory = categoryService.update(id, updateCategoryDto);
-        return ResponseEntity.ok(toResponseDto(updatedCategory));
+        return ResponseEntity.ok(CategoryResponseDto.fromModel(updatedCategory));
     }
 
     @DeleteMapping("/{id}")
@@ -64,16 +64,5 @@ public class CategoryController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         categoryService.deleteById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    private CategoryResponseDto toResponseDto(Category category) {
-        return new CategoryResponseDto(
-                category.getId(),
-                category.getName(),
-                category.getSlug(),
-                category.getDescription(),
-                category.getCreatedAt(),
-                category.getUpdatedAt()
-        );
     }
 }

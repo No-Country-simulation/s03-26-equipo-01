@@ -3,7 +3,7 @@ package com.cms.services.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
-import com.cms.persistence.SQL.UserSQLDAO;
+import com.cms.persistence.repository.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;

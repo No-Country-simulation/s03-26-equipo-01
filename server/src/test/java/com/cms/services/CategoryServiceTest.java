@@ -4,7 +4,7 @@ import com.cms.controller.dtos.CreateCategoryDto;
 import com.cms.controller.dtos.UpdateCategoryDto;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Category;
-import com.cms.persistence.repository.CategoryRepository;
+import com.cms.persistence.repository.sql.CategorySQLDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,16 +24,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class CategoryServiceTest {
 
     private final CategoryService categoryService;
-    private final CategoryRepository categoryRepository;
+    private final CategorySQLDAO categorySQLDAO;
     private final ResetService resetService;
 
     CategoryServiceTest(
             CategoryService categoryService,
-            CategoryRepository categoryRepository,
+            CategorySQLDAO categorySQLDAO,
             ResetService resetService
     ) {
         this.categoryService = categoryService;
-        this.categoryRepository = categoryRepository;
+        this.categorySQLDAO = categorySQLDAO;
         this.resetService = resetService;
     }
 
@@ -115,7 +115,7 @@ class CategoryServiceTest {
 
         categoryService.deleteById(createdCategory.getId());
 
-        Category deletedCategory = categoryRepository.findById(createdCategory.getId()).orElseThrow();
+        Category deletedCategory = categorySQLDAO.findById(createdCategory.getId()).orElseThrow();
 
         assertTrue(deletedCategory.getDeleted());
         assertEquals(createdCategory.getId(), deletedCategory.getId());
