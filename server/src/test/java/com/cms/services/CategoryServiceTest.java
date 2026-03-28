@@ -1,7 +1,5 @@
 package com.cms.services;
 
-import com.cms.controller.dtos.CreateCategoryDto;
-import com.cms.controller.dtos.UpdateCategoryDto;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.sql.CategorySQLDAO;
@@ -9,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
 
@@ -44,10 +43,15 @@ class CategoryServiceTest {
 
     @Test
     void createTest() {
-        Category createdCategory = categoryService.create(
-                new CreateCategoryDto("Technology", "technology", "Technology testimonials")
-        );
+        Category categoryToCreate = Category.builder()
+                .name("Technology")
+                .slug("technology")
+                .description("Technology testimonials")
+                .build();
 
+        Category createdCategory = categoryService.create(categoryToCreate);
+
+        // Verify the object returned by the service
         assertNotNull(createdCategory.getId());
         assertEquals("Technology", createdCategory.getName());
         assertEquals("technology", createdCategory.getSlug());
@@ -55,23 +59,27 @@ class CategoryServiceTest {
         assertFalse(createdCategory.getDeleted());
         assertNotNull(createdCategory.getCreatedAt());
         assertNotNull(createdCategory.getUpdatedAt());
+
+        // Verify the object was actually persisted in the database
+        Category persistedCategory = categoryService.findById(createdCategory.getId());
+        assertNotNull(persistedCategory);
+        assertEquals("technology", persistedCategory.getSlug());
     }
 
     @Test
     void findAllTest() {
         int initialSize = categoryService.findAll().size();
 
-        categoryService.create(new CreateCategoryDto("Marketing", "marketing", "Marketing testimonials"));
-        categoryService.create(new CreateCategoryDto("Sales", "sales", "Sales testimonials"));
+        categoryService.create(Category.builder().name("Marketing").slug("marketing").description("Marketing testimonials").build());
+        categoryService.create(Category.builder().name("Sales").slug("sales").description("Sales testimonials").build());
 
         assertEquals(initialSize + 2, categoryService.findAll().size());
     }
 
     @Test
     void findByIdTest() {
-        Category createdCategory = categoryService.create(
-                new CreateCategoryDto("Operations", "operations", "Operations testimonials")
-        );
+        Category categoryToCreate = Category.builder().name("Operations").slug("operations").description("Operations testimonials").build();
+        Category createdCategory = categoryService.create(categoryToCreate);
 
         Category recoveredCategory = categoryService.findById(createdCategory.getId());
 
@@ -81,14 +89,12 @@ class CategoryServiceTest {
 
     @Test
     void updateTest() {
-        Category createdCategory = categoryService.create(
-                new CreateCategoryDto("Original", "original", "Original description")
-        );
+        Category categoryToCreate = Category.builder().name("Original").slug("original").description("Original description").build();
+        Category createdCategory = categoryService.create(categoryToCreate);
 
-        Category updatedCategory = categoryService.update(
-                createdCategory.getId(),
-                new UpdateCategoryDto("Updated", "Updated description", null)
-        );
+        Category updateData = Category.builder().name("Updated").description("Updated description").build();
+
+        Category updatedCategory = categoryService.update(createdCategory.getId(), updateData);
 
         assertEquals(createdCategory.getId(), updatedCategory.getId());
         assertEquals("Updated", updatedCategory.getName());
@@ -98,9 +104,8 @@ class CategoryServiceTest {
 
     @Test
     void findAllShouldExcludeDeletedCategories() {
-        Category createdCategory = categoryService.create(
-                new CreateCategoryDto("Visible", "visible", "Visible description")
-        );
+        Category categoryToCreate = Category.builder().name("Visible").slug("visible").description("Visible description").build();
+        Category createdCategory = categoryService.create(categoryToCreate);
 
         categoryService.deleteById(createdCategory.getId());
 
@@ -109,9 +114,8 @@ class CategoryServiceTest {
 
     @Test
     void deleteByIdShouldSoftDeleteCategory() {
-        Category createdCategory = categoryService.create(
-                new CreateCategoryDto("Removable", "removable", "Removable description")
-        );
+        Category categoryToCreate = Category.builder().name("Removable").slug("removable").description("Removable description").build();
+        Category createdCategory = categoryService.create(categoryToCreate);
 
         categoryService.deleteById(createdCategory.getId());
 
@@ -121,6 +125,17 @@ class CategoryServiceTest {
         assertEquals(createdCategory.getId(), deletedCategory.getId());
         assertFalse(categoryService.findAll().stream().anyMatch(category -> category.getId().equals(createdCategory.getId())));
         assertThrows(EntityNotFoundException.class, () -> categoryService.findById(createdCategory.getId()));
+    }
+
+    @Test
+    void createCategoryWithDuplicateSlugShouldThrowException() {
+        Category firstCategory = Category.builder().name("First").slug("duplicate-slug").description("Desc 1").build();
+        categoryService.create(firstCategory);
+
+        Category secondCategory = Category.builder().name("Second").slug("duplicate-slug").description("Desc 2").build();
+
+        // Verify that the database constraint throws a DataIntegrityViolationException
+        assertThrows(DataIntegrityViolationException.class, () -> categoryService.create(secondCategory));
     }
 
     @AfterEach
