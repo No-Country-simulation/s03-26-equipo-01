@@ -7,7 +7,6 @@ public record UpdateCategoryDto(
         String slug,
         String description
 ) {
-        // Applies non-null fields from the incoming request to the existing entity
         public void aplicar(Category category) {
                 if (this.name() != null) {
                         category.setName(this.name());

@@ -26,7 +26,6 @@ class CategoryServiceTest {
     private final CategorySQLDAO categorySQLDAO;
     private final ResetService resetService;
 
-    // Reusable category for tests
     private Category defaultCategory;
 
     CategoryServiceTest(
@@ -41,7 +40,6 @@ class CategoryServiceTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize common test data to avoid code duplication
         Category categoryToCreate = Category.builder()
                 .name("Common Category")
                 .slug("common-category")
@@ -61,7 +59,6 @@ class CategoryServiceTest {
 
         Category createdCategory = categoryService.create(categoryToCreate);
 
-        // Verify the object returned by the service
         assertNotNull(createdCategory.getId());
         assertEquals("Technology", createdCategory.getName());
         assertEquals("technology", createdCategory.getSlug());
@@ -70,7 +67,6 @@ class CategoryServiceTest {
         assertNotNull(createdCategory.getCreatedAt());
         assertNotNull(createdCategory.getUpdatedAt());
 
-        // Verify the object was actually persisted in the database
         Category persistedCategory = categoryService.findById(createdCategory.getId());
         assertNotNull(persistedCategory);
         assertEquals("technology", persistedCategory.getSlug());
@@ -88,7 +84,6 @@ class CategoryServiceTest {
 
     @Test
     void findByIdTest() {
-        // Use the category created in setUp
         Category recoveredCategory = categoryService.findById(defaultCategory.getId());
 
         assertEquals(defaultCategory.getId(), recoveredCategory.getId());
@@ -99,7 +94,6 @@ class CategoryServiceTest {
     void updateTest() {
         Category updateData = Category.builder().name("Updated").description("Updated description").build();
 
-        // Update the category created in setUp
         Category updatedCategory = categoryService.update(defaultCategory.getId(), updateData);
 
         assertEquals(defaultCategory.getId(), updatedCategory.getId());
@@ -110,7 +104,6 @@ class CategoryServiceTest {
 
     @Test
     void findAllShouldExcludeDeletedCategories() {
-        // Delete the category created in setUp
         categoryService.deleteById(defaultCategory.getId());
 
         assertTrue(categoryService.findAll().stream().noneMatch(category -> category.getId().equals(defaultCategory.getId())));
@@ -118,7 +111,6 @@ class CategoryServiceTest {
 
     @Test
     void deleteByIdShouldSoftDeleteCategory() {
-        // Delete the category created in setUp
         categoryService.deleteById(defaultCategory.getId());
 
         Category deletedCategory = categorySQLDAO.findById(defaultCategory.getId()).orElseThrow();
@@ -131,20 +123,17 @@ class CategoryServiceTest {
 
     @Test
     void createCategoryWithDuplicateSlugShouldThrowException() {
-        // Attempt to create a category with the same slug as the defaultCategory
         Category duplicateCategory = Category.builder()
                 .name("Duplicate")
                 .slug("common-category")
                 .description("Duplicate desc")
                 .build();
 
-        // Verify that the database constraint throws a DataIntegrityViolationException
         assertThrows(DataIntegrityViolationException.class, () -> categoryService.create(duplicateCategory));
     }
 
     @AfterEach
     void tearDown() {
-        // Clean up database state after each test
         resetService.resetAll();
     }
 }

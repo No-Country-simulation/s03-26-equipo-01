@@ -38,8 +38,6 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Long id, Category categoryData) {
         Category categoryToUpdate = findById(id);
 
-        // Apply partial updates from the incoming categoryData entity.
-        // Slug uniqueness is handled naturally by database constraints.
         if (categoryData.getName() != null) {
             categoryToUpdate.setName(categoryData.getName());
         }

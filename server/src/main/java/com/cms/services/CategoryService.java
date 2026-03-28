@@ -5,13 +5,13 @@ import com.cms.model.Category;
 import java.util.List;
 
 public interface CategoryService {
-    Category create(Category category); // <-- Ahora recibe la Entidad
+    Category create(Category category);
 
     List<Category> findAll();
 
     Category findById(Long id);
 
-    Category update(Long id, Category categoryData); // Recibe la entidad con los cambios
+    Category update(Long id, Category categoryData);
 
     void deleteById(Long id);
 }
