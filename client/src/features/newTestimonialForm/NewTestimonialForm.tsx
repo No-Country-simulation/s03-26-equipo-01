@@ -9,6 +9,7 @@ import { InputWithIcon } from "./components/InputWithIcon";
 import { ImageUp, SquarePlay} from "lucide-react";
 import { alpha } from "@mui/material/styles";
 import UploadButtonWithIcon from "./components/UploadButtonWithIcon";
+import RatingPicker from "./components/RatingPicker";
 
 export const NewTestimonialForm = () => {
   const { control } = useForm({
@@ -20,6 +21,7 @@ export const NewTestimonialForm = () => {
       authorization: false,
       video: "",
       image: null,
+      rating: null
     }
   });
   return (
@@ -51,6 +53,8 @@ export const NewTestimonialForm = () => {
           control={control}
           placeholder="Indica nombre"
         />
+
+        <RatingPicker name="rating" label="Valoración general" control={control} />
 
         <Input 
           name="testimonial" 
