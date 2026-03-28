@@ -5,6 +5,8 @@ import com.cms.exception.business.BusinessException; // <-- Verifica que este im
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -31,6 +33,8 @@ public class GlobalExceptionHandler {
     ) {
         return ErrorResponseDTO.buildResponse(HttpStatus.CONFLICT, exception.getMessage(), request);
     }
+
+
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
     public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(

@@ -1,11 +1,14 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.exception.business.BusinessException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.sql.CategorySQLDAO;
 import com.cms.services.CategoryService;
 import jakarta.transaction.Transactional;
 import java.util.List;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +23,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category create(Category category) {
-        return categorySQLDAO.save(category);
+        try {
+            return categorySQLDAO.save(category);
+        } catch (DataIntegrityViolationException ex) {
+            throw new BusinessException("Ya existe una categoría con ese slug");
+        }
     }
 
     @Override
