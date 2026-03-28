@@ -1,6 +1,5 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dtos.UpdateCategoryDto;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.sql.CategorySQLDAO;
@@ -20,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category create(Category category) { // <-- Se limpió el método
+    public Category create(Category category) {
         return categorySQLDAO.save(category);
     }
 
@@ -39,12 +38,17 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Long id, Category categoryData) {
         Category categoryToUpdate = findById(id);
 
-        // Update fields only if they are provided.
-        // Note: Slug uniqueness is handled by the database constraint.
-        // A DataIntegrityViolationException will be thrown if a duplicate is inserted.
-        if (categoryData.getName() != null) categoryToUpdate.setName(categoryData.getName());
-        if (categoryData.getSlug() != null) categoryToUpdate.setSlug(categoryData.getSlug());
-        if (categoryData.getDescription() != null) categoryToUpdate.setDescription(categoryData.getDescription());
+        // Apply partial updates from the incoming categoryData entity.
+        // Slug uniqueness is handled naturally by database constraints.
+        if (categoryData.getName() != null) {
+            categoryToUpdate.setName(categoryData.getName());
+        }
+        if (categoryData.getSlug() != null) {
+            categoryToUpdate.setSlug(categoryData.getSlug());
+        }
+        if (categoryData.getDescription() != null) {
+            categoryToUpdate.setDescription(categoryData.getDescription());
+        }
 
         return categorySQLDAO.save(categoryToUpdate);
     }
