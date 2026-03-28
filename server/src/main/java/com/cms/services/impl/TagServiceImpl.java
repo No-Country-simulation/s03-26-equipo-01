@@ -2,7 +2,7 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.Tag;
-import com.cms.persistence.repository.sql.TagSQLDAO;
+import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.TagService;
 import jakarta.transaction.Transactional;
 import java.util.List;

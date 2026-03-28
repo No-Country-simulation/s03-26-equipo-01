@@ -1,4 +1,4 @@
-package com.cms.persistence.repository.sql;
+package com.cms.persistence.sql;
 
 import com.cms.model.Category;
 import java.util.List;

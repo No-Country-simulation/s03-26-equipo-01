@@ -3,7 +3,7 @@ package com.cms.services.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.model.Category;
-import com.cms.persistence.repository.sql.CategorySQLDAO;
+import com.cms.persistence.sql.CategorySQLDAO;
 import com.cms.services.CategoryService;
 import jakarta.transaction.Transactional;
 import java.util.List;
