@@ -4,7 +4,6 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Editor;
-import com.cms.persistence.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +77,7 @@ public class UserServiceTest {
 
         userService.disableUser(editorSaved.getId());
 
-        List<User> users = userService.findAllEnable();
+        List<User> users = userService.findAllEnabled(true);
 
         assertFalse(users.contains(editorSaved));
         assertTrue(users.contains(editorSaved2));
@@ -91,7 +90,7 @@ public class UserServiceTest {
         User editorSaved2 = userService.save(otroEditor);
 
         userService.enableUser(editorSaved.getId());
-        List<User> users = userService.findAllEnable();
+        List<User> users = userService.findAllEnabled(true);
 
         assertTrue(users.contains(editorSaved));
         assertTrue(users.contains(editorSaved2));

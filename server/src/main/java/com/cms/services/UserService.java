@@ -12,7 +12,7 @@ public interface UserService {
 
     void disableUser(Long idUser);
 
-    List<User> findAllEnable();
+    List<User> findAllEnabled(boolean enabled);
 
     void enableUser(Long idUser);
 }

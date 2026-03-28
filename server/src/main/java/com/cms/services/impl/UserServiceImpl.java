@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllEnable() {
-        return userSQLDAO.findAllByEnabledTrue();
+    public List<User> findAllEnabled(boolean enabled) {
+        return userSQLDAO.findAllByEnabled(enabled);
     }
 
     @Override
