@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import type { User } from "../../types/user/user";
-import { admin } from "../../types/user/rol-names";
 import { ADMIN_PATH, EDITOR_PATH } from "../../../core/routes/routes";
+import { admin } from "../../types/user/roles";
 
 const useUserNavegate = () => {
 
