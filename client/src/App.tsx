@@ -3,6 +3,7 @@ import { Routes } from "react-router-dom"
 import { ADMIN_PATH, EDITOR_PATH, LOGIN_PATH } from "./core/routes/routes"
 import Login from "./features/login/pages/Login"
 import AuthProvider from "./shared/auth/context/provide-auth"
+import NotFoundPage from "./shared/pages/404-not-found/NotFoundPage"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Route path = {LOGIN_PATH} element = {<Login />}></Route>
           <Route path = {ADMIN_PATH} element = {<p>Admin</p>}></Route>
           <Route path = {EDITOR_PATH} element = {<p>Editor</p>}></Route>
+          <Route path = {'*'} element = {<NotFoundPage />}></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
