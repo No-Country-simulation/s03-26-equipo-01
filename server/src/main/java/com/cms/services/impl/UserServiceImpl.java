@@ -46,13 +46,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void disableUser(Long idUser) {
-        User user = userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
+        User user = findById(idUser);
 
         user.disable();
+    }
+
+    private User findById(Long idUser) {
+        return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
     }
 
     @Override
     public List<User> findAllEnable() {
         return userSQLDAO.findAllByEnabledTrue();
+    }
+
+    @Override
+    public void enableUser(Long idUser) {
+        User user = findById(idUser);
+
+        user.enable();
     }
 }

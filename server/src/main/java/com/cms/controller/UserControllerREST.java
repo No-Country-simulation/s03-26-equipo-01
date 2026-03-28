@@ -24,4 +24,11 @@ public class UserControllerREST {
         return ResponseEntity.noContent().build();
     }
 
+    @PatchMapping("/enable/{idUser}")
+    public ResponseEntity<?> enableUser(@PathVariable Long idUser) {
+        userService.enableUser(idUser);
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

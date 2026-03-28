@@ -24,4 +24,8 @@ public abstract class User {
     public void disable() {
         this.enabled = false;
     }
+
+    public void enable() {
+        this.enabled = true;
+    }
 }

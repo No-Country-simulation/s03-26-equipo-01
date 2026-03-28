@@ -84,6 +84,19 @@ public class UserServiceTest {
         assertTrue(users.contains(editorSaved2));
     }
 
+    @Test
+    public void enableUserAndGetEnableUserTest() {
+        User editorSaved = userService.save(editor);
+        userService.disableUser(editorSaved.getId());
+        User editorSaved2 = userService.save(otroEditor);
+
+        userService.enableUser(editorSaved.getId());
+        List<User> users = userService.findAllEnable();
+
+        assertTrue(users.contains(editorSaved));
+        assertTrue(users.contains(editorSaved2));
+    }
+
     @AfterEach
     public void tearDown(){
         resetService.resetAll();
