@@ -31,6 +31,7 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
+    // Enforce uniqueness at the database level to prevent race conditions
     @Column(unique = true, nullable = false)
     private String slug;
 

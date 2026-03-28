@@ -39,7 +39,9 @@ public class CategoryServiceImpl implements CategoryService {
     public Category update(Long id, Category categoryData) {
         Category categoryToUpdate = findById(id);
 
-        // Aquí usamos los datos que vienen de la entidad 'categoryData'
+        // Update fields only if they are provided.
+        // Note: Slug uniqueness is handled by the database constraint.
+        // A DataIntegrityViolationException will be thrown if a duplicate is inserted.
         if (categoryData.getName() != null) categoryToUpdate.setName(categoryData.getName());
         if (categoryData.getSlug() != null) categoryToUpdate.setSlug(categoryData.getSlug());
         if (categoryData.getDescription() != null) categoryToUpdate.setDescription(categoryData.getDescription());
