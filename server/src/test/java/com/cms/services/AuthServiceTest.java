@@ -41,7 +41,7 @@ public class AuthServiceTest {
     public void setup() {
         admin = Admin.builder()
                 .email("admin@mail.com")
-                .password(passwordEncoder.encode("password123"))
+                .password("password123")
                 .firstName("John")
                 .lastName("Doe")
                 .build();
@@ -54,13 +54,9 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("admin@mail.com", "password123");
 
-        AuthResponseDTO response = authService.authUser(token);
+        String jwt = authService.authUser(token);
 
-        assertNotNull(response.token());
-        assertEquals("Bearer", response.type());
-        assertEquals("admin@mail.com", response.email());
-        assertEquals("ADMIN", response.role());
-        assertNotNull(response.email());
+        assertNotNull(jwt);
     }
 
     @Test
