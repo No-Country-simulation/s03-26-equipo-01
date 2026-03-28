@@ -5,6 +5,7 @@
     --link-color: #7182FF;
     --dark-text-color: #21140F;
     --primary-font: 'Roboto';
+    --error-color: #B3261E;
 
     --primary-font: clamp(1vh, 0.8197vw + 2.8565rem, 2vh);
     --medium-font: clamp(2vh, 0.8197vw + 2.8565rem, 2.4vh);

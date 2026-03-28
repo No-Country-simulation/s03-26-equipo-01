@@ -35,3 +35,8 @@
 .text-input .text-input-placeholder--on-focus {
     opacity: 0;
 }
+
+.text-input-error {
+    margin-top: 4px;
+    color: var(--error-color);
+}
