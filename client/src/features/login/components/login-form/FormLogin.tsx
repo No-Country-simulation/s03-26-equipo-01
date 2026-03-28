@@ -18,7 +18,7 @@ const LoginForm = () => {
             className = 'form-container'>
             {inputsData.map(inputData => 
                 <TextInput
-                    {...register(inputData.name as 'email' | 'password')}
+                    register = {register}
                     key = {inputData.id}
                     inputTextData = {inputData} 
                 />

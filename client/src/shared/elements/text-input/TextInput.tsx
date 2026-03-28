@@ -2,9 +2,9 @@ import { TextField } from '@mui/material';
 import './styles/text-input.css';
 import type { TextInputProps } from './text-input-props';
 import useFocus from './hooks/use-focus';
+import type { FieldValues, Path } from 'react-hook-form';
 
-
-const TextInput = ({inputTextData}: TextInputProps) => {
+const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputProps<T>) => {
 
     const {onFocus, changeFocus, handleCounter} = useFocus();
 
@@ -12,9 +12,13 @@ const TextInput = ({inputTextData}: TextInputProps) => {
         <div className='text-input-container'>
             <label htmlFor={inputTextData.name}>{inputTextData.label}</label>
             <TextField 
+                {...register(inputTextData.name as Path<T>, 
+                    {
+                        onChange: () => handleCounter(),
+                        onBlur: () => changeFocus()
+                    }
+                )}
                 onFocus = {() => changeFocus()}
-                onBlur = {() => changeFocus()}
-                onChange = {() => handleCounter()}
                 id = {inputTextData.id} 
                 name = {inputTextData.name}
                 required = {inputTextData.required}
