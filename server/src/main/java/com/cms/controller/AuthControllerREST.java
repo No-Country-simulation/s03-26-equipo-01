@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class AuthControllerREST {
                     schema = @Schema(implementation = ErrorResponseDTO.class)
             )
     )
+    @SecurityRequirements()
     public ResponseEntity<Void> login(@RequestBody AuthRequestDTO authRequestDTO) {
 
         String token = authService.authUser(authRequestDTO.aModelo());
