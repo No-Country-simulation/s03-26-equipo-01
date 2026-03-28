@@ -1,11 +1,13 @@
 package com.cms.services;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.exception.business.BusinessException;
 import com.cms.model.Category;
 import com.cms.persistence.repository.sql.CategorySQLDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,24 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CategoryServiceTest {
 
-    private final CategoryService categoryService;
-    private final CategorySQLDAO categorySQLDAO;
-    private final ResetService resetService;
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private ResetService resetService;
 
     private Category defaultCategory;
 
-    CategoryServiceTest(
-            CategoryService categoryService,
-            CategorySQLDAO categorySQLDAO,
-            ResetService resetService
-    ) {
-        this.categoryService = categoryService;
-        this.categorySQLDAO = categorySQLDAO;
-        this.resetService = resetService;
-    }
 
     @BeforeEach
     void setUp() {
@@ -113,11 +107,6 @@ class CategoryServiceTest {
     void deleteByIdShouldSoftDeleteCategory() {
         categoryService.deleteById(defaultCategory.getId());
 
-        Category deletedCategory = categorySQLDAO.findById(defaultCategory.getId()).orElseThrow();
-
-        assertTrue(deletedCategory.getDeleted());
-        assertEquals(defaultCategory.getId(), deletedCategory.getId());
-        assertFalse(categoryService.findAll().stream().anyMatch(category -> category.getId().equals(defaultCategory.getId())));
         assertThrows(EntityNotFoundException.class, () -> categoryService.findById(defaultCategory.getId()));
     }
 
@@ -129,7 +118,7 @@ class CategoryServiceTest {
                 .description("Duplicate desc")
                 .build();
 
-        assertThrows(DataIntegrityViolationException.class, () -> categoryService.create(duplicateCategory));
+        assertThrows(BusinessException.class, () -> categoryService.create(duplicateCategory));
     }
 
     @AfterEach

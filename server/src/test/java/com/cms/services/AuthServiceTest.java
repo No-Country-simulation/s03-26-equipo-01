@@ -1,7 +1,6 @@
 package com.cms.services;
 
 
-import com.cms.controller.dto.auth.AuthResponseDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Admin;
@@ -17,10 +16,8 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
 @ActiveProfiles("test")
-
 public class AuthServiceTest {
 
     @Autowired
