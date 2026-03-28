@@ -11,7 +11,7 @@ public interface CategoryService {
 
     Category findById(Long id);
 
-    Category update(Long id, UpdateCategoryDto updateCategoryDto);
+    Category update(Long id, Category categoryData); // Recibe la entidad con los cambios
 
     void deleteById(Long id);
 }

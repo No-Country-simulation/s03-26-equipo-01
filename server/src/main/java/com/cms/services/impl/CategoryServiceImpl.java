@@ -36,9 +36,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category update(Long id, UpdateCategoryDto updateCategoryDto) {
+    public Category update(Long id, Category categoryData) {
         Category categoryToUpdate = findById(id);
-        updateCategoryDto.aplicar(categoryToUpdate);
+
+        // Aquí usamos los datos que vienen de la entidad 'categoryData'
+        if (categoryData.getName() != null) categoryToUpdate.setName(categoryData.getName());
+        if (categoryData.getSlug() != null) categoryToUpdate.setSlug(categoryData.getSlug());
+        if (categoryData.getDescription() != null) categoryToUpdate.setDescription(categoryData.getDescription());
+
         return categorySQLDAO.save(categoryToUpdate);
     }
 

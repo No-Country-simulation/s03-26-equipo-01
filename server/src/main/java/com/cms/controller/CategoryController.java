@@ -55,7 +55,10 @@ public class CategoryController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateCategoryDto updateCategoryDto
     ) {
-        Category updatedCategory = categoryService.update(id, updateCategoryDto);
+        Category categoryToUpdate = categoryService.findById(id); // Buscamos la actual
+        updateCategoryDto.aplicar(categoryToUpdate); // El DTO la actualiza
+        Category updatedCategory = categoryService.update(id, categoryToUpdate); // El servicio la guarda
+
         return ResponseEntity.ok(CategoryResponseDto.fromModel(updatedCategory));
     }
 
