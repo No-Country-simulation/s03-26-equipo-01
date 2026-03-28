@@ -1,13 +1,12 @@
 package com.cms.model.user;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @SuperBuilder
+@EqualsAndHashCode(of = "id")
 public abstract class User {
 
     private Long id;
@@ -21,4 +20,8 @@ public abstract class User {
     public String getRole(){
         return this.getClass().getSimpleName().toUpperCase();
     };
+
+    public void disable() {
+        this.enabled = false;
+    }
 }

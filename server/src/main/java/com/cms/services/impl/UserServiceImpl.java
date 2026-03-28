@@ -10,6 +10,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @Transactional
@@ -26,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByMail(String email) {
-        return userSQLDAO.findByEmail(email).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), email));
+        return userSQLDAO.findByEmailAndEnabledTrue(email).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), email));
     }
 
     @Override
@@ -40,5 +42,17 @@ public class UserServiceImpl implements UserService {
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateEmailException("El email ya está registrado: " + user.getEmail());
         }
+    }
+
+    @Override
+    public void disableUser(Long idUser) {
+        User user = userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
+
+        user.disable();
+    }
+
+    @Override
+    public List<User> findAllEnable() {
+        return userSQLDAO.findAllByEnabledTrue();
     }
 }

@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -27,6 +28,8 @@ public class UserServiceTest {
 
     private User editor;
 
+    private User otroEditor;
+
     @BeforeEach
     public void setup(){
         editor = Editor.builder()
@@ -35,6 +38,14 @@ public class UserServiceTest {
                 .firstName("tomas")
                 .lastName("kumar")
                 .build();
+
+        otroEditor = Editor.builder()
+                .email("tm123@gmail.com")
+                .password("123")
+                .firstName("otro")
+                .lastName("usuario")
+                .build();
+
     }
 
     @Test
@@ -49,13 +60,6 @@ public class UserServiceTest {
         assertEquals(editor.getLastName(), editorRecovered.getLastName());
 
         assertThrows(DuplicateEmailException.class, () -> {
-            User otroEditor = Editor.builder()
-                    .email("tm@gmail.com")
-                    .password("123")
-                    .firstName("otro")
-                    .lastName("usuario")
-                    .build();
-
             userService.save(otroEditor);
         });
     }
@@ -65,6 +69,20 @@ public class UserServiceTest {
         assertThrows(EntityNotFoundException.class, () -> userService.findUserByMail(""));
     }
 
+
+    @Test
+    public void disableUserAndGetEnableUserTest() {
+        User editorSaved = userService.save(editor);
+
+        User editorSaved2 = userService.save(otroEditor);
+
+        userService.disableUser(editorSaved.getId());
+
+        List<User> users = userService.findAllEnable();
+
+        assertFalse(users.contains(editorSaved));
+        assertTrue(users.contains(editorSaved2));
+    }
 
     @AfterEach
     public void tearDown(){
