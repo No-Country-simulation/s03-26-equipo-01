@@ -5,11 +5,16 @@ import SubmitButton from '../submit-button/SubmitButton';
 import './styles/form-login.css';
 import inputsData from './input-data';
 import type { UserCredentials } from '../../../../shared/auth/models/user-credentials';
+import schema from './schema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const LoginForm = () => {
 
     const {login} = useAuthContext();
-    const {register, handleSubmit} = useForm<UserCredentials>();
+    const {register, handleSubmit, formState: {errors}} = useForm<UserCredentials>({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
     const handleLogin = (data: UserCredentials) => login(data);
 
     return (
@@ -19,6 +24,7 @@ const LoginForm = () => {
             {inputsData.map(inputData => 
                 <TextInput
                     register = {register}
+                    error = {errors[inputData.name as keyof UserCredentials]?.message}
                     key = {inputData.id}
                     inputTextData = {inputData} 
                 />

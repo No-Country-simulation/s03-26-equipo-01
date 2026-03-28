@@ -4,7 +4,7 @@ import type { TextInputProps } from './text-input-props';
 import useFocus from './hooks/use-focus';
 import type { FieldValues, Path } from 'react-hook-form';
 
-const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputProps<T>) => {
+const TextInput = <T extends FieldValues>({inputTextData, error, register}: TextInputProps<T>) => {
 
     const {onFocus, changeFocus, handleCounter} = useFocus();
 
@@ -18,11 +18,10 @@ const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputPr
                         onBlur: () => changeFocus()
                     }
                 )}
+                error = {error !== undefined}
                 onFocus = {() => changeFocus()}
                 id = {inputTextData.id} 
                 name = {inputTextData.name}
-                required = {inputTextData.required}
-                type = {inputTextData.type}
                 label = {inputTextData.placeholder}
                 variant = 'standard' 
                 className = 'text-input'
@@ -35,6 +34,7 @@ const TextInput = <T extends FieldValues>({inputTextData, register}: TextInputPr
                     }
                 }}
             />
+            {error && <p className='text-input-error'>{error}</p>}
         </div>
     )
 }
