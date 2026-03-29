@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+
 public record TestimonialRequestDTO(
         @NotNull
         @NotBlank
@@ -31,6 +33,7 @@ public record TestimonialRequestDTO(
                 .email(email)
                 .rating(rating)
                 .state(StateTestimonial.DRAFT)
+                .createdAt(LocalDate.now())
                 .build();
     }
 }

@@ -1,8 +1,6 @@
 package com.cms.controller;
 
 import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
-import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
-import com.cms.model.testimonial.Testimonial;
 import com.cms.services.TestimonialService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -27,7 +25,7 @@ public class TestimonialControllerREST {
 
     @PostMapping
     public ResponseEntity<?> testify(@RequestBody @Valid TestimonialRequestDTO request){
-        testimonialService.save(request.toModel());
+        testimonialService.save(request.toModel(), request.idEmbed());
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

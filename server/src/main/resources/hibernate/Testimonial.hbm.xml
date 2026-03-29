@@ -21,6 +21,7 @@
         <many-to-one name="embed"
                      class="com.cms.model.embed.Embed"
                      column="embed_id"
+                     cascade="merge"
                      not-null="true"/>
 
     </class>
