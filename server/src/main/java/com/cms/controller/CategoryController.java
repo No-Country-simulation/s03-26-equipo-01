@@ -1,8 +1,8 @@
 package com.cms.controller;
 
-import com.cms.controller.dtos.CreateCategoryDto;
-import com.cms.controller.dtos.CategoryResponseDto;
-import com.cms.controller.dtos.UpdateCategoryDto;
+import com.cms.controller.dto.category.CreateCategoryDto;
+import com.cms.controller.dto.category.CategoryResponseDto;
+import com.cms.controller.dto.category.UpdateCategoryDto;
 import com.cms.model.Category;
 import com.cms.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;

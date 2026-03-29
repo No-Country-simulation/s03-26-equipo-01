@@ -1,4 +1,4 @@
-package com.cms.controller.dtos;
+package com.cms.controller.dto.category;
 
 import com.cms.model.Category;
 
