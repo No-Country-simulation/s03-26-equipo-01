@@ -7,7 +7,7 @@ export interface Auth {
     /*
         PROPÓSITO: Logea al usuario con las credenciales dadas.
         RETORNA: 
-            * User Admin o Edit (falta modela este tipo)
+            * User Admin o Edit 
     */
     login: (user: UserCredentials) => void 
     closeError: () => void
