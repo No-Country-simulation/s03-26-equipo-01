@@ -29,7 +29,7 @@ interface SubmitButtonProps {
 const SubmitButton = ({isAvailable = false} : SubmitButtonProps) => {
   return (
     <ThemeProvider theme={theme}>
-    <Button variant="contained" disableElevation endIcon={<Send size = {22}/>} fullWidth      color="primary" sx={{padding:'8px 22px'}} disabled = {!isAvailable}>Enviar</Button>
+    <Button variant="contained" disableElevation endIcon={<Send size = {22}/>} fullWidth color="primary" sx={{padding:'8px 22px', fontSize:"1.5rem"}} disabled = {!isAvailable}>Enviar</Button>
     </ThemeProvider>
   )
 }
