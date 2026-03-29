@@ -6,13 +6,16 @@ import './login-card-presentation.css';
 
 const LoginCardPresentation = () => {
 
-    const {error} = useAuthContext();
+    const {error, closeError} = useAuthContext();
 
     return (
         <div className='login-container'>
             <LogoContainer />
             <LoginFormContainer />
-            {error && <CredentialsErrorContainer message = {error.message}/>}
+            {error && <CredentialsErrorContainer 
+                message = {error.message} 
+                close = {closeError }
+            />}
         </div>
     )
 }

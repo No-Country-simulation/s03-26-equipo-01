@@ -10,10 +10,11 @@ interface AuthProviderProps {
 
 const AuthProvider = ({children}: AuthProviderProps) => {
 
-    const {user, error, login} = useAuth();
+    const {closeError, user, error, login} = useAuth();
 
     const auth: Auth = {
-        login: login,
+        closeError,
+        login,
         user,
         error
     }

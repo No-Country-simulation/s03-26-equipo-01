@@ -10,6 +10,7 @@ export interface Auth {
             * User Admin o Edit (falta modela este tipo)
     */
     login: (user: UserCredentials) => void 
+    closeError: () => void
     user: User | null
     error: CredentialsError | null
 }

@@ -22,7 +22,9 @@ const useAuth = () => {
         }
     }
 
-    return {user, error, login}
+    const closeError = () => setError(null);
+
+    return {user, error, login, closeError}
 }
 
 export default useAuth;
