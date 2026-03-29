@@ -49,7 +49,6 @@ public record TestimonialRequestDTO(
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         @NotNull
-        @NotBlank
         Long idEmbed
 
 ) {

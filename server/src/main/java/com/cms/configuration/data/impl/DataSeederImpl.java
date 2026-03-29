@@ -1,8 +1,10 @@
 package com.cms.configuration.data.impl;
 
 import com.cms.configuration.data.DataSeeder;
+import com.cms.model.embed.Embed;
 import com.cms.model.user.impl.Admin;
 import com.cms.model.user.impl.Editor;
+import com.cms.services.EmbedService;
 import com.cms.services.UserService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -13,12 +15,15 @@ public class DataSeederImpl implements DataSeeder {
 
     private final UserService userService;
 
+    private final EmbedService embedService;
+
     private Editor editor;
 
     private Admin admin;
 
-    public DataSeederImpl(UserService userService) {
+    public DataSeederImpl(UserService userService, EmbedService embedService) {
         this.userService = userService;
+        this.embedService = embedService;
     }
 
     @Override
@@ -35,6 +40,8 @@ public class DataSeederImpl implements DataSeeder {
                 .firstName("admin")
                 .lastName("administra")
                 .build();
+
+        embedService.save(new Embed());
 
         userService.save(editor);
 

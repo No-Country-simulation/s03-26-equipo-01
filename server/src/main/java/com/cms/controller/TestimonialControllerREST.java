@@ -2,6 +2,7 @@ package com.cms.controller;
 
 import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
 import com.cms.services.TestimonialService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class TestimonialControllerREST {
 
 
     @PostMapping
+    @SecurityRequirements()
     public ResponseEntity<?> testify(@RequestBody @Valid TestimonialRequestDTO request){
         testimonialService.save(request.toModel(), request.idEmbed());
 
