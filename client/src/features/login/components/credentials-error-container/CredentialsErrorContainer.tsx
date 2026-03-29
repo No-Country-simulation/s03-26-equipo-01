@@ -1,5 +1,5 @@
 import type { CredentialsErrorContainerProps } from './credentials-error-container';
-import './credentials-error-container.css';
+import './styles/credentials-error-container.css';
 import image from '../../../../assets/icon.svg';
 
 const CredentialsErrorContainer = ({message, close}: CredentialsErrorContainerProps) => {
