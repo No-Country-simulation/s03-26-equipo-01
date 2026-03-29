@@ -11,7 +11,6 @@ const SubmitButton = () => {
                 width: '100%',
                 minHeight: '6vh',
                 fontSize: 'var(--primary-font)',
-                fontWeight: 'bold',
                 backgroundColor: 'var(--accent-color)',
                 color: '#FFF'
             }}>

@@ -3,7 +3,9 @@ import './credentials-error-container.css';
 
 const CredentialsErrorContainer = ({message}: CredentialsErrorContainerProps) => {
     return (
-        <p>{message}</p>
+        <div>
+            <p>{message}</p>
+        </div>
     )
 }
 
