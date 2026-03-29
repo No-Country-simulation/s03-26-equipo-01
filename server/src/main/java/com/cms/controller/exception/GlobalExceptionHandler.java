@@ -4,12 +4,15 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException; // <-- Verifica que este import coincida con tu superclase
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
+
+import java.nio.file.AccessDeniedException;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +35,13 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         return ErrorResponseDTO.buildResponse(HttpStatus.CONFLICT, exception.getMessage(), request);
+    }
+
+    @ExceptionHandler({AccessDeniedException.class, AuthorizationDeniedException.class })
+    public ResponseEntity<ErrorResponseDTO> handleAccessDenied(
+            Exception exception, HttpServletRequest request) {
+        return ErrorResponseDTO.buildResponse(HttpStatus.FORBIDDEN,
+                "No tiene permisos para realizar esta acción", request);
     }
 
 
