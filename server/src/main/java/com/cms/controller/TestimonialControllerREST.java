@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Testimonial")
+@RequestMapping("/testimonial")
 @Tag(name = "Testimonio", description = "Endpoints para la gestión de testimonios")
 public class TestimonialControllerREST {
 
