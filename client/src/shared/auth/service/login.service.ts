@@ -10,7 +10,7 @@ import handleInvalidCredentials from "./invalid-credentials";
 
 async function loginService(credentials: UserCredentials): Promise<User> {
     try {
-        const user = await api.post<UserResponse>(LOGIN_API, credentials, {validateStatus: (status) => status === 200});
+        const user = await api.post<UserResponse>(LOGIN_API, credentials);
         setToken(user);
         return userResponseAdapter(user.data);
     }

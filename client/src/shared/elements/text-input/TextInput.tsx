@@ -22,6 +22,7 @@ const TextInput = <T extends FieldValues>({inputTextData, error, register}: Text
                 onFocus = {() => changeFocus()}
                 id = {inputTextData.id} 
                 name = {inputTextData.name}
+                type = {inputTextData.type}
                 label = {inputTextData.placeholder}
                 variant = 'standard' 
                 className = 'text-input'
