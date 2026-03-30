@@ -15,7 +15,8 @@ import { MultitextInput } from "./components/MultiTextInput";
 import theme from "./theme";
 
 export const NewTestimonialForm = () => {
-  const { control } = useForm({
+  const { control, formState:{isValid} } = useForm({
+    mode: "onChange",
     defaultValues: {
       name: "",
       email: "",
@@ -41,6 +42,9 @@ export const NewTestimonialForm = () => {
                 label="Nombre y Apellido" 
                 control={control}
                 placeholder="Usa nombre real"
+                rules={{ 
+                  required: "El nombre y apellido es necesario"
+                }}
               />
 
               <TextInput 
@@ -49,8 +53,7 @@ export const NewTestimonialForm = () => {
                 control={control} 
                 placeholder="Registrado en la plataforma"
                 rules={{ 
-                  required: "El email es necesario",
-                  pattern: { value: /^\S+@\S+$/i, message: "Mail no válido" }
+                  required: "El email es necesario"
                 }}
               />
             </Box>
@@ -60,9 +63,19 @@ export const NewTestimonialForm = () => {
                 label="Curso o programa realizado" 
                 control={control}
                 placeholder="Indica nombre"
+                rules={{ 
+                  required: "El curso o programa realizado es necesario"
+                }}
               />
 
-              <RatingPicker name="rating" label="Valoración general" control={control} />
+              <RatingPicker 
+                name="rating" 
+                label="Valoración general" 
+                control={control}
+                rules={{ 
+                  required: "La valoración es necesaria"
+                }}
+                 />
             </Box>
         </Box>
         <Box sx={{display:"flex", flexDirection:"column", gap:"64px", padding:"24px 24px"}}>
@@ -73,20 +86,34 @@ export const NewTestimonialForm = () => {
               control={control} 
               rows={6}
               placeholder="¿Qué fue lo que más te gustó de tu experiencia?"
+              rules={{ 
+                  required: "El testimonio es necesario"
+                }}
             />
 
             <Box sx={{display:"flex", justifyContent:"space-between", flexWrap: "wrap", gap:"45px"}}>
-              <TextInputWithIcon control={control} label="Link video de Youtube (Opcional)" name="video" placeholder="https://www.youtube.com/watch..." icon = {<SquarePlay color={alpha("#2D2D2D", 0.5)} />} />
+              <TextInputWithIcon 
+                control={control} 
+                label="Link video de Youtube (Opcional)" 
+                name="video" placeholder="https://www.youtube.com/watch..." 
+                icon = {<SquarePlay color={alpha("#2D2D2D", 0.5)} />}
+                />
               
               <UploadButtonWithIcon control={control} label="Añadir imagen (Opcional)" name="image" icon={<ImageUp color={alpha("#2D2D2D", 0.5)} />} />
             </Box>
 
-            <AuthorizationCheckbox name="authorization" control={control} text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."/>
+            <AuthorizationCheckbox 
+              name="authorization" 
+              control={control} 
+              text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."
+              rules={{ 
+                  required: "El curso o programa realizado es necesario"
+                }}
+              />
 
-            <SubmitButton isAvailable = {true}/>
+            <SubmitButton isAvailable = {isValid}/>
           </Box>
         </Box>
-      
       </Box>
     </Box>
     </Container>

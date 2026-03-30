@@ -11,7 +11,7 @@ interface TextInputWithIconProps <T extends FieldValues>{
   icon: React.ReactNode
 }
 
-export const TextInputWithIcon = <T extends FieldValues>({ name, control, label, placeholder, icon } : TextInputWithIconProps<T>) => {
+export const TextInputWithIcon = <T extends FieldValues>({ name, control, label, placeholder, icon, rules } : TextInputWithIconProps<T>) => {
   const id = `input-${name}`;
   return(
   <FormControl sx={{width:"100%", minWidth:"275px", maxWidth:"404px"}}>
@@ -24,6 +24,7 @@ export const TextInputWithIcon = <T extends FieldValues>({ name, control, label,
         <Controller
           name={name}
           control={control}
+          rules={rules}
           render={({ field, fieldState: { error } }) => (
             <Input
               id={id}

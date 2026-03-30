@@ -10,9 +10,10 @@ interface RatingPickerProps<T extends FieldValues>{
   name: Path<T>,
   control:Control<T>
   label: string,
+  rules?: object
 }
 
-const RatingPicker = <T extends FieldValues>({name, control, label} : RatingPickerProps<T>) => {
+const RatingPicker = <T extends FieldValues>({name, control, label, rules} : RatingPickerProps<T>) => {
   const numbers = [1,2,3,4,5,6,7,8,9,10];
   const id = `input-${name}`;
 
@@ -23,6 +24,7 @@ const RatingPicker = <T extends FieldValues>({name, control, label} : RatingPick
         <Controller
           name={name}
           control={control}
+          rules={rules}
           render={({ field: {onChange, value, ref} }) => {
             const currentPickedNumber = Number(value) || 0;
             return (

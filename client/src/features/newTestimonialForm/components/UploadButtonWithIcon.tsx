@@ -7,9 +7,10 @@ interface UploadButtonWithIconProps<T extends FieldValues>{
   control:Control<T>
   label: string,
   icon: React.ReactNode
+  rules?: object
 }
 
-const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon}:UploadButtonWithIconProps<T>) => {
+const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon, rules}:UploadButtonWithIconProps<T>) => {
   const id = `input-${name}`;
   return (
     <FormControl>
@@ -22,7 +23,8 @@ const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon
           <Controller
             name={name}
             control={control}
-            render={({ field }) => (
+            rules={rules}
+            render={({ field: { onChange, ...field } }) => (
               <Button
                 component="label"
                 role={undefined}
@@ -41,8 +43,11 @@ const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon
                   hidden
                   onChange={(e) => {
                     const file = e.target.files?.[0];
-                    console.log(file)
+                    if (file) {
+                      onChange(file); 
+                    }
                   }}
+                  value=""
                 />
               </Button>
             )}

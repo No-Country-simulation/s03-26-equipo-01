@@ -13,7 +13,7 @@ interface MultitextInputProps <T extends FieldValues>{
   placeholder?: string,
 }
 
-export const MultitextInput = <T extends FieldValues>({ name, control, label, placeholder, rows} : MultitextInputProps<T>) => {
+export const MultitextInput = <T extends FieldValues>({ name, control, label, placeholder, rows, rules} : MultitextInputProps<T>) => {
   const id = `input-${name}`;
   return(
     <Box sx={{display:"flex", flexDirection:"column", width:"100%" ,gap:"6px"}}>
@@ -21,6 +21,7 @@ export const MultitextInput = <T extends FieldValues>({ name, control, label, pl
       <Controller
         name={name}
         control={control}
+        rules={rules}
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}

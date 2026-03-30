@@ -11,7 +11,7 @@ interface TextInputProps <T extends FieldValues>{
   placeholder?: string,
 }
 
-export const TextInput = <T extends FieldValues>({ name, control, label, placeholder} : TextInputProps<T>) => {
+export const TextInput = <T extends FieldValues>({ name, control, label, placeholder, rules} : TextInputProps<T>) => {
   const id = `input-${name}`;
   return(
     <Box sx={{display:"flex", flexDirection:"column", width:"100%", minWidth:"141px" ,maxWidth:"341px" ,gap:"6px"}}>
@@ -19,6 +19,7 @@ export const TextInput = <T extends FieldValues>({ name, control, label, placeho
       <Controller
         name={name}
         control={control}
+        rules={rules}
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}

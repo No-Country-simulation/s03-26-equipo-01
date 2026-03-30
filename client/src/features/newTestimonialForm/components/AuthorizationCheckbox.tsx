@@ -4,13 +4,15 @@ import { Controller, type Control, type FieldValues, type Path } from "react-hoo
 interface AuthorizationCheckboxProps<T extends FieldValues> {
   name: Path<T>,
   control: Control <T>,
-  text: string
+  text: string,
+  rules?: object
 }
 
-const AuthorizationCheckbox = <T extends FieldValues>({name, control, text} : AuthorizationCheckboxProps<T>) => (
+const AuthorizationCheckbox = <T extends FieldValues>({name, control, text, rules} : AuthorizationCheckboxProps<T>) => (
   <Controller
     name={name}
     control={control}
+    rules={rules}
     render={({ field, fieldState: { error } }) => (
       <FormControl>
         <Box component="label" sx={{display:"flex", alignItems:"center"}}>
