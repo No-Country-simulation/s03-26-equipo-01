@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.disable();
     }
 
-    private User findById(Long idUser) {
+    public User findById(Long idUser) {
         return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
     }
 
