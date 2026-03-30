@@ -1,9 +1,6 @@
 package com.cms.services;
 
-import com.cms.exception.EntityNotFoundException;
-import com.cms.model.embeds.Embeds;
-import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
-import com.cms.model.embeds.dto.DateEmbedsResponseDTO;
+import com.cms.model.embeds.Embed;
 import com.cms.model.user.impl.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +25,7 @@ public class EmbedServiceTest {
     private ResetService resetService;
 
     private Admin admin;
-    private DateEmbedsRequestDTO embedRequest;
+    private Embed embed;
 
     @BeforeEach
     public void setup(){
@@ -43,23 +38,24 @@ public class EmbedServiceTest {
 
         admin = (Admin) userService.save(admin);
 
-        embedRequest = new DateEmbedsRequestDTO();
+        embed = new Embed();
     }
 
     @Test
     public void registerEmbedSTest() {
-        Embeds embedSaved = embedService.registerEmbed(admin.getId(), embedRequest);
+        Embed embedSaved = embedService.registerEmbed(admin.getId(), embed);
+        Admin adminRecovered = (Admin) userService.findById(admin.getId());
 
         assertNotNull(embedSaved.getId());
-        assertEquals(admin.getId(), embedSaved.getAdmin().getId());
-        assertTrue(admin.getEmbeds().contains(embedSaved));
+        assertEquals(adminRecovered.getId(), embedSaved.getAdmin().getId());
+        assertTrue(adminRecovered.getEmbeds().contains(embedSaved));
     }
     @Test
     public void registerEmbedWithDisabledAdminTest() {
         userService.disableUser(admin.getId());
 
         assertThrows(IllegalArgumentException.class, () -> {
-            embedService.registerEmbed(admin.getId(), embedRequest);
+            embedService.registerEmbed(admin.getId(), embed);
         });
     }
 

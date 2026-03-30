@@ -1,9 +1,11 @@
 package com.cms.controller;
 
 
+import com.cms.controller.dto.embeds.DateEmbedsResponseDTO;
+import com.cms.model.embeds.Embed;
 import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
-import com.cms.model.embeds.dto.DateEmbedsResponseDTO;
 
+import com.cms.services.EmbedService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,20 +13,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class EmbedsController {
+@RequestMapping("/embed")
+public class EmbedController {
 
     private final EmbedService embedService;
-    public EmbedsController(EmbedService embedService) {
+    public EmbedController(EmbedService embedService) {
         this.embedService = embedService;
     }
 
-    @PostMapping("/embeds/registro/{idAdmin}")
+    @PostMapping("registro/{idAdmin}")
     public ResponseEntity<DateEmbedsResponseDTO> registerEmbeds(
             @PathVariable Long idAdmin,
             @RequestBody @Valid DateEmbedsRequestDTO request) {
 
-        Embeds embeds = embedService.registerEmbed(idAdmin, request);
-        DateEmbedsResponseDTO response = new DateEmbedsResponseDTO(embeds)
+        Embed embed = embedService.registerEmbed(idAdmin, request.toModel());
+
+        DateEmbedsResponseDTO response = DateEmbedsResponseDTO.fromModel(embed);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

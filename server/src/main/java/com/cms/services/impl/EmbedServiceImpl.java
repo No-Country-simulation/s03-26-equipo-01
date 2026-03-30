@@ -1,39 +1,36 @@
-package com.cms.model.embeds.embedService;
+package com.cms.services.impl;
 
-import com.cms.model.embeds.Embeds;
-import com.cms.model.embeds.EmbedsRepository;
-import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
-import com.cms.model.embeds.dto.DateEmbedsResponseDTO;
-import com.cms.model.embeds.usuariosLocal.AdminRepository;
+import com.cms.model.embeds.EmbedSQLDAO;
+import com.cms.model.embeds.Embed;
+import com.cms.model.user.impl.Admin;
+import com.cms.persistence.SQL.AdminSQLDAO;
+import com.cms.services.EmbedService;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class EmbedServiceImpl implements EnbedService {
-     private final EmbedsRepository embedRepository;
+public class EmbedServiceImpl implements EmbedService {
+     private final EmbedSQLDAO embedRepository;
      private final AdminSQLDAO adminRepository;
 
-    public EnbedServiceImpl(EmbedsRepository embedRepository, AdminSQLDAO adminRepository) {
+    public EmbedServiceImpl(EmbedSQLDAO embedRepository, AdminSQLDAO adminRepository) {
         this.embedRepository = embedRepository;
         this.adminRepository = adminRepository;
     }
 
-    public Embeds registerEmbed (Long adminId ,DateEmbedsRequestDTO request) {
+
+    public Embed registerEmbed (Long adminId , Embed embed) {
 
         Admin admin = adminRepository.findByIdAndEnabledTrue(adminId)
                 .orElseThrow(() -> new IllegalArgumentException(
                         "El Admin no pudo ser encontrado o no está habilitado, id: " + adminId
                 ));
 
-        Embeds embeds = new Embeds();
+        embed.setAdmin(admin);
 
-        embeds.setAdmin(admin);
+        admin.agregarEmbed(embed);
 
-        admin.getEmbeds().add(embeds);
-
-        embedRepository.save(embeds);
-
-        return embeds;
+        return embedRepository.save(embed);
     }
 }

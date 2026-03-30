@@ -1,9 +1,9 @@
 package com.cms.services;
 
-import com.cms.model.embeds.Embeds;
+import com.cms.model.embeds.Embed;
 import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 
 
 public interface EmbedService {
-    Embeds registerEmbed(Long adminId , DateEmbedsRequestDTO request);
+    Embed registerEmbed(Long adminId , Embed embed);
 }
