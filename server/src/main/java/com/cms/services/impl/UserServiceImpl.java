@@ -3,7 +3,7 @@ package com.cms.services.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
-import com.cms.persistence.SQL.UserSQLDAO;
+import com.cms.persistence.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         user.disable();
     }
 
-    private User findById(Long idUser) {
+    public User findById(Long idUser) {
         return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
     }
 

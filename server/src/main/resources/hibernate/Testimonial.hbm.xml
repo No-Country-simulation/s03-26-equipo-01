@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.cms.model.testimonial.Testimonial"
+           table="testimonials">
+
+        <id name="id" column="id">
+            <generator class="sequence"/>
+        </id>
+
+        <property name="testimonial" column="testimonial" not-null="true"/>
+        <property name="rating" column="rating" not-null="true"/>
+        <property name="email" column="email"/>
+        <property name="state" column="state" type="com.cms.model.testimonial.enums.StateTestimonial"/>
+        <property name="createdAt" column="created_at"/>
+
+        <many-to-one name="embed"
+                     class="com.cms.model.embeds.Embed"
+                     column="embed_id"
+                     cascade="merge"
+                     not-null="true"/>
+
+    </class>
+
+</hibernate-mapping>

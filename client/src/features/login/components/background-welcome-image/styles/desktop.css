@@ -1,20 +1,13 @@
 
 
-@media screen and (min-width: 1920px) {
-
+@media screen and (min-width: 1024px) {
     .background-welcome-image-container {
-        position: absolute;
-        z-index: 0;
-        display: grid;
-        place-items: center;
-        width: 100%;
-        height: 80%;
-        overflow-y:hidden
+        height: 100vh;
     }
 
     .background-welcome-image-container img {
-        padding-top: 50px;
-        width: 90%;
+        padding-top: 70px;
+        height: 100%;
+        width: 70%;
     }
 }
-

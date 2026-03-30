@@ -1,0 +1,46 @@
+
+.credentials-error-container {
+    display: grid;
+    grid-template-columns: 2% 88% 10%;
+    position: absolute;
+    width: 90%;
+    max-width: 500px;
+    height: 8vh;
+    max-height: 300px;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #F9DEDC;
+    animation: fadeIn 0.4s forwards;
+}
+
+.credentials-error-container .credentials-error-container_red-container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--error-color);
+}
+
+.credentials-error-container .credentials-error-container_message {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.credentials-error-container .credentials-error-container_close {
+    display: grid;
+    place-items: center;
+}
+
+.credentials-error-container .credentials-error-container_close img {
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        top: -50vh;
+    }
+    to {
+        top: 25vh;
+    }
+}
