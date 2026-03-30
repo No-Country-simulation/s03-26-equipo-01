@@ -11,8 +11,9 @@ const SubmitButton = () => {
                 width: '100%',
                 minHeight: '6vh',
                 fontSize: 'var(--primary-font)',
-                backgroundColor: 'var(--accent-color)',
-                color: '#FFF'
+                fontWeight: 'medium',
+                backgroundColor: 'var(--primary-color)',
+                color: 'var(--secondary-color)'
             }}>
                 Iniciar Sesión
         </Button>
