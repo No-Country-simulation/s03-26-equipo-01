@@ -14,15 +14,17 @@ interface MultitextInputProps <T extends FieldValues>{
 }
 
 export const MultitextInput = <T extends FieldValues>({ name, control, label, placeholder, rows} : MultitextInputProps<T>) => {
+  const id = `input-${name}`;
   return(
     <Box sx={{display:"flex", flexDirection:"column", width:"100%" ,gap:"6px"}}>
-      <FormLabel sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
+      <FormLabel htmlFor={id} sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
       <Controller
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
           <Input
-            {...field}           
+            {...field}
+            id={id}      
             error={!!error}
             fullWidth
             placeholder={placeholder}

@@ -1,14 +1,6 @@
 import { Box, Button, FormControl, InputAdornment, FormLabel} from "@mui/material"
-import { alpha, createTheme, ThemeProvider } from "@mui/material/styles";
+import { alpha } from "@mui/material/styles";
 import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1B2E45',
-    },
-  },
-});
 
 interface UploadButtonWithIconProps<T extends FieldValues>{
   name: Path<T>,
@@ -18,15 +10,15 @@ interface UploadButtonWithIconProps<T extends FieldValues>{
 }
 
 const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon}:UploadButtonWithIconProps<T>) => {
+  const id = `input-${name}`;
   return (
     <FormControl>
       <Box sx={{display:"flex", flexDirection:"column", gap:"12px", width:"275px"}}>
-        <FormLabel sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
+        <FormLabel htmlFor={id} sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
         <Box sx={{ display: "flex", alignItems: "center", gap:"16px"}}>
           <Box sx={{backgroundColor: alpha("#2D2D2D", 0.16), borderRadius: "50%", width: "40px", height:"40px", flexShrink: 0 , display: "flex", alignItems: "center", justifyContent: "center", padding: "8px"}}>
             {<InputAdornment position="start" sx={{marginRight: 0}}>{icon}</InputAdornment>}
           </Box>
-        <ThemeProvider theme={theme}>
           <Controller
             name={name}
             control={control}
@@ -36,13 +28,14 @@ const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon
                 role={undefined}
                 variant="contained"
                 tabIndex={-1}
-                disableElevation 
+                color="primary"
                 fullWidth
                 sx={{width:"219px", height:"42px", fontSize:"1.5rem", fontWeight: "Medium"}}
               >
                 SELECCIONAR ARCHIVO
                 <input
                   {...field}
+                  id={id}
                   type="file"
                   accept="image/jpeg, image/png, image/webp, image/gif"
                   hidden
@@ -54,7 +47,6 @@ const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon
               </Button>
             )}
           />
-        </ThemeProvider>
         </Box>
       </Box>
     </FormControl>

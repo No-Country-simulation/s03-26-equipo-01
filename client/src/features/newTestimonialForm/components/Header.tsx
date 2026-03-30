@@ -14,8 +14,8 @@ const Header = ({title, subtitle}: HeaderPropsType) => {
       alignItems: 'center',
       width: '100%'
     }}>
-      <Typography variant="h4" align="center" sx={{fontSize:"3.2rem"}}>{title}</Typography>
-      <Typography variant="subtitle1" align="center" sx={{fontSize:"1.6rem"}}>{subtitle}</Typography>
+      <Typography fontWeight="fontWeightRegular" variant="h4" color="primary" align="center" sx={{fontSize:"3.2rem"}}>{title}</Typography>
+      <Typography variant="subtitle1" color="primary" align="center" sx={{fontSize:"1.6rem"}}>{subtitle}</Typography>
     </Box>
   )
 }

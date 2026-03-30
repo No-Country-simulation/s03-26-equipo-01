@@ -12,15 +12,17 @@ interface TextInputProps <T extends FieldValues>{
 }
 
 export const TextInput = <T extends FieldValues>({ name, control, label, placeholder} : TextInputProps<T>) => {
+  const id = `input-${name}`;
   return(
     <Box sx={{display:"flex", flexDirection:"column", width:"100%", minWidth:"141px" ,maxWidth:"341px" ,gap:"6px"}}>
-      <FormLabel sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
+      <FormLabel  htmlFor={id} color="secondary" sx={{position:"static", fontSize:"1.4rem"}}> {label} </FormLabel>
       <Controller
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
           <Input
-            {...field}           
+            {...field}
+            id={id}           
             error={!!error}
             fullWidth
             placeholder={placeholder}

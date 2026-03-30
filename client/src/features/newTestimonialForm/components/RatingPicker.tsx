@@ -14,18 +14,19 @@ interface RatingPickerProps<T extends FieldValues>{
 
 const RatingPicker = <T extends FieldValues>({name, control, label} : RatingPickerProps<T>) => {
   const numbers = [1,2,3,4,5,6,7,8,9,10];
+  const id = `input-${name}`;
 
   return (
     <FormControl sx={{width:"100%", maxWidth:"340px"}}>
       <Box sx={{display:"flex", flexDirection:"column"}}>
-        <FormLabel sx={{position:"static" , fontSize:"1.4rem"}}> {label} </FormLabel>
+        <FormLabel htmlFor={id} sx={{position:"static" , fontSize:"1.4rem"}}> {label} </FormLabel>
         <Controller
           name={name}
           control={control}
           render={({ field: {onChange, value, ref} }) => {
             const currentPickedNumber = Number(value) || 0;
             return (
-            <RadioGroup row sx={{gap:"12px", padding:"8px 0", flexWrap: "nowrap"}} onChange={(e) => {
+            <RadioGroup id={id} row sx={{gap:"12px", padding:"8px 0", flexWrap: "nowrap"}} onChange={(e) => {
               onChange(Number(e.target.value))
             }}>
               {

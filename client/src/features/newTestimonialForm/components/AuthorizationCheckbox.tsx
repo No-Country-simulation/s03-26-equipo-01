@@ -1,4 +1,4 @@
-import { Checkbox, FormControl, FormHelperText, Box, Typography, alpha } from "@mui/material";
+import { Checkbox, FormControl, FormHelperText, Box, Typography} from "@mui/material";
 import { Controller, type Control, type FieldValues, type Path } from "react-hook-form"
 
 interface AuthorizationCheckboxProps<T extends FieldValues> {
@@ -17,8 +17,8 @@ const AuthorizationCheckbox = <T extends FieldValues>({name, control, text} : Au
           <Checkbox {...field} sx={{ width:"42px", height:"42px" , flexShrink:"0"}} size="large"/>
           <Typography
             variant="body1"
+            color="secondary"
             sx={{
-              color: alpha("#21140F",0.59),
               fontSize: "1.6rem",
               lineHeight: 1.4,
               userSelect: "none",

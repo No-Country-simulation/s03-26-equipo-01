@@ -8,10 +8,11 @@ import AuthorizationCheckbox from "./components/AuthorizationCheckbox";
 import SubmitButton from "./components/SubmitButton";
 import { TextInputWithIcon } from "./components/TextInputWithIcon";
 import { ImageUp, SquarePlay} from "lucide-react";
-import { alpha } from "@mui/material/styles";
+import { alpha, ThemeProvider } from "@mui/material/styles";
 import UploadButtonWithIcon from "./components/UploadButtonWithIcon";
 import RatingPicker from "./components/RatingPicker";
 import { MultitextInput } from "./components/MultiTextInput";
+import theme from "./theme";
 
 export const NewTestimonialForm = () => {
   const { control } = useForm({
@@ -27,6 +28,7 @@ export const NewTestimonialForm = () => {
     }
   });
   return (
+    <ThemeProvider theme={theme}>
     <Container>
     <Box sx={{ width: '100%', minWidth:"440px", backgroundColor:"#FAFAFA", padding:"48px 12px", display:"flex", justifyContent:"center"}} >
         <Box component="form" sx={{ display:"flex", flexDirection:"column", width: '100%', maxWidth:"800px" , backgroundColor:"#FFFFFF", gap:"10px", padding:"48px 12px", borderRadius:"16px", border: `1px solid ${alpha('#464646', 0.22)}`}} onSubmit={()=>console.log('send')}>
@@ -88,5 +90,6 @@ export const NewTestimonialForm = () => {
       </Box>
     </Box>
     </Container>
+    </ThemeProvider>
   )
 }
