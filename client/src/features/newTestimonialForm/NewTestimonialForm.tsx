@@ -22,12 +22,12 @@ export const NewTestimonialForm = () => {
   const { control, formState:{isValid}} = useForm({
     mode: "onChange",
     defaultValues: {
-      name: "",
+      fullName: "",
       email: "",
-      testimonial: "",
+      text: "",
       course:"",
       authorization: false,
-      video: "",
+      youtubeUrl: "",
       image: null,
       rating: null
     }
@@ -42,7 +42,7 @@ export const NewTestimonialForm = () => {
 
             <Box sx={{display:"flex", justifyContent:"space-between", gap:"45px"}}>
               <TextInput 
-                name="name" 
+                name="fullName" 
                 label="Nombre y Apellido" 
                 control={control}
                 placeholder="Usa nombre real"
@@ -80,7 +80,7 @@ export const NewTestimonialForm = () => {
         <Box sx={{display:"flex", flexDirection:"column", gap:"64px", padding:"24px 24px"}}>
           <Box sx={{display:"flex", flexDirection:"column", gap:"45px", padding:"0"}}>
             <MultitextInput
-              name="testimonial" 
+              name="text" 
               label="Testimonio" 
               control={control} 
               rows={6}
@@ -94,7 +94,7 @@ export const NewTestimonialForm = () => {
               <TextInputWithIcon 
                 control={control} 
                 label="Link video de Youtube (Opcional)" 
-                name="video" placeholder="https://www.youtube.com/watch..." 
+                name="youtubeUrl" placeholder="https://www.youtube.com/watch..." 
                 icon = {<SquarePlay color={alpha("#2D2D2D", 0.5)} />}
                 />
               
