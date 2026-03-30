@@ -7,6 +7,8 @@
     --primary-font: 'Roboto';
     --error-color: #B3261E;
 
+    --secondary-color-text: #4D433F;
+
     --primary-font: clamp(1vh, 0.8197vw + 2.8565rem, 2vh);
     --medium-font: clamp(2vh, 0.8197vw + 2.8565rem, 2.4vh);
     --large-font: clamp(3vh, 0.8197vw + 2.8565rem, 5vh);
