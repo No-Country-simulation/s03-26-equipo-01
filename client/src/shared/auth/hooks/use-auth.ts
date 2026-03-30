@@ -3,26 +3,21 @@ import type { UserCredentials } from "../models/user-credentials";
 import type { User } from "../../types/user/user";
 import loginService from "../service/login.service";
 import useUserNavegate from "./use-user-navegate";
-import { CredentialsError } from "../../../core/api/errors/client-error/credentials-error";
+import useApi from "../../../core/api/hooks/use-api";
 
 const useAuth = () => {
     
     const [user, setUser] = useState<User | null>(null);
-    const [error, setError] = useState<CredentialsError | null>(null);
+    const {error, post, refreshError} = useApi<User>();
     const {redirectTo} = useUserNavegate();
 
     async function login(credentials: UserCredentials) {
-        try {
-            const user = await loginService(credentials);
-            setUser(user);
-            redirectTo(user);
-        }
-        catch(error: unknown) {
-            if(error instanceof CredentialsError) setError(error);
-        }
+        const user = await post(loginService, credentials);
+        setUser(user);
+        redirectTo(user);
     }
 
-    const closeError = () => setError(null);
+    const closeError = () => refreshError();
 
     return {user, error, login, closeError}
 }
