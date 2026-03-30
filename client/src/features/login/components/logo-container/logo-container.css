@@ -10,8 +10,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 74%;
-    max-width: 210px;
+    gap: 0.5vw;
 }
 
 .logo-container-cms, .logo-container-testimonial {
@@ -20,9 +19,9 @@
 }
 
 .logo-container-cms {
-    font-size: 32px;
+    font-size: var(--large-font);
 }
 
 .logo-container-testimonial {
-    font-size: 20px;
+    font-size: var(--medium-font);
 }

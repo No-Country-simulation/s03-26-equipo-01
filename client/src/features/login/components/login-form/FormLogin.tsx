@@ -1,15 +1,20 @@
 import { useForm } from 'react-hook-form';
-import useAuth from '../../../../shared/auth/context/use-auth';
+import useAuthContext from '../../../../shared/auth/context/use-auth';
 import TextInput from '../../../../shared/elements/text-input/TextInput';
 import SubmitButton from '../submit-button/SubmitButton';
 import './styles/form-login.css';
 import inputsData from './input-data';
-import type { UserCredentials } from '../../../../shared/auth/types/user-credentials';
+import type { UserCredentials } from '../../../../shared/auth/models/user-credentials';
+import schema from './schema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const LoginForm = () => {
 
-    const {login} = useAuth();
-    const {register, handleSubmit} = useForm<UserCredentials>();
+    const {login} = useAuthContext();
+    const {register, handleSubmit, formState: {errors}} = useForm<UserCredentials>({
+        resolver: yupResolver(schema),
+        mode: 'onChange'
+    });
     const handleLogin = (data: UserCredentials) => login(data);
 
     return (
@@ -19,6 +24,7 @@ const LoginForm = () => {
             {inputsData.map(inputData => 
                 <TextInput
                     register = {register}
+                    error = {errors[inputData.name as keyof UserCredentials]?.message}
                     key = {inputData.id}
                     inputTextData = {inputData} 
                 />

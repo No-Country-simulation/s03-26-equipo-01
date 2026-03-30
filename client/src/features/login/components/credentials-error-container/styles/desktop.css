@@ -1,0 +1,7 @@
+
+@media screen and (min-width: 1024px) {
+    .credentials-error-container {
+        width: 30%;
+        left: 67vw;
+    }
+}

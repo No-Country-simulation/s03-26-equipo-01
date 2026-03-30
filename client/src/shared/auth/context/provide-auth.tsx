@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import AuthContext from "./create-auth";
-import type { Auth } from "../types/auth";
+import type { Auth } from "../models/auth";
 import useAuth from "../hooks/use-auth";
 
 
@@ -10,10 +10,13 @@ interface AuthProviderProps {
 
 const AuthProvider = ({children}: AuthProviderProps) => {
 
-    const {login} = useAuth();
+    const {closeError, user, error, login} = useAuth();
 
     const auth: Auth = {
-        login: login
+        closeError,
+        login,
+        user,
+        error
     }
     
     return (
