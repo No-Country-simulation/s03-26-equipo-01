@@ -20,8 +20,7 @@ public class Embeds {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "admin_id", nullable = false)
     private Admin admin;
-    @Column(name = "embed_token", nullable = false,unique = true)
-    private String embedToken;
+
 
 
 
