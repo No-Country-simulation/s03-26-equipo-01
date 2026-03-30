@@ -58,6 +58,13 @@ public class UserServiceTest {
         assertEquals(editor.getFirstName(), editorRecovered.getFirstName());
         assertEquals(editor.getLastName(), editorRecovered.getLastName());
 
+        otroEditor = Editor.builder()
+                .email("tm@gmail.com")
+                .password("123")
+                .firstName("otro")
+                .lastName("usuario")
+                .build();
+
         assertThrows(DuplicateEmailException.class, () -> {
             userService.save(otroEditor);
         });

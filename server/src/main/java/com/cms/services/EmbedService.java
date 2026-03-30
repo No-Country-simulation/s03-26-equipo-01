@@ -6,4 +6,6 @@ import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 
 public interface EmbedService {
     Embed registerEmbed(Long adminId , Embed embed);
+
+    Embed findById(Long idEmbed);
 }
