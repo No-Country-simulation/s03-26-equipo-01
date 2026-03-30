@@ -24,6 +24,14 @@
 
         <subclass name="com.cms.model.user.impl.Admin"
                   discriminator-value="ADMIN">
+
+            <bag name="embeds"
+                 inverse="true"
+                 lazy="false">
+                <key column="admin_id"/>
+                <one-to-many class="com.cms.model.embeds.Embed"/>
+            </bag>
+
         </subclass>
 
         <subclass name="com.cms.model.user.impl.Editor"

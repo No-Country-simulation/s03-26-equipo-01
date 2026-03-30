@@ -1,6 +1,6 @@
 package com.cms.model.testimonial;
 
-import com.cms.model.embed.Embed;
+import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

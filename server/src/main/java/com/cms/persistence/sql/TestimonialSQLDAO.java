@@ -1,4 +1,4 @@
-package com.cms.persistence.SQL;
+package com.cms.persistence.sql;
 
 import com.cms.model.testimonial.Testimonial;
 import org.springframework.data.jpa.repository.JpaRepository;

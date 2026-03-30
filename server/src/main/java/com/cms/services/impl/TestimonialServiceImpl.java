@@ -1,6 +1,6 @@
 package com.cms.services.impl;
 
-import com.cms.model.embed.Embed;
+import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.persistence.TestimonialRepository;
 import com.cms.services.EmbedService;

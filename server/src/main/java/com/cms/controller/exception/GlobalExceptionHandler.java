@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolationException;
 
 import java.nio.file.AccessDeniedException;
 import java.util.stream.Collectors;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -41,6 +43,8 @@ public class GlobalExceptionHandler {
         return ErrorResponseDTO.buildResponse(HttpStatus.FORBIDDEN,
                 "No tiene permisos para realizar esta acción", request);
     }
+
+
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ConstraintViolationException.class})
     public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(

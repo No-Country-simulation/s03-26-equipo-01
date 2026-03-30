@@ -19,7 +19,7 @@
         <property name="createdAt" column="created_at"/>
 
         <many-to-one name="embed"
-                     class="com.cms.model.embed.Embed"
+                     class="com.cms.model.embeds.Embed"
                      column="embed_id"
                      cascade="merge"
                      not-null="true"/>

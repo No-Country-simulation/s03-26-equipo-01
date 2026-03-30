@@ -1,8 +1,9 @@
 package com.cms.services;
 
-import com.cms.model.embed.Embed;
+import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,10 +24,14 @@ public class TestimonialServiceTest {
     private ResetService resetService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private TestimonialService testimonialService;
 
     @Autowired
     private EmbedService embedService;
+    private Admin admin;
 
     private Testimonial testimonial;
 
@@ -34,8 +39,15 @@ public class TestimonialServiceTest {
 
     @BeforeEach
     public void setUp() {
+        admin = Admin.builder()
+                .email("admin@test.com")
+                .password("123")
+                .firstName("Admin")
+                .lastName("User")
+                .build();
 
-        embed = embedService.save(new Embed());
+        admin = (Admin) userService.save(admin);
+        embed = embedService.registerEmbed(admin.getId(), new Embed());
 
         testimonial = Testimonial.builder()
                 .testimonial("Excelente servicio, lo recomiendo totalmente")

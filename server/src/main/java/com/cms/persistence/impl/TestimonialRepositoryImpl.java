@@ -3,7 +3,7 @@ package com.cms.persistence.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.User;
-import com.cms.persistence.SQL.TestimonialSQLDAO;
+import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.persistence.TestimonialRepository;
 import org.springframework.stereotype.Repository;
 
