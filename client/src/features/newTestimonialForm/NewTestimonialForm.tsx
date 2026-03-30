@@ -13,9 +13,13 @@ import UploadButtonWithIcon from "./components/UploadButtonWithIcon";
 import RatingPicker from "./components/RatingPicker";
 import { MultitextInput } from "./components/MultiTextInput";
 import theme from "./theme";
+import ComboBox from "./components/ComboBox";
+
+//Datos de ejemplo hasta integrar la API
+const courses = [{label:"Photoshop", id:0 },{label:"Diseño Web", id:1}, {label: "Canva", id:2}, {label:"Edición de video", id:3}];
 
 export const NewTestimonialForm = () => {
-  const { control, formState:{isValid} } = useForm({
+  const { control, formState:{isValid}} = useForm({
     mode: "onChange",
     defaultValues: {
       name: "",
@@ -58,12 +62,7 @@ export const NewTestimonialForm = () => {
               />
             </Box>
             <Box sx={{display:"flex", flexWrap:"wrap", gap:"45px"}}>
-              <TextInput 
-                name="course" 
-                label="Curso o programa realizado" 
-                control={control}
-                placeholder="Indica nombre"
-                rules={{ 
+              <ComboBox control={control} data={courses} label="Curso o programa realizado" name="course" placeholder="Indica nombre" rules={{ 
                   required: "El curso o programa realizado es necesario"
                 }}
               />
