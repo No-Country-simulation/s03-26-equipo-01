@@ -1,0 +1,13 @@
+
+
+@media screen and (min-width: 1024px) {
+    .background-welcome-image-container {
+        height: 100vh;
+    }
+
+    .background-welcome-image-container img {
+        padding-top: 70px;
+        height: 100%;
+        width: 70%;
+    }
+}

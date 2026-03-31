@@ -1,0 +1,9 @@
+
+
+.form-container {
+    display: grid;
+    place-items: center;
+    width: 90%;
+    height: 100%;
+    max-height: 300px;
+}
