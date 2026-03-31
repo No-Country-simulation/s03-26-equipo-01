@@ -16,10 +16,12 @@ public record TestimonialRequestDTO(
         @Schema(
                 description = "Contenido del testimonio",
                 example = "Excelente servicio, muy recomendable.",
+                maximum = "300",
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         @NotNull
         @NotBlank
+        @Max(300)
         String testimonial,
 
         @Schema(
@@ -39,8 +41,8 @@ public record TestimonialRequestDTO(
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         @NotNull
-        @Min(0)
-        @Max(5)
+        @Min(1)
+        @Max(10)
         int rating,
 
         @Schema(
