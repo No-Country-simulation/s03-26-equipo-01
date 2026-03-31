@@ -2,6 +2,7 @@ package com.cms.services;
 
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.AuthResult;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Admin;
 import org.junit.jupiter.api.AfterEach;
@@ -51,9 +52,12 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("admin@mail.com", "password123");
 
-        String jwt = authService.authUser(token);
+        AuthResult result = authService.authUser(token);
 
-        assertNotNull(jwt);
+        assertNotNull(result);
+        assertNotNull(result.token());
+        assertNotNull(result.user());
+        assertEquals("admin@mail.com", result.user().getEmail());
     }
 
     @Test
