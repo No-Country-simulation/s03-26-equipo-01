@@ -1,8 +1,14 @@
+import LogoContainer from './components/logo-container/LogoContainer';
+import NavegationList from './components/navegation-list/NavegationList';
+import type { SideBarProps } from './side-dar';
 import './sidebar.css';
 
-const SideBar = () => {
+const SideBar = ({ itemsData }: SideBarProps) => {
     return (
-        <p></p>
+        <section className = 'home-sidebar'>
+            <LogoContainer />
+            <NavegationList itemsData = {itemsData} />
+        </section>
     )
 }
 
