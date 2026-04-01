@@ -1,7 +1,7 @@
 package com.cms.services.impl;
 
 import com.cms.controller.dto.auth.AuthResponseDTO;
-import com.cms.exception.EntityNotFoundException;
+import com.cms.model.AuthResult;
 import com.cms.model.user.User;
 import com.cms.security.jwt.JwtService;
 import com.cms.security.user.UserDetailsImpl;
@@ -29,14 +29,17 @@ public class AuthServiceImpl implements AuthService {
         this.userService = userService;
     }
 
-    public String authUser(UsernamePasswordAuthenticationToken token) {
+    public AuthResult authUser(UsernamePasswordAuthenticationToken token) {
         String email = token.getPrincipal().toString();
 
-            User user = userService.findUserByMail(email).orElseThrow(() -> new BadCredentialsException("email o password invalidas"));
-            authenticationManager.authenticate(token);
+        User user = userService.findUserByMail(email).orElseThrow(() -> new BadCredentialsException("email o password invalidas"));
 
-            UserDetails userDetails = new UserDetailsImpl(user);
+        authenticationManager.authenticate(token);
 
-            return jwtService.generarToken(userDetails);
+        UserDetails userDetails = new UserDetailsImpl(user);
+
+        String jwtToken = jwtService.generarToken(userDetails);
+
+        return new AuthResult(jwtToken, user);
     }
 }

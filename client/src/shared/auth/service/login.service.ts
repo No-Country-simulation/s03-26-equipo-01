@@ -7,7 +7,6 @@ import { setToken } from "../repository/token.repository";
 import type { UserResponse } from "../adapters/dtos/user-response";
 import handleInvalidCredentials from "./invalid-credentials";
 
-
 async function loginService(credentials: UserCredentials): Promise<User> {
     try {
         const user = await api.post<UserResponse>(LOGIN_API, credentials);
@@ -15,7 +14,7 @@ async function loginService(credentials: UserCredentials): Promise<User> {
         return userResponseAdapter(user.data);
     }
     catch(error: unknown) {
-        handleInvalidCredentials(error);
+        throw handleInvalidCredentials(error);
     }
 }
 
