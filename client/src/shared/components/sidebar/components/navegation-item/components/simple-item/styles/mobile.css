@@ -1,7 +1,3 @@
-.sidebar-simple-item {
-    max-height: 48px;
-}
-
 .sidebar-simple-item .sidebar-simple-item_button {
     display: grid;
     place-items: center;

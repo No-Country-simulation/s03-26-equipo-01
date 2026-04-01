@@ -1,7 +1,7 @@
 import DropDownItem from './components/dropdown-item/DropdownItem';
 import SimpleItem from './components/simple-item/SimpleItem';
 import type { NavegationItemProps } from './navegation-item';
-import './navegation-item.css';
+import './styles/navegation-item.css';
 
 const NavegationItem = ({item}: NavegationItemProps) => {
  

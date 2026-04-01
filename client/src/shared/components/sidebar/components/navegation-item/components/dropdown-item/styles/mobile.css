@@ -57,7 +57,6 @@
     justify-self: end;
     cursor: pointer;
     transition: transform 0.3s
-
 }
 
 .sidebar-dropdown-item .sidebar-dropdown-item_icon-container .img_sidebar-rotate {
@@ -67,7 +66,7 @@
 .sidebar-dropdown-item .sidebar-dropdown-subitems-container {
     justify-self: end;
     display: grid;
-    grid-template-rows: repeat(auto-fill, 40px);
+    grid-template-rows: repeat(auto-fill, 8vh);
     width: 100%;
     padding-left: 26px;
     animation: show-sublist 0.5s forwards; 

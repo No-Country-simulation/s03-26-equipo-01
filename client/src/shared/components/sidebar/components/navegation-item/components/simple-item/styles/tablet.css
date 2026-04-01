@@ -1,7 +1,14 @@
 
 
 @media screen and (min-width: 768px) {
+    .sidebar-simple-item .sidebar-simple-item_button .sidebar-simple-item_button_container {
+        gap: 1vw;
+    }
     .sidebar-item .sidebar-simple-item_button .sidebar-simple-item_button_container{
         width: 100%;
     }
+    .sidebar-simple-item .sidebar-simple-item_icon-container img {
+        width: 100%;
+    }
+
 }

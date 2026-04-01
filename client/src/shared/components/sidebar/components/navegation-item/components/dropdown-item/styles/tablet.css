@@ -3,10 +3,19 @@
 @media screen and (min-width: 768px) {
     .sidebar-dropdown-item .sidebar-dropdown-nav-item-container {
         margin: 0;
-        width: 100%;
+        width: 90%;
     }
 
     .sidebar-dropdown-item .sidebar-dropdown-subitems-container {
-        padding-left: 1vw;
+        padding-left: 0.1vw;
+    }
+
+    .sidebar-dropdown-nav-item-container figure img {
+        width: 4vw;
+    }
+
+
+    .sidebar-dropdown-item .sidebar-dropdown-item_icon-container img {
+        width: 90%;
     }
 }
