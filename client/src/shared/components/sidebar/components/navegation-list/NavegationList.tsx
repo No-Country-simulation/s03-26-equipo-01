@@ -4,7 +4,7 @@ import './navegation-list.css';
 
 const NavegationList = ({ itemsData }: NavegationListProps) => {
     return (
-        <div className = 'home-sidebar'>
+        <div className = 'home-sidebar-navegation-list'>
             <nav>
                 <ul>
                     {itemsData.map(item => (
