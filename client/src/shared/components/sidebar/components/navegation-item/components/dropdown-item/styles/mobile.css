@@ -55,6 +55,13 @@
 
 .sidebar-dropdown-item .sidebar-dropdown-item_icon-container img {
     justify-self: end;
+    cursor: pointer;
+    transition: transform 0.3s
+
+}
+
+.sidebar-dropdown-item .sidebar-dropdown-item_icon-container .img_sidebar-rotate {
+    transform: rotate(180deg)
 }
 
 .sidebar-dropdown-item .sidebar-dropdown-subitems-container {

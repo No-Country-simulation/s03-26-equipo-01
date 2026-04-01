@@ -2,6 +2,7 @@ import { useState } from "react";
 import SimpleItem from "../simple-item/SimpleItem";
 import type { DropDownItemProps } from "./dropdown-item";
 import './styles/dropdown-item.css';
+import dropBoxIcon from '../../../../../../../../public/dropbox-icon.svg';
 
 const DropDownItem = ({item}: DropDownItemProps) => {
 
@@ -19,7 +20,7 @@ const DropDownItem = ({item}: DropDownItemProps) => {
                     <h4 className = 'sidebar-dropdown-item_title'>{item.title}</h4>
                 </div>
             <figure className = 'sidebar-dropdown-item_icon-container'>
-                <img src = {item.iconUrl} onClick = {() => handleActive()}/>
+                <img src = {dropBoxIcon} onClick = {() => handleActive()} className = {isActive ? 'img_sidebar-rotate' : ''}/>
             </figure>
             </section>
             {isActive && <section className = 'sidebar-dropdown-subitems-container'>
