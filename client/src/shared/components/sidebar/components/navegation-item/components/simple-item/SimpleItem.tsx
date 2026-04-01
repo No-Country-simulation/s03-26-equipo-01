@@ -1,5 +1,5 @@
 import type { NavegationItemProps } from "../../navegation-item";
-import './simple-item.css';
+import './styles/simple-item.css';
 
 const SimpleItem = ({item}: NavegationItemProps) => {
     

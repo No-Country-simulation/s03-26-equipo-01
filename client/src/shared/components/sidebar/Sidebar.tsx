@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { SideBarProps } from './side-dar';
-import './sidebar.css';
+import './styles/sidebar.css';
 import MenuIcon from './components/menu-icon/MenuIcon';
 import SideBarContent from './components/sidebar-content/SidebarContent';
 

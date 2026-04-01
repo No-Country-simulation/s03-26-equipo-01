@@ -1,5 +1,5 @@
 import type { MenuIconProps } from './menu-icon';
-import './menu-icon.css';
+import './styles/menu-icon.css';
 import icon from '../../../../../../public/menu.png';
 
 const MenuIcon = ({onSubmit, isActive}: MenuIconProps) => {
