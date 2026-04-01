@@ -1,13 +1,8 @@
-.sidebar-item {
-    display: grid;
-    place-items: center;
-    width: 70%;
-    max-width: 216px;
-    height: 100%;
+.sidebar-simple-item {
     max-height: 48px;
 }
 
-.sidebar-item .sidebar-simple-item_button {
+.sidebar-simple-item .sidebar-simple-item_button {
     display: grid;
     place-items: center;
     width: 100%;
@@ -17,7 +12,7 @@
     background-color: transparent;
 }
 
-.sidebar-item .sidebar-simple-item_button div {
+.sidebar-simple-item .sidebar-simple-item_button div {
     display: grid;
     place-items: center;
     grid-template-columns: 20% 80%;
@@ -27,18 +22,18 @@
     background-color: transparent;
 }
 
-.sidebar-item .sidebar-simple-item_icon-container {
+.sidebar-simple-item .sidebar-simple-item_icon-container {
     display: grid;
     place-items: center;
     width: 100%;
     height: 100%;
 }
 
-.sidebar-item .sidebar-simple-item_icon-container img {
+.sidebar-simple-item .sidebar-simple-item_icon-container img {
     justify-self: end;
 }
 
-.sidebar-item .sidebar-simple-item_title {
+.sidebar-simple-item .sidebar-simple-item_title {
     font-size: var(--font-size-medium);
     font-weight: 100;
     color: #FFF;

@@ -1,7 +1,7 @@
-import type { NavegationItemProps } from "../../navegation-item";
+import type { SimpleItemProps } from './simple-item';
 import './styles/simple-item.css';
 
-const SimpleItem = ({item}: NavegationItemProps) => {
+const SimpleItem = ({item}: SimpleItemProps) => {
     
     return (
         <div className = 'sidebar-simple-item sidebar-item'>

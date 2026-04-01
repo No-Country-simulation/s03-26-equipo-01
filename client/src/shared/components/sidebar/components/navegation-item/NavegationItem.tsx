@@ -6,9 +6,9 @@ import './navegation-item.css';
 const NavegationItem = ({item}: NavegationItemProps) => {
  
     return (
-        item.isDropdown ? 
-            <DropDownItem item = {item} /> : 
-            <SimpleItem item = {item} /> 
+        item.type === 'simple' ? 
+            <SimpleItem item = {item} /> :
+            <DropDownItem item = {item} />
     )
 }
 

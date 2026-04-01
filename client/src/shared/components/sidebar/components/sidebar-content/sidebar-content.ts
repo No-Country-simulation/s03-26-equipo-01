@@ -1,4 +1,4 @@
-import type { NavegationItemData } from "../../../../types/navegation-list-data";
+import type { NavegationItemData } from "../../../../types/navegation-item-data/navegation-list-data";
 
 
 export interface SideBarContentProps {
