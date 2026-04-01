@@ -6,11 +6,13 @@ const SimpleItem = ({item}: SimpleItemProps) => {
     return (
         <div className = 'sidebar-simple-item sidebar-item'>
             <button className = 'sidebar-simple-item_button'>
-                <div>
+                <div className = 'sidebar-simple-item_button_container'>
                     <figure className = 'sidebar-simple-item_icon-container'>
                         <img src = {item.iconUrl} />
                     </figure>
-                    <h4 className = 'sidebar-simple-item_title'>{item.title}</h4>
+                    <div className = 'sidebar-simple-item_button_text-container'>
+                        <h4>{item.title}</h4>
+                    </div>
                 </div>
             </button>
         </div>
