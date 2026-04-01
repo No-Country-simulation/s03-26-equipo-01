@@ -34,7 +34,7 @@
 }
 
 .sidebar-simple-item .sidebar-simple-item_title {
-    font-size: var(--font-size-medium);
+    font-size: var(--medium-font);
     font-weight: 100;
     color: #FFF;
 }
