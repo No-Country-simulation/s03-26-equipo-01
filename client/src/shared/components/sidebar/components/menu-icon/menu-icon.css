@@ -1,11 +1,19 @@
 
 
-.sidebar-menu-icon_container {
+.sidebar-menu-icon_container, .sidebar-menu-icon_disable {
     width: 100%;
     height: 100%;
 }
 
-.sidebar-menu-icon_container img {
+.sidebar-menu-icon_container {
+    background-color: var(--secondary-color);
+}
+
+.sidebar-menu-icon_disable {
+    background-color: transparent;
+}
+
+.sidebar-menu-icon_container img, .sidebar-menu-icon_disable img {
     width: 2%;
     min-width: 20px;
     height: 80%;

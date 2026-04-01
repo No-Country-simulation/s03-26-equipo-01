@@ -12,7 +12,7 @@ const SideBar = ({ itemsData }: SideBarProps) => {
 
     return (
         <section className = 'home-sidebar'>
-            <MenuIcon onSubmit = {handleActive} />
+            <MenuIcon onSubmit = {handleActive} isActive = {isActive} />
             {isActive && <SideBarContent itemsData = {itemsData} />}
         </section>
     )
