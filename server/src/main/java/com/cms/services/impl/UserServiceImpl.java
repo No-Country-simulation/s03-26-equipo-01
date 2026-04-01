@@ -7,10 +7,12 @@ import com.cms.persistence.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -57,8 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAll() {
-        return userSQLDAO.findAllOrderByEnabledDesc();
+    public Page<User> findAll(int page) {
+        Pageable pageable = PageRequest.of(page, 9);
+        return userSQLDAO.findAllOrderByEnabledDesc(pageable);
     }
 
     @Override

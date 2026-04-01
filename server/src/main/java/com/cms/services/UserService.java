@@ -1,9 +1,8 @@
 package com.cms.services;
 
 import com.cms.model.user.User;
-import com.cms.model.user.impl.Admin;
+import org.springframework.data.domain.Page;
 
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -20,5 +19,5 @@ public interface UserService {
 
     User findById(Long idUser);
 
-    List<User> findAll();
+    Page<User> findAll(int page);
 }

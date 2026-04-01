@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,11 +45,8 @@ public class UserControllerREST {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseSimpleDTO>> getAllUsers() {
-        List<UserResponseSimpleDTO> response = userService.findAll()
-                .stream()
-                .map(UserResponseSimpleDTO::fromModel)
-                .toList();
+    public ResponseEntity<Page<UserResponseSimpleDTO>> getAllUsers(@RequestParam(defaultValue = "0") int page) {
+        Page<UserResponseSimpleDTO> response = userService.findAll(page).map(UserResponseSimpleDTO::fromModel);
 
         return ResponseEntity.ok(response);
     }

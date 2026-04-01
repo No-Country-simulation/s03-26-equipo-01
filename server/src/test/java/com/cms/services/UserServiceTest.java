@@ -110,7 +110,7 @@ public class UserServiceTest {
 
         userService.disableUser(editorSaved.getId());
 
-        List<User> users = userService.findAll();
+        List<User> users = userService.findAll(0).getContent();
 
         int indexHabilitado = users.indexOf(otroEditorSaved);
         int indexDeshabilitado = users.indexOf(editorSaved);
