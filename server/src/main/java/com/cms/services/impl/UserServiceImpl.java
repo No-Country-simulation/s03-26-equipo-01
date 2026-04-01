@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -53,6 +54,11 @@ public class UserServiceImpl implements UserService {
 
     public User findById(Long idUser) {
         return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userSQLDAO.findAllOrderByEnabledDesc();
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.cms.services;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Admin;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -18,4 +19,6 @@ public interface UserService {
     void enableUser(Long idUser);
 
     User findById(Long idUser);
+
+    List<User> findAll();
 }

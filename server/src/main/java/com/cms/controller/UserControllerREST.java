@@ -42,6 +42,16 @@ public class UserControllerREST {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserResponseSimpleDTO>> getAllUsers() {
+        List<UserResponseSimpleDTO> response = userService.findAll()
+                .stream()
+                .map(UserResponseSimpleDTO::fromModel)
+                .toList();
+
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/{idUser}")
     @AdminEndpoint
     @Operation(summary = "Deshabilitar usuario (soft delete)")

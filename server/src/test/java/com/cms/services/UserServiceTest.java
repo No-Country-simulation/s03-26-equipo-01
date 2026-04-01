@@ -103,6 +103,21 @@ public class UserServiceTest {
         assertTrue(users.contains(editorSaved2));
     }
 
+    @Test
+    public void findAllOrderByEnabledDescTest() {
+        User editorSaved = userService.save(editor);
+        User otroEditorSaved = userService.save(otroEditor);
+
+        userService.disableUser(editorSaved.getId());
+
+        List<User> users = userService.findAll();
+
+        int indexHabilitado = users.indexOf(otroEditorSaved);
+        int indexDeshabilitado = users.indexOf(editorSaved);
+
+        assertTrue(indexHabilitado < indexDeshabilitado);
+    }
+
     @AfterEach
     public void tearDown(){
         resetService.resetAll();
