@@ -5,7 +5,7 @@ import icon from '../../../../../../public/menu.png';
 const MenuIcon = ({onSubmit, isActive}: MenuIconProps) => {
     
     return (
-        <figure className = {isActive ? 'sidebar-menu-icon_container' : 'sidebar-menu-icon_disable'}>
+        <figure className = {isActive ? 'sidebar-menu-icon_container show-sidebar' : 'sidebar-menu-icon_disable'}>
             <img src = {icon} alt='icono de Menu' onClick = {onSubmit} />
         </figure>
     )

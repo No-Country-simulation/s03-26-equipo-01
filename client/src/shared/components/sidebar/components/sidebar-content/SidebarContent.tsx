@@ -5,7 +5,7 @@ import './styles/sidebar-content.css';
 
 const SideBarContent = ({itemsData} : SideBarContentProps) => {
     return (
-        <aside className = "home-sidebar-content">
+        <aside className = 'home-sidebar-content show-sidebar'>
             <LogoContainer />
             <NavegationList itemsData = {itemsData} />
         </aside>
