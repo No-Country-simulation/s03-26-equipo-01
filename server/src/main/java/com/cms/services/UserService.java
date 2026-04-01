@@ -4,10 +4,11 @@ import com.cms.model.user.User;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
-    User findUserByMail(String email);
+    Optional<User> findUserByMail(String email);
 
     User save(User user);
 

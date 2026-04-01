@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -30,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByMail(String email) {
-        return userSQLDAO.findByEmailAndEnabledTrue(email).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), email));
+    public Optional<User> findUserByMail(String email) {
+        return userSQLDAO.findByEmailAndEnabledTrue(email);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class UserServiceTest {
     public void saveUserAndGetTest() {
         User editorSaved = userService.save(editor);
 
-        User editorRecovered = userService.findUserByMail(editorSaved.getEmail());
+        User editorRecovered = userService.findUserByMail(editorSaved.getEmail()).get();
 
         assertEquals(editor.getEmail(), editorRecovered.getEmail());
         assertEquals(editor.getPassword(), editorRecovered.getPassword());
@@ -68,11 +68,6 @@ public class UserServiceTest {
         assertThrows(DuplicateEmailException.class, () -> {
             userService.save(otroEditor);
         });
-    }
-
-    @Test
-    public void findUserByEmailButItWasntExitedTest() {
-        assertThrows(EntityNotFoundException.class, () -> userService.findUserByMail(""));
     }
 
 
