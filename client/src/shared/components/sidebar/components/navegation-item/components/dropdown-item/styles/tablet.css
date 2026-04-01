@@ -10,6 +10,10 @@
         padding-left: 0.1vw;
     }
 
+    .sidebar-dropdown-nav-item-container .sidebar-dropdown-title-container {
+        width: 90%;
+    }
+
     .sidebar-dropdown-nav-item-container figure img {
         width: 4vw;
     }

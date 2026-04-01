@@ -13,11 +13,13 @@ const DropDownItem = ({item}: DropDownItemProps) => {
     return (
         <div className = 'sidebar-dropdown-item sidebar-item'>
             <section className = 'sidebar-dropdown-nav-item-container'>
-                <div>
+                <div className = 'sidebar-dropdown-nav-item-title-container'>
                     <figure>
                         <img src = {item.iconUrl} />
                     </figure>
-                    <h4 className = 'sidebar-dropdown-item_title'>{item.title}</h4>
+                    <div className = 'sidebar-dropdown-title-container'>
+                        <h4 className = 'sidebar-dropdown-item_title'>{item.title}</h4>
+                    </div>
                 </div>
             <figure className = 'sidebar-dropdown-item_icon-container'>
                 <img src = {dropBoxIcon} onClick = {() => handleActive()} className = {isActive ? 'img_sidebar-rotate' : ''}/>
