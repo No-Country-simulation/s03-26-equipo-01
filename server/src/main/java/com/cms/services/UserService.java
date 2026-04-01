@@ -1,13 +1,14 @@
 package com.cms.services;
 
 import com.cms.model.user.User;
-import com.cms.model.user.impl.Admin;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
-    User findUserByMail(String email);
+    Optional<User> findUserByMail(String email);
 
     User save(User user);
 
@@ -18,4 +19,6 @@ public interface UserService {
     void enableUser(Long idUser);
 
     User findById(Long idUser);
+
+    Page<User> findAll(int page);
 }
