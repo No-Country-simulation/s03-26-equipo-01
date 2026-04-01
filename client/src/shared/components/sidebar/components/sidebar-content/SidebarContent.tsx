@@ -5,10 +5,10 @@ import './sidebar-content.css';
 
 const SideBarContent = ({itemsData} : SideBarContentProps) => {
     return (
-        <div className = "home-sidebar-content">
+        <aside className = "home-sidebar-content">
             <LogoContainer />
             <NavegationList itemsData = {itemsData} />
-        </div>
+        </aside>
     )
 }
 
