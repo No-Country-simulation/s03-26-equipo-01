@@ -12,8 +12,7 @@
 }
 
 .sidebar-menu-icon_container img, .sidebar-menu-icon_disable img {
-    width: 2%;
-    min-width: 20px;
+    min-width: 4%;
     height: 80%;
     margin: 5px;
     cursor: pointer;

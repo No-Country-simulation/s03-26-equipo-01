@@ -6,3 +6,14 @@
     width: 100%;
     height: 100%;
 }
+
+.sidebar-logo-container figure {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-logo-container figure img {
+    min-height: 60%;
+}
