@@ -7,7 +7,7 @@ const NavegationItem = ({item}: NavegationItemProps) => {
         <button>
             <h3>{item.title}</h3>
             <figure>
-                <img src={item.iconUrl} alt={item.title} />
+                <img src = {item.iconUrl} />
             </figure>
         </button>
     )

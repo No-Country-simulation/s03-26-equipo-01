@@ -1,0 +1,11 @@
+
+.home-sidebar-content {
+    position: absolute;
+    z-index: -1;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 20% 80%;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--secondary-color);
+}

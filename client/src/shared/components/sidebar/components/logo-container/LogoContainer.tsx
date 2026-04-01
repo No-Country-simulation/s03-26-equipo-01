@@ -1,11 +1,11 @@
-import './sidebar.css';
-
+import './logo-container.css';
+import logo from '../../../../../assets/Logo.svg';
 
 const LogoContainer = () => {
     return (
-        <div className = 'home-logo-container'>
+        <div className = 'sidebar-logo-container'>
             <figure>
-                <img src="" alt="" />
+                <img src = {logo} alt='Logo principal de Voz Activa' />
             </figure>
         </div>
     )
