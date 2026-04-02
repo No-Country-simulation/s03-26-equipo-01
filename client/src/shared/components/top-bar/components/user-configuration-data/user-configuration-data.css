@@ -1,0 +1,16 @@
+.user-configuration-data {
+    justify-self: end;
+    align-self: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 150px;
+    margin-right: 4vw;
+}
+
+.user-configuration-data p {
+    font-size: var(--medium-font);
+    font-weight: bold;
+    color: #FFF;
+}
