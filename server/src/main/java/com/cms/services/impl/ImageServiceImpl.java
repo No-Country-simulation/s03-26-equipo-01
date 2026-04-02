@@ -23,6 +23,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Media guardarImagen(MultipartFile imagen) {
+        if (imagen == null || imagen.isEmpty()) {
+            return null;
+        }
+
         try {
             Map result = cloudinary.uploader().upload(imagen.getBytes(), ObjectUtils.emptyMap());
             return new Media(
