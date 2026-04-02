@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAll(int page) {
-        Pageable pageable = PageRequest.of(page, 9);
+        Pageable pageable = PageRequest.of(page, 15);
         return userSQLDAO.findAllOrderByEnabledDesc(pageable);
     }
 
