@@ -8,11 +8,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/testimonial")
@@ -26,10 +25,10 @@ public class TestimonialControllerREST {
     }
 
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirements()
-    public ResponseEntity<?> testify(@RequestBody @Valid TestimonialRequestDTO request){
-        Testimonial testimonial = testimonialService.save(request.toModel(), request.idEmbed());
+    public ResponseEntity<TestimonialResponseDTO> testify(@ModelAttribute @Valid TestimonialRequestDTO request){
+        Testimonial testimonial = testimonialService.save(request.toModel(), request.idEmbed(), request.image());
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

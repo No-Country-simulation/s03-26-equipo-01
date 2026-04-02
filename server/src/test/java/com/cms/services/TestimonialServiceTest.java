@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -59,7 +57,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonial() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId());
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null);
 
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
