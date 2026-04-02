@@ -1,39 +1,43 @@
 import { ADMIN_DASHBOARD_PATH, ADMIN_TESTIMONIAL_PATH, ADMIN_USER_PATH } from "../../core/routes/routes";
 import type { NavegationItemData } from "../../shared/types/navegation-item-data/navegation-list-data";
-
+import dashboardIcon from '../../assets/dashboard-icon/dashboard-icon.svg';
+import testimonialsIcon from '../../assets/testimonial-icon/testimonial-icon.svg';
+import managersIcon from '../../assets/manager-icon/manager-icon.svg';
+import usersIcon from '../../assets/user-icon/user-icon.svg';
+import embedIcon from '../../assets/embed-icon/embed-icon.svg';
 
 const itemsData: NavegationItemData[] = [
     {
         id: 1,
-        iconUrl: '../../../public/dashboard-icon/dashboard-icon.svg',
+        iconUrl: dashboardIcon,
         title: 'Dashboard',
         routePage: ADMIN_DASHBOARD_PATH,
         type: 'simple'
     },
     {
         id: 2,
-        iconUrl: '../../../public/testimonial-icon/testimonial-icon.svg',
+        iconUrl: testimonialsIcon,
         title: 'Testimonios',
         routePage: ADMIN_TESTIMONIAL_PATH,
         type: 'simple'
     },
     {
         id: 3,
-        iconUrl: '../../../public/manager-icon/manager-icon.svg',
+        iconUrl: managersIcon,
         title: 'Gestión',
         routePage: ADMIN_TESTIMONIAL_PATH,
         type: 'simple'
     },
     {
         id: 4,
-        iconUrl: '../../../public/user-icon/user-icon.svg',
+        iconUrl: usersIcon,
         title: 'Usuarios',
         routePage: ADMIN_USER_PATH,
         type: 'simple'
     },
     {
         id: 5,
-        iconUrl: '../../../public/embed-icon/embed-icon.svg',
+        iconUrl: embedIcon,
         title: 'Embed',
         type: 'dropdown',
         subRoutes: [

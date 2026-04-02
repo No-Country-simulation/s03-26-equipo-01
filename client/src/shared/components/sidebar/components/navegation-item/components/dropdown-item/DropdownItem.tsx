@@ -2,7 +2,7 @@ import { useState } from "react";
 import SimpleItem from "../simple-item/SimpleItem";
 import type { DropDownItemProps } from "./dropdown-item";
 import './styles/dropdown-item.css';
-import dropBoxIcon from '../../../../../../../../public/dropbox-icon.svg';
+import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
 
 const DropDownItem = ({item}: DropDownItemProps) => {
 

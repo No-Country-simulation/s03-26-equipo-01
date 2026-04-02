@@ -10,7 +10,7 @@ const NavegationList = ({ itemsData }: NavegationListProps) => {
             <nav>
                 <ul>
                     {itemsData.map(item => 
-                        <NavegationItem item = {item} />
+                        <NavegationItem key = {item.id} item = {item} />
                     )}
                 </ul>
             </nav>
