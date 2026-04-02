@@ -32,16 +32,22 @@ public class TagController {
     public ResponseEntity<List<TagResponseDto>> findAll() {
         List<TagResponseDto> tags = tagService.findAll()
                 .stream()
-                .map(TagResponseDto::fromModel)
+                .map(this::toResponseDto)
                 .toList();
         return ResponseEntity.ok(tags);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
+    public ResponseEntity<TagResponseDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(toResponseDto(tagService.findById(id)));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TagResponseDto> create(@Valid @RequestBody CreateTagDto createTagDto) {
-        Tag createdTag = tagService.create(createTagDto.toModel());
-        return ResponseEntity.status(HttpStatus.CREATED).body(TagResponseDto.fromModel(createdTag));
+        Tag createdTag = tagService.create(toModel(createTagDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(toResponseDto(createdTag));
     }
 
     @PutMapping("/{id}")
@@ -50,8 +56,8 @@ public class TagController {
             @PathVariable Long id,
             @Valid @RequestBody UpdateTagDto updateTagDto
     ) {
-        Tag updatedTag = tagService.update(id, updateTagDto.toModel());
-        return ResponseEntity.ok(TagResponseDto.fromModel(updatedTag));
+        Tag updatedTag = tagService.update(id, toModel(updateTagDto));
+        return ResponseEntity.ok(toResponseDto(updatedTag));
     }
 
     @DeleteMapping("/{id}")
@@ -59,5 +65,28 @@ public class TagController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         tagService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private Tag toModel(CreateTagDto createTagDto) {
+        return Tag.builder()
+                .name(createTagDto.name())
+                .build();
+    }
+
+    private Tag toModel(UpdateTagDto updateTagDto) {
+        return Tag.builder()
+                .name(updateTagDto.name())
+                .build();
+    }
+
+    private TagResponseDto toResponseDto(Tag tag) {
+        return new TagResponseDto(
+                tag.getId(),
+                tag.getName(),
+                tag.getSlug(),
+                tag.isActive(),
+                tag.getCreatedAt(),
+                tag.getUpdatedAt()
+        );
     }
 }
