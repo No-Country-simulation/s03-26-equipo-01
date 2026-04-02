@@ -1,4 +1,4 @@
-package com.cms.controller.dto.tag;
+package com.cms.controller.dto;
 
 import com.cms.model.Tag;
 import jakarta.validation.constraints.Pattern;
@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Pattern;
 public record UpdateTagDto(
         @Pattern(regexp = ".*\\S.*") String name
 ) {
-    public void aplicar(Tag tag) {
-        if (name != null) {
-            tag.setName(name);
-        }
+    public Tag toModel() {
+        return Tag.builder()
+                .name(name)
+                .build();
     }
 }

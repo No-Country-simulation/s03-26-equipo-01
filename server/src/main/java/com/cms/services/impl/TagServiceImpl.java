@@ -30,7 +30,7 @@ public class TagServiceImpl implements TagService {
 
         tag.setName(normalizedName);
         tag.setSlug(slug);
-        tag.setDeleted(false);
+        tag.setActive(true);
 
         return save(tag);
     }
@@ -38,29 +38,26 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<Tag> findAll() {
-        return tagSQLDAO.findAllByDeletedFalse();
+        return tagSQLDAO.findAllByIsActiveTrueOrderByNameAsc();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Tag findById(Long id) {
-        return tagSQLDAO.findByIdAndDeletedFalse(id)
+        return tagSQLDAO.findByIdAndIsActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
     }
 
     @Override
     public Tag update(Long id, Tag tagData) {
         Tag tagToUpdate = findById(id);
+        String normalizedName = normalizeName(tagData.getName());
+        String slug = generateSlug(normalizedName);
 
-        if (tagData.getName() != null) {
-            String normalizedName = normalizeName(tagData.getName());
-            String slug = generateSlug(normalizedName);
+        validateUniqueness(normalizedName, slug, id);
 
-            validateUniqueness(normalizedName, slug, id);
-
-            tagToUpdate.setName(normalizedName);
-            tagToUpdate.setSlug(slug);
-        }
+        tagToUpdate.setName(normalizedName);
+        tagToUpdate.setSlug(slug);
 
         return save(tagToUpdate);
     }
@@ -69,7 +66,7 @@ public class TagServiceImpl implements TagService {
     public void deleteById(Long id) {
         Tag tag = findById(id);
         tag.getTestimonials().clear();
-        tag.setDeleted(true);
+        tag.setActive(false);
         tagSQLDAO.saveAndFlush(tag);
     }
 
@@ -106,12 +103,14 @@ public class TagServiceImpl implements TagService {
             throw new BusinessException("El nombre del tag es obligatorio");
         }
 
-        return name.trim().toLowerCase(Locale.ROOT);
+        return name.strip()
+                .replaceAll("\\s+", " ")
+                .toLowerCase(Locale.ROOT);
     }
 
     private String generateSlug(String name) {
         String slug = Normalizer.normalize(name, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}", "")
+                .replaceAll("\\p{M}+", "")
                 .replaceAll("[^a-z0-9]+", "-")
                 .replaceAll("(^-+|-+$)", "");
 

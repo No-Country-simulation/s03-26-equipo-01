@@ -4,12 +4,14 @@ import com.cms.model.Tag;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface TagSQLDAO extends JpaRepository<Tag, Long> {
 
-    List<Tag> findAllByDeletedFalse();
+    List<Tag> findAllByIsActiveTrueOrderByNameAsc();
 
-    Optional<Tag> findByIdAndDeletedFalse(Long id);
+    Optional<Tag> findByIdAndIsActiveTrue(Long id);
 
     boolean existsByName(String name);
 
