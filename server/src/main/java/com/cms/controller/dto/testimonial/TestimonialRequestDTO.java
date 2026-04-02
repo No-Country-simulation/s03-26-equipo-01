@@ -1,5 +1,6 @@
 package com.cms.controller.dto.testimonial;
 
+import com.cms.controller.annotations.ValidImageFile;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -55,6 +56,7 @@ public record TestimonialRequestDTO(
                 description = "Imagen del testimonio",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
+        @ValidImageFile
         MultipartFile image
 
 ) {
