@@ -1,24 +1,18 @@
-import SideBar from '../../../shared/components/sidebar/Sidebar';
 import itemsData from './admin-sidebar';
-import './admin.css';
 import AdminRoutes from '../routes/admin-routes';
 import { ADMIN_BASE_PATH } from '../../../core/routes/routes';
-import { useState } from 'react';
+import PageContainer from '../../../shared/components/page-container/PageContainer';
 
 const Admin = () => {
-    const [isActive, setIsActive] = useState(false);
-        
-    const handleActive = () => setIsActive(!isActive);
     
     return (
-        <main className = {isActive ? 'admin-page_reduce' : 'admin-page'}>
-            <SideBar 
+        <main>
+            <PageContainer 
                 itemsData = {itemsData} 
-                urlBase = {ADMIN_BASE_PATH} 
-                isActive = {isActive}
-                onActive = {handleActive}
-            />
-            <AdminRoutes />
+                basePath = {ADMIN_BASE_PATH}
+            >
+                <AdminRoutes />
+            </PageContainer>
         </main>
     )
 }

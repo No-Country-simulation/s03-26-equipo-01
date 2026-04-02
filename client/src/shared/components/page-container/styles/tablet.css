@@ -1,0 +1,10 @@
+@media screen and (min-width: 768px) {
+    .page-container_reduce {
+        overflow-y: auto;
+    }
+
+    .page-container_reduce {
+        display: grid;
+        grid-template-columns: 30% 70%;
+    }
+}
