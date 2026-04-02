@@ -1,15 +1,9 @@
-import { useState, type ReactNode } from "react";
-import type { NavegationItemData } from "../../types/navegation-item-data/navegation-list-data";
+import { useState } from "react";
 import SideBar from "../sidebar/Sidebar";
 import './styles/page-container.css'
 import TopBar from "../top-bar/TopBat";
 import MenuIcon from "../sidebar/components/menu-icon/MenuIcon";
-
-interface PageContainerProps {
-    itemsData: NavegationItemData[]
-    basePath: string
-    children: ReactNode
-}
+import type { HeaderContainerProps, PageContainerProps, PageContentProps } from "./page-container";
 
 const PageContainer = ({children, itemsData, basePath}: PageContainerProps) => {
 
@@ -19,20 +13,42 @@ const PageContainer = ({children, itemsData, basePath}: PageContainerProps) => {
     
     return (
         <main className = {isActive ? 'page-container_reduce' : 'page-container'}>
-            <section className = 'page-header-container'>
-                <MenuIcon onSubmit = {handleActive} isActive = {isActive} />
-                <TopBar />
-            </section>
-            <section className = {isActive ? 'page-content-container' : 'page-content-container_disable'}>
-                {isActive && <SideBar 
-                    itemsData = {itemsData} 
-                    urlBase = {basePath} 
-                    onActive = {handleActive}
-                />}
-                {children}
-            </section>
+            <HeaderContainer 
+                onActive = {handleActive}
+                isActive = {isActive}
+            />
+            <PageContent 
+                onActive = {handleActive}
+                isActive = {isActive}
+                children = {children}
+                itemsData = {itemsData}
+                basePath = {basePath}
+            />
         </main>
     )
 }
+
+const HeaderContainer = ({onActive, isActive}: HeaderContainerProps) => {
+    return (
+        <section className = 'page-header-container'>
+            <MenuIcon onSubmit = {onActive} isActive = {isActive} />
+            <TopBar />
+        </section>
+    )
+}
+
+const PageContent = ({onActive, isActive, itemsData, basePath, children}: PageContentProps) => {
+    return (
+        <section className = {isActive ? 'page-content-container' : 'page-content-container_disable'}>
+            {isActive && <SideBar 
+                itemsData = {itemsData} 
+                urlBase = {basePath} 
+                onActive = {onActive}
+        />}
+            {children}
+        </section>
+    )
+}
+
 
 export default PageContainer;
