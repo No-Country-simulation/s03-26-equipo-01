@@ -1,13 +1,7 @@
-
-.home-sidebar_disable {
-    height: 5%;
-}
-
 .home-sidebar {
     position: relative;
     display: grid;
     place-items: center;
-    grid-template-rows: 10vh 90vh;
     width: 100%;
     height: 100vh;
 }

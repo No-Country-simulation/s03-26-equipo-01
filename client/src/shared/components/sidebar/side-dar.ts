@@ -5,5 +5,4 @@ export interface SideBarProps {
     itemsData: NavegationItemData[]
     urlBase: string
     onActive: () => void 
-    isActive: boolean
 }

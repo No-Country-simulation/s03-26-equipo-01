@@ -2,14 +2,7 @@
     justify-self: start;
     width: 10vh;
     height: 10vh;
-}
-
-.sidebar-menu-icon_container {
-    background-color: var(--secondary-color);
-}
-
-.sidebar-menu-icon_disable {
-    background-color: transparent;
+    background-color: var(--secondary-dark-color);
 }
 
 .sidebar-menu-icon_container img, .sidebar-menu-icon_disable img {

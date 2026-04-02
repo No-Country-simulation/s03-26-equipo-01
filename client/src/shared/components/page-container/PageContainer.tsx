@@ -2,6 +2,8 @@ import { useState, type ReactNode } from "react";
 import type { NavegationItemData } from "../../types/navegation-item-data/navegation-list-data";
 import SideBar from "../sidebar/Sidebar";
 import './styles/page-container.css'
+import TopBar from "../top-bar/TopBat";
+import MenuIcon from "../sidebar/components/menu-icon/MenuIcon";
 
 interface PageContainerProps {
     itemsData: NavegationItemData[]
@@ -17,12 +19,15 @@ const PageContainer = ({children, itemsData, basePath}: PageContainerProps) => {
     
     return (
         <main className = {isActive ? 'page-container_reduce' : 'page-container'}>
-            <SideBar 
-                itemsData = {itemsData} 
-                urlBase = {basePath} 
-                isActive = {isActive}
-                onActive = {handleActive}
-            />
+            <div className = 'page-header-container'>
+                <MenuIcon onSubmit = {handleActive} isActive = {isActive} />
+                <TopBar />
+            </div>
+            {isActive && <SideBar 
+                    itemsData = {itemsData} 
+                    urlBase = {basePath} 
+                    onActive = {handleActive}
+                />}
             {children}
         </main>
     )
