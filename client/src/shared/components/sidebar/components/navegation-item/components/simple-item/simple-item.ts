@@ -2,4 +2,5 @@ import type { SimpleNavegationItemData } from "../../../../../../types/navegatio
 
 export interface SimpleItemProps {
     item: SimpleNavegationItemData
+    navegate: (url : string) => void
 }

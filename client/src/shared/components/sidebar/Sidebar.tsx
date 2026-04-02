@@ -4,7 +4,7 @@ import './styles/sidebar.css';
 import MenuIcon from './components/menu-icon/MenuIcon';
 import SideBarContent from './components/sidebar-content/SidebarContent';
 
-const SideBar = ({ itemsData }: SideBarProps) => {
+const SideBar = ({ itemsData, urlBase }: SideBarProps) => {
 
     const [isActive, setIsActive] = useState(false);
 
@@ -13,7 +13,7 @@ const SideBar = ({ itemsData }: SideBarProps) => {
     return (
         <section className = 'home-sidebar'>
             <MenuIcon onSubmit = {handleActive} isActive = {isActive} />
-            {isActive && <SideBarContent itemsData = {itemsData} />}
+            {isActive && <SideBarContent itemsData = {itemsData} urlBase = {urlBase} />}
         </section>
     )
 }

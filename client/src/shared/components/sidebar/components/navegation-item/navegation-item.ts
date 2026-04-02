@@ -2,4 +2,5 @@ import type { NavegationItemData } from "../../../../types/navegation-item-data/
 
 export interface NavegationItemProps {
     item: NavegationItemData
+    urlBase: string
 }

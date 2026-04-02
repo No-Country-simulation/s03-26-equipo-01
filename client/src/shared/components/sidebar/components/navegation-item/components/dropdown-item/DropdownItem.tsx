@@ -4,7 +4,7 @@ import type { DropDownItemProps } from "./dropdown-item";
 import './styles/dropdown-item.css';
 import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
 
-const DropDownItem = ({item}: DropDownItemProps) => {
+const DropDownItem = ({item, navegate}: DropDownItemProps) => {
 
     const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -28,6 +28,7 @@ const DropDownItem = ({item}: DropDownItemProps) => {
             {isActive && <section className = 'sidebar-dropdown-subitems-container'>
                 {item.subRoutes.map(subRoute => 
                     <SimpleItem 
+                        navegate = {navegate}
                         key = {subRoute.id} 
                         item = {subRoute} 
                     />

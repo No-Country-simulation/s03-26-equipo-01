@@ -1,11 +1,11 @@
 import type { SimpleItemProps } from './simple-item';
 import './styles/simple-item.css';
 
-const SimpleItem = ({item}: SimpleItemProps) => {
+const SimpleItem = ({item, navegate}: SimpleItemProps) => {
     
     return (
         <div className = 'sidebar-simple-item sidebar-item'>
-            <button className = 'sidebar-simple-item_button'>
+            <button className = 'sidebar-simple-item_button' onClick = {() => navegate(item.routePage)}>
                 <div className = 'sidebar-simple-item_button_container'>
                     <figure className = 'sidebar-simple-item_icon-container'>
                         <img 

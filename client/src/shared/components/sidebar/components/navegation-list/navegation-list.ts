@@ -3,4 +3,5 @@ import type { NavegationItemData } from "../../../../types/navegation-item-data/
 
 export interface NavegationListProps {
     itemsData: NavegationItemData[]
+    urlBase: string
 }

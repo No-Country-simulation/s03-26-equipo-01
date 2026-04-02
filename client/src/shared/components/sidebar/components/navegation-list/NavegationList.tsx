@@ -3,14 +3,18 @@ import type { NavegationListProps } from './navegation-list';
 import './navegation-list.css';
 
 
-const NavegationList = ({ itemsData }: NavegationListProps) => {
+const NavegationList = ({ itemsData, urlBase }: NavegationListProps) => {
 
     return (
         <div className = 'home-sidebar-navegation-list'>
             <nav>
                 <ul>
                     {itemsData.map(item => 
-                        <NavegationItem key = {item.id} item = {item} />
+                        <NavegationItem 
+                            key = {item.id} 
+                            item = {item} 
+                            urlBase = {urlBase} 
+                        />
                     )}
                 </ul>
             </nav>

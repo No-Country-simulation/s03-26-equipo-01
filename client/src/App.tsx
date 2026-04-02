@@ -4,7 +4,7 @@ import { ADMIN_PATH, EDITOR_PATH, LOGIN_PATH } from "./core/routes/routes"
 import Login from "./features/login/pages/Login"
 import AuthProvider from "./shared/auth/context/provide-auth"
 import NotFoundPage from "./shared/pages/404-not-found/NotFoundPage"
-import Admin from "./features/admin/Admin"
+import Admin from "./features/admin/pages/Admin"
 
 function App() {
   return (

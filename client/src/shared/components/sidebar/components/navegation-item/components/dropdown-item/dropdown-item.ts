@@ -3,4 +3,5 @@ import type { DropdownNavegationItemData } from "../../../../../../types/navegat
 
 export interface DropDownItemProps {
     item: DropdownNavegationItemData
+    navegate: (url : string) => void
 }
