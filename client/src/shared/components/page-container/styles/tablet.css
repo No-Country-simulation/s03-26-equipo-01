@@ -11,6 +11,6 @@
     }
 
     .page-content-container {
-        grid-template-columns: 30% 70%;
+        grid-template-columns: 20% 80%;
     }
 }
