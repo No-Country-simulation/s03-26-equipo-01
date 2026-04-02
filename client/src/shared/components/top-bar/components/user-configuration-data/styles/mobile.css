@@ -10,7 +10,7 @@
     justify-content: space-around;
     align-items: center;
     height: 100%;
-    width: 150px;
+    width: 100%;
     margin-right: 4vw;
 }
 
@@ -26,12 +26,12 @@
 
 .user-configuration-dropbox {
     position: absolute;
-    left: 0;
+    right: 1vw;
     top: 50px;
     display: grid;
     grid-template-rows: 50% 50%;
     place-items: center;
-    width: 90%;
+    width: 100%;
     height: 30vh;
     border-radius: 8px;
     border: 1px solid #DBDDE0;

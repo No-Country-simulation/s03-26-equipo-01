@@ -1,0 +1,14 @@
+
+
+@media screen and (min-width: 1024px) {
+
+    .user-configuration-data {
+        width: 14vw;
+        height: 10vh;
+    }
+    .user-configuration-dropbox {
+        position: relative;
+        top: 1vh;
+        width: 100%;
+    }
+}

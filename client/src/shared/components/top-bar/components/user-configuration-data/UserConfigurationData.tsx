@@ -1,4 +1,4 @@
-import './user-configuration-data.css'
+import './styles/user-configuration-data.css';
 import type { CardUserDataProps, ConfigurationContainerProps, UserConfigurationDataProps } from './user-configuration-data';
 import dropboxIcon from '../../../../../assets/dropbox-icon-grey.svg';
 import { useState } from 'react';
@@ -30,7 +30,7 @@ const ConfigurationContainer = ({user, onActive}: ConfigurationContainerProps) =
 
 const CardUserData = ({user}: CardUserDataProps) => {
     return (
-        <div className = 'user-configuration-dropbox'>
+        <div className = 'user-configuration-dropbox falling-container'>
             <section className = 'user-configuration-dropbox_user'>
                 <p className = 'user-configuration-dropbox_user--name'>{user?.firstName} {user?.lastName}</p>
                 <p className = 'user-configuration-dropbox_user--email'>{user?.email}</p>
