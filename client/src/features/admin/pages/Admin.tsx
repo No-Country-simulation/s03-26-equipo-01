@@ -6,14 +6,12 @@ import PageContainer from '../../../shared/components/page-container/PageContain
 const Admin = () => {
     
     return (
-        <main>
-            <PageContainer 
-                itemsData = {itemsData} 
-                basePath = {ADMIN_BASE_PATH}
-            >
-                <AdminRoutes />
-            </PageContainer>
-        </main>
+        <PageContainer 
+            itemsData = {itemsData} 
+            basePath = {ADMIN_BASE_PATH}
+        >
+            <AdminRoutes />
+        </PageContainer>
     )
 }
 

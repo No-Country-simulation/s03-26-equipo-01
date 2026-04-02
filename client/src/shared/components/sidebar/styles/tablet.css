@@ -2,7 +2,6 @@
 
 @media screen and (min-width: 768px) {
     .home-sidebar {
-        display: block;
-        width: 20vw;
+        height: 100%;
     }
 }

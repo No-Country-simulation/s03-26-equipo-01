@@ -19,16 +19,18 @@ const PageContainer = ({children, itemsData, basePath}: PageContainerProps) => {
     
     return (
         <main className = {isActive ? 'page-container_reduce' : 'page-container'}>
-            <div className = 'page-header-container'>
+            <section className = 'page-header-container'>
                 <MenuIcon onSubmit = {handleActive} isActive = {isActive} />
                 <TopBar />
-            </div>
-            {isActive && <SideBar 
+            </section>
+            <section className = {isActive ? 'page-content-container' : 'page-content-container_disable'}>
+                {isActive && <SideBar 
                     itemsData = {itemsData} 
                     urlBase = {basePath} 
                     onActive = {handleActive}
                 />}
-            {children}
+                {children}
+            </section>
         </main>
     )
 }
