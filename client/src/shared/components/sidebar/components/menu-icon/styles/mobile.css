@@ -1,6 +1,7 @@
 .sidebar-menu-icon_container, .sidebar-menu-icon_disable {
-    width: 100%;
-    height: 100%;
+    justify-self: start;
+    width: 10vh;
+    height: 10vh;
 }
 
 .sidebar-menu-icon_container {

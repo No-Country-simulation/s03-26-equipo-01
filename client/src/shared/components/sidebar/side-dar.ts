@@ -4,4 +4,6 @@ import type { NavegationItemData } from "../../types/navegation-item-data/navega
 export interface SideBarProps {
     itemsData: NavegationItemData[]
     urlBase: string
+    onActive: () => void 
+    isActive: boolean
 }
