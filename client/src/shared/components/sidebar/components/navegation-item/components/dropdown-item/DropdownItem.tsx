@@ -4,7 +4,7 @@ import './styles/dropdown-item.css';
 import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
 import useActive from "../../../../../../hooks/use-active";
 
-const DropDownItem = ({item, navegate}: DropDownItemProps) => {
+const DropDownItem = ({item, navegate, onActive}: DropDownItemProps) => {
 
     const {isActive, handleActive} = useActive();
     
@@ -14,7 +14,7 @@ const DropDownItem = ({item, navegate}: DropDownItemProps) => {
                 isActive = {isActive} 
                 item = {item}
             />
-            {isActive && <DropDownList item = {item} navegate = {navegate}/>}
+            {isActive && <DropDownList item = {item} navegate = {navegate} onActive = {onActive} />}
         </div>
     )
 }
@@ -37,7 +37,7 @@ const DropDownContainer = ({item, isActive}: DropDownContainerProps) => {
     )
 }
 
-const DropDownList = ({item, navegate}: DropDownListProps) => {
+const DropDownList = ({item, navegate, onActive}: DropDownListProps) => {
     return (
         <section className = 'sidebar-dropdown-subitems-container'>
                 {item.subRoutes.map(subRoute => 
@@ -45,6 +45,7 @@ const DropDownList = ({item, navegate}: DropDownListProps) => {
                         navegate = {navegate}
                         key = {subRoute.id} 
                         item = {subRoute} 
+                        handleActive = {onActive}
                     />
                 )}
         </section>
