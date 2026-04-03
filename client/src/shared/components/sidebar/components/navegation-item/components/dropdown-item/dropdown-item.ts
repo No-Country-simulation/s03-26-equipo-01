@@ -5,3 +5,14 @@ export interface DropDownItemProps {
     item: DropdownNavegationItemData
     navegate: (url : string) => void
 }
+
+export interface DropDownContainerProps {
+    item: DropdownNavegationItemData
+    isActive: boolean
+}
+
+export interface DropDownListProps {
+    item: DropdownNavegationItemData
+    navegate: (url : string) => void
+}
+

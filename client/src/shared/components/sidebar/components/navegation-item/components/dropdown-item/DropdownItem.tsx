@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SimpleItem from "../simple-item/SimpleItem";
-import type { DropDownItemProps } from "./dropdown-item";
+import type { DropDownContainerProps, DropDownItemProps, DropDownListProps } from "./dropdown-item";
 import './styles/dropdown-item.css';
 import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
 
@@ -12,20 +12,36 @@ const DropDownItem = ({item, navegate}: DropDownItemProps) => {
     
     return (
         <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive()}>
-            <section className = 'sidebar-dropdown-nav-item-container'>
-                <div className = 'sidebar-dropdown-nav-item-title-container'>
-                    <figure>
-                        <img src = {item.iconUrl} />
-                    </figure>
-                    <div className = 'sidebar-dropdown-title-container'>
-                        <h4 className = 'sidebar-dropdown-item_title'>{item.title}</h4>
-                    </div>
+            <DropDownContainer 
+                isActive = {isActive} 
+                item = {item}
+            />
+            {isActive && <DropDownList item = {item} navegate = {navegate}/>}
+        </div>
+    )
+}
+
+const DropDownContainer = ({item, isActive}: DropDownContainerProps) => {
+    return (
+        <section className = 'sidebar-dropdown-nav-item-container'>
+            <div className = 'sidebar-dropdown-nav-item-title-container'>
+                <figure>
+                    <img src = {item.iconUrl} />
+                </figure>
+                <div className = 'sidebar-dropdown-title-container'>
+                    <h4 className = 'sidebar-dropdown-item_title'>{item.title}</h4>
                 </div>
+            </div>
             <figure className = 'sidebar-dropdown-item_icon-container'>
                 <img src = {dropBoxIcon} className = {isActive ? 'img_sidebar-rotate' : ''}/>
             </figure>
-            </section>
-            {isActive && <section className = 'sidebar-dropdown-subitems-container'>
+        </section>
+    )
+}
+
+const DropDownList = ({item, navegate}: DropDownListProps) => {
+    return (
+        <section className = 'sidebar-dropdown-subitems-container'>
                 {item.subRoutes.map(subRoute => 
                     <SimpleItem 
                         navegate = {navegate}
@@ -33,8 +49,7 @@ const DropDownItem = ({item, navegate}: DropDownItemProps) => {
                         item = {subRoute} 
                     />
                 )}
-            </section>}
-        </div>
+        </section>
     )
 }
 
