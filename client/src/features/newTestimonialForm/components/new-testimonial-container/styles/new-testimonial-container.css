@@ -21,3 +21,9 @@
   padding: 48px 0;
   gap:3.5em;
 }
+
+@media screen and (min-width: 1024px) {
+  .new-testimonial {
+    min-width: 70vw;
+  }
+}
