@@ -47,8 +47,8 @@ public class TagServiceImpl implements TagService {
         Tag tagToUpdate = findById(id);
         String normalizedName = normalizeName(tagData.getName());
         String slug = generateSlug(normalizedName);
-        tagToUpdate.setName(normalizedName);
-        tagToUpdate.setSlug(slug);
+
+        tagToUpdate.updateTag(normalizedName, slug);
 
         return save(tagToUpdate);
     }

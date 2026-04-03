@@ -62,4 +62,9 @@ public class Tag {
             inverseJoinColumns = @JoinColumn(name = "testimonial_id")
     )
     private Set<Testimonial> testimonials = new LinkedHashSet<>();
+
+    public void updateTag(String name, String slug) {
+        this.name = name;
+        this.slug = slug;
+    }
 }
