@@ -73,7 +73,7 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("noexiste@mail.com", "password123");
 
-        assertThrows(EntityNotFoundException.class, () -> authService.authUser(token));
+        assertThrows(BadCredentialsException.class, () -> authService.authUser(token));
     }
 
     @AfterEach
