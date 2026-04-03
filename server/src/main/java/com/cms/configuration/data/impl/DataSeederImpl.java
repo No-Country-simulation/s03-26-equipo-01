@@ -28,12 +28,6 @@ public class DataSeederImpl implements DataSeeder {
 
     @Override
     public void run(String... args) {
-        editor = Editor.builder()
-                .email("editor@gmail.com")
-                .password("123")
-                .firstName("editor")
-                .lastName("edita")
-                .build();
         admin = Admin.builder()
                 .email("admin@gmail.com")
                 .password("123")
@@ -42,6 +36,15 @@ public class DataSeederImpl implements DataSeeder {
                 .build();
 
         Admin adminSaved = (Admin) userService.save(admin);
+
+        editor = Editor.builder()
+                .email("editor@gmail.com")
+                .password("123")
+                .firstName("editor")
+                .lastName("edita")
+                .createdBy(adminSaved)
+                .build();
+
 
         embedService.registerEmbed(adminSaved.getId(), new Embed());
 
