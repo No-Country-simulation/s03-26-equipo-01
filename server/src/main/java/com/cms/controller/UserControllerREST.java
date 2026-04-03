@@ -30,6 +30,27 @@ public class UserControllerREST {
         this.userService = userService;
     }
 
+    @GetMapping("/{userId}")
+    @Operation(summary = "obtener los datos de un usuario autenticado")
+    @ApiResponse(
+           responseCode = "200",
+           description = "Retorna los datos de un usuario autenticado",
+           content = @Content(schema = @Schema(implementation = UserResponseSimpleDTO.class))
+
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "Retorna información sobre el error del usuario no encontrado",
+            content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
+
+    )
+    public ResponseEntity<UserResponseSimpleDTO> getUser(
+            @Parameter(description = "ID del usuario", example = "1")
+            @PathVariable Long userId) {
+        User user = userService.findById(userId);
+        return ResponseEntity.ok(UserResponseSimpleDTO.fromModel(user));
+    }
+
     @GetMapping("/{enabled}")
     @AdminEndpoint
     @Operation(summary = "Obtener usuarios por estado")
