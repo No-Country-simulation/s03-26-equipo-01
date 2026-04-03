@@ -1,5 +1,6 @@
 package com.cms.services.impl;
 
+import com.cms.controller.dto.TagUpdateRequestDTO; // <-- Agregamos el import
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
@@ -8,7 +9,6 @@ import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.TagService;
 import java.text.Normalizer;
 import java.util.List;
-import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -43,9 +43,10 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag update(Long id, Tag tagData) {
+    public Tag update(Long id, TagUpdateRequestDTO updateTagDto) { // <-- Actualizamos el nombre acá también
         Tag tagToUpdate = findById(id);
-        String normalizedName = normalizeName(tagData.getName());
+
+        String normalizedName = normalizeName(updateTagDto.name());
         String slug = generateSlug(normalizedName);
 
         tagToUpdate.updateTag(normalizedName, slug);
@@ -56,12 +57,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public void deleteById(Long id) {
         Tag tag = findById(id);
-
-
         tag.clearTestimonials();
-
         tag.setActive(false);
-        save(tag); // O tagSQLDAO.saveAndFlush(tag) si lo tenías así
+        save(tag);
     }
 
     private Tag save(Tag tag) {
@@ -73,7 +71,6 @@ public class TagServiceImpl implements TagService {
     }
 
     private String normalizeName(String name) {
-
         return name.trim().toLowerCase();
     }
 

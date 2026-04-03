@@ -56,10 +56,9 @@ public class TagController {
     @AdminEndpoint
     public ResponseEntity<TagResponseDto> update(
             @PathVariable Long id,
-            @Valid @RequestBody TagUpdateRequestDTO tagUpdateRequestDTO
+            @Valid @RequestBody TagUpdateRequestDTO updateTagDto // <-- Arreglado el error de tipeo acá
     ) {
-        Tag tagDetails = Tag.builder().name(tagUpdateRequestDTO.name()).build();
-        Tag updatedTag = tagService.update(id, tagDetails);
+        Tag updatedTag = tagService.update(id, updateTagDto);
         return ResponseEntity.ok(TagResponseDto.fromEntity(updatedTag));
     }
 
