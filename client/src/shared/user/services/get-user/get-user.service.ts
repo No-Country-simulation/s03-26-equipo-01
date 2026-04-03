@@ -8,7 +8,7 @@ import type { User } from "../../models/user";
 async function getUser(): Promise<User> {
     const tokenData = getUserData();
     const token = getToken();
-    const userData = await api.get<UserResponse>(`/user/${tokenData.id}`, {
+    const userData = await api.get<UserResponse>(`/user/detail`, {
         headers: {
             Authorization: `Bearer ${token}`
         }
