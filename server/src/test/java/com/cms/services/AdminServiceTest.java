@@ -71,13 +71,8 @@ public class AdminServiceTest {
     public void getResourceAdmin(){
         AdminResource adminResource = adminService.getResource(admin.getId());
 
-        List<Long> userIds = adminResource.getUsers()
-                .stream()
-                .map(User::getId)
-                .toList();
-
-        assertTrue(userIds.contains(editor.getId()));
-        assertTrue(userIds.contains(editor2.getId()));
+        assertTrue(adminResource.getUsers().contains(editor));
+        assertTrue(adminResource.getUsers().contains(editor2));
 
     }
 
