@@ -56,9 +56,12 @@ public class TagServiceImpl implements TagService {
     @Override
     public void deleteById(Long id) {
         Tag tag = findById(id);
-        tag.getTestimonials().clear();
+
+
+        tag.clearTestimonials();
+
         tag.setActive(false);
-        tagSQLDAO.saveAndFlush(tag);
+        save(tag); // O tagSQLDAO.saveAndFlush(tag) si lo tenías así
     }
 
     private Tag save(Tag tag) {

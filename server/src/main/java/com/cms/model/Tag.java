@@ -67,4 +67,9 @@ public class Tag {
         this.name = name;
         this.slug = slug;
     }
+    public void clearTestimonials() {
+        if (this.testimonials != null) {
+            this.testimonials.clear();
+        }
+    }
 }
