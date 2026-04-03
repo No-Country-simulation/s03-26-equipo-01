@@ -72,16 +72,9 @@ public class TagServiceImpl implements TagService {
         }
     }
 
-
-
     private String normalizeName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new BusinessException("El nombre del tag es obligatorio");
-        }
 
-        return name.strip()
-                .replaceAll("\\s+", " ")
-                .toLowerCase(Locale.ROOT);
+        return name.trim().toLowerCase();
     }
 
     private String generateSlug(String name) {
