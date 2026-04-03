@@ -10,9 +10,10 @@ async function getUser(): Promise<User> {
     const token = getToken();
     const userData = await api.get<UserResponse>(`/user/detail`, {
         headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: token
         }
     });
+    console.log(userData.data)
     return userDataAdapter(userData.data, tokenData.role);
 }
 

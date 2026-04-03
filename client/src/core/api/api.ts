@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import handleErrors from "./middlewares/middlewares";
 
 const api = axios.create({
-    baseURL: '/'
+    baseURL: 'http://localhost:8080/api/v1'
 })
 
 api.interceptors.response.use(
