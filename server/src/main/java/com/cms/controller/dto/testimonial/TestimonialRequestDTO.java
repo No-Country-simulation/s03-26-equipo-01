@@ -1,12 +1,11 @@
 package com.cms.controller.dto.testimonial;
 
+import com.cms.controller.annotations.ValidImageFile;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 
@@ -21,7 +20,7 @@ public record TestimonialRequestDTO(
         )
         @NotNull
         @NotBlank
-        @Max(300)
+        @Size(max = 300, message = "Testimonial must not exceed 300 characters")
         String testimonial,
 
         @Schema(
@@ -34,10 +33,10 @@ public record TestimonialRequestDTO(
         String email,
 
         @Schema(
-                description = "Puntuación del testimonio (0 a 5)",
+                description = "Puntuación del testimonio (1 a 10)",
                 example = "5",
-                minimum = "0",
-                maximum = "5",
+                minimum = "1",
+                maximum = "10",
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         @NotNull
@@ -51,7 +50,14 @@ public record TestimonialRequestDTO(
                 requiredMode = Schema.RequiredMode.REQUIRED
         )
         @NotNull
-        Long idEmbed
+        Long idEmbed,
+
+        @Schema(
+                description = "Imagen del testimonio",
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED
+        )
+        @ValidImageFile
+        MultipartFile image
 
 ) {
     public Testimonial toModel() {
