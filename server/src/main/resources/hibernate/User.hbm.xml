@@ -36,6 +36,12 @@
 
         <subclass name="com.cms.model.user.impl.Editor"
                   discriminator-value="EDITOR">
+
+            <many-to-one name="createdBy"
+                         class="com.cms.model.user.impl.Admin"
+                         column="created_by"
+                         not-null="false"
+                         cascade="none"/>
         </subclass>
 
     </class>
