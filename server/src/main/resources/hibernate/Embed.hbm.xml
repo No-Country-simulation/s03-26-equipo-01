@@ -13,7 +13,7 @@
         </id>
 
         <many-to-one name="admin"
-                     class="com.cms.model.user.impl.Admin"
+                     class="com.cms.model.user.impl.admin.Admin"
                      column="admin_id"
                      not-null="true"/>
 

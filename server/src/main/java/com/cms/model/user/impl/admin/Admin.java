@@ -1,4 +1,4 @@
-package com.cms.model.user.impl;
+package com.cms.model.user.impl.admin;
 
 import com.cms.model.embeds.Embed;
 import com.cms.model.user.User;

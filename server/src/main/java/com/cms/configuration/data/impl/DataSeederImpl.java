@@ -2,7 +2,7 @@ package com.cms.configuration.data.impl;
 
 import com.cms.configuration.data.DataSeeder;
 import com.cms.model.embeds.Embed;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.Editor;
 import com.cms.services.EmbedService;
 import com.cms.services.UserService;
