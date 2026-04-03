@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
-import { InternalError } from "../errors/server-error/internal-error";
-import { UknowError } from "../errors/server-error/uknow-error";
-import { NotFoundError } from "../errors/client-error/not-found";
+import { InternalError } from "../../errors/server-error/internal-error";
+import { UknowError } from "../../errors/server-error/uknow-error";
+import { NotFoundError } from "../../errors/client-error/not-found";
 
 function handleErrors(error: AxiosError) {
     if (!error.response) throw new UknowError();

@@ -1,5 +1,5 @@
 import api from "../../../core/api/api";
-import { LOGIN_API } from "../../../core/api/urls";
+import { LOGIN_API } from "../../../core/api/urls/urls";
 import type { User } from "../../user/models/user";
 import type { AuthCredentials } from "../models/user-credentials";
 import { userResponseAdapter } from "../adapters/auth.adapter";
