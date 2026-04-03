@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
     @Query("SELECT a FROM Admin a WHERE a.id = :id AND a.enabled = true")
     Optional<Admin> findByIdAndEnabledTrue(@Param("id") Long id);
+
+    Long id(Long id);
 }
