@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.controller.dto.TagUpdateRequestDTO; // <-- Agregamos este import
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
@@ -21,11 +22,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test") // <-- Esto le dice a Spring que use el archivo que creamos recién
+@ActiveProfiles("test")
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class TagServiceTest {
-    // ... tus tests ...
 
     private final TagService tagService;
     private final TagSQLDAO tagSQLDAO;
@@ -54,6 +54,7 @@ public class TagServiceTest {
 
     @Test
     void createShouldRejectBlankName() {
+        // Este pasa perfecto porque en tu generateSlug todavía tenés la validación de BusinessException
         assertThrows(BusinessException.class, () -> tagService.create(Tag.builder().name("   ").build()));
     }
 
@@ -85,7 +86,8 @@ public class TagServiceTest {
     void updateShouldNormalizeAndPersistNewName() {
         Tag createdTag = tagService.create(Tag.builder().name("java").build());
 
-        Tag updatedTag = tagService.update(createdTag.getId(), Tag.builder().name("  Java   Avanzado ").build());
+        // ¡ACÁ ESTÁ EL CAMBIO! Ahora le pasamos el DTO como espera el Servicio
+        Tag updatedTag = tagService.update(createdTag.getId(), new TagUpdateRequestDTO("  Java   Avanzado "));
 
         assertEquals(createdTag.getId(), updatedTag.getId());
         assertEquals("java avanzado", updatedTag.getName());
@@ -97,9 +99,10 @@ public class TagServiceTest {
         Tag existingTag = tagService.create(Tag.builder().name("spring").build());
         Tag tagToUpdate = tagService.create(Tag.builder().name("security").build());
 
+        // ¡ACÁ TAMBIÉN! Reemplazamos el builder por el DTO
         assertThrows(
                 DuplicateResourceException.class,
-                () -> tagService.update(tagToUpdate.getId(), Tag.builder().name(existingTag.getName()).build())
+                () -> tagService.update(tagToUpdate.getId(), new TagUpdateRequestDTO(existingTag.getName()))
         );
     }
 

@@ -1,6 +1,6 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dto.TagUpdateRequestDTO; // <-- Agregamos el import
+import com.cms.controller.dto.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
@@ -43,7 +43,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag update(Long id, TagUpdateRequestDTO updateTagDto) { // <-- Actualizamos el nombre acá también
+    public Tag update(Long id, TagUpdateRequestDTO updateTagDto) {
         Tag tagToUpdate = findById(id);
 
         String normalizedName = normalizeName(updateTagDto.name());
