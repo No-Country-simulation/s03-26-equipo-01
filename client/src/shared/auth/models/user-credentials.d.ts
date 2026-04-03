@@ -1,6 +1,6 @@
 
 
-export interface UserCredentials {
+export interface AuthCredentials {
     email: string
     password: string
 }

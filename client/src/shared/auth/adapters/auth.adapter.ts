@@ -1,6 +1,6 @@
-import type { User } from "../../types/user/user";
-import { getUserData } from "../repository/token.repository";
-import type { UserResponse } from "./dtos/user-response";
+import type { User } from "../../user/models/user";
+import type { UserResponse } from "../../user/dtos/user-response";
+import { getUserData } from "../../../core/services/token/decoded-token";
 
 export function userResponseAdapter(response: UserResponse): User {
     const userHeaderData = getUserData();
