@@ -71,7 +71,10 @@ public class TagServiceImpl implements TagService {
     }
 
     private String normalizeName(String name) {
-        return name.trim().toLowerCase();
+        return name
+                .trim()
+                .toLowerCase()
+                .replaceAll("\\s+", " ");
     }
 
     private String generateSlug(String name) {

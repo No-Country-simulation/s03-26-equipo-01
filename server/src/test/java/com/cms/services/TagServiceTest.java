@@ -1,6 +1,6 @@
 package com.cms.services;
 
-import com.cms.controller.dto.TagUpdateRequestDTO; // <-- Agregamos este import
+import com.cms.controller.dto.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
@@ -8,6 +8,8 @@ import com.cms.model.Tag;
 import com.cms.persistence.sql.TagSQLDAO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,7 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@Transactional
 @ActiveProfiles("test")
 @RequiredArgsConstructor
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
@@ -29,6 +30,7 @@ public class TagServiceTest {
 
     private final TagService tagService;
     private final TagSQLDAO tagSQLDAO;
+    private final ResetService resetService;
 
     @Test
     void createShouldNormalizeNameAndGenerateSlug() {
@@ -54,7 +56,6 @@ public class TagServiceTest {
 
     @Test
     void createShouldRejectBlankName() {
-        // Este pasa perfecto porque en tu generateSlug todavía tenés la validación de BusinessException
         assertThrows(BusinessException.class, () -> tagService.create(Tag.builder().name("   ").build()));
     }
 
@@ -86,7 +87,6 @@ public class TagServiceTest {
     void updateShouldNormalizeAndPersistNewName() {
         Tag createdTag = tagService.create(Tag.builder().name("java").build());
 
-        // ¡ACÁ ESTÁ EL CAMBIO! Ahora le pasamos el DTO como espera el Servicio
         Tag updatedTag = tagService.update(createdTag.getId(), new TagUpdateRequestDTO("  Java   Avanzado "));
 
         assertEquals(createdTag.getId(), updatedTag.getId());
@@ -99,7 +99,6 @@ public class TagServiceTest {
         Tag existingTag = tagService.create(Tag.builder().name("spring").build());
         Tag tagToUpdate = tagService.create(Tag.builder().name("security").build());
 
-        // ¡ACÁ TAMBIÉN! Reemplazamos el builder por el DTO
         assertThrows(
                 DuplicateResourceException.class,
                 () -> tagService.update(tagToUpdate.getId(), new TagUpdateRequestDTO(existingTag.getName()))
@@ -116,5 +115,10 @@ public class TagServiceTest {
 
         assertFalse(deletedTag.isActive());
         assertThrows(EntityNotFoundException.class, () -> tagService.findById(createdTag.getId()));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        resetService.resetAll();
     }
 }

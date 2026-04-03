@@ -47,7 +47,6 @@ public class TagController {
     @PostMapping
     @AdminEndpoint
     public ResponseEntity<TagResponseDto> create(@Valid @RequestBody TagRequestDTO tagRequestDTO) {
-        // En vez de armarlo acá, le decimos al DTO que se convierta a Entidad
         Tag createdTag = tagService.create(tagRequestDTO.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).body(TagResponseDto.fromEntity(createdTag));
     }
@@ -56,7 +55,7 @@ public class TagController {
     @AdminEndpoint
     public ResponseEntity<TagResponseDto> update(
             @PathVariable Long id,
-            @Valid @RequestBody TagUpdateRequestDTO updateTagDto // <-- Arreglado el error de tipeo acá
+            @Valid @RequestBody TagUpdateRequestDTO updateTagDto
     ) {
         Tag updatedTag = tagService.update(id, updateTagDto);
         return ResponseEntity.ok(TagResponseDto.fromEntity(updatedTag));

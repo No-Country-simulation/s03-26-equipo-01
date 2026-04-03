@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')") // Acá habilitamos ambos roles
+@PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
 @SecurityRequirement(name = "bearerAuth")
 @Operation(description = "Requiere rol ADMIN o EDITOR")
 @ApiResponse(
