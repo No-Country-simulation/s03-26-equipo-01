@@ -47,8 +47,8 @@ public class TagController {
     @PostMapping
     @AdminEndpoint
     public ResponseEntity<TagResponseDto> create(@Valid @RequestBody TagRequestDTO tagRequestDTO) {
-        Tag newTag = Tag.builder().name(tagRequestDTO.name()).build();
-        Tag createdTag = tagService.create(newTag);
+        // En vez de armarlo acá, le decimos al DTO que se convierta a Entidad
+        Tag createdTag = tagService.create(tagRequestDTO.toEntity());
         return ResponseEntity.status(HttpStatus.CREATED).body(TagResponseDto.fromEntity(createdTag));
     }
 
