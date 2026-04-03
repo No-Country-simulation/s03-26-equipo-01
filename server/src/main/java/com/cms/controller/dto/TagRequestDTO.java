@@ -2,6 +2,6 @@ package com.cms.controller.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record CreateTagDto(
+public record TagRequestDTO(
         @NotBlank String name
 ) {}

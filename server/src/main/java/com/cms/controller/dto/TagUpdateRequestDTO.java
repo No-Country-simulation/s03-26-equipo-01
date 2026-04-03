@@ -1,5 +1,5 @@
 package com.cms.controller.dto;
 
-public record UpdateTagDto(
+public record TagUpdateRequestDTO(
         String name
 ) {}

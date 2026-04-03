@@ -2,9 +2,9 @@ package com.cms.controller;
 
 import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
-import com.cms.controller.dto.CreateTagDto;
+import com.cms.controller.dto.TagRequestDTO;
 import com.cms.controller.dto.TagResponseDto;
-import com.cms.controller.dto.UpdateTagDto;
+import com.cms.controller.dto.TagUpdateRequestDTO;
 import com.cms.model.Tag;
 import com.cms.services.TagService;
 import jakarta.validation.Valid;
@@ -46,8 +46,8 @@ public class TagController {
 
     @PostMapping
     @AdminEndpoint
-    public ResponseEntity<TagResponseDto> create(@Valid @RequestBody CreateTagDto createTagDto) {
-        Tag newTag = Tag.builder().name(createTagDto.name()).build();
+    public ResponseEntity<TagResponseDto> create(@Valid @RequestBody TagRequestDTO tagRequestDTO) {
+        Tag newTag = Tag.builder().name(tagRequestDTO.name()).build();
         Tag createdTag = tagService.create(newTag);
         return ResponseEntity.status(HttpStatus.CREATED).body(TagResponseDto.fromEntity(createdTag));
     }
@@ -56,9 +56,9 @@ public class TagController {
     @AdminEndpoint
     public ResponseEntity<TagResponseDto> update(
             @PathVariable Long id,
-            @Valid @RequestBody UpdateTagDto updateTagDto
+            @Valid @RequestBody TagUpdateRequestDTO tagUpdateRequestDTO
     ) {
-        Tag tagDetails = Tag.builder().name(updateTagDto.name()).build();
+        Tag tagDetails = Tag.builder().name(tagUpdateRequestDTO.name()).build();
         Tag updatedTag = tagService.update(id, tagDetails);
         return ResponseEntity.ok(TagResponseDto.fromEntity(updatedTag));
     }
