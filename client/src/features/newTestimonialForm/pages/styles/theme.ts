@@ -2,24 +2,13 @@ import { alpha } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
-  palette: {
-    primary: {
-      main: alpha("#21140F", 1), 
-    },
-    secondary: {
-      main: alpha("#21140F", 0.75),
-    },
-    background: {
-      default: '#FAFAFA',
-    },
-  },
-
   components: {
     MuiButton: {
       defaultProps: {
         disableElevation: true, 
       },
-      styleOverrides: {
+
+     /* styleOverrides: {
         containedPrimary: {
           backgroundColor: alpha('#1B2E45', 1), 
           color: '#ffffff',           
@@ -33,8 +22,9 @@ const theme = createTheme({
             color: '#FFFFFF',           
           },
         },
-      }
+      }*/
     },
+
     MuiCheckbox: {
       styleOverrides: {
         root: {
@@ -44,22 +34,16 @@ const theme = createTheme({
         },
       },
     },
-    MuiFormLabel: {
-      styleOverrides:{
-        root:({ theme }) => ({
-          color: theme.palette.secondary.main,
-        }),
-      }
-    },
+   
     MuiInput: {
-  styleOverrides: {
-    root: {
-      '& input::placeholder': {
-        color: alpha('#21140F', 0.46),
-        opacity: 1
+    styleOverrides: {
+      root: {
+        '& input::placeholder': {
+          color: alpha('#222222', 0.46),
+          opacity: 1
+        },
       },
     },
-  },
 },
   }
 });

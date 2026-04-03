@@ -1,0 +1,31 @@
+.new-testimonial_form-container{
+  width: 100%;
+  margin:auto;
+  display:flex;
+  flex-direction: column;
+  height: auto;
+}
+
+.new-testimonial_form{
+  width: 100%;
+  display:grid;
+  grid-template-columns: 1fr;
+  row-gap: 2.5em;
+  column-gap: 1.5em;
+  height: auto;
+}
+
+.icon{
+  width: 1.8em;
+  height: 1.8em;
+}
+
+@media screen and (min-width: 1024px){
+  .new-testimonial_form{
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .full-row-grid{
+    grid-column: span 2;
+  }
+}

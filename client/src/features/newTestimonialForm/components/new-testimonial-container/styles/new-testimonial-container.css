@@ -1,0 +1,23 @@
+.new-testimonial{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 85%;
+  max-width: 800px;
+  height: auto;
+  min-height: fit-content;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(70, 70, 70, 0.22);
+}
+
+.new-testimonial-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: auto;
+  padding: 48px 0;
+  gap:3.5em;
+}

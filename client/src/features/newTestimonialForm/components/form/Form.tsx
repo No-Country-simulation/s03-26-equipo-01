@@ -1,0 +1,120 @@
+import './styles/form.css'
+import { useForm } from "react-hook-form";
+import SubmitButton from "../submit-button/SubmitButton";
+import { alpha } from '@mui/material/styles';
+import { ImageUp, SquarePlay } from "lucide-react";
+import ComboBox from "../combo-box/ComboBox";
+import { TextInput } from "../text-input/TextInput";
+import AuthorizationCheckbox from '../authorization-checkbox/AuthorizationCheckbox';
+import UploadButtonWithIcon from '../upload-button-with-icon/UploadButtonWithIcon';
+import { TextInputWithIcon } from '../text-input-with-icon/TextInputWithIcon';
+import { MultitextInput } from '../multitext-input/MultiTextInput';
+import RatingPicker from '../rating-picker/RatingPicker';
+
+//Datos de ejemplo hasta integrar la API
+const courses = [{label:"Photoshop", id:0 },{label:"Diseño Web", id:1}, {label: "Canva", id:2}, {label:"Edición de video", id:3}];
+
+const Form = () => {
+    const { control, formState:{isValid}} = useForm({
+    mode: "onChange",
+    defaultValues: {
+      fullName: "",
+      email: "",
+      text: "",
+      course:"",
+      authorization: false,
+      youtubeUrl: "",
+      image: null,
+      rating: null
+    }
+  });
+  return (
+    <section className='new-testimonial_form-container'>
+     <form className='new-testimonial_form' onSubmit={()=>console.log('send')}>
+        <TextInput 
+          name="fullName" 
+          label="Nombre y Apellido" 
+          control={control}
+          placeholder="Usa nombre real"
+          rules={{ 
+            required: "El nombre y apellido es necesario"
+          }}
+        />
+
+        <TextInput 
+          name="email" 
+          label="Mail" 
+          control={control} 
+          placeholder="Registrado en la plataforma"
+          rules={{ 
+            required: "El email es necesario"
+          }}
+        />
+       
+        <ComboBox 
+          control={control} 
+          data={courses} 
+          label="Curso o programa realizado" 
+          name="course" 
+          placeholder="Indica nombre" 
+          rules={{ 
+            required: "El curso o programa realizado es necesario"
+          }}
+        />
+
+        <RatingPicker
+          name="rating" 
+          label="Valoración general" 
+          control={control}
+          rules={{ 
+            required: "La valoración es necesaria"
+          }}
+        />
+
+       <div className='full-row-grid'>
+          <MultitextInput
+            name="text" 
+            label="Testimonio" 
+            control={control} 
+            rows={3}
+            placeholder="Comparte tu experiencia"
+            rules={{ 
+                required: "El testimonio es necesario"
+              }}
+          />
+        </div>
+
+        <TextInputWithIcon
+          control={control} 
+          label="Link video de Youtube (Opcional)" 
+          name="youtubeUrl" placeholder="https://www.youtube.com/watch..." 
+          icon = {<SquarePlay className="icon" color={alpha("#2D2D2D", 0.5)} />}
+          />
+             
+        <UploadButtonWithIcon
+          control={control} 
+          label="Añadir imagen (Opcional)" 
+          name="image" 
+          icon={<ImageUp className="icon" color={alpha("#2D2D2D", 0.5)} />} 
+        />
+        
+        <div className='full-row-grid'>
+          <AuthorizationCheckbox
+            name="authorization" 
+            control={control} 
+            text = "Autorizo el uso público de mi testimonio en la plataforma y materiales de comunicación."
+            rules={{ 
+                required: "El curso o programa realizado es necesario"
+              }}
+            />
+        </div>
+        
+        <div className='full-row-grid'>
+          <SubmitButton isAvailable = {isValid}/>
+        </div>
+      </form>
+    </section>
+  )
+}
+
+export default Form
