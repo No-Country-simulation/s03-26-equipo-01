@@ -1,13 +1,11 @@
 import './styles/user-configuration-data.css';
 import type { CardUserDataProps, ConfigurationContainerProps, UserConfigurationDataProps } from './user-configuration-data';
 import dropboxIcon from '../../../../../assets/dropbox-icon-grey.svg';
-import { useState } from 'react';
+import useActive from '../../../../hooks/use-active';
 
 const UserConfigurationData = ({user}: UserConfigurationDataProps) => {
 
-    const [isActive, setIsActive] = useState<boolean>(false);
-
-    const handleActive = () => setIsActive(!isActive);
+    const {isActive, handleActive} = useActive();
 
     return (
         <section className = 'user-configuration-data'>

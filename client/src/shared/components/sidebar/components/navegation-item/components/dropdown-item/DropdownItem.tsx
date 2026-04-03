@@ -1,14 +1,12 @@
-import { useState } from "react";
 import SimpleItem from "../simple-item/SimpleItem";
 import type { DropDownContainerProps, DropDownItemProps, DropDownListProps } from "./dropdown-item";
 import './styles/dropdown-item.css';
 import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
+import useActive from "../../../../../../hooks/use-active";
 
 const DropDownItem = ({item, navegate}: DropDownItemProps) => {
 
-    const [isActive, setIsActive] = useState<boolean>(false);
-
-    const handleActive = () => setIsActive(!isActive);
+    const {isActive, handleActive} = useActive();
     
     return (
         <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive()}>
