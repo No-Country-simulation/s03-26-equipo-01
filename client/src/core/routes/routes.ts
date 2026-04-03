@@ -1,4 +1,4 @@
-export const LOGIN_PATH = "/login";
-export const ADMIN_PATH = "/admin";
-export const EDITOR_PATH = "/editor";
-export const TESTIMONIAL_PATH = "/testimonial";
+export * from './login/login';
+export * from './admin/admin';
+export * from './editor/editor';
+export * from './testimonial/testimonial';

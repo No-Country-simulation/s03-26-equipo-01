@@ -18,6 +18,5 @@ export function getUserData(): UserTokenData {
 }
 
 export interface UserTokenData {
-    sub: string;
     role: Rol;
 }

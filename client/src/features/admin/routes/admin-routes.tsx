@@ -1,0 +1,18 @@
+import { Route, Routes } from "react-router-dom"
+import { ADMIN_ADD_TESTIMONIAL_EMBED_PATH, ADMIN_DASHBOARD_PATH, ADMIN_MANAGER_PATH, ADMIN_READ_TESTIMONIAL_EMBED_PATH, ADMIN_TESTIMONIAL_PATH, ADMIN_USER_PATH } from '../../../core/routes/admin/admin';
+
+const AdminRoutes = () => {
+    
+    return (
+        <Routes>
+            <Route path = {ADMIN_DASHBOARD_PATH} element = {<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloribus saepe praesentium laborum, fugiat dolorum, expedita quod aspernatur perspiciatis laboriosam ut ab maiores nisi, possimus dolorem! Placeat excepturi rerum alias officia. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit porro delectus, fugiat sint id repellat quod possimus vitae earum ex minima magnam dignissimos fuga cumque, quisquam voluptas quibusdam non reiciendis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim quisquam maiores omnis facere inventore itaque, accusamus dolore, provident voluptatibus fuga, laborum a deleniti adipisci. Ullam quae pariatur veritatis quas voluptate! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officia ipsum iure a delectus animi perferendis quis itaque quas vitae praesentium corporis eveniet modi laborum tempore, quisquam, minus, voluptates illum tenetur! Lorem ipsum dolor sit amet consectetur adipisicing elit. In amet dolores at rem ullam, tenetur temporibus delectus repellat expedita cum nihil odio voluptatum aspernatur qui, unde ipsum nesciunt aut ducimus. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Deleniti omnis possimus nemo facilis harum error nulla necessitatibus, sed quod cum, reiciendis autem doloribus id, est illo. Corrupti, doloremque. Explicabo, quasi! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nobis provident deserunt quam at fugit ipsum, modi, porro, maiores cupiditate explicabo id sequi aut tempora illum non laboriosam qui nisi ipsam. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia eligendi doloribus eos, unde nesciunt eveniet enim ipsum aliquam laudantium, quae voluptatum, ab molestiae magni! Ipsum atque doloribus quasi aliquam totam? Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus vero eius sequi et aut. Deleniti, fugit voluptatum voluptatibus vel velit beatae quia sequi ab dolore, reiciendis enim similique quis at. Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nobis iusto cumque est aliquam, sapiente eaque dolorum sed ipsum eligendi necessitatibus itaque atque mollitia non perspiciatis quod recusandae. Molestias, ad. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi molestiae sed voluptatum assumenda facere totam. Quia error, dignissimos delectus harum repellendus pariatur sint, repudiandae, sunt corrupti officiis consequuntur aliquam nihil. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam similique explicabo provident saepe exercitationem deleniti, modi voluptates temporibus soluta expedita architecto veritatis distinctio sunt asperiores vero voluptas placeat odio vel!</p>} />
+            <Route path = {ADMIN_TESTIMONIAL_PATH} element = {<p>test</p>} />
+            <Route path = {ADMIN_MANAGER_PATH} element = {<p>gestion</p>} />
+            <Route path = {ADMIN_USER_PATH} element = {<p>user</p>} />
+            <Route path = {ADMIN_ADD_TESTIMONIAL_EMBED_PATH} element = {<p>create embed</p>} />
+            <Route path = {ADMIN_READ_TESTIMONIAL_EMBED_PATH} element = {<p>read embed</p>} />
+        </Routes>
+    )
+}
+
+export default AdminRoutes;

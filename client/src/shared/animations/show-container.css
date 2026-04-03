@@ -1,0 +1,14 @@
+
+
+.falling-container {
+    animation: show-container 0.5s forwards;
+}
+
+@keyframes show-container {
+    from {
+        opacity: 0;
+    }
+    to {
+        overflow: 1;
+    }
+}

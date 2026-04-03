@@ -1,6 +1,7 @@
 package com.cms.security.jwt.impl;
 
 import com.cms.security.jwt.JwtService;
+import com.cms.security.user.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +25,10 @@ public class JwtServiceImpl implements JwtService {
 
 
     public String generarToken(UserDetails user) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) user;
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .claim("id", userDetails.getId())
                 .claim("role", user.getAuthorities()
                         .stream()
                         .findFirst()
@@ -46,6 +49,16 @@ public class JwtServiceImpl implements JwtService {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+
+    @Override
+    public Long extractUserId(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("id", Long.class);
     }
 
     public boolean tokenValido(String token, UserDetails user) {

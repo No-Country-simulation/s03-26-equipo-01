@@ -1,0 +1,16 @@
+@media screen and (min-width: 768px) {
+    .page-container_reduce {
+        display: grid;
+        grid-template-rows: 10% 90%;
+        overflow-y: auto;
+    }
+
+    .page-content-container_disable, .page-content-container {
+        display: grid;
+        place-items: center;
+    }
+
+    .page-content-container {
+        grid-template-columns: 20% 80%;
+    }
+}
