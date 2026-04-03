@@ -1,0 +1,25 @@
+.new-testimonial_input-with-icon-container{
+  width: 100%;
+  min-width: 275px;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  gap:12px;
+}
+
+.new-testimonial_generic-icon-container{
+  background-color: rgba(70, 70, 70, 0.16);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em;
+}
+
+.new-testimonial_input-with-icon-action-group{
+   display: flex;
+   align-items: end;
+   gap: 16px;
+   width:100%
+}

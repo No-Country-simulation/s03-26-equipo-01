@@ -1,0 +1,21 @@
+.header-container{
+  width: 100%;
+  height: auto;
+}
+
+.header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap:8px;
+}
+
+.header_title{
+  color: var(--dark-text-color);
+}
+
+.header_subtitle{
+  color: var(--dark-text-color);
+}

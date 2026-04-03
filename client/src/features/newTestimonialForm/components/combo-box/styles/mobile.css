@@ -1,0 +1,6 @@
+.combo-box-container{
+  display: flex;
+  flex-direction: column; 
+  min-width: 90%;
+  gap: 6px
+}
