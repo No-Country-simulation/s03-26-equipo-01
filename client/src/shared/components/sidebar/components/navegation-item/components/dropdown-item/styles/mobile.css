@@ -1,5 +1,6 @@
 .sidebar-dropdown-item {
     max-height: 48px;
+    cursor: pointer;
 }
 
 .sidebar-dropdown-item .sidebar-dropdown-nav-item-container {

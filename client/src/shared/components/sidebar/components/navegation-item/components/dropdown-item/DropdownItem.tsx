@@ -11,7 +11,7 @@ const DropDownItem = ({item, navegate}: DropDownItemProps) => {
     const handleActive = () => setIsActive(!isActive);
     
     return (
-        <div className = 'sidebar-dropdown-item sidebar-item'>
+        <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive()}>
             <section className = 'sidebar-dropdown-nav-item-container'>
                 <div className = 'sidebar-dropdown-nav-item-title-container'>
                     <figure>
@@ -22,7 +22,7 @@ const DropDownItem = ({item, navegate}: DropDownItemProps) => {
                     </div>
                 </div>
             <figure className = 'sidebar-dropdown-item_icon-container'>
-                <img src = {dropBoxIcon} onClick = {() => handleActive()} className = {isActive ? 'img_sidebar-rotate' : ''}/>
+                <img src = {dropBoxIcon} className = {isActive ? 'img_sidebar-rotate' : ''}/>
             </figure>
             </section>
             {isActive && <section className = 'sidebar-dropdown-subitems-container'>
