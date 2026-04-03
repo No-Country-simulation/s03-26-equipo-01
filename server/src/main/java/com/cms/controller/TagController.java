@@ -1,5 +1,7 @@
 package com.cms.controller;
 
+import com.cms.controller.annotations.AdminEditorEndpoint;
+import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.CreateTagDto;
 import com.cms.controller.dto.TagResponseDto;
 import com.cms.controller.dto.UpdateTagDto;
@@ -10,7 +12,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
+    @AdminEditorEndpoint
     public ResponseEntity<List<TagResponseDto>> findAll() {
         List<TagResponseDto> tags = tagService.findAll()
                 .stream()
@@ -38,13 +39,13 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
+    @AdminEditorEndpoint
     public ResponseEntity<TagResponseDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(TagResponseDto.fromEntity(tagService.findById(id)));
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @AdminEndpoint
     public ResponseEntity<TagResponseDto> create(@Valid @RequestBody CreateTagDto createTagDto) {
         Tag newTag = Tag.builder().name(createTagDto.name()).build();
         Tag createdTag = tagService.create(newTag);
@@ -52,7 +53,7 @@ public class TagController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @AdminEndpoint
     public ResponseEntity<TagResponseDto> update(
             @PathVariable Long id,
             @Valid @RequestBody UpdateTagDto updateTagDto
@@ -63,7 +64,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @AdminEndpoint
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         tagService.deleteById(id);
         return ResponseEntity.noContent().build();
