@@ -1,5 +1,6 @@
 @media screen and (min-width: 1024px) {
     .sidebar-item {
         max-height: 8vh;
+        padding-left: 6%;
     }
 }
