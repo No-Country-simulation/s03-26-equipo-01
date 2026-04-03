@@ -1,17 +1,17 @@
 import { useState } from "react";
-import type { UserCredentials } from "../models/user-credentials";
-import type { User } from "../../types/user/user";
+import type { AuthCredentials } from "../models/user-credentials";
+import type { User } from "../../user/models/user";
 import loginService from "../service/login.service";
-import useUserNavegate from "./use-user-navegate";
+import useHomeNavegate from "./use-home-navegate";
 import useApi from "../../../core/api/hooks/use-api";
 
 const useAuth = () => {
     
     const [user, setUser] = useState<User | null>(null);
     const {error, post, refreshError} = useApi<User>();
-    const {redirectTo} = useUserNavegate();
+    const {redirectTo} = useHomeNavegate();
 
-    async function login(credentials: UserCredentials) {
+    async function login(credentials: AuthCredentials) {
         const user = await post(loginService, credentials);
         setUser(user);
         redirectTo(user);

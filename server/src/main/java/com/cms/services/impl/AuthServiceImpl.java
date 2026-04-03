@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResult authUser(UsernamePasswordAuthenticationToken token) {
         String email = token.getPrincipal().toString();
 
-        User user = userService.findUserByMail(email);
+        User user = userService.findUserByMail(email).orElseThrow(() -> new BadCredentialsException("email o password invalidas"));
 
         authenticationManager.authenticate(token);
 

@@ -24,6 +24,11 @@
                      cascade="merge"
                      not-null="true"/>
 
+        <component name="image" class="com.cms.model.testimonial.Media">
+            <property name="url"      column="image_url"/>
+            <property name="publicId" column="image_public_id"/>
+        </component>
+
     </class>
 
 </hibernate-mapping>

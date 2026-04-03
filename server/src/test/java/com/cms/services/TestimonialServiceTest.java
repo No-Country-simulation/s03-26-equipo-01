@@ -9,16 +9,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.time.LocalDate;
+import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class TestimonialServiceTest {
-
 
     @Autowired
     private ResetService resetService;
@@ -31,10 +33,9 @@ public class TestimonialServiceTest {
 
     @Autowired
     private EmbedService embedService;
+
     private Admin admin;
-
     private Testimonial testimonial;
-
     private Embed embed;
 
     @BeforeEach
@@ -58,12 +59,47 @@ public class TestimonialServiceTest {
     }
 
     @Test
-    public void testifyAndGetTestimonial() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId());
-
+    public void testifyAndGetTestimonialWithoutFile() {
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
-        assertEquals(testimonialSaved.getId(),testimonialRecovered.getId());
+        assertNotNull(testimonialSaved.getId());
+        assertEquals(testimonialSaved.getId(),          testimonialRecovered.getId());
+        assertEquals(testimonialSaved.getTestimonial(), testimonialRecovered.getTestimonial());
+        assertEquals(testimonialSaved.getRating(),      testimonialRecovered.getRating());
+        assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
+        assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
+        assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
+        assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
+        assertNull(testimonialRecovered.getImage());
+    }
+
+    @Test
+    public void testifyWithImage() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("logo.jpg");
+        if (is == null) throw new IllegalStateException("logo.jpg no encontrado en src/test/resources/");
+
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "logo.jpg",
+                "image/jpeg",
+                is.readAllBytes()
+        );
+
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file);
+        Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
+
+        assertNotNull(testimonialSaved.getId());
+        assertEquals(testimonialSaved.getId(),          testimonialRecovered.getId());
+        assertEquals(testimonialSaved.getTestimonial(), testimonialRecovered.getTestimonial());
+        assertEquals(testimonialSaved.getRating(),      testimonialRecovered.getRating());
+        assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
+        assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
+        assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
+        assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
+        assertNotNull(testimonialRecovered.getImage());
+        assertNotNull(testimonialRecovered.getImage().getUrl());
+        assertNotNull(testimonialRecovered.getImage().getPublicId());
     }
 
     @AfterEach

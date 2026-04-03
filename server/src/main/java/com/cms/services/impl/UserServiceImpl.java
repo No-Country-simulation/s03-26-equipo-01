@@ -7,10 +7,14 @@ import com.cms.persistence.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -27,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByMail(String email) {
-        return userSQLDAO.findByEmailAndEnabledTrue(email).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), email));
+    public Optional<User> findUserByMail(String email) {
+        return userSQLDAO.findByEmailAndEnabledTrue(email);
     }
 
     @Override
@@ -53,6 +57,12 @@ public class UserServiceImpl implements UserService {
 
     public User findById(Long idUser) {
         return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
+    }
+
+    @Override
+    public Page<User> findAll(int page) {
+        Pageable pageable = PageRequest.of(page, 15);
+        return userSQLDAO.findAllOrderByEnabledDesc(pageable);
     }
 
     @Override
