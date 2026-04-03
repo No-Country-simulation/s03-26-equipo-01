@@ -38,7 +38,7 @@
                   discriminator-value="EDITOR">
 
             <many-to-one name="createdBy"
-                         class="com.cms.model.user.impl.Admin"
+                         class="com.cms.model.user.impl.admin.Admin"
                          column="created_by"
                          not-null="false"
                          cascade="none"/>
