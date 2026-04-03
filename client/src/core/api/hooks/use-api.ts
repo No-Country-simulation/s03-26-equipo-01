@@ -9,9 +9,9 @@ const useApi = <T extends object>() => {
         try {
             return await execute(data);
         } 
-        catch (err) {
-            if (err instanceof ApiError) setError(err);
-            throw err;
+        catch (error) {
+            if (error instanceof ApiError) setError(error);
+            throw error;
         }
     }
 
