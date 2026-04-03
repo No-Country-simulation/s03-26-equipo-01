@@ -24,14 +24,8 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag create(Tag tag) {
         String normalizedName = normalizeName(tag.getName());
-        String slug = generateSlug(normalizedName);
-
-        validateUniqueness(normalizedName, slug, null);
-
         tag.setName(normalizedName);
-        tag.setSlug(slug);
-        tag.setActive(true);
-
+        tag.setSlug(generateSlug(normalizedName));
         return save(tag);
     }
 
@@ -53,9 +47,6 @@ public class TagServiceImpl implements TagService {
         Tag tagToUpdate = findById(id);
         String normalizedName = normalizeName(tagData.getName());
         String slug = generateSlug(normalizedName);
-
-        validateUniqueness(normalizedName, slug, id);
-
         tagToUpdate.setName(normalizedName);
         tagToUpdate.setSlug(slug);
 
@@ -78,25 +69,7 @@ public class TagServiceImpl implements TagService {
         }
     }
 
-    private void validateUniqueness(String name, String slug, Long id) {
-        if (id == null) {
-            if (tagSQLDAO.existsByName(name)) {
-                throw new DuplicateResourceException("Ya existe un tag con ese nombre");
-            }
-            if (tagSQLDAO.existsBySlug(slug)) {
-                throw new DuplicateResourceException("Ya existe un tag con ese slug");
-            }
-            return;
-        }
 
-        if (tagSQLDAO.existsByNameAndIdNot(name, id)) {
-            throw new DuplicateResourceException("Ya existe un tag con ese nombre");
-        }
-
-        if (tagSQLDAO.existsBySlugAndIdNot(slug, id)) {
-            throw new DuplicateResourceException("Ya existe un tag con ese slug");
-        }
-    }
 
     private String normalizeName(String name) {
         if (name == null || name.isBlank()) {
