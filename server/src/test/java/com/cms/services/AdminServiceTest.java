@@ -1,6 +1,6 @@
 package com.cms.services;
 
-import com.cms.model.user.User;
+import com.cms.model.Category;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -11,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -26,14 +25,18 @@ public class AdminServiceTest {
     private UserService userService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private ResetService resetService;
 
     private Admin admin;
-
+    private Admin otroAdmin;
     private Editor editor;
-
     private Editor editor2;
-
+    private Category category1;
+    private Category category2;
+    private Category categoryDeOtroAdmin;
 
     @BeforeEach
     public void setup(){
@@ -43,8 +46,15 @@ public class AdminServiceTest {
                 .firstName("tomas")
                 .lastName("kumar")
                 .build();
+        admin = (Admin) userService.save(admin);
 
-        admin = (Admin)  userService.save(admin);
+        otroAdmin = Admin.builder()
+                .email("otro@gmail.com")
+                .password("123")
+                .firstName("otro")
+                .lastName("admin")
+                .build();
+        otroAdmin = (Admin) userService.save(otroAdmin);
 
         editor = Editor.builder()
                 .email("tm@gmail.com")
@@ -53,7 +63,6 @@ public class AdminServiceTest {
                 .lastName("kumar")
                 .createdBy(admin)
                 .build();
-
         editor2 = Editor.builder()
                 .email("tm123@gmail.com")
                 .password("123")
@@ -61,10 +70,21 @@ public class AdminServiceTest {
                 .lastName("usuario")
                 .createdBy(admin)
                 .build();
+        editor  = (Editor) userService.save(editor);
+        editor2 = (Editor) userService.save(editor2);
 
-        editor = (Editor)  userService.save(editor);
-        editor2 = (Editor)  userService.save(editor2);
-
+        category1 = categoryService.create(
+                Category.builder().name("Tech").slug("tech").description("Tecnología").build(),
+                admin.getId()
+        );
+        category2 = categoryService.create(
+                Category.builder().name("Marketing").slug("marketing").description("Marketing").build(),
+                admin.getId()
+        );
+        categoryDeOtroAdmin = categoryService.create(
+                Category.builder().name("Ajena").slug("ajena").description("De otro admin").build(),
+                otroAdmin.getId()
+        );
     }
 
     @Test
@@ -74,11 +94,13 @@ public class AdminServiceTest {
         assertTrue(adminResource.getUsers().contains(editor));
         assertTrue(adminResource.getUsers().contains(editor2));
 
+        assertTrue(adminResource.getCategories().contains(category1));
+        assertTrue(adminResource.getCategories().contains(category2));
+        assertFalse(adminResource.getCategories().contains(categoryDeOtroAdmin));
     }
 
     @AfterEach
     public void tearDown(){
         resetService.resetAll();
     }
-
 }
