@@ -29,27 +29,27 @@ const NavegationItem = ({item, urlBase, handleActive, isElementActive}: Navegati
 
 const SimpleNavItem = ({item, handleNavegate, handleActive, isElementActive}: SimpleNavItemProps) => {
     return (
-        <>
-            {isElementActive(item.id) && <section className = 'sidebar-item-active'>aa</section>}
+        <section className = {isElementActive(item.id) ? 'sidebar-item_container--selected' : 'sidebar-item_container'}>
+            <div className = {isElementActive(item.id) ? 'sidebar-item-selected' : 'sidebar-item-disable'} />
             <SimpleItem 
                 item = {item} 
                 navegate = {handleNavegate} 
                 handleActive = {handleActive}
             /> 
-        </>
+        </section>
     )
 }
 
 const DropNavItem = ({item, handleNavegate, handleActive, isElementActive}: DropNavItemProps) => {
     return (
-        <>
-            {isElementActive(item.id) && <section className = 'sidebar-item-active'>aa</section>}
+        <section className = {isElementActive(item.id) ? 'sidebar-item_container--selected' : 'sidebar-item_container'}>
+            <div className = {isElementActive(item.id) ? 'sidebar-item-selected' : 'sidebar-item-disable'} />
             <DropDownItem 
                 item = {item} 
                 navegate = {handleNavegate} 
                 onActive = {handleActive}
             />
-        </>
+        </section>
     )
 }
 
