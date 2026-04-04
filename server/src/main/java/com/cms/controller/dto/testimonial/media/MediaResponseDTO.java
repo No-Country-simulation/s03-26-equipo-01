@@ -13,6 +13,7 @@ public record MediaResponseDTO(
         String public_id
 ) {
     public static MediaResponseDTO fromModel(Media image) {
+        if (image == null) return null;
         return new MediaResponseDTO(
                 image.getUrl(),
                 image.getPublicId()

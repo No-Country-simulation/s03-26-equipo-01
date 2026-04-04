@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
@@ -13,10 +14,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.InputStream;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -72,6 +72,48 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
         assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
         assertNull(testimonialRecovered.getImage());
+    }
+
+    @Test
+    public void findTestimonialByAdminWithMultipleTestimonials() {
+        Testimonial testimonial2 = Testimonial.builder()
+                .testimonial("Muy buen servicio")
+                .rating(4)
+                .email("user2@test.com")
+                .state(StateTestimonial.DRAFT)
+                .build();
+
+
+        Admin otherAdmin = Admin.builder()
+                .email("other@test.com")
+                .password("123")
+                .firstName("Other")
+                .lastName("Admin")
+                .build();
+        otherAdmin = (Admin) userService.save(otherAdmin);
+        Embed otherEmbed = embedService.registerEmbed(otherAdmin.getId(), new Embed());
+
+        Testimonial testimonialOtherAdmin = Testimonial.builder()
+                .testimonial("Testimonio de otro admin")
+                .rating(3)
+                .email("other@test.com")
+                .state(StateTestimonial.DRAFT)
+                .build();
+
+        testimonialService.save(testimonial,           embed.getId(),      null);
+        testimonialService.save(testimonial2,          embed.getId(),      null);
+        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null);
+
+        List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
+
+        assertEquals(2, testimonials.size());
+    }
+
+    @Test
+    public void findTestimonialByAdminNotFound() {
+        assertThrows(EntityNotFoundException.class, () ->
+                testimonialService.findTestimonialByAdmin(-1L)
+        );
     }
 
     @Test
