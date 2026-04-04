@@ -1,8 +1,8 @@
 import { object, ObjectSchema, string } from 'yup';
-import type { UserCredentials } from '../../../../shared/auth/models/user-credentials';
+import type { AuthCredentials } from '../../../../shared/auth/models/user-credentials';
 
 
-const schema: ObjectSchema<UserCredentials> = object().shape({
+const schema: ObjectSchema<AuthCredentials> = object().shape({
     email: 
         string(). 
         email('El correo electrónico no es válido').

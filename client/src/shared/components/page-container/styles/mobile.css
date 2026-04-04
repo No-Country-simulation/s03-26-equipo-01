@@ -1,0 +1,18 @@
+.page-container {
+    position: relative;
+    display: grid;
+    grid-template-rows: 10% 90%;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-container_reduce {
+    overflow-y: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-header-container {
+    display: flex;
+    justify-content: space-between;
+}

@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum StateTestimonial {
+    APPROVED("Aprobado"),
     DRAFT("Borrador"),
     PUBLISHED("Publicado"),
     ARCHIVED("Archivado");

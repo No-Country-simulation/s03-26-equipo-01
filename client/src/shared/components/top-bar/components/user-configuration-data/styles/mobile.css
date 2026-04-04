@@ -1,0 +1,81 @@
+.user-configuration-data {
+    position: relative;
+    justify-self: end;
+    align-self: center;
+    cursor: pointer;
+}
+
+.user-configuration-data_presentation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    margin-right: 4vw;
+}
+
+.user-configuration-data_presentation  p {
+    font-size: var(--medium-font);
+    font-weight: bold;
+    color: #FFF;
+}
+
+.user-configuration-data_presentation figure {
+    margin-top: 5px;
+}
+
+.user-configuration-dropbox {
+    position: absolute;
+    right: 1vw;
+    top: 50px;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    place-items: center;
+    width: 100%;
+    height: 30vh;
+    border-radius: 8px;
+    border: 1px solid #DBDDE0;
+    background-color: #F7F6F5;
+}
+
+.user-configuration-dropbox .user-configuration-dropbox_user {
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+    width: 100%;
+    height: 60%;
+    border-bottom: 1px solid #DBDDE0;
+}
+
+.user-configuration-dropbox_user p {
+    margin-left: 20%;
+}
+
+.user-configuration-dropbox_user--name {
+    font-size: var(--medium-font);
+}
+
+.user-configuration-dropbox_user--email {
+    opacity: 0.8;
+    color: #21140F;
+}
+
+.user-configuration-dropbox .user-configuration-dropbox_loguot {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%
+}
+
+.user-configuration-dropbox_loguot button {
+    width: 50%;
+    margin-left: 10%;
+    text-align: start;
+    border-style: none;
+}
+
+.user-configuration-dropbox_loguot--button {
+    font-weight: bold;
+    color: var(--logout-color);
+}

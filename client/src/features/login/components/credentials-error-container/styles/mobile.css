@@ -27,6 +27,10 @@
     height: 100%;
 }
 
+.credentials-error-container .credentials-error-container_message p {
+    text-align: center;
+}
+
 .credentials-error-container .credentials-error-container_close {
     display: grid;
     place-items: center;

@@ -1,0 +1,8 @@
+
+
+@media screen and (min-width: 1024px) {
+
+    .page-content-container {
+        grid-template-columns: 20% 80%;
+    }
+}
