@@ -5,7 +5,9 @@ import type { AuthCredentials } from "./user-credentials";
 
 export interface Auth {
     login: (user: AuthCredentials) => void 
+    logout: (user: User) => void
     closeError: () => void
     user: User | null
+    isLoading: boolean
     error: CredentialsError | null
 }

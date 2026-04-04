@@ -1,13 +1,19 @@
-import type { CardUserDataProps, UserDataSectionProps } from "./card-user";
+import type { CardUserDataProps, UserDataSectionProps, UserDropboxSectionProps } from "./card-user";
 import helpIcon from '../../../../../assets/config-icon/help-icon.svg';
 import logoutIcon from '../../../../../assets/config-icon/logout-icon.svg';
 import './styles/card-user.css';
+import type { User } from "../../../../user/models/user";
 
-const CardUserData = ({user}: CardUserDataProps) => {
+const CardUserData = ({user, logout}: CardUserDataProps) => {
     return (
         <div className = 'user-configuration-dropbox falling-container'>
-            <UserDataSection user = {user} />
-            <UserDropboxSection />
+            <UserDataSection 
+                user = {user} 
+            />
+            <UserDropboxSection 
+                user = {user}
+                logout = {logout}    
+            />
         </div>
     )
 }
@@ -21,7 +27,7 @@ const UserDataSection = ({user}: UserDataSectionProps) => {
     )
 }
 
-const UserDropboxSection = () => {
+const UserDropboxSection = ({user, logout}: UserDropboxSectionProps) => {
     return (
         <section className = 'user-configuration-dropbox_loguot'>
             <div className = 'help-dropbox-container'>
@@ -30,7 +36,7 @@ const UserDropboxSection = () => {
             </div>
             <div className = 'logout-dropbox-container'>
                 <img src = {logoutIcon} alt = "icono para cerrera sesión" />
-                <button className = 'user-configuration-dropbox_loguot--button'>Cerrar sesión</button>
+                <button onClick = {() => logout(user as User)} className = 'user-configuration-dropbox_loguot--button'>Cerrar sesión</button>
             </div>
         </section>
     )

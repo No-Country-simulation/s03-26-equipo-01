@@ -4,14 +4,17 @@ import useActive from '../../../../hooks/use-active';
 import CardUserData from '../card-user/CardUser';
 import ConfigurationContainer from '../configuration-container/ConfigurationContainer';
 
-const UserConfigurationData = ({user}: UserConfigurationDataProps) => {
+const UserConfigurationData = ({user, logout}: UserConfigurationDataProps) => {
 
     const {isActive, handleActive} = useActive();
 
     return (
         <section className = 'user-configuration-data'>
-            <ConfigurationContainer user = {user} onActive = {handleActive} />
-            {isActive && <CardUserData user = {user} />}
+            <ConfigurationContainer 
+                user = {user} 
+                onActive = {handleActive} 
+            />
+            {isActive && <CardUserData user = {user} logout = {logout} />}
         </section>
     )
 }
