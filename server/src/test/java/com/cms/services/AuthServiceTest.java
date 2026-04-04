@@ -2,9 +2,9 @@ package com.cms.services;
 
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.model.AuthResult;
+import com.cms.model.user.AuthResult;
 import com.cms.model.user.User;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,7 +73,7 @@ public class AuthServiceTest {
         UsernamePasswordAuthenticationToken token =
                 new UsernamePasswordAuthenticationToken("noexiste@mail.com", "password123");
 
-        assertThrows(EntityNotFoundException.class, () -> authService.authUser(token));
+        assertThrows(BadCredentialsException.class, () -> authService.authUser(token));
     }
 
     @AfterEach

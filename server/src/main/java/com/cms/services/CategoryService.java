@@ -4,7 +4,7 @@ import com.cms.model.Category;
 import java.util.List;
 
 public interface CategoryService {
-    Category create(Category category);
+    Category create(Category category, Long idAdmin);
 
     List<Category> findAll();
 
