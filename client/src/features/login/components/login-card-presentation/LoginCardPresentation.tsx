@@ -1,4 +1,4 @@
-import useAuthContext from "../../../../shared/auth/context/use-auth";
+import useAuthContext from "../../../../shared/auth/context/use-auth-context";
 import CredentialsErrorContainer from "../credentials-error-container/CredentialsErrorContainer";
 import LoginFormContainer from "../login-form-container/LoginFormContainer"
 import LogoContainer from "../logo-container/LogoContainer"
