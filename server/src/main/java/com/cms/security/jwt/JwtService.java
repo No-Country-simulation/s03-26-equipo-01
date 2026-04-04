@@ -8,4 +8,6 @@ public interface JwtService {
     boolean tokenValido(String token, UserDetails user);
 
     String extraerUsername(String token);
+
+    Long extractUserId(String token);
 }

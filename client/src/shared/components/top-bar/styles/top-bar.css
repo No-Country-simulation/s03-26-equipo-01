@@ -1,0 +1,5 @@
+.top-bar {
+    display: grid;
+    width: 100%;
+    background-color: var(--secondary-dark-color);
+}

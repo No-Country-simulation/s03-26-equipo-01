@@ -22,7 +22,7 @@
         <property name="lastName" column="last_name"/>
         <property name="enabled" column="enabled"/>
 
-        <subclass name="com.cms.model.user.impl.Admin"
+        <subclass name="com.cms.model.user.impl.admin.Admin"
                   discriminator-value="ADMIN">
 
             <bag name="embeds"
@@ -36,6 +36,12 @@
 
         <subclass name="com.cms.model.user.impl.Editor"
                   discriminator-value="EDITOR">
+
+            <many-to-one name="createdBy"
+                         class="com.cms.model.user.impl.admin.Admin"
+                         column="created_by"
+                         not-null="false"
+                         cascade="none"/>
         </subclass>
 
     </class>

@@ -1,0 +1,24 @@
+.new-testimonial-rating_container{
+  display: flex; 
+  flex-direction: column;
+  width: 100%; 
+  max-width: 340px;
+}
+.new-testimonial-rating_option-box{
+  border: 1px solid #343C45;
+  border-radius:4px; 
+  min-width: 7%;
+  max-width:24px;
+  max-height: 24px;
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  position:relative; 
+  cursor:pointer;
+  flex-shrink: 0;
+  background-color: transparent;
+}
+
+.option-box-selected{
+  background-color: #465D8E;
+}

@@ -17,7 +17,7 @@
 
 .auth-links_password-links-container p, .auth-links_helper-container p {
     opacity: 0.8;
-    color: #21140F;
+    color: var(--secondary-color-text);
 }
 
 .auth-links_password-links-container a, .auth-links_helper-container a {
@@ -25,6 +25,17 @@
     color: var(--link-color);
 }
 
+@media screen and (min-width: 1024px) {
+    .auth-links {
+        height: 56%;
+    }
+    .auth-links_password-links-container, .auth-links_helper-container {
+        flex-direction: row;
+        justify-content: center;
+        width: 70%;
+        height: 50%;
+    }
+}
 
 
 

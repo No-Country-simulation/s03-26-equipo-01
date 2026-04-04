@@ -1,7 +1,7 @@
 package com.cms.services;
 
 import com.cms.model.embeds.Embed;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

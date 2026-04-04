@@ -4,6 +4,7 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Editor;
+import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,13 +30,25 @@ public class UserServiceTest {
 
     private User otroEditor;
 
+    private Admin adminSaved;
+
     @BeforeEach
     public void setup(){
+        Admin admin = Admin.builder()
+                .email("12312@gmail.com")
+                .password("123")
+                .firstName("tomas")
+                .lastName("kumar")
+                .build();
+
+        adminSaved = (Admin)  userService.save(admin);
+
         editor = Editor.builder()
                 .email("tm@gmail.com")
                 .password("123")
                 .firstName("tomas")
                 .lastName("kumar")
+                .createdBy(adminSaved)
                 .build();
 
         otroEditor = Editor.builder()
@@ -43,36 +56,34 @@ public class UserServiceTest {
                 .password("123")
                 .firstName("otro")
                 .lastName("usuario")
+                .createdBy(adminSaved)
                 .build();
 
     }
 
     @Test
     public void saveUserAndGetTest() {
-        User editorSaved = userService.save(editor);
+        Editor editorSaved = (Editor) userService.save(editor);
 
-        User editorRecovered = userService.findUserByMail(editorSaved.getEmail());
+        Editor editorRecovered = (Editor) userService.findUserByMail(editorSaved.getEmail()).get();
 
-        assertEquals(editor.getEmail(), editorRecovered.getEmail());
-        assertEquals(editor.getPassword(), editorRecovered.getPassword());
-        assertEquals(editor.getFirstName(), editorRecovered.getFirstName());
-        assertEquals(editor.getLastName(), editorRecovered.getLastName());
+        assertEquals(editorSaved.getEmail(), editorRecovered.getEmail());
+        assertEquals(editorSaved.getPassword(), editorRecovered.getPassword());
+        assertEquals(editorSaved.getFirstName(), editorRecovered.getFirstName());
+        assertEquals(editorSaved.getLastName(), editorRecovered.getLastName());
+        assertEquals(editorSaved.getCreatedBy().getId(), editorRecovered.getCreatedBy().getId());
 
         otroEditor = Editor.builder()
                 .email("tm@gmail.com")
                 .password("123")
                 .firstName("otro")
                 .lastName("usuario")
+                .createdBy(adminSaved)
                 .build();
 
         assertThrows(DuplicateEmailException.class, () -> {
             userService.save(otroEditor);
         });
-    }
-
-    @Test
-    public void findUserByEmailButItWasntExitedTest() {
-        assertThrows(EntityNotFoundException.class, () -> userService.findUserByMail(""));
     }
 
 
@@ -101,6 +112,21 @@ public class UserServiceTest {
 
         assertTrue(users.contains(editorSaved));
         assertTrue(users.contains(editorSaved2));
+    }
+
+    @Test
+    public void findAllOrderByEnabledDescTest() {
+        User editorSaved = userService.save(editor);
+        User otroEditorSaved = userService.save(otroEditor);
+
+        userService.disableUser(editorSaved.getId());
+
+        List<User> users = userService.findAll(0).getContent();
+
+        int indexHabilitado = users.indexOf(otroEditorSaved);
+        int indexDeshabilitado = users.indexOf(editorSaved);
+
+        assertTrue(indexHabilitado < indexDeshabilitado);
     }
 
     @AfterEach

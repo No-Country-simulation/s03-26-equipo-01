@@ -1,0 +1,13 @@
+
+
+@media screen and (min-width: 1024px) {
+    .sidebar-logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+    }
+    .sidebar-logo-container figure {
+        height: 90%;
+    }   
+
+}

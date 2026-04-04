@@ -2,7 +2,7 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.EmbedSQLDAO;

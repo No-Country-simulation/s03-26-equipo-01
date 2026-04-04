@@ -1,0 +1,7 @@
+
+
+@media screen and (min-width: 1024px) {
+    .home-sidebar-content {
+        grid-template-rows: 14% 86%;
+    }
+}
