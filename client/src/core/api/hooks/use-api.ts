@@ -7,7 +7,9 @@ const useApi = <T extends object>() => {
 
     async function post<S>(execute: (newData: S) => Promise<T>, data: S): Promise<T> {
         try {
-            return await execute(data);
+            const newData = await execute(data);
+            refreshError();
+            return newData;
         } 
         catch (error) {
             if (error instanceof ApiError) setError(error);
@@ -17,7 +19,9 @@ const useApi = <T extends object>() => {
 
     async function get<T>(execute: () => Promise<T>): Promise<T> {
         try {
-            return await execute();
+            const newData = await execute();
+            refreshError();
+            return newData;
         } 
         catch (error) {
             if (error instanceof ApiError) setError(error);

@@ -2,6 +2,6 @@
 
 @media screen and (min-width: 1024px) {
     .sidebar-simple-item .sidebar-simple-item_icon-container img {
-        width: auto;
+        width: 4vw;
     }
 }

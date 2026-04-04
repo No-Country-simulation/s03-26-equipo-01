@@ -10,7 +10,7 @@ const useUser = () => {
     useEffect(() => {
         get(getUser)
             .then(user => setUser(user))
-            .catch(error => console.log(error));
+            .catch(error => error);
     }, []);
 
     return {user}
