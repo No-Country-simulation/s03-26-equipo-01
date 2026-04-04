@@ -5,5 +5,5 @@ export interface SelectInputData {
     name: string 
     placeholder: string 
     content: string[]
-    type: 'category' | 'tag' | 'editorId' | 'status' | 'date'
+    type: 'category' | 'tag' | 'editorName' | 'status' | 'date'
 }

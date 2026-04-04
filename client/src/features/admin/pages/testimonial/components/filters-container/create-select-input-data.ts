@@ -15,7 +15,7 @@ const createSelectInputData = (adminResources: TestimonialResources): SelectInpu
             name: 'editor',
             placeholder: 'Editor',
             content: adminResources.users.map(user => user.completeName), 
-            type: 'editorId'
+            type: 'editorName'
         },
         {
             id: 3,

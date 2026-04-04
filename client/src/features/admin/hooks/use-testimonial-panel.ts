@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import useApi from "../../../core/api/hooks/use-api";
 import adminTestimonialResource from "../services/admin-testimonial-resource.service";
 import type TestimonialResources from "../models/testimonial-resources";
+import type { FilterData } from "../../../shared/types/filter-data/filter-data";
 
 const useTestimonialPanel = () => {
 
@@ -14,7 +15,9 @@ const useTestimonialPanel = () => {
             .catch(error => console.error(error))
     }, [])
 
-    return {adminResources}
+    const sendFilter = (filter: FilterData) => console.log(filter); 
+
+    return {sendFilter, adminResources}
 }
 
 export default useTestimonialPanel;

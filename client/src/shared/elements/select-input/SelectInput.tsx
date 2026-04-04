@@ -2,10 +2,11 @@ import { FormControl, InputLabel, MenuItem, Select, type SelectChangeEvent } fro
 import type { SelectInputData } from "../../types/select-input-data/select-input-data";
 import './select-input.css'
 import { useState } from "react";
+import type { FilterData } from "../../types/filter-data/filter-data";
 
 interface SelectInputProps {
     selectInputData: SelectInputData
-    handleSubmit: (value: string, type: string) => void
+    handleSubmit: (value: string, type: keyof FilterData) => void
 }
 
 const SelectInput = ({selectInputData, handleSubmit}: SelectInputProps) => {

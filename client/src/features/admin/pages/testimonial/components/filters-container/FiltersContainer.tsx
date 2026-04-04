@@ -1,13 +1,16 @@
 import SelectInput from "../../../../../../shared/elements/select-input/SelectInput";
+import useFilter from "../../../../../../shared/hooks/use-filter-data";
+import type { FilterData } from "../../../../../../shared/types/filter-data/filter-data";
 import createSelectInputData from "./create-select-input-data";
 import type { FiltersContainerProps } from "./filters-container";
 import './styles/filters-container.css';
 
-const FiltersContainer = ({adminResources}: FiltersContainerProps) => {
+const FiltersContainer = ({adminResources, onFilter}: FiltersContainerProps) => {
 
     const selectInputData = createSelectInputData(adminResources);  
-    const handleSubmit = (value: string, type: string) => console.log(value, type)
-
+    const {addData} = useFilter();
+    const handleFilter = (value: string, type: keyof FilterData) => onFilter(addData(value, type));
+    
     return (
         <section className = 'admin-filters-container'>
             <h3>filtrar por</h3>
@@ -16,7 +19,7 @@ const FiltersContainer = ({adminResources}: FiltersContainerProps) => {
                     <SelectInput
                         key = {selectInputData.id} 
                         selectInputData = {selectInputData} 
-                        handleSubmit = {handleSubmit} />
+                        handleSubmit = {handleFilter} />
                 )}
             </form>
         </section>

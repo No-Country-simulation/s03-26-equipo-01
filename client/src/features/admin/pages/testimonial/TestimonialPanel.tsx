@@ -5,13 +5,15 @@ import './styles/testimonial-panel.css';
 
 const TestimonialPanel = () => {
 
-    const {adminResources} = useTestimonialPanel();
+    const {adminResources, sendFilter} = useTestimonialPanel();
     
     return (
         <section className = 'testimonial-admin-panel'>
             <div className = 'testimonial-admin-panel_container'>
                 <TitleContainer />
-                {adminResources && <FiltersContainer adminResources = {adminResources} />}
+                {adminResources && <FiltersContainer 
+                    adminResources = {adminResources} 
+                    onFilter = {sendFilter} />}
             </div>
         </section>
     )
