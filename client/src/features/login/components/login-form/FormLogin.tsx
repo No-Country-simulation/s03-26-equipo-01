@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import useAuthContext from '../../../../shared/auth/context/use-auth';
+import useAuthContext from '../../../../shared/auth/context/use-auth-context';
 import TextInput from '../../../../shared/elements/text-input/TextInput';
 import SubmitButton from '../submit-button/SubmitButton';
 import './styles/form-login.css';
