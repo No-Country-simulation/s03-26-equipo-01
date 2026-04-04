@@ -42,13 +42,13 @@ const itemsData: NavegationItemData[] = [
         type: 'dropdown',
         subRoutes: [
             {
-                id: 1,
+                id: 6,
                 title: 'De lectura',
                 routePage: ADMIN_READ_TESTIMONIAL_EMBED_PATH,
                 type: 'simple'
             },
             {
-                id: 2,
+                id: 7,
                 title: 'De escritura',
                 routePage: ADMIN_ADD_TESTIMONIAL_EMBED_PATH,
                 type: 'simple'
