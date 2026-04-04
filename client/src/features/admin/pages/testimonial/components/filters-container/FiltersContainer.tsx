@@ -10,7 +10,7 @@ const FiltersContainer = ({adminResources}: FiltersContainerProps) => {
 
     return (
         <section className = 'admin-filters-container'>
-            <h3>filtrar por:</h3>
+            <h3>filtrar por</h3>
             <form>
                 {selectInputData.map(selectInputData => 
                     <SelectInput

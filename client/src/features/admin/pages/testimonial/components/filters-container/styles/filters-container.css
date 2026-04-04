@@ -1,14 +1,2 @@
-.admin-filters-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    height: 100%;
-}
-
-.admin-filters-container form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10%, 200px));
-    width: 100%;
-    height: 80%;
-}
+@import './mobile.css';
+@import './tablet.css';

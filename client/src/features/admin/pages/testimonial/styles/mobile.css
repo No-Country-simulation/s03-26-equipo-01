@@ -8,7 +8,6 @@
 .testimonial-admin-panel_container {
     display: grid;
     place-items: center;
-    grid-template-rows: 20% 20% repeat(auto-fit, minmax(20%, auto));
     width: 90%;
     height: 90%;
 }

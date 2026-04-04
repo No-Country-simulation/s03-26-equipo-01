@@ -18,9 +18,10 @@ const SelectInput = ({selectInputData, handleSubmit}: SelectInputProps) => {
 
     return (
         <FormControl fullWidth>
-            <InputLabel className = 'select-input_label'>{selectInputData.placeholder}</InputLabel>
+            <InputLabel id = {selectInputData.id.toString()}>{selectInputData.placeholder}</InputLabel>
             <Select 
-                className = 'select-input_container'
+                label = {selectInputData.placeholder}
+                labelId = {selectInputData.id.toString()}
                 id = {selectInputData.id.toString()}
                 name = {selectInputData.name}
                 value = {content}
