@@ -8,5 +8,6 @@ export interface Auth {
     logout: (user: User) => void
     closeError: () => void
     user: User | null
+    isLoading: boolean
     error: CredentialsError | null
 }
