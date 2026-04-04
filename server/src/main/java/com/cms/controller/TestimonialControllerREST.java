@@ -6,6 +6,10 @@ import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.services.TestimonialService;
 import com.cms.utils.AuthUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -33,6 +37,17 @@ public class TestimonialControllerREST {
 
     @GetMapping
     @AdminEndpoint
+    @Operation(
+            summary = "Obtener testimonios del admin",
+            description = "Retorna todos los testimonios asociados a los embeds del admin autenticado"
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Lista de testimonios obtenida exitosamente",
+            content = @Content(
+                    schema = @Schema(implementation = TestimonialResponseDTO.class)
+            )
+    )
     public ResponseEntity<List<TestimonialResponseDTO>> getAllTestimonials(Authentication authentication) {
         Long idAdmin = authUtils.getUserId(authentication);
 
