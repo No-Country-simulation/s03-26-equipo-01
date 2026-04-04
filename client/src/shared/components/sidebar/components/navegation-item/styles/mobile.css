@@ -1,13 +1,31 @@
 .sidebar-item {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 2% 98%;
     width: 70%;
     min-width: 15vw;
     max-width: 216px;
     height: 100%;
     max-height: 10vh;
+    transition: background-color 0.2s;
+    border-radius: 5px;
 }
 
 .sidebar-item:hover {
-    background: rgba(77, 120, 173, 0.22);
+    background-color: rgba(77, 120, 173, 0.22);
     color: #4D78AD;
+}
+
+.sidebar-item-active {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 2% 98%;
+    width: 70%;
+    min-width: 15vw;
+    max-width: 216px;
+    height: 100%;
+    max-height: 10vh;
+    transition: background-color 0.2s;
+    border-radius: 5px;
 }
 
