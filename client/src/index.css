@@ -12,6 +12,7 @@
     --light-background:#FAFAFA;
     --selected-color: #F97316;
 
+    --primary-color-text: #21140F;
     --secondary-color-text: #4D433F;
 
     --primary-font: clamp(1vh, 0.8197vw + 2.8565rem, 2vh);

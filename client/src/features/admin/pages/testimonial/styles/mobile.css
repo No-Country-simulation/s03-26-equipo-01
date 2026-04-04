@@ -1,0 +1,14 @@
+.testimonial-admin-panel {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.testimonial-admin-panel_container {
+    display: grid;
+    place-items: center;
+    grid-template-rows: 20% 20% repeat(auto-fit, minmax(20%, auto));
+    width: 90%;
+    height: 90%;
+}
