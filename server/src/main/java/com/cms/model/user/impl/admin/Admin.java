@@ -1,4 +1,4 @@
-package com.cms.model.user.impl;
+package com.cms.model.user.impl.admin;
 
 import com.cms.model.embeds.Embed;
 import com.cms.model.user.User;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 public class Admin extends User {
 
     @Builder.Default

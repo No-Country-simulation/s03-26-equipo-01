@@ -15,9 +15,19 @@ const useApi = <T extends object>() => {
         }
     }
 
+    async function get<T>(execute: () => Promise<T>): Promise<T> {
+        try {
+            return await execute();
+        } 
+        catch (error) {
+            if (error instanceof ApiError) setError(error);
+            throw error;
+        }
+    }
+
     const refreshError = () => setError(null);
 
-    return {post, error, refreshError}
+    return {get, post, error, refreshError}
 }
 
 export default useApi;

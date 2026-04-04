@@ -6,6 +6,7 @@ import com.cms.model.user.User;
 import com.cms.persistence.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
 
 
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
             return saved;
 
         } catch (DataIntegrityViolationException e) {
+            log.error("Integrity violation", e);
             throw new DuplicateEmailException("El email ya está registrado: " + user.getEmail());
         }
     }

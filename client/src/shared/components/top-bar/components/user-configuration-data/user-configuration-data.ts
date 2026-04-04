@@ -1,4 +1,4 @@
-import type { User } from "../../../../types/user/user";
+import type { User } from "../../../../user/models/user";
 
 export interface UserConfigurationDataProps {
     user: User | null
