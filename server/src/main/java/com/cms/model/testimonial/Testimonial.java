@@ -21,5 +21,6 @@ public class Testimonial {
     private String email;
     private Media image;
     private StateTestimonial state;
-    private LocalDate createdAt;
+    @Builder.Default
+    private LocalDate createdAt = LocalDate.now();
 }
