@@ -1,6 +1,6 @@
 package com.cms.services;
 
-import com.cms.model.Category;
+import com.cms.model.testimonial.Category;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;

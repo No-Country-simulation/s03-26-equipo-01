@@ -1,6 +1,6 @@
 package com.cms.controller.dto.tag;
 
-import com.cms.model.Tag;
+import com.cms.model.testimonial.Tag;
 import jakarta.validation.constraints.NotBlank;
 
 public record TagRequestDTO(

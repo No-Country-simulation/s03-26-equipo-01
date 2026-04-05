@@ -1,7 +1,7 @@
 package com.cms.services;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
-import com.cms.model.Tag;
+import com.cms.model.testimonial.Tag;
 import java.util.List;
 
 public interface TagService {

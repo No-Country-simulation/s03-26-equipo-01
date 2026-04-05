@@ -1,4 +1,4 @@
-package com.cms.model;
+package com.cms.model.testimonial;
 
 import com.cms.model.user.impl.admin.Admin;
 import lombok.*;

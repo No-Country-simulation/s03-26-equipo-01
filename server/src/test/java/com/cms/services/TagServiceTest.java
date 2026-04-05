@@ -4,7 +4,7 @@ import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
-import com.cms.model.Tag;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.sql.TagSQLDAO;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.model.Category;
+import com.cms.model.testimonial.Category;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -39,6 +39,7 @@ public class AdminServiceImpl implements AdminService {
         return AdminResource.builder()
                 .users(editores)
                 .categories(categories)
+                .tags(admin.getTags())
                 .build();
     }
 }

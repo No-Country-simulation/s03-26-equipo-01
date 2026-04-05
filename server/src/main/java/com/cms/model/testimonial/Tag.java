@@ -1,6 +1,5 @@
-package com.cms.model;
+package com.cms.model.testimonial;
 
-import com.cms.model.testimonial.Testimonial;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;

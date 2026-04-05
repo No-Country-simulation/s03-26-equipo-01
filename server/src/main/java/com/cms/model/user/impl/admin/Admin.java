@@ -1,5 +1,6 @@
 package com.cms.model.user.impl.admin;
 
+import com.cms.model.testimonial.Tag;
 import com.cms.model.embeds.Embed;
 import com.cms.model.user.User;
 import lombok.Builder;
@@ -20,7 +21,14 @@ public class Admin extends User {
     @Builder.Default
     private List<Embed> embeds = new ArrayList<>();
 
+    @Builder.Default
+    private List<Tag> tags = new ArrayList<>();
+
     public void agregarEmbed(Embed embed) {
         embeds.add(embed);
+    }
+
+    public void agregarTag(Tag tag) {
+        tags.add(tag);
     }
 }

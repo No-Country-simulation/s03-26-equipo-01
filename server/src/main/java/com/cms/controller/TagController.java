@@ -5,7 +5,7 @@ import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.tag.TagRequestDTO;
 import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
-import com.cms.model.Tag;
+import com.cms.model.testimonial.Tag;
 import com.cms.services.TagService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
