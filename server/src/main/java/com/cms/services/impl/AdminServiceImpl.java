@@ -18,27 +18,21 @@ import java.util.List;
 @Transactional
 public class AdminServiceImpl implements AdminService {
 
-    private final EditorSQLDAO editorDAO;
     private final AdminSQLDAO adminDAO;
-    private final CategorySQLDAO categoryDAO;
 
-    public AdminServiceImpl(EditorSQLDAO editorDAO, AdminSQLDAO adminDAO, CategorySQLDAO categoryDAO) {
-        this.editorDAO = editorDAO;
+    public AdminServiceImpl(AdminSQLDAO adminDAO) {
         this.adminDAO = adminDAO;
-        this.categoryDAO = categoryDAO;
     }
 
 
     @Override
     public AdminResource getResource(Long idAdmin) {
-        Admin admin = adminDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
-
-        List<User> editores = editorDAO.findAllByCreatedBy(admin);
-        List<Category> categories = categoryDAO.findAllByCreator(admin);
+        Admin admin = adminDAO.findById(idAdmin)
+                .orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
 
         return AdminResource.builder()
-                .users(editores)
-                .categories(categories)
+                .users(admin.getEditors())
+                .categories(admin.getCategories())
                 .tags(admin.getTags())
                 .build();
     }
