@@ -11,6 +11,7 @@ import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.EmbedSQLDAO;
 import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.services.EmbedService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
@@ -53,12 +54,8 @@ public class EmbedServiceImpl implements EmbedService {
 
 
     @Override
-    public List<TestimonialEmbedResponseDTO> getTestimonialEmbed() {
-       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTop5ByState(StateTestimonial.PUBLISHED);
-       return testimonialEmbed.stream().
-               map(TestimonialEmbedResponseDTO::fromModel)
-               .collect(Collectors.toList());
-
-
+    public List<Testimonial> getTestimonialEmbed() {
+       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(0, 5));
+       return testimonialEmbed;
     }
 }

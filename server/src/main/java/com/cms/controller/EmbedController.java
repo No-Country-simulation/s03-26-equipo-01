@@ -6,6 +6,7 @@ import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
 import com.cms.model.embeds.Embed;
 import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 
+import com.cms.model.testimonial.Testimonial;
 import com.cms.services.EmbedService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/embed")
@@ -36,9 +38,13 @@ public class EmbedController {
     }
 
     @PostMapping("/testimonial/published")
-    public ResponseEntity<List<TestimonialEmbedResponseDTO>> testimonialPublished(){
-       List<TestimonialEmbedResponseDTO> responseDTO = embedService.getTestimonialEmbed();
-        return ResponseEntity.ok(responseDTO);
+    public ResponseEntity<List<Testimonial>> testimonialPublished(){
+       List<Testimonial> testimonialEmbed = embedService.getTestimonialEmbed();
+       testimonialEmbed.stream().
+                map(TestimonialEmbedResponseDTO::fromModel)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(testimonialEmbed);
     }
 
 
