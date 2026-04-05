@@ -32,13 +32,13 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<Tag> findAll() {
-        return tagSQLDAO.findAllByIsActiveTrueOrderByNameAsc();
+        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Tag findById(Long id) {
-        return tagSQLDAO.findByIdAndIsActiveTrue(id)
+        return tagSQLDAO.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
     }
 

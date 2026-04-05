@@ -41,7 +41,6 @@ public class TagServiceTest {
         assertEquals("backend-java", createdTag.getSlug());
         assertTrue(createdTag.isActive());
         assertNotNull(createdTag.getCreatedAt());
-        assertNotNull(createdTag.getUpdatedAt());
     }
 
     @Test
