@@ -11,11 +11,13 @@ const TestimonialPanel = () => {
     return (
         <section className = 'testimonial-admin-panel'>
             <div className = 'testimonial-admin-panel_container'>
-                <TitleContainer />
-                {adminResources && <FiltersContainer 
-                    adminResources = {adminResources} 
-                    onFilter = {sendFilter} />
-                }
+                <div className = 'testimonial-admin-panel_container--info'>
+                    <TitleContainer />
+                    {adminResources && <FiltersContainer 
+                        adminResources = {adminResources} 
+                        onFilter = {sendFilter} />
+                    }
+                </div>
                 {testimonials && <TestimonialsList testimonials = {testimonials} />}
             </div>
         </section>

@@ -1,1 +1,1 @@
-export type State = 'Aprobado' | 'Borrador' | 'Publicado' | 'Archivado'
+export type State = 'APROBADO' | 'BORRADOR' | 'PUBLICADO' | 'ARCHIVADO'

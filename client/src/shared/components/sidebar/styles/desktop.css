@@ -1,4 +1,7 @@
 @media screen and (min-width: 1024px) {
+    .home-sidebar {
+        height: auto;
+    }
     .home-sidebar_fixed {
         position: fixed;
         left: 0;

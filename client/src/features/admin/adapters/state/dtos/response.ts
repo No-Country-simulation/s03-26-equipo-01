@@ -1,0 +1,1 @@
+export type StateResponse = 'APPROVED' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'

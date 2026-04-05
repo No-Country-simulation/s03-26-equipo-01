@@ -1,3 +1,2 @@
-.testimonials-admin-list {
-    width: 100%;
-}
+@import './mobile.css';
+@import './desktop.css'
