@@ -5,8 +5,8 @@ import Login from "./features/login/pages/Login"
 import AuthProvider from "./shared/auth/context/provide-auth"
 import NotFoundPage from "./shared/pages/404-not-found/NotFoundPage"
 import { NewTestimonial } from "./features/newTestimonialForm/pages/NewTestimonial"
-import Admin from "./features/admin/pages/Admin"
 import AuthValidator from "./shared/auth/components/auth-validator/AuthValidator"
+import Admin from "./features/admin/pages/home/Admin"
 
 function App() {
   return (

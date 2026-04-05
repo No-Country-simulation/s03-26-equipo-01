@@ -1,0 +1,46 @@
+
+
+.testimonial-admin-approved, 
+.testimonial-admin-draft, 
+.testimonial-admin-publish, 
+.testimonial-admin-archived {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 35%;
+    height: 100%;
+}
+
+.testimonial-admin-approved div, 
+.testimonial-admin-draft div, 
+.testimonial-admin-publish div, 
+.testimonial-admin-archived div{
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+}
+
+.testimonial-admin-approved div {
+    background-color: #317234;
+}
+
+.testimonial-admin-approved p {
+    color: #317234;
+}
+
+.testimonial-admin-publish div {
+    background-color: #007685;
+}
+
+.testimonial-admin-publish p {
+    color: #007685;
+}
+
+.testimonial-admin-draft div {
+    background-color: #BA7517;
+}
+
+.testimonial-admin-draft p {
+    color: #BA7517;
+}

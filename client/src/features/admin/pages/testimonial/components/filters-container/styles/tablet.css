@@ -1,0 +1,8 @@
+@media screen and (min-width: 768px) {
+    .admin-filters-container {
+        justify-content: space-between;
+    }
+    .admin-filters-container form {
+        height: 70%;
+    }
+}
