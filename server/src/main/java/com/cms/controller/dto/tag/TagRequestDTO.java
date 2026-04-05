@@ -1,4 +1,4 @@
-package com.cms.controller.dto;
+package com.cms.controller.dto.tag;
 
 import com.cms.model.Tag;
 import jakarta.validation.constraints.NotBlank;

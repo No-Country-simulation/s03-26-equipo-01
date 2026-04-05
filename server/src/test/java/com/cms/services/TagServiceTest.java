@@ -1,14 +1,16 @@
 package com.cms.services;
 
-import com.cms.controller.dto.TagUpdateRequestDTO;
+import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.Tag;
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.sql.TagSQLDAO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,6 +31,20 @@ public class TagServiceTest {
     private final TagService tagService;
     private final TagSQLDAO tagSQLDAO;
     private final ResetService resetService;
+    private final UserService userService;
+    private Long idAdmin;
+
+    @BeforeEach
+    public void setUp() {
+        Admin admin = Admin.builder()
+                .email("admin@gmail.com")
+                .password("123")
+                .firstName("tomas")
+                .lastName("kumar")
+                .build();
+        admin = (Admin) userService.save(admin);
+        idAdmin = admin.getId();
+    }
 
     @Test
     void createShouldNormalizeNameAndGenerateSlug() {

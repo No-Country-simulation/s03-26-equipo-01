@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 public class Category {
 
     private Long id;
+
     private String name;
+
     private String slug;
+
     private String description;
 
     @Builder.Default

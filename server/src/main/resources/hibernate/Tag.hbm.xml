@@ -13,8 +13,14 @@
 
         <property name="name"      column="name"       not-null="true" unique="true"/>
         <property name="slug"      column="slug"       not-null="true" unique="true"/>
-        <property name="active"  column="is_active"  not-null="true"/>
+        <property name="active"    column="is_active"  not-null="true"/>
         <property name="createdAt" column="created_at" not-null="true" update="false"/>
+
+        <many-to-one name="creator"
+                     class="com.cms.model.user.impl.admin.Admin"
+                     column="created_by"
+                     not-null="false"
+                     cascade="none"/>
 
         <set name="testimonials" table="testimonial_tags" fetch="select" lazy="true">
             <key column="tag_id"/>

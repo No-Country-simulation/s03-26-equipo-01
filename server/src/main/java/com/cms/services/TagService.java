@@ -1,6 +1,6 @@
 package com.cms.services;
 
-import com.cms.controller.dto.TagUpdateRequestDTO;
+import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.model.Tag;
 import java.util.List;
 

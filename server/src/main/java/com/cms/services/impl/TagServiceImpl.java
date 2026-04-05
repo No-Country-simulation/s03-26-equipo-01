@@ -1,10 +1,12 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dto.TagUpdateRequestDTO;
+import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.Tag;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.TagService;
 import java.text.Normalizer;
@@ -20,12 +22,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class TagServiceImpl implements TagService {
 
     private final TagSQLDAO tagSQLDAO;
+    private final AdminSQLDAO adminSQLDAO;
 
     @Override
     public Tag create(Tag tag, Long idAdmin) {
+        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+
         String normalizedName = normalizeName(tag.getName());
+
         tag.setName(normalizedName);
+
         tag.setSlug(generateSlug(normalizedName));
+
+        tag.setCreator(admin);
+
         return save(tag);
     }
 
