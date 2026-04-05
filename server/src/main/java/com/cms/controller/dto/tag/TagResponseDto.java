@@ -1,6 +1,6 @@
-package com.cms.controller.dto;
+package com.cms.controller.dto.tag;
 
-import com.cms.model.Tag;
+import com.cms.model.testimonial.Tag;
 import java.time.LocalDateTime;
 
 public record TagResponseDto(
@@ -8,8 +8,7 @@ public record TagResponseDto(
         String name,
         String slug,
         boolean isActive,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        LocalDateTime createdAt
 ) {
 
     public static TagResponseDto fromEntity(Tag tag) {
@@ -18,8 +17,7 @@ public record TagResponseDto(
                 tag.getName(),
                 tag.getSlug(),
                 tag.isActive(),
-                tag.getCreatedAt(),
-                tag.getUpdatedAt()
+                tag.getCreatedAt()
         );
     }
 }

@@ -32,6 +32,23 @@
                 <one-to-many class="com.cms.model.embeds.Embed"/>
             </bag>
 
+            <bag name="tags"
+                 inverse="true"
+                 lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.testimonial.Tag"/>
+            </bag>
+
+            <bag name="editors" inverse="true" lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.user.impl.Editor"/>
+            </bag>
+
+            <bag name="categories" inverse="true" lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.testimonial.Category"/>
+            </bag>
+
         </subclass>
 
         <subclass name="com.cms.model.user.impl.Editor"

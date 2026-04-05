@@ -1,6 +1,6 @@
 package com.cms.controller.dto.category;
 
-import com.cms.model.Category;
+import com.cms.model.testimonial.Category;
 
 public record UpdateCategoryDto(
         String name,

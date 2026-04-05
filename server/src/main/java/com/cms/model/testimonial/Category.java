@@ -1,4 +1,4 @@
-package com.cms.model;
+package com.cms.model.testimonial;
 
 import com.cms.model.user.impl.admin.Admin;
 import lombok.*;
@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 public class Category {
 
     private Long id;
+
     private String name;
+
     private String slug;
+
     private String description;
 
     @Builder.Default

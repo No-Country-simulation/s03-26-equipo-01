@@ -1,6 +1,6 @@
 package com.cms.persistence.sql;
 
-import com.cms.model.Category;
+import com.cms.model.testimonial.Category;
 import java.util.List;
 import java.util.Optional;
 

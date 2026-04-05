@@ -1,5 +1,6 @@
 package com.cms.persistence.sql;
 import com.cms.model.user.impl.admin.Admin;
+import com.cms.model.user.impl.admin.AdminResource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
