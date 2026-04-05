@@ -1,0 +1,1 @@
+export const ADMIN_TESTIMONIALS_URL = '/testimonial';

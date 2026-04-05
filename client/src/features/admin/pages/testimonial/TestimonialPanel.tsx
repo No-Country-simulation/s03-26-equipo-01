@@ -1,11 +1,12 @@
 import useTestimonialPanel from '../../hooks/use-testimonial-panel';
 import FiltersContainer from './components/filters-container/FiltersContainer';
+import TestimonialsContainer from './components/testimonials-container/TestimonialContainer';
 import TitleContainer from './components/title-container/TitleContainer';
 import './styles/testimonial-panel.css';
 
 const TestimonialPanel = () => {
 
-    const {adminResources, sendFilter} = useTestimonialPanel();
+    const {adminResources, testimonials, sendFilter} = useTestimonialPanel();
     
     return (
         <section className = 'testimonial-admin-panel'>
@@ -13,7 +14,9 @@ const TestimonialPanel = () => {
                 <TitleContainer />
                 {adminResources && <FiltersContainer 
                     adminResources = {adminResources} 
-                    onFilter = {sendFilter} />}
+                    onFilter = {sendFilter} />
+                }
+                {testimonials && <TestimonialsContainer testimonials = {testimonials} />}
             </div>
         </section>
     )

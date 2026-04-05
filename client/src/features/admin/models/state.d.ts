@@ -1,0 +1,1 @@
+export type State = 'Aprobado' | 'Borrador' | 'Publicado' | 'Archivado'

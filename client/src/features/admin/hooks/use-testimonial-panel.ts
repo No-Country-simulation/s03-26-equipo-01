@@ -3,21 +3,31 @@ import useApi from "../../../core/api/hooks/use-api";
 import adminTestimonialResource from "../services/admin-testimonial-resource.service";
 import type TestimonialResources from "../models/testimonial-resources";
 import type { FilterData } from "../../../shared/types/filter-data/filter-data";
+import type { Testimonial } from "../models/testimonial";
+import adminTestimonials from "../services/admin-testimonials";
 
 const useTestimonialPanel = () => {
 
-    const [adminResources, setTestimonialPanel] = useState<TestimonialResources>();
+    const [adminResources, setAdminResources] = useState<TestimonialResources>();
+    const [testimonials, setTestimonials] = useState<Testimonial[]>();
     const {get} = useApi<TestimonialResources>();
 
-    useEffect(() => {
+    const getters = () => [
+        get(adminTestimonials)
+            .then(testimonials => setTestimonials(testimonials))
+            .catch(error => console.error(error)),
         get(adminTestimonialResource)
-            .then(adminResources => setTestimonialPanel(adminResources))
+            .then(adminResources => setAdminResources(adminResources))
             .catch(error => console.error(error))
+    ]
+
+    useEffect(() => {
+        getters()
     }, [])
 
     const sendFilter = (filter: FilterData) => console.log(filter); 
 
-    return {sendFilter, adminResources}
+    return {sendFilter, adminResources, testimonials}
 }
 
 export default useTestimonialPanel;
