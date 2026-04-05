@@ -1,8 +1,9 @@
 package com.cms.services;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
-import com.cms.model.Category;
+import com.cms.exception.business.impl.DuplicateResourceException;
+import com.cms.model.testimonial.Category;
+import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,20 +25,35 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Autowired
+    private UserService userService;
+
+
+    @Autowired
     private ResetService resetService;
 
     private Category defaultCategory;
 
+    private Admin adminSaved;
 
     @BeforeEach
     void setUp() {
+
+        Admin admin = Admin.builder()
+                .email("12312@gmail.com")
+                .password("123")
+                .firstName("tomas")
+                .lastName("kumar")
+                .build();
+
+        adminSaved = (Admin)  userService.save(admin);
+        
         Category categoryToCreate = Category.builder()
                 .name("Common Category")
                 .slug("common-category")
                 .description("Common description for tests")
                 .build();
 
-        defaultCategory = categoryService.create(categoryToCreate);
+        defaultCategory = categoryService.create(categoryToCreate, adminSaved.getId());
     }
 
     @Test
@@ -48,7 +64,7 @@ class CategoryServiceTest {
                 .description("Technology testimonials")
                 .build();
 
-        Category createdCategory = categoryService.create(categoryToCreate);
+        Category createdCategory = categoryService.create(categoryToCreate, adminSaved.getId());
 
         assertNotNull(createdCategory.getId());
         assertEquals("Technology", createdCategory.getName());
@@ -67,8 +83,8 @@ class CategoryServiceTest {
     void findAllTest() {
         int initialSize = categoryService.findAll().size();
 
-        categoryService.create(Category.builder().name("Marketing").slug("marketing").description("Marketing testimonials").build());
-        categoryService.create(Category.builder().name("Sales").slug("sales").description("Sales testimonials").build());
+        categoryService.create(Category.builder().name("Marketing").slug("marketing").description("Marketing testimonials").build(), adminSaved.getId());
+        categoryService.create(Category.builder().name("Sales").slug("sales").description("Sales testimonials").build(), adminSaved.getId());
 
         assertEquals(initialSize + 2, categoryService.findAll().size());
     }
@@ -115,7 +131,7 @@ class CategoryServiceTest {
                 .description("Duplicate desc")
                 .build();
 
-        assertThrows(BusinessException.class, () -> categoryService.create(duplicateCategory));
+        assertThrows(DuplicateResourceException.class, () -> categoryService.create(duplicateCategory, adminSaved.getId()));
     }
 
     @AfterEach

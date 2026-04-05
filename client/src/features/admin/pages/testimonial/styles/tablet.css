@@ -1,0 +1,10 @@
+@media screen and (min-width: 768px) {
+
+    .testimonial-admin-panel_container {
+        place-items: start;
+    }
+
+    .testimonial-admin-panel_container {
+        grid-template-rows: 20% 20% repeat(auto-fit, minmax(20%, auto));
+    }
+}

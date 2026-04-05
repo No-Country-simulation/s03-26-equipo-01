@@ -1,9 +1,10 @@
 package com.cms.services;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +14,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.io.InputStream;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -60,7 +60,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, null);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -75,6 +75,48 @@ public class TestimonialServiceTest {
     }
 
     @Test
+    public void findTestimonialByAdminWithMultipleTestimonials() {
+        Testimonial testimonial2 = Testimonial.builder()
+                .testimonial("Muy buen servicio")
+                .rating(4)
+                .email("user2@test.com")
+                .state(StateTestimonial.DRAFT)
+                .build();
+
+
+        Admin otherAdmin = Admin.builder()
+                .email("other@test.com")
+                .password("123")
+                .firstName("Other")
+                .lastName("Admin")
+                .build();
+        otherAdmin = (Admin) userService.save(otherAdmin);
+        Embed otherEmbed = embedService.registerEmbed(otherAdmin.getId(), new Embed());
+
+        Testimonial testimonialOtherAdmin = Testimonial.builder()
+                .testimonial("Testimonio de otro admin")
+                .rating(3)
+                .email("other@test.com")
+                .state(StateTestimonial.DRAFT)
+                .build();
+
+        testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
+        testimonialService.save(testimonial2,          embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
+        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
+
+        List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
+
+        assertEquals(2, testimonials.size());
+    }
+
+    @Test
+    public void findTestimonialByAdminNotFound() {
+        assertThrows(EntityNotFoundException.class, () ->
+                testimonialService.findTestimonialByAdmin(-1L)
+        );
+    }
+
+    @Test
     public void testifyWithImage() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("logo.jpg");
         if (is == null) throw new IllegalStateException("logo.jpg no encontrado en src/test/resources/");
@@ -86,7 +128,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, null);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, "https://www.youtube.com/watch?v=KhXTwEypI6c");
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());

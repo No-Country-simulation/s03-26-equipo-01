@@ -1,0 +1,106 @@
+package com.cms.services.impl;
+
+import com.cms.controller.dto.tag.TagUpdateRequestDTO;
+import com.cms.exception.EntityNotFoundException;
+import com.cms.exception.business.BusinessException;
+import com.cms.exception.business.impl.DuplicateResourceException;
+import com.cms.model.testimonial.Tag;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.sql.AdminSQLDAO;
+import com.cms.persistence.sql.TagSQLDAO;
+import com.cms.services.TagService;
+import java.text.Normalizer;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class TagServiceImpl implements TagService {
+
+    private final TagSQLDAO tagSQLDAO;
+    private final AdminSQLDAO adminSQLDAO;
+
+    @Override
+    public Tag create(Tag tag, Long idAdmin) {
+        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+
+        String normalizedName = normalizeName(tag.getName());
+
+        tag.setName(normalizedName);
+
+        tag.setSlug(generateSlug(normalizedName));
+
+        tag.setCreator(admin);
+
+        admin.agregarTag(tag);
+
+        adminSQLDAO.save(admin);
+
+        return save(tag);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Tag> findAll() {
+        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Tag findById(Long id) {
+        return tagSQLDAO.findByIdAndActiveTrue(id)
+                .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
+    }
+
+    @Override
+    public Tag update(Long id, TagUpdateRequestDTO updateTagDto) {
+        Tag tagToUpdate = findById(id);
+
+        String normalizedName = normalizeName(updateTagDto.name());
+        String slug = generateSlug(normalizedName);
+
+        tagToUpdate.updateTag(normalizedName, slug);
+
+        return save(tagToUpdate);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Tag tag = findById(id);
+        tag.clearTestimonials();
+        tag.setActive(false);
+        save(tag);
+    }
+
+    private Tag save(Tag tag) {
+        try {
+            return tagSQLDAO.saveAndFlush(tag);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
+        }
+    }
+
+    private String normalizeName(String name) {
+        return name
+                .trim()
+                .toLowerCase()
+                .replaceAll("\\s+", " ");
+    }
+
+    private String generateSlug(String name) {
+        String slug = Normalizer.normalize(name, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("(^-+|-+$)", "");
+
+        if (slug.isBlank()) {
+            throw new BusinessException("El nombre del tag es invalido");
+        }
+
+        return slug;
+    }
+}

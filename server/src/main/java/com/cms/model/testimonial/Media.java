@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Media {
 
-    private String url;
-    private String publicId;
+
+    private String url ;
+
+    private String publicId ;
 
     private String videoUrl;
     private String videoId;
@@ -21,11 +23,13 @@ public class Media {
     private String channelName;
 
     public void setImageData(Media imageMedia) {
+        if (imageMedia == null) return;
         this.url = imageMedia.getUrl();
         this.publicId = imageMedia.getPublicId();
     }
 
     public void setVideoData(Media videoMedia) {
+        if (videoMedia == null) return;
         this.videoId = videoMedia.getVideoId();
         this.videoUrl = videoMedia.getVideoUrl();
         this.videoTitle = videoMedia.getVideoTitle();

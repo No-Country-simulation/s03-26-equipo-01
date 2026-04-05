@@ -2,13 +2,15 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.EmbedSQLDAO;
 import com.cms.services.EmbedService;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -40,5 +42,10 @@ public class EmbedServiceImpl implements EmbedService {
     @Override
     public Embed findById(Long idEmbed) {
         return embedSQLDAO.findById(idEmbed).orElseThrow(() -> new EntityNotFoundException(Embed.class.getName(), idEmbed));
+    }
+
+    @Override
+    public List<Long> findAllIdsByAdmin(Admin admin) {
+        return embedSQLDAO.findAllByAdmin(admin);
     }
 }

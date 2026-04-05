@@ -1,0 +1,70 @@
+.user-configuration-dropbox {
+    position: absolute;
+    right: 1vw;
+    top: 8vh;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    place-items: center;
+    width: 100%;
+    height: 30vh;
+    border-radius: 8px;
+    border: 1px solid #DBDDE0;
+    background-color: #F7F6F5;
+}
+
+.user-configuration-dropbox .user-configuration-dropbox_user {
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+    width: 100%;
+    min-height: 60%;
+    border-bottom: 1px solid #DBDDE0;
+}
+
+.user-configuration-dropbox_user p {
+    text-align: center;
+}
+
+.user-configuration-dropbox_user--name {
+    font-size: var(--medium-font);
+}
+
+.user-configuration-dropbox_user--email {
+    opacity: 0.8;
+    color: #21140F;
+}
+
+.user-configuration-dropbox .user-configuration-dropbox_loguot {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%
+}
+
+.help-dropbox-container, .logout-dropbox-container {
+    display: flex;
+    align-items: center;
+    margin-left: 10%;
+}
+
+.help-dropbox-container button, .logout-dropbox-container button {
+    width: 70%;
+    height: 100%;
+    margin-left: 5%;
+    font-size: var(--medium-font);
+    text-align: start;
+    border-style: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.help-dropbox-container img, .logout-dropbox-container img {
+    height: 100%;
+    width: 14%;
+}
+
+.user-configuration-dropbox_loguot--button {
+    font-weight: bold;
+    color: var(--logout-color);
+}

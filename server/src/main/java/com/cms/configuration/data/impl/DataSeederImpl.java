@@ -2,9 +2,9 @@ package com.cms.configuration.data.impl;
 
 import com.cms.configuration.data.DataSeeder;
 import com.cms.model.embeds.Embed;
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.user.impl.Admin;
 import com.cms.model.user.impl.Editor;
 import com.cms.services.EmbedService;
 import com.cms.services.TestimonialService;
@@ -33,13 +33,6 @@ public class DataSeederImpl implements DataSeeder {
 
     @Override
     public void run(String... args) {
-        editor = Editor.builder()
-                .email("editor@gmail.com")
-                .password("123")
-                .firstName("editor")
-                .lastName("edita")
-                .build();
-
         admin = Admin.builder()
                 .email("admin@gmail.com")
                 .password("123")
@@ -48,6 +41,17 @@ public class DataSeederImpl implements DataSeeder {
                 .build();
 
         Admin adminSaved = (Admin) userService.save(admin);
+
+        editor = Editor.builder()
+                .email("editor@gmail.com")
+                .password("123")
+                .firstName("editor")
+                .lastName("edita")
+                .createdBy(adminSaved)
+                .build();
+
+
+        embedService.registerEmbed(adminSaved.getId(), new Embed());
         Embed embed = embedService.registerEmbed(adminSaved.getId(), new Embed());
 
         userService.save(editor);
@@ -83,6 +87,6 @@ public class DataSeederImpl implements DataSeeder {
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId, null, null));
+        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c"));
     }
 }

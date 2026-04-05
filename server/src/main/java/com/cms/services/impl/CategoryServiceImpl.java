@@ -1,8 +1,10 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
-import com.cms.model.Category;
+import com.cms.exception.business.impl.DuplicateResourceException;
+import com.cms.model.testimonial.Category;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.CategorySQLDAO;
 import com.cms.services.CategoryService;
 import jakarta.transaction.Transactional;
@@ -16,17 +18,25 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategorySQLDAO categorySQLDAO;
+    private final AdminSQLDAO adminSQLDAO;
 
-    public CategoryServiceImpl(CategorySQLDAO categorySQLDAO) {
+    public CategoryServiceImpl(CategorySQLDAO categorySQLDAO, AdminSQLDAO adminSQLDAO) {
         this.categorySQLDAO = categorySQLDAO;
+        this.adminSQLDAO = adminSQLDAO;
     }
 
     @Override
-    public Category create(Category category) {
+    public Category create(Category category, Long idAdmin) {
+        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+
+        category.setCreator(admin);
+
         try {
-            return categorySQLDAO.save(category);
+            Category saved = categorySQLDAO.save(category);
+            categorySQLDAO.flush();
+            return saved;
         } catch (DataIntegrityViolationException ex) {
-            throw new BusinessException("Ya existe una categoría con ese slug");
+            throw new DuplicateResourceException("Ya existe una categoría con ese slug");
         }
     }
 

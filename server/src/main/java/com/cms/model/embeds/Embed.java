@@ -1,6 +1,6 @@
 package com.cms.model.embeds;
 
-import com.cms.model.user.impl.Admin;
+import com.cms.model.user.impl.admin.Admin;
 import lombok.*;
 
 @Data

@@ -9,7 +9,7 @@ const DropDownItem = ({item, navegate, onActive}: DropDownItemProps) => {
     const {isActive, handleActive} = useActive();
     
     return (
-        <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive()}>
+        <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive(item.id)}>
             <DropDownContainer 
                 isActive = {isActive} 
                 item = {item}
