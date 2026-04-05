@@ -9,12 +9,10 @@ import com.cms.persistence.sql.TagSQLDAO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,7 +32,7 @@ public class TagServiceTest {
 
     @Test
     void createShouldNormalizeNameAndGenerateSlug() {
-        Tag createdTag = tagService.create(Tag.builder().name("  BACKEND   Java  ").build());
+        Tag createdTag = tagService.create(Tag.builder().name("  BACKEND   Java  ").build(), idAdmin);
 
         assertNotNull(createdTag.getId());
         assertEquals("backend java", createdTag.getName());
@@ -45,23 +43,23 @@ public class TagServiceTest {
 
     @Test
     void createShouldRejectDuplicateName() {
-        tagService.create(Tag.builder().name("spring boot").build());
+        tagService.create(Tag.builder().name("spring boot").build(), idAdmin);
 
         assertThrows(
                 DuplicateResourceException.class,
-                () -> tagService.create(Tag.builder().name("  Spring   Boot ").build())
+                () -> tagService.create(Tag.builder().name("  Spring   Boot ").build(), idAdmin)
         );
     }
 
     @Test
     void createShouldRejectBlankName() {
-        assertThrows(BusinessException.class, () -> tagService.create(Tag.builder().name("   ").build()));
+        assertThrows(BusinessException.class, () -> tagService.create(Tag.builder().name("   ").build(), idAdmin));
     }
 
     @Test
     void findAllShouldReturnOnlyActiveTags() {
-        Tag activeTag = tagService.create(Tag.builder().name("activo").build());
-        Tag deletedTag = tagService.create(Tag.builder().name("borrado").build());
+        Tag activeTag = tagService.create(Tag.builder().name("activo").build(), idAdmin);
+        Tag deletedTag = tagService.create(Tag.builder().name("borrado").build(), idAdmin);
 
         tagService.deleteById(deletedTag.getId());
 
@@ -73,7 +71,7 @@ public class TagServiceTest {
 
     @Test
     void findByIdShouldReturnActiveTag() {
-        Tag createdTag = tagService.create(Tag.builder().name("arquitectura").build());
+        Tag createdTag = tagService.create(Tag.builder().name("arquitectura").build(), idAdmin);
 
         Tag recoveredTag = tagService.findById(createdTag.getId());
 
@@ -84,7 +82,7 @@ public class TagServiceTest {
 
     @Test
     void updateShouldNormalizeAndPersistNewName() {
-        Tag createdTag = tagService.create(Tag.builder().name("java").build());
+        Tag createdTag = tagService.create(Tag.builder().name("java").build(), idAdmin);
 
         Tag updatedTag = tagService.update(createdTag.getId(), new TagUpdateRequestDTO("  Java   Avanzado "));
 
@@ -95,8 +93,8 @@ public class TagServiceTest {
 
     @Test
     void updateShouldRejectDuplicateNameInAnotherTag() {
-        Tag existingTag = tagService.create(Tag.builder().name("spring").build());
-        Tag tagToUpdate = tagService.create(Tag.builder().name("security").build());
+        Tag existingTag = tagService.create(Tag.builder().name("spring").build(), idAdmin);
+        Tag tagToUpdate = tagService.create(Tag.builder().name("security").build(), idAdmin);
 
         assertThrows(
                 DuplicateResourceException.class,
@@ -106,7 +104,7 @@ public class TagServiceTest {
 
     @Test
     void deleteByIdShouldApplySoftDelete() {
-        Tag createdTag = tagService.create(Tag.builder().name("ciberseguridad").build());
+        Tag createdTag = tagService.create(Tag.builder().name("ciberseguridad").build(), idAdmin);
 
         tagService.deleteById(createdTag.getId());
 

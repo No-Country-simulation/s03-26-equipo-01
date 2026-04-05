@@ -5,7 +5,7 @@ import com.cms.model.Tag;
 import java.util.List;
 
 public interface TagService {
-    Tag create(Tag tag);
+    Tag create(Tag tag, Long idAdmin);
 
     List<Tag> findAll();
 

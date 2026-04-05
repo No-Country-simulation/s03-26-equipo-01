@@ -22,7 +22,7 @@ public class TagServiceImpl implements TagService {
     private final TagSQLDAO tagSQLDAO;
 
     @Override
-    public Tag create(Tag tag) {
+    public Tag create(Tag tag, Long idAdmin) {
         String normalizedName = normalizeName(tag.getName());
         tag.setName(normalizedName);
         tag.setSlug(generateSlug(normalizedName));
