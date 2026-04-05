@@ -1,24 +1,33 @@
 package com.cms.services.impl;
 
+import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
+import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Admin;
 
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.EmbedSQLDAO;
+import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.services.EmbedService;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class EmbedServiceImpl implements EmbedService {
      private final EmbedSQLDAO embedSQLDAO;
      private final AdminSQLDAO adminSQLDAO;
+     private final TestimonialSQLDAO testimonialSQLDAO;
 
-    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO) {
+    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO,TestimonialSQLDAO testimonialSQLDAO) {
         this.embedSQLDAO = embedSQLDAO;
         this.adminSQLDAO = adminSQLDAO;
+        this.testimonialSQLDAO = testimonialSQLDAO;
     }
 
 
@@ -40,5 +49,16 @@ public class EmbedServiceImpl implements EmbedService {
     @Override
     public Embed findById(Long idEmbed) {
         return embedSQLDAO.findById(idEmbed).orElseThrow(() -> new EntityNotFoundException(Embed.class.getName(), idEmbed));
+    }
+
+
+    @Override
+    public List<TestimonialEmbedResponseDTO> getTestimonialEmbed() {
+       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTop5ByState(StateTestimonial.PUBLISHED);
+       return testimonialEmbed.stream().
+               map(TestimonialEmbedResponseDTO::fromModel)
+               .collect(Collectors.toList());
+
+
     }
 }

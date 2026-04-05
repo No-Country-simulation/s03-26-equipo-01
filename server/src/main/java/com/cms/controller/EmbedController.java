@@ -2,6 +2,7 @@ package com.cms.controller;
 
 
 import com.cms.controller.dto.embeds.DateEmbedsResponseDTO;
+import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
 import com.cms.model.embeds.Embed;
 import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/embed")
@@ -30,6 +33,12 @@ public class EmbedController {
 
         DateEmbedsResponseDTO response = DateEmbedsResponseDTO.fromModel(embed);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/testimonial/published")
+    public ResponseEntity<List<TestimonialEmbedResponseDTO>> testimonialPublished(){
+       List<TestimonialEmbedResponseDTO> responseDTO = embedService.getTestimonialEmbed();
+        return ResponseEntity.ok(responseDTO);
     }
 
 
