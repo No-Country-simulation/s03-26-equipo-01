@@ -1,6 +1,7 @@
 package com.cms.services;
 
 import com.cms.model.testimonial.Category;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -37,6 +38,13 @@ public class AdminServiceTest {
     private Category category1;
     private Category category2;
     private Category categoryDeOtroAdmin;
+
+    @Autowired
+    private TagService tagService;
+
+    private Tag tag1;
+    private Tag tag2;
+    private Tag tagDeOtroAdmin;
 
     @BeforeEach
     public void setup(){
@@ -85,6 +93,10 @@ public class AdminServiceTest {
                 Category.builder().name("Ajena").slug("ajena").description("De otro admin").build(),
                 otroAdmin.getId()
         );
+
+        tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+        tag2 = tagService.create(Tag.builder().name("frontend").build(), admin.getId());
+        tagDeOtroAdmin = tagService.create(Tag.builder().name("devops").build(), otroAdmin.getId());
     }
 
     @Test
@@ -97,6 +109,10 @@ public class AdminServiceTest {
         assertTrue(adminResource.getCategories().contains(category1));
         assertTrue(adminResource.getCategories().contains(category2));
         assertFalse(adminResource.getCategories().contains(categoryDeOtroAdmin));
+
+        assertTrue(adminResource.getTags().contains(tag1));
+        assertTrue(adminResource.getTags().contains(tag2));
+        assertFalse(adminResource.getTags().contains(tagDeOtroAdmin));
     }
 
     @AfterEach
