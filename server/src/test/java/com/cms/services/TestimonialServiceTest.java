@@ -60,7 +60,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, null);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -86,7 +86,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, null);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());

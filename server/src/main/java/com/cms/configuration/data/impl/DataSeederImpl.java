@@ -83,6 +83,6 @@ public class DataSeederImpl implements DataSeeder {
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId));
+        testimonials.forEach(t -> testimonialService.save(t, embedId, null, null));
     }
 }
