@@ -1,5 +1,10 @@
 @media screen and (min-width: 1024px) {
-    .home-sidebar {
+    .home-sidebar_fixed {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 9;
         height: 100%;
+        width: 20%;
     }
 }

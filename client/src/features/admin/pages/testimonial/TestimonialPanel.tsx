@@ -1,6 +1,6 @@
 import useTestimonialPanel from '../../hooks/use-testimonial-panel';
 import FiltersContainer from './components/filters-container/FiltersContainer';
-import TestimonialsContainer from './components/testimonials-container/TestimonialContainer';
+import TestimonialsList from './components/testimonials-container/TestimonialContainer';
 import TitleContainer from './components/title-container/TitleContainer';
 import './styles/testimonial-panel.css';
 
@@ -16,7 +16,7 @@ const TestimonialPanel = () => {
                     adminResources = {adminResources} 
                     onFilter = {sendFilter} />
                 }
-                {testimonials && <TestimonialsContainer testimonials = {testimonials} />}
+                {testimonials && <TestimonialsList testimonials = {testimonials} />}
             </div>
         </section>
     )

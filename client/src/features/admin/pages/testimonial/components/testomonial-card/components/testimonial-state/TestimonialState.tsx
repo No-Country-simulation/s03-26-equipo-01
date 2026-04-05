@@ -3,9 +3,9 @@ import type { TestimonialStateProps } from "./testimonial-state";
 
 const TestimonialState = ({testimonial}: TestimonialStateProps) => {
     return (
-        <div>
+        <section>
             {testimonial.state}
-        </div>
+        </section>
     )
 }
 

@@ -4,11 +4,12 @@ import TestimonialDescription from "./components/testimonial-description/Testimo
 import TestimonialState from "./components/testimonial-state/TestimonialState";
 import TestimonialTags from "./components/testimonial-tags/TestimonialTags";
 import type { TestimonialCardProps } from "./testimonial-card";
+import './styles/testomonial-card.css';
 
 //<DecisionsContainer testimonial = {testimonial} />
 const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
     return (
-        <article>
+        <article className = 'testimonial-admin-card-container'>
             <TestimonialHeader testimonial = {testimonial} />
             <TestimonialState testimonial = {testimonial} />
             <TestimonialDescription testimonial = {testimonial} />

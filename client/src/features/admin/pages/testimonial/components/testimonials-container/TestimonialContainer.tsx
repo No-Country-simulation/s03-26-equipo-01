@@ -1,9 +1,10 @@
 import TestimonialCard from "../testomonial-card/TestimonialCard";
 import type { TestimonialsContainerProps } from "./testomonial-container";
+import './styles/testimonials-container.css';
 
-const TestimonialsContainer = ({testimonials}: TestimonialsContainerProps) => {
+const TestimonialsList = ({testimonials}: TestimonialsContainerProps) => {
     return (
-        <section>
+        <section className = 'testimonials-admin-list'>
             {testimonials.map(testimonial => 
                 <TestimonialCard 
                     key = {testimonial.id}
@@ -14,4 +15,4 @@ const TestimonialsContainer = ({testimonials}: TestimonialsContainerProps) => {
     )
 }
 
-export default TestimonialsContainer;
+export default TestimonialsList;

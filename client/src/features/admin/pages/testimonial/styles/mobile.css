@@ -8,6 +8,8 @@
 .testimonial-admin-panel_container {
     display: grid;
     place-items: center;
+    grid-template-rows: 20% 40%;
     width: 90%;
     height: 90%;
+    gap: 2vh;
 }

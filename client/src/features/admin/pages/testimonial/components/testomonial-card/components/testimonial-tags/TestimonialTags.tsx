@@ -2,9 +2,9 @@ import type { TestimonialTagsProps } from "./testimonial-tags";
 
 const TestimonialTags = ({testimonial}: TestimonialTagsProps) => {
     return (
-        <div>
+        <section>
             tags
-        </div>
+        </section>
     )
 }
 
