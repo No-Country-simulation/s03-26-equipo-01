@@ -1,3 +1,4 @@
+import type { Image } from "./image"
 import type { State } from "./state"
 
 export interface Testimonial {
@@ -8,4 +9,5 @@ export interface Testimonial {
     email: string 
     state: State
     createdAt: Date
+    image?: Image
 }

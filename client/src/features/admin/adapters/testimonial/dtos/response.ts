@@ -1,3 +1,4 @@
+import type { Image } from "../../../models/image"
 import type { State } from "../../../models/state"
 
 export interface TestimonialResponse {
@@ -8,4 +9,5 @@ export interface TestimonialResponse {
     email: string 
     state: State
     createdAt: Date
+    image: Image
 }

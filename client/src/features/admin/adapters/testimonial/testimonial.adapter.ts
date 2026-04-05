@@ -13,6 +13,7 @@ function adminTestimonialAdapter(testimonial: TestimonialResponse): Testimonial 
         rating: testimonial.rating,
         email: testimonial.email, 
         state: testimonial.state,
+        image: testimonial.image,
         createdAt: testimonial.createdAt
     }
 }

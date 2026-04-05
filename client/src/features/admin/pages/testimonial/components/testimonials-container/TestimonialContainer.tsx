@@ -1,15 +1,14 @@
-import type { Testimonial } from "../../../../models/testimonial";
-
-
-interface TestimonialsContainerProps {
-    testimonials: Testimonial[]
-}
+import TestimonialCard from "../testomonial-card/TestimonialCard";
+import type { TestimonialsContainerProps } from "./testomonial-container";
 
 const TestimonialsContainer = ({testimonials}: TestimonialsContainerProps) => {
     return (
         <section>
             {testimonials.map(testimonial => 
-                <p key = {testimonial.id}>{testimonial.testimonial}</p>
+                <TestimonialCard 
+                    key = {testimonial.id}
+                    testimonial = {testimonial}
+                />
             )}
         </section>
     )
