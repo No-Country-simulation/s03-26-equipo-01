@@ -71,7 +71,6 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
         assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
-        assertNull(testimonialRecovered.getImage());
     }
 
     @Test
@@ -139,9 +138,9 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
         assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
-        assertNotNull(testimonialRecovered.getImage());
-        assertNotNull(testimonialRecovered.getImage().getUrl());
-        assertNotNull(testimonialRecovered.getImage().getPublicId());
+        assertNotNull(testimonialRecovered.getMedia());
+        assertNotNull(testimonialRecovered.getMedia().getUrl());
+        assertNotNull(testimonialRecovered.getMedia().getPublicId());
     }
 
     @AfterEach

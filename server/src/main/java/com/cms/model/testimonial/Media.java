@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Media {
 
+    private String id;
 
     private String url ;
 

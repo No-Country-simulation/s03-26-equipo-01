@@ -41,7 +41,7 @@ public record TestimonialResponseDTO(
                 testimonial.getTestimonial(),
                 testimonial.getEmbed().getId(),
                 testimonial.getRating(),
-                MediaResponseDTO.fromModel(testimonial.getImage()),
+                MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),
                 testimonial.getState(),
                 testimonial.getCreatedAt()
