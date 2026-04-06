@@ -2,6 +2,7 @@ package com.cms.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Media;
 import com.cms.services.ImageService;
 import jakarta.transaction.Transactional;
@@ -44,10 +45,10 @@ public class ImageServiceImpl implements ImageService {
             Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
 
             if (!"ok".equals(result.get("result"))) {
-                throw new RuntimeException("No se pudo eliminar la imagen: " + result.get("result"));
+                throw new EntityNotFoundException(Media.class.getSimpleName(), publicId);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Error al conectar con Cloudinary para eliminar la imagen", e);
+            throw new RuntimeException("Error al conectar con el servidor para eliminar la imagen", e);
         }
     }
 }
