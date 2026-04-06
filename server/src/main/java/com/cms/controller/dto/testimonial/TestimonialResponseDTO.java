@@ -6,6 +6,7 @@ import com.cms.controller.dto.testimonial.media.MediaResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 
 import java.time.LocalDate;
@@ -22,6 +23,11 @@ public record TestimonialResponseDTO(
 
         @Schema(description = "ID del recurso embebido asociado", example = "1")
         long idEmbed,
+        @Schema(
+                description = "Nombre de la persona que hizo el testimonio",
+                example = "Roberto mendez"
+        )
+        String witness,
 
         @Schema(description = "Puntuación del testimonio (1 a 10)", example = "5")
         int rating,
@@ -47,6 +53,7 @@ public record TestimonialResponseDTO(
                 testimonial.getId(),
                 testimonial.getTestimonial(),
                 testimonial.getEmbed().getId(),
+                testimonial.getWitness(),
                 testimonial.getRating(),
                 MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),

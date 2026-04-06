@@ -79,24 +79,28 @@ public class DataSeederImpl implements DataSeeder {
         List<Testimonial> testimonials = List.of(
                 Testimonial.builder()
                         .testimonial("Excelente servicio, lo recomiendo totalmente.")
+                        .witness("Robert")
                         .rating(5)
                         .email("maria@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
                 Testimonial.builder()
                         .testimonial("Muy buena atención, quedé muy conforme.")
+                        .witness("Robert2")
                         .rating(4)
                         .email("carlos@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
                 Testimonial.builder()
                         .testimonial("El producto superó mis expectativas.")
+                        .witness("Robert3")
                         .rating(5)
                         .email("lucia@gmail.com")
                         .state(StateTestimonial.DRAFT)
                         .build(),
                 Testimonial.builder()
                         .testimonial("Buena experiencia en general.")
+                        .witness("Robert4")
                         .rating(3)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.DRAFT)

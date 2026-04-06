@@ -52,6 +52,13 @@ public record TestimonialRequestDTO(
         )
         @NotNull
         Long idEmbed,
+        @Schema(
+                description = "Nombre de la persona que hizo el testimonio",
+                example = "Roberto mendez",
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        @NotNull
+        String witness,
 
         @Schema(
                 description = "Imagen del testimonio",
@@ -85,6 +92,7 @@ public record TestimonialRequestDTO(
     public Testimonial toModel() {
         return Testimonial.builder()
                 .testimonial(testimonial)
+                .witness(witness)
                 .email(email)
                 .rating(rating)
                 .state(StateTestimonial.DRAFT)
