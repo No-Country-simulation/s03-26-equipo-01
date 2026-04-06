@@ -2,6 +2,7 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
+import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
@@ -21,19 +22,25 @@ import java.util.List;
 public class TestimonialServiceImpl implements TestimonialService {
 
     private final TestimonialRepository testimonialRepository;
+    private final ImageService imageService;
     private final EmbedService embedService;
+    private final YoutubeService youtubeService;
     private final AdminSQLDAO adminSQLDAO;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
+                                  ImageService imageService,
                                   EmbedService embedService,
+                                  YoutubeService youtubeService,
                                   AdminSQLDAO adminSQLDAO) {
         this.testimonialRepository = testimonialRepository;
+        this.imageService = imageService;
         this.embedService = embedService;
+        this.youtubeService = youtubeService;
         this.adminSQLDAO = adminSQLDAO;
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, Long aLong) {
+    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl) {
         Embed embed = embedService.findById(idEmbed);
         model.setEmbed(embed);
         return testimonialRepository.save(model, image, youtubeUrl);
