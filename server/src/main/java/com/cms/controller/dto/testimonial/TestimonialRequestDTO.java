@@ -57,7 +57,13 @@ public record TestimonialRequestDTO(
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
         @ValidImageFile
-        MultipartFile image
+        MultipartFile image,
+        @Schema(
+                description = "URL del video de YouTube",
+                example = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED
+        )
+        String youtubeUrl
 
 ) {
     public Testimonial toModel() {

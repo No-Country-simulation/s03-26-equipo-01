@@ -1,22 +1,44 @@
 package com.cms.controller.dto.testimonial.media;
 
 import com.cms.model.testimonial.Media;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(name = "MediaResponse", description = "Datos de la imagen asociada al testimonio")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(name = "MediaResponse", description = "Datos multimedia asociada al testimonio")
 public record MediaResponseDTO(
 
-        @Schema(description = "URL pública de la imagen", example = "https://res.cloudinary.com/demo/image/upload/sample.jpg")
-        String url,
+        @Schema(description = "URL pública de la imagen")
+        String imageUrl,
 
-        @Schema(description = "ID público del recurso en Cloudinary", example = "cms/testimonials/abc123")
-        String public_id
+        @Schema(description = "ID público del recurso en Cloudinary")
+        String imagePublicId,
+
+        @Schema(description = "URL del video embebido de YouTube")
+        String videoUrl,
+
+        @Schema(description = "ID del video de YouTube")
+        String videoId,
+
+        @Schema(description = "Título del video de YouTube")
+        String videoTitle,
+
+        @Schema(description = "URL del thumbnail del video")
+        String thumbnailUrl,
+
+        @Schema(description = "Nombre del canal de YouTube")
+        String channelName
 ) {
-    public static MediaResponseDTO fromModel(Media image) {
-        if (image == null) return null;
+    public static MediaResponseDTO fromModel(Media media) {
+        if (media == null) return null;
         return new MediaResponseDTO(
-                image.getUrl(),
-                image.getPublicId()
+                media.getUrl(),
+                media.getPublicId(),
+                media.getVideoUrl(),
+                media.getVideoId(),
+                media.getVideoTitle(),
+                media.getThumbnailUrl(),
+                media.getChannelName()
         );
     }
 }
