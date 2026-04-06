@@ -7,10 +7,7 @@ import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
-import com.cms.services.EmbedService;
-import com.cms.services.ImageService;
-import com.cms.services.TestimonialService;
-import com.cms.services.YoutubeService;
+import com.cms.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,28 +19,26 @@ import java.util.List;
 public class TestimonialServiceImpl implements TestimonialService {
 
     private final TestimonialRepository testimonialRepository;
-    private final ImageService imageService;
     private final EmbedService embedService;
-    private final YoutubeService youtubeService;
+    private final MediaService mediaService;
     private final AdminSQLDAO adminSQLDAO;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
-                                  ImageService imageService,
-                                  EmbedService embedService,
-                                  YoutubeService youtubeService,
+                                  EmbedService embedService, MediaService mediaService,
                                   AdminSQLDAO adminSQLDAO) {
         this.testimonialRepository = testimonialRepository;
-        this.imageService = imageService;
         this.embedService = embedService;
-        this.youtubeService = youtubeService;
+        this.mediaService = mediaService;
         this.adminSQLDAO = adminSQLDAO;
     }
 
     @Override
     public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl) {
         Embed embed = embedService.findById(idEmbed);
+        Media media = mediaService.save(image, youtubeUrl);
         model.setEmbed(embed);
-        return testimonialRepository.save(model, image, youtubeUrl);
+        model.setMedia(media);
+        return testimonialRepository.save(model);
     }
 
     @Override

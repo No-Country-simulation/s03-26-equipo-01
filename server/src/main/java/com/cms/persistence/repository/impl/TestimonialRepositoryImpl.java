@@ -23,13 +23,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
-    public Testimonial save(Testimonial model, MultipartFile image, String youtubeUrl) {
-        Media media = buildMedia(image, youtubeUrl);
-
-        if (media != null) {
-            model.setMedia(media);
-        }
-
+    public Testimonial save(Testimonial model) {
         return testimonialSQLDAO.save(model);
     }
 
@@ -56,14 +50,4 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         }
     }
 
-    private Media buildMedia(MultipartFile image, String youtubeUrl) {
-        boolean hasImage = image != null && !image.isEmpty();
-        boolean hasYoutube = youtubeUrl != null && !youtubeUrl.isBlank();
-
-        if (!hasImage && !hasYoutube) {
-            return null;
-        }
-
-        return mediaRepository.save(image, youtubeUrl);
-    }
 }

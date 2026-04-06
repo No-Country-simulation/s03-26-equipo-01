@@ -15,24 +15,16 @@ public class MediaRepositoryImpl implements MediaRepository {
 
     private final MediaMongoDAO mediaMongoDAO;
 
-    private final ImageService imageService;
-
-    private final YoutubeService youtubeService;
 
     private final MediaMapper mediaMapper;
 
-    public MediaRepositoryImpl(MediaMongoDAO mediaMongoDAO, ImageService imageService, YoutubeService youtubeService, MediaMapper mediaMapper) {
+    public MediaRepositoryImpl(MediaMongoDAO mediaMongoDAO, MediaMapper mediaMapper) {
         this.mediaMongoDAO = mediaMongoDAO;
-        this.imageService = imageService;
-        this.youtubeService = youtubeService;
         this.mediaMapper = mediaMapper;
     }
 
     @Override
-    public Media save(MultipartFile image, String youtubeUrl) {
-        Media imageMedia = (image != null && !image.isEmpty()) ? imageService.guardarImagen(image) : null;
-        Media videoMedia = (youtubeUrl != null && !youtubeUrl.isBlank()) ? youtubeService.fromUrl(youtubeUrl) : null;
-
+    public Media save(Media imageMedia , Media videoMedia) {
         Media media = mediaMapper.fromSources(imageMedia, videoMedia);
 
         MediaMongo saved = mediaMongoDAO.save(mediaMapper.toMongo(media));
@@ -47,6 +39,15 @@ public class MediaRepositoryImpl implements MediaRepository {
         return mediaMongoDAO.findById(id)
                 .map(mediaMapper::fromMongo)
                 .orElse(null);
+    }
+
+    @Override
+    public void clearImageFields(String publicId) {
+        mediaMongoDAO.findByImagePublicId(publicId).ifPresent(media -> {
+            media.setImageUrl(null);
+            media.setImagePublicId(null);
+            mediaMongoDAO.save(media);
+        });
     }
 
 

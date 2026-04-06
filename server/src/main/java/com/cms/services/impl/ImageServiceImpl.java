@@ -37,4 +37,17 @@ public class ImageServiceImpl implements ImageService {
             throw new RuntimeException("Error al guardar la imagen", e);
         }
     }
+
+    @Override
+    public void deleteImage(String publicId) {
+        try {
+            Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+
+            if (!"ok".equals(result.get("result"))) {
+                throw new RuntimeException("No se pudo eliminar la imagen: " + result.get("result"));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error al conectar con Cloudinary para eliminar la imagen", e);
+        }
+    }
 }

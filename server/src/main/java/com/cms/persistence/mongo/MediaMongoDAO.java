@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MediaMongoDAO extends MongoRepository<MediaMongo, String> {
 
+    Optional<MediaMongo> findByImagePublicId(String imagePublicId);
 }
