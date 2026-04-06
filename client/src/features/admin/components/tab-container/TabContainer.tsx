@@ -15,8 +15,8 @@ const TabContainer = ({children, onTab}: TabContainerProps) => {
     return (
         <section>
             <Tabs onChange = {handleChange} value = {index}>
-                <Tab label = 'Categoria' />
-                <Tab label = 'Tag' />
+                <Tab label = {TabValues.CATEGORIA} />
+                <Tab label = {TabValues.TAG} />
             </Tabs>
             {children}
         </section>
