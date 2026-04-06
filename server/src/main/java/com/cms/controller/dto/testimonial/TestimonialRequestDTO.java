@@ -55,6 +55,8 @@ public record TestimonialRequestDTO(
 
         @Schema(
                 description = "Imagen del testimonio",
+                type = "string",
+                format = "binary",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
         @ValidImageFile
@@ -68,7 +70,7 @@ public record TestimonialRequestDTO(
 
         @Schema(
                 description = "Id de los tags que van a asociarse al testimonio",
-                example = "1,2,3",
+                example = "[1, 2, 3]",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
         List<Long> idTags,

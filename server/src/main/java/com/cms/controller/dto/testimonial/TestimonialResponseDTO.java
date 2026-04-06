@@ -33,7 +33,7 @@ public record TestimonialResponseDTO(
         String email,
 
         @Schema(description = "Estado del testimonio", example = "DRAFT")
-        StateTestimonial state,
+        String state,
 
         @Schema(description = "Fecha de creación del testimonio", example = "2026-04-02")
         LocalDate createdAt,
@@ -50,7 +50,7 @@ public record TestimonialResponseDTO(
                 testimonial.getRating(),
                 MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),
-                testimonial.getState(),
+                testimonial.getState().getLabel(),
                 testimonial.getCreatedAt(),
                 CategoryResponseSimpleDTO.fromModel(testimonial.getCategory()),
                 testimonial.getTags().stream().map(TagResponseDto::fromEntity).toList()
