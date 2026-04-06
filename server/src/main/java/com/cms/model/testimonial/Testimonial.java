@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 public class Testimonial {
 
     private Long id;
+
+    private String witness;
 
     private String testimonial;
 
@@ -26,6 +29,10 @@ public class Testimonial {
     private String email;
 
     private Media media;
+
+    private Category category;
+
+    private List<Tag> tags;
 
     private StateTestimonial state;
 
