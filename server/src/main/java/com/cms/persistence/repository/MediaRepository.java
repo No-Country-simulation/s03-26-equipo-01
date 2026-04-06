@@ -10,4 +10,6 @@ public interface MediaRepository {
     Media findById(String id);
 
     void clearImageFields(String publicId);
+
+    void clearVideoField(String videoId);
 }

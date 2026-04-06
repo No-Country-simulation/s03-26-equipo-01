@@ -20,4 +20,11 @@ public class MediaControllerREST {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/video/{videoId}")
+    public ResponseEntity<Void> deleteVideo(@PathVariable String videoId) {
+        mediaService.deleteVideo(videoId);
+
+        return ResponseEntity.noContent().build();
+    }
 }

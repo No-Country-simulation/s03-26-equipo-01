@@ -43,5 +43,10 @@ public class MediaServiceImpl implements MediaService {
         mediaRepository.clearImageFields(publicId);
     }
 
+    @Override
+    public void deleteVideo(String videoId) {
+        mediaRepository.clearVideoField(videoId);
+    }
+
 
 }

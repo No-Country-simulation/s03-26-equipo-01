@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface MediaMongoDAO extends MongoRepository<MediaMongo, String> {
 
     Optional<MediaMongo> findByImagePublicId(String imagePublicId);
+
+    Optional<MediaMongo> findByVideoId(String videoId);
 }

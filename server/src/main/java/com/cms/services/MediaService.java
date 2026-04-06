@@ -10,4 +10,6 @@ public interface MediaService {
     Media save(MultipartFile image, String youtubeUrl);
 
     void deleteImage(String publicId);
+
+    void deleteVideo(String videoId);
 }

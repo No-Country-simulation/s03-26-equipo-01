@@ -15,7 +15,6 @@ public class MediaRepositoryImpl implements MediaRepository {
 
     private final MediaMongoDAO mediaMongoDAO;
 
-
     private final MediaMapper mediaMapper;
 
     public MediaRepositoryImpl(MediaMongoDAO mediaMongoDAO, MediaMapper mediaMapper) {
@@ -46,6 +45,18 @@ public class MediaRepositoryImpl implements MediaRepository {
         mediaMongoDAO.findByImagePublicId(publicId).ifPresent(media -> {
             media.setImageUrl(null);
             media.setImagePublicId(null);
+            mediaMongoDAO.save(media);
+        });
+    }
+
+    @Override
+    public void clearVideoField(String videoId) {
+        mediaMongoDAO.findByVideoId(videoId).ifPresent( media -> {
+            media.setVideoId(null);
+            media.setVideoUrl(null);
+            media.setVideoTitle(null);
+            media.setThumbnailUrl(null);
+            media.setChannelName(null);
             mediaMongoDAO.save(media);
         });
     }

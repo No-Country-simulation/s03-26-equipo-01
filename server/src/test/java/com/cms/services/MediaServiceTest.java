@@ -23,7 +23,7 @@ class MediaServiceTest {
     private ResetService resetService;
 
     @Test
-    void creaMediaYLuegoEliminaImagen() throws Exception {
+    void SavedMediaAndDeleteImage() throws Exception {
         InputStream is = getClass().getClassLoader().getResourceAsStream("logo.jpg");
         if (is == null) throw new IllegalStateException("logo.jpg no encontrado en src/test/resources/");
 
@@ -48,6 +48,36 @@ class MediaServiceTest {
         Media deleted = mediaService.findById(created.getId());
         assertNull(deleted.getUrl());
         assertNull(deleted.getPublicId());
+    }
+    @Test
+    void SavedMediaAndDeleteVideo() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("logo.jpg");
+        if (is == null) throw new IllegalStateException("logo.jpg no encontrado en src/test/resources/");
+
+        MockMultipartFile image = new MockMultipartFile(
+                "file",
+                "test-image.jpg",
+                "image/jpeg",
+                is.readAllBytes()
+        );
+
+        String youtubeUrl = "https://www.youtube.com/watch?v=Y2oemCK-vAU";
+
+        Media created = mediaService.save(image, youtubeUrl);
+
+        assertNotNull(created);
+        assertNotNull(created.getPublicId());
+        assertNotNull(created.getUrl());
+        assertNotNull(created.getVideoId());
+
+        mediaService.deleteVideo(created.getVideoId());
+
+        Media deleted = mediaService.findById(created.getId());
+        assertNull(deleted.getVideoTitle());
+        assertNull(deleted.getThumbnailUrl());
+        assertNull(deleted.getVideoUrl());
+        assertNull(deleted.getVideoId());
+        assertNull(deleted.getChannelName());
     }
 
 
