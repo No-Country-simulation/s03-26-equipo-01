@@ -1,3 +1,7 @@
 @media screen and (min-width: 768px) {
-
+    .testimonial-admin-panel_container--info {
+        display: grid;
+        gap: 5vh;
+        height: 100%;
+    }
 }

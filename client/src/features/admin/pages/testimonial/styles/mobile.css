@@ -10,15 +10,8 @@
 
 .testimonial-admin-panel_container {
     display: grid;
-    place-items: center;
-    grid-template-rows: 14% 1fr;
-    gap: 7vh;
+    grid-template-rows: 20% 1fr;
+    gap: 10vh;
     width: 90%;
     height: 96%;
-}
-
-.testimonial-admin-panel_container--info {
-    display: grid;
-    width: 100%;
-    gap: 5vh
 }
