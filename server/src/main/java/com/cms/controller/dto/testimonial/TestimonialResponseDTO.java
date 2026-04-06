@@ -1,6 +1,7 @@
 package com.cms.controller.dto.testimonial;
 
 import com.cms.controller.dto.category.CategoryResponseSimpleDTO;
+import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.testimonial.media.MediaResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Schema(name = "TestimonialResponse", description = "Respuesta con los datos de un testimonio")
 public record TestimonialResponseDTO(
@@ -36,7 +38,9 @@ public record TestimonialResponseDTO(
         @Schema(description = "Fecha de creación del testimonio", example = "2026-04-02")
         LocalDate createdAt,
 
-        CategoryResponseSimpleDTO category
+        CategoryResponseSimpleDTO category,
+
+        List<TagResponseDto> tags
 ) {
     public static TestimonialResponseDTO fromModel(Testimonial testimonial) {
         return new TestimonialResponseDTO(
@@ -48,7 +52,8 @@ public record TestimonialResponseDTO(
                 testimonial.getEmail(),
                 testimonial.getState(),
                 testimonial.getCreatedAt(),
-                CategoryResponseSimpleDTO.fromModel(testimonial.getCategory())
+                CategoryResponseSimpleDTO.fromModel(testimonial.getCategory()),
+                testimonial.getTags().stream().map(TagResponseDto::fromEntity).toList()
         );
     }
 }

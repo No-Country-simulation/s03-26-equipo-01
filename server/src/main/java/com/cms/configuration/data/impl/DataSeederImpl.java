@@ -3,14 +3,12 @@ package com.cms.configuration.data.impl;
 import com.cms.configuration.data.DataSeeder;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
-import com.cms.services.CategoryService;
-import com.cms.services.EmbedService;
-import com.cms.services.TestimonialService;
-import com.cms.services.UserService;
+import com.cms.services.*;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -24,15 +22,17 @@ public class DataSeederImpl implements DataSeeder {
     private final EmbedService embedService;
     private final TestimonialService testimonialService;
     private final CategoryService categoryService;
+    private final TagService tagService;
 
     private Editor editor;
     private Admin admin;
 
-    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService) {
+    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
         this.userService = userService;
         this.embedService = embedService;
         this.testimonialService = testimonialService;
         this.categoryService = categoryService;
+        this.tagService = tagService;
     }
 
     @Override
@@ -54,7 +54,6 @@ public class DataSeederImpl implements DataSeeder {
                 .createdBy(adminSaved)
                 .build();
 
-
         embedService.registerEmbed(adminSaved.getId(), new Embed());
         Embed embed = embedService.registerEmbed(adminSaved.getId(), new Embed());
 
@@ -73,6 +72,9 @@ public class DataSeederImpl implements DataSeeder {
                 admin.getId()
         );
 
+        Tag tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+        Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
+        List<Long> tagIds = List.of(tag1.getId(), tag2.getId());
 
         List<Testimonial> testimonials = List.of(
                 Testimonial.builder()
@@ -101,6 +103,6 @@ public class DataSeederImpl implements DataSeeder {
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId()));
+        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds));
     }
 }

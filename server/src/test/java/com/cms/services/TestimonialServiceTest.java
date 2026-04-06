@@ -3,6 +3,7 @@ package com.cms.services;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
@@ -38,10 +39,14 @@ public class TestimonialServiceTest {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private TagService tagService;
+
     private Admin admin;
     private Testimonial testimonial;
     private Embed embed;
     private Category category;
+    private List<Long> tagIds;
 
     @BeforeEach
     public void setUp() {
@@ -64,6 +69,10 @@ public class TestimonialServiceTest {
                 admin.getId()
         );
 
+        Tag tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+        Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
+        tagIds = List.of(tag1.getId(), tag2.getId());
+
         testimonial = Testimonial.builder()
                 .testimonial("Excelente servicio, lo recomiendo totalmente")
                 .rating(5)
@@ -74,7 +83,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId());
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -112,9 +121,9 @@ public class TestimonialServiceTest {
                 .state(StateTestimonial.DRAFT)
                 .build();
 
-        testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId());
-        testimonialService.save(testimonial2,          embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId());
-        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId());
+        testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
+        testimonialService.save(testimonial2,          embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
+        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
 
         List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
 
@@ -140,7 +149,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId());
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());

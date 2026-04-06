@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -32,11 +33,15 @@ public class Testimonial {
 
     private Category category;
 
-    private List<Tag> tags;
+    @Builder.Default
+    private List<Tag> tags = new ArrayList<>();
 
     private StateTestimonial state;
 
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
+    public void agregarTags(List<Tag> tags) {
+        this.tags.addAll(tags);
+    }
 }

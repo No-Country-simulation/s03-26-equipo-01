@@ -66,7 +66,8 @@ public class TestimonialControllerREST {
                 request.idEmbed(),
                 request.image(),
                 request.youtubeUrl(),
-                request.idCategoria()
+                request.idCategoria(),
+                request.idTags()
         );
 
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
