@@ -4,7 +4,7 @@ import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.category.CreateCategoryDto;
 import com.cms.controller.dto.category.CategoryResponseDto;
 import com.cms.controller.dto.category.UpdateCategoryDto;
-import com.cms.model.Category;
+import com.cms.model.testimonial.Category;
 import com.cms.services.CategoryService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;

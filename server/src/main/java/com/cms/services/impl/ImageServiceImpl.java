@@ -29,10 +29,10 @@ public class ImageServiceImpl implements ImageService {
 
         try {
             Map result = cloudinary.uploader().upload(imagen.getBytes(), ObjectUtils.emptyMap());
-            return new Media(
-                    (String) result.get("public_id"),
-                    (String) result.get("secure_url")
-            );
+            return Media.builder()
+                    .publicId((String) result.get("public_id"))
+                    .url((String) result.get("secure_url"))
+                    .build();
         } catch (IOException e) {
             throw new RuntimeException("Error al guardar la imagen", e);
         }

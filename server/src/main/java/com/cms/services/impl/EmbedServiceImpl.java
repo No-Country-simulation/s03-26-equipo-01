@@ -10,6 +10,8 @@ import com.cms.services.EmbedService;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class EmbedServiceImpl implements EmbedService {
@@ -40,5 +42,10 @@ public class EmbedServiceImpl implements EmbedService {
     @Override
     public Embed findById(Long idEmbed) {
         return embedSQLDAO.findById(idEmbed).orElseThrow(() -> new EntityNotFoundException(Embed.class.getName(), idEmbed));
+    }
+
+    @Override
+    public List<Long> findAllIdsByAdmin(Admin admin) {
+        return embedSQLDAO.findAllByAdmin(admin);
     }
 }

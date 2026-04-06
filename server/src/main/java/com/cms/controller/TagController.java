@@ -2,11 +2,12 @@ package com.cms.controller;
 
 import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
-import com.cms.controller.dto.TagRequestDTO;
-import com.cms.controller.dto.TagResponseDto;
-import com.cms.controller.dto.TagUpdateRequestDTO;
-import com.cms.model.Tag;
+import com.cms.controller.dto.tag.TagRequestDTO;
+import com.cms.controller.dto.tag.TagResponseDto;
+import com.cms.controller.dto.tag.TagUpdateRequestDTO;
+import com.cms.model.testimonial.Tag;
 import com.cms.services.TagService;
+import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 public class TagController {
 
     private final TagService tagService;
+    private final AuthUtils authUtils;
 
     @Operation(summary = "Obtener todos los tags activos")
     @ApiResponses(value = {
@@ -73,9 +76,10 @@ public class TagController {
                     required = true,
                     content = @Content(schema = @Schema(implementation = TagRequestDTO.class))
             )
-            TagRequestDTO tagRequestDTO) {
+            TagRequestDTO tagRequestDTO, Authentication authentication) {
 
-        Tag createdTag = tagService.create(tagRequestDTO.toEntity());
+        Long idAdmin = authUtils.getUserId(authentication);
+        Tag createdTag = tagService.create(tagRequestDTO.toEntity(), idAdmin);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(TagResponseDto.fromEntity(createdTag));
     }

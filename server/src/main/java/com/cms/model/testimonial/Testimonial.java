@@ -14,12 +14,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class Testimonial {
+
     private Long id;
+
     private String testimonial;
+
     private Embed embed;
+
     private int rating;
+
     private String email;
-    private Media image;
+
+    private Media media;
+
     private StateTestimonial state;
-    private LocalDate createdAt;
+
+    @Builder.Default
+    private LocalDate createdAt = LocalDate.now();
+
 }

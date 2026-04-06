@@ -1,0 +1,8 @@
+.testimonial-admin-header {
+    justify-self: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+}
