@@ -11,9 +11,30 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Media {
 
-    @Builder.Default
-    private String url = "123";
+    private String id;
 
-    @Builder.Default
-    private String publicId = "123";
+    private String url ;
+
+    private String publicId ;
+
+    private String videoUrl;
+    private String videoId;
+    private String videoTitle;
+    private String thumbnailUrl;
+    private String channelName;
+
+    public void setImageData(Media imageMedia) {
+        if (imageMedia == null) return;
+        this.url = imageMedia.getUrl();
+        this.publicId = imageMedia.getPublicId();
+    }
+
+    public void setVideoData(Media videoMedia) {
+        if (videoMedia == null) return;
+        this.videoId = videoMedia.getVideoId();
+        this.videoUrl = videoMedia.getVideoUrl();
+        this.videoTitle = videoMedia.getVideoTitle();
+        this.thumbnailUrl = videoMedia.getThumbnailUrl();
+        this.channelName = videoMedia.getChannelName();
+    }
 }

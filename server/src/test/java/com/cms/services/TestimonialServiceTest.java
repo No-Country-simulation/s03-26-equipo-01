@@ -60,7 +60,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -71,7 +71,6 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
         assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
-        assertNull(testimonialRecovered.getImage());
     }
 
     @Test
@@ -100,9 +99,9 @@ public class TestimonialServiceTest {
                 .state(StateTestimonial.DRAFT)
                 .build();
 
-        testimonialService.save(testimonial,           embed.getId(),      null);
-        testimonialService.save(testimonial2,          embed.getId(),      null);
-        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null);
+        testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
+        testimonialService.save(testimonial2,          embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
+        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c");
 
         List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
 
@@ -128,7 +127,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, "https://www.youtube.com/watch?v=KhXTwEypI6c");
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -139,9 +138,9 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
         assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
-        assertNotNull(testimonialRecovered.getImage());
-        assertNotNull(testimonialRecovered.getImage().getUrl());
-        assertNotNull(testimonialRecovered.getImage().getPublicId());
+        assertNotNull(testimonialRecovered.getMedia());
+        assertNotNull(testimonialRecovered.getMedia().getUrl());
+        assertNotNull(testimonialRecovered.getMedia().getPublicId());
     }
 
     @AfterEach

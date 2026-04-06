@@ -61,7 +61,13 @@ public class TestimonialControllerREST {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirements()
     public ResponseEntity<TestimonialResponseDTO> testify(@ModelAttribute @Valid TestimonialRequestDTO request){
-        Testimonial testimonial = testimonialService.save(request.toModel(), request.idEmbed(), request.image());
+        Testimonial testimonial = testimonialService.save(
+                request.toModel(),
+                request.idEmbed(),
+                request.image(),
+                request.youtubeUrl()
+        );
+
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

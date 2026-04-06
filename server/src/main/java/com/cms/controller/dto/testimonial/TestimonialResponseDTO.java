@@ -23,8 +23,8 @@ public record TestimonialResponseDTO(
         @Schema(description = "Puntuación del testimonio (1 a 10)", example = "5")
         int rating,
 
-        @Schema(description = "Imagen del testimonio")
-        MediaResponseDTO image,
+        @Schema(description = "Media del testimonio")
+        MediaResponseDTO media,
 
         @Schema(description = "Correo electrónico del autor del testimonio", example = "usuario@email.com")
         String email,
@@ -41,7 +41,7 @@ public record TestimonialResponseDTO(
                 testimonial.getTestimonial(),
                 testimonial.getEmbed().getId(),
                 testimonial.getRating(),
-                MediaResponseDTO.fromModel(testimonial.getImage()),
+                MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),
                 testimonial.getState(),
                 testimonial.getCreatedAt()
