@@ -6,9 +6,9 @@
 .testimonial-admin-archived {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
-    width: 35%;
+    margin-left: 4%;
+    width: 30%;
     height: 100%;
 }
 
