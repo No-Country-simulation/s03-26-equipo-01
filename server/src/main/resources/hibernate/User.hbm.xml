@@ -22,7 +22,7 @@
         <property name="lastName" column="last_name"/>
         <property name="enabled" column="enabled"/>
 
-        <subclass name="com.cms.model.user.impl.Admin"
+        <subclass name="com.cms.model.user.impl.admin.Admin"
                   discriminator-value="ADMIN">
 
             <bag name="embeds"
@@ -32,10 +32,33 @@
                 <one-to-many class="com.cms.model.embeds.Embed"/>
             </bag>
 
+            <bag name="tags"
+                 inverse="true"
+                 lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.testimonial.Tag"/>
+            </bag>
+
+            <bag name="editors" inverse="true" lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.user.impl.Editor"/>
+            </bag>
+
+            <bag name="categories" inverse="true" lazy="false">
+                <key column="created_by"/>
+                <one-to-many class="com.cms.model.testimonial.Category"/>
+            </bag>
+
         </subclass>
 
         <subclass name="com.cms.model.user.impl.Editor"
                   discriminator-value="EDITOR">
+
+            <many-to-one name="createdBy"
+                         class="com.cms.model.user.impl.admin.Admin"
+                         column="created_by"
+                         not-null="false"
+                         cascade="none"/>
         </subclass>
 
     </class>

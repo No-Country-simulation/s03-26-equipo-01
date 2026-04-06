@@ -24,6 +24,17 @@
                      cascade="merge"
                      not-null="true"/>
 
+        <component name="media" class="com.cms.model.testimonial.Media">
+            <property name="id"           column="media_id"/>
+            <property name="url"          column="image_url"/>
+            <property name="publicId"     column="image_public_id"/>
+            <property name="videoUrl"     column="video_url"/>
+            <property name="videoId"      column="video_id"/>
+            <property name="videoTitle"   column="video_title"/>
+            <property name="thumbnailUrl" column="thumbnail_url"/>
+            <property name="channelName"  column="channel_name"/>
+        </component>
+
     </class>
 
 </hibernate-mapping>

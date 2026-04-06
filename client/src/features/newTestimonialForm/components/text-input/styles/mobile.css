@@ -1,0 +1,8 @@
+.new-testimonial_input-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 141px; 
+  gap: 6px;
+  height: auto;
+}

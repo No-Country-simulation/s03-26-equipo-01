@@ -1,0 +1,7 @@
+.testimonials-admin-list {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 360px));
+    gap: 4vh;
+    width: 100%;
+}

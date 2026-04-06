@@ -5,6 +5,10 @@ import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 
 import java.util.List;
+import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
+import com.cms.model.user.impl.admin.Admin;
+
+import java.util.List;
 
 
 public interface EmbedService {
@@ -14,4 +18,6 @@ public interface EmbedService {
 
 
     List<Testimonial> getTestimonialEmbed();
+
+    List<Long> findAllIdsByAdmin(Admin admin);
 }

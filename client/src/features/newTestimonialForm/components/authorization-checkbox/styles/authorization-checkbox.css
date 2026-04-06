@@ -1,0 +1,7 @@
+.new-testimonial_checkbox-container{
+  width: 100%;
+  max-width: 728px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

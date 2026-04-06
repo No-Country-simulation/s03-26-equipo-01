@@ -1,7 +1,6 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dto.auth.AuthResponseDTO;
-import com.cms.model.AuthResult;
+import com.cms.model.user.AuthResult;
 import com.cms.model.user.User;
 import com.cms.security.jwt.JwtService;
 import com.cms.security.user.UserDetailsImpl;

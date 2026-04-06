@@ -1,0 +1,21 @@
+.page-container {
+    position: relative;
+    display: grid;
+    grid-template-rows: 10% 1fr;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-container_reduce {
+    overflow-y: hidden;
+    display: grid;
+    grid-template-rows: 10% 1fr;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page-header-container {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
