@@ -2,8 +2,8 @@ package com.cms.services;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.user.impl.Admin;
-import com.cms.persistence.TestimonialRepository;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TestimonialRepository;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -153,16 +153,19 @@ import static org.junit.jupiter.api.Assertions.*;
             createSpecificTestimonial("Draft 2", 4, "draft2@test.com", StateTestimonial.DRAFT);
             createSpecificTestimonial("Archived 1", 2, "archived1@test.com", StateTestimonial.ARCHIVED);
         }
-        private Testimonial createSpecificTestimonial (String testimonialText,int rating, String email, StateTestimonial
-        state){
+        private Testimonial createSpecificTestimonial ( String testimonialText,
+                                                          int rating,
+                                                          String email,
+                                                          StateTestimonial state){
             Testimonial testimonial = Testimonial.builder()
                     .testimonial(testimonialText)
                     .rating(rating)
                     .email(email)
                     .state(state)
+
                     .build();
 
-            return testimonialService.save(testimonial, embed.getId());
+            return testimonialService.save(testimonial, embed.getId(), null, null);
         }
         @AfterEach
         public void tearDown () {
