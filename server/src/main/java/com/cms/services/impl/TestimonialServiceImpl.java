@@ -7,6 +7,7 @@ import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
+import com.cms.persistence.sql.CategorySQLDAO;
 import com.cms.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -19,25 +20,39 @@ import java.util.List;
 public class TestimonialServiceImpl implements TestimonialService {
 
     private final TestimonialRepository testimonialRepository;
+
     private final EmbedService embedService;
+
     private final MediaService mediaService;
+
     private final AdminSQLDAO adminSQLDAO;
+
+    private final CategorySQLDAO categoryDAO;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
                                   EmbedService embedService, MediaService mediaService,
-                                  AdminSQLDAO adminSQLDAO) {
+                                  AdminSQLDAO adminSQLDAO, CategorySQLDAO categoryDAO) {
+
         this.testimonialRepository = testimonialRepository;
+
         this.embedService = embedService;
+
         this.mediaService = mediaService;
+
         this.adminSQLDAO = adminSQLDAO;
+
+        this.categoryDAO = categoryDAO;
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl) {
+    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, Long idCategory) {
         Embed embed = embedService.findById(idEmbed);
         Media media = mediaService.save(image, youtubeUrl);
+
         model.setEmbed(embed);
         model.setMedia(media);
+        model.setCategory(categoryDAO.findById(idCategory).orElse(null));
+
         return testimonialRepository.save(model);
     }
 

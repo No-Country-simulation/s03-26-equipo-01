@@ -2,10 +2,12 @@ package com.cms.configuration.data.impl;
 
 import com.cms.configuration.data.DataSeeder;
 import com.cms.model.embeds.Embed;
+import com.cms.model.testimonial.Category;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
+import com.cms.services.CategoryService;
 import com.cms.services.EmbedService;
 import com.cms.services.TestimonialService;
 import com.cms.services.UserService;
@@ -21,14 +23,16 @@ public class DataSeederImpl implements DataSeeder {
     private final UserService userService;
     private final EmbedService embedService;
     private final TestimonialService testimonialService;
+    private final CategoryService categoryService;
 
     private Editor editor;
     private Admin admin;
 
-    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService) {
+    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService) {
         this.userService = userService;
         this.embedService = embedService;
         this.testimonialService = testimonialService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -60,6 +64,16 @@ public class DataSeederImpl implements DataSeeder {
     }
 
     private void seedTestimonials(Long embedId) {
+        Category category = categoryService.create(
+                Category.builder()
+                        .name("Test Category")
+                        .slug("test-category")
+                        .description("Category for tests")
+                        .build(),
+                admin.getId()
+        );
+
+
         List<Testimonial> testimonials = List.of(
                 Testimonial.builder()
                         .testimonial("Excelente servicio, lo recomiendo totalmente.")
@@ -87,6 +101,6 @@ public class DataSeederImpl implements DataSeeder {
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", request.idCategoria()));
+        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId()));
     }
 }

@@ -1,5 +1,6 @@
 package com.cms.controller.dto.testimonial;
 
+import com.cms.controller.dto.category.CategoryResponseSimpleDTO;
 import com.cms.controller.dto.testimonial.media.MediaResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
@@ -33,7 +34,9 @@ public record TestimonialResponseDTO(
         StateTestimonial state,
 
         @Schema(description = "Fecha de creación del testimonio", example = "2026-04-02")
-        LocalDate createdAt
+        LocalDate createdAt,
+
+        CategoryResponseSimpleDTO category
 ) {
     public static TestimonialResponseDTO fromModel(Testimonial testimonial) {
         return new TestimonialResponseDTO(
@@ -44,7 +47,8 @@ public record TestimonialResponseDTO(
                 MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),
                 testimonial.getState(),
-                testimonial.getCreatedAt()
+                testimonial.getCreatedAt(),
+                CategoryResponseSimpleDTO.fromModel(testimonial.getCategory())
         );
     }
 }
