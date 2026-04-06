@@ -4,8 +4,7 @@
     position: relative;
     z-index: 1;
     width: 90%;
-    height: 90vh;
+    height: 80%;
     display: grid;
     place-items: center;
-    grid-template-rows: 20% 80%;
 }
