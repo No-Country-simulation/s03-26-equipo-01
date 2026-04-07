@@ -1,0 +1,5 @@
+@media screen and (min-width: 1024px) {
+    .modal-form_title h3 {
+        font-size: var(--large-font);
+    }
+}

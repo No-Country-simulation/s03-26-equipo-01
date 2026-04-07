@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
-import type { ButtonsContainerProps, CategoryModalFormProps, InputsContainerProps } from "./category-model-form";
-import TextInput from "../../../../shared/elements/text-input/TextInput";
+import type { CategoryModalFormProps } from "./category-model-form";
 import schema from "./types/schema";
 import type { CategoryCreated } from "../../adapters/category/dtos/category-created";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +7,9 @@ import inputTextData from "./types/input-text-data";
 import ModalContainer from "../../../../shared/components/modal-container/ModalContainer";
 import './styles/category-model-form.css';
 import useActive from "../../../../shared/hooks/use-active";
+import ModalTitleContainer from "../modal-title-form/ModalTitleContainer";
+import ModalInputsContainer from "../modal-input-container/ModalInputContainer";
+import ModalButtonsContainer from "../modal-buttons-container/ModalButtonsContainer";
 
 const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
 
@@ -21,46 +23,20 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
         <ModalContainer disable = {isActive}>
             <form onSubmit = {handleSubmit(handleClick)} className = 'category-modal-form-container'>
                 <div>
-                    <TitleContainer />
-                    <InputsContainer 
+                    <ModalTitleContainer title = "Nueva Categoria" />
+                    <ModalInputsContainer 
                         register = {register}
                         errorMessage = {errors.name?.message}
+                        inputTextData = {inputTextData}
+                        warningText = "Crea categorias amplias, no específicas."
                     />
-                    <ButtonsContainer onActive = {handleActive} />
+                    <ModalButtonsContainer onActive = {handleActive} />
                 </div>
             </form>
         </ModalContainer>
     )
 }
 
-const TitleContainer = () => {
-    return (
-        <section className = 'category-modal-form_title'>
-            <h3>Nuevo Categoria</h3>
-        </section>
-    )
-}
 
-const InputsContainer = ({register, errorMessage}: InputsContainerProps) => {
-    return (
-        <section className = 'category-modal-form_inputs'>
-            <TextInput 
-                inputTextData = {inputTextData}
-                register = {register}
-                error = {errorMessage}
-            />
-            <p>Crea categorias amplias, no específicas.</p>
-        </section>
-    )
-}
-
-const ButtonsContainer = ({onActive}: ButtonsContainerProps) => {
-    return (
-        <section className = 'category-modal-form_buttons'>
-            <button onClick = {onActive} className = 'category-modal-form--cancel'>CANCELAR</button>
-            <button className = 'category-modal-form--add'>CONFIRMAR</button>
-        </section>
-    )
-}
 
 export default CategoryModalForm;
