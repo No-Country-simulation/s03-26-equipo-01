@@ -7,4 +7,14 @@
     .category-modal-form_title h3 {
         font-size: var(--large-font);
     }
+
+    .category-modal-form_buttons {
+        min-width: 20vw;
+        min-height: 5vh;
+    }
+
+    .category-modal-form_buttons button {
+        min-width: 10vw;
+        min-height: 6vh;
+    }
 }
