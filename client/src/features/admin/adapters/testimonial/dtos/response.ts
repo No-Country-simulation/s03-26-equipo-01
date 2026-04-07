@@ -1,4 +1,3 @@
-import type { Image } from "../../../models/image"
 import type { MediaResponse } from "../../media/dtos/media"
 import type { AdminState } from "../../../models/state"
 import type { CategoryResponse } from "../../category/dtos/response"
@@ -16,5 +15,4 @@ export interface TestimonialResponse {
     category: CategoryResponse
     tags: TagResponse[]
     media: MediaResponse
-    image?: Image
 }
