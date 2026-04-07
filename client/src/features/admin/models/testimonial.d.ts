@@ -1,5 +1,5 @@
 import type { Image } from "./image"
-import type { State } from "./state"
+import type { AdminState } from "./state"
 
 export interface Testimonial {
     id: number, 
@@ -7,7 +7,7 @@ export interface Testimonial {
     idEmbed: number 
     rating: number
     email: string 
-    state: State
+    state: AdminState
     createdAt: Date
     image?: Image
 }

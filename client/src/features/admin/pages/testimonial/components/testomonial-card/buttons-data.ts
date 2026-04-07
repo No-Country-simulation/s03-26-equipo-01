@@ -1,8 +1,8 @@
 import type { ChangeStateButtons } from "../../../../../../shared/types/change-state-button-data/change-state-button"
-import type { State } from "../../../../models/state"
+import type { AdminState } from "../../../../models/state"
 
-const buttonsStateData: Record<State, ChangeStateButtons> = {
-    APROBADO: {
+const buttonsStateData: Record<AdminState, ChangeStateButtons> = {
+    Aprobado: {
         nextState: {
             text: 'PUBLICAR',
             event: (id: number) => console.log(id)
@@ -12,7 +12,7 @@ const buttonsStateData: Record<State, ChangeStateButtons> = {
             event: (id: number) => console.log(id)
         }
     },
-    BORRADOR: {
+    Pendiente: {
         nextState: {
             text: 'APROBAR',
             event: (id: number) => console.log(id)
@@ -22,7 +22,7 @@ const buttonsStateData: Record<State, ChangeStateButtons> = {
             event: (id: number) => console.log(id)
         }
     },
-    PUBLICADO: {
+    Publicado: {
         nextState: {
             text: 'DESPUBLICAR',
             event: (id: number) => console.log(id)
@@ -31,17 +31,7 @@ const buttonsStateData: Record<State, ChangeStateButtons> = {
             text: 'ELIMINAR',
             event: (id: number) => console.log(id)
         }
-    },
-    ARCHIVADO: {
-        nextState: {
-            text: 'APROBAR',
-            event: (id: number) => console.log(id)
-        },
-        prevState: {
-            text: 'RECHAZAR',
-            event: (id: number) => console.log(id)
-        }
-    },
+    }
 }
 
 export default buttonsStateData
