@@ -4,6 +4,8 @@ import TabContainer from "../../components/tab-container/TabContainer";
 import CategoryDashboard from "./components/category-dashboard/CategoryDashboard";
 import TagDashboard from "./components/tag-dashboard/TagDashboard";
 import useTab from "../../hooks/use-tab";
+import './styles/dashboard-panel.css';
+import type { TabsProps } from "./dashboard-panel";
 
 const DashboardPanel = () => {    
 
@@ -17,13 +19,22 @@ const DashboardPanel = () => {
                     <TitleContainer 
                         title = {`Bienvenido ${user?.firstName + ' ' + user?.lastName}`}
                     />
-                    <TabContainer onTab = {handleTab}>
-                        <CategoryDashboard currentTab = {tabName} />
-                        <TagDashboard currentTab = {tabName} />
-                    </TabContainer>
+                    <Tabs 
+                        handleTab = {handleTab} 
+                        tabName = {tabName}
+                    />
                 </div>
             </div>
         </section>
+    )
+}
+
+const Tabs = ({handleTab, tabName}: TabsProps) => {
+    return (
+        <TabContainer onTab = {handleTab}>
+            <CategoryDashboard currentTab = {tabName} />
+            <TagDashboard currentTab = {tabName} />
+        </TabContainer>
     )
 }
 
