@@ -1,5 +1,4 @@
 import type { Testimonial } from "../../models/testimonial";
-import { stateResponseAdapter } from "../state/state.adapter";
 import type { TestimonialResponse } from "./dtos/response";
 
 function adminTestimonialsAdapter(response: TestimonialResponse[]): Testimonial[] {
@@ -13,7 +12,7 @@ function adminTestimonialAdapter(testimonial: TestimonialResponse): Testimonial 
         idEmbed: testimonial.idEmbed,
         rating: testimonial.rating,
         email: testimonial.email, 
-        state: stateResponseAdapter(testimonial.state),
+        state: testimonial.state,
         image: testimonial.image,
         createdAt: testimonial.createdAt
     }
