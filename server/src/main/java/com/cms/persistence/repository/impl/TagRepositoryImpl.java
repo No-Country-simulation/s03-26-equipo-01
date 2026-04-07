@@ -8,6 +8,9 @@ import com.cms.persistence.repository.mapper.TagMapper;
 import com.cms.persistence.sql.TagSQLDAO;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class TagRepositoryImpl implements TagRepository {
 
@@ -23,7 +26,17 @@ public class TagRepositoryImpl implements TagRepository {
         this.tagSQLDAO = tagSQLDAO;
     }
 
-    public Tag save(Tag tag) {
+    @Override
+    public List<Tag> findAllByActiveTrueOrderByNameAsc() {
+        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
+    }
+
+    @Override
+    public Optional<Tag> findByIdAndActiveTrue(Long id) {
+        return tagSQLDAO.findByIdAndActiveTrue(id);
+    }
+
+    public Tag saveAndFlush(Tag tag) {
         Tag saved = tagSQLDAO.save(tag);
 
         TagElastic elastic = tagMapper.toElastic(saved);

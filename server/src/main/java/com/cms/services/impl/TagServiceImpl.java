@@ -2,14 +2,12 @@ package com.cms.services.impl;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
-import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.TagService;
-import java.text.Normalizer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,8 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 
-    private final TagSQLDAO tagSQLDAO;
     private final AdminSQLDAO adminSQLDAO;
+
+    private final TagRepository tagRepository;
 
     @Override
     public Tag create(Tag tag, Long idAdmin) {
@@ -44,13 +43,13 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<Tag> findAll() {
-        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
+        return tagRepository.findAllByActiveTrueOrderByNameAsc();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Tag findById(Long id) {
-        return tagSQLDAO.findByIdAndActiveTrue(id)
+        return tagRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
     }
 
@@ -75,7 +74,7 @@ public class TagServiceImpl implements TagService {
 
     private Tag save(Tag tag) {
         try {
-            return tagSQLDAO.saveAndFlush(tag);
+            return tagRepository.saveAndFlush(tag);
         } catch (DataIntegrityViolationException exception) {
             throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
         }
