@@ -1,0 +1,10 @@
+@media screen and (min-width: 1024px) {
+    .category-modal-form-container {
+        min-width: 40vw;
+        min-height: 40vh;
+    }
+
+    .category-modal-form_title h3 {
+        font-size: var(--large-font);
+    }
+}

@@ -57,8 +57,8 @@ const InputsContainer = ({register, errorMessage}: InputsContainerProps) => {
 const ButtonsContainer = ({onActive}: ButtonsContainerProps) => {
     return (
         <section className = 'category-modal-form_buttons'>
-            <button onClick = {onActive}>Cancelar</button>
-            <button>Confirmar</button>
+            <button onClick = {onActive} className = 'category-modal-form--cancel'>CANCELAR</button>
+            <button className = 'category-modal-form--add'>CONFIRMAR</button>
         </section>
     )
 }

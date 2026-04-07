@@ -4,6 +4,7 @@
     --primary-color: #FF9B71;
     --secondary-color: #0F1845;
     --secondary-dark-color: #0F1845;
+    --primary-blue: #1E308A;
     --accent-color: #4D78AD;
     --link-color: #7182FF;
     --dark-text-color: #21140F;
@@ -14,12 +15,14 @@
     --light-background:#FAFAFA;
     --selected-color: #F97316;
 
+    --primary-title-color: #444444;
+
     --primary-color-text: #21140F;
     --secondary-color-text: #4D433F;
 
     --primary-font: clamp(1vh, 0.8197vw + 2.8565rem, 2vh);
     --medium-font: clamp(2vh, 0.8197vw + 2.8565rem, 2.4vh);
-    --large-font: clamp(3vh, 0.8197vw + 2.8565rem, 5vh);
+    --large-font: clamp(2.5vh, 0.8197vw + 2.8565rem, 4.5vh);
 }
 
 html {
