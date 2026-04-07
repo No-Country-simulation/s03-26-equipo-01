@@ -1,1 +1,1 @@
-export type StateResponse = 'APPROVED' | 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'
+export type StateResponse = 'APPROVED' | 'PUBLISHED' | 'PENDING'

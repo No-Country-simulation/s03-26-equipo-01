@@ -1,5 +1,5 @@
 import type { Image } from "../../../models/image"
-import type { StateResponse } from "../../state/dtos/response"
+import type { AdminState } from "../../../models/state"
 
 export interface TestimonialResponse {
     id: number, 
@@ -7,7 +7,7 @@ export interface TestimonialResponse {
     idEmbed: number 
     rating: number
     email: string 
-    state: StateResponse
+    state: AdminState
     createdAt: Date
     image: Image
 }
