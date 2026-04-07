@@ -12,4 +12,6 @@ public interface TestimonialRepository {
     List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds);
 
     Testimonial save(Testimonial model, MultipartFile image, String youtubeUrl);
+
+    Testimonial update(Testimonial model);
 }

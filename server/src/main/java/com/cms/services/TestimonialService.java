@@ -12,4 +12,6 @@ public interface TestimonialService {
     Testimonial findTestimonialById(Long id);
 
     List<Testimonial> findTestimonialByAdmin(Long idAdmin);
+
+    Testimonial nextState(Long id, String role);
 }

@@ -1,5 +1,6 @@
 package com.cms.controller;
 
+import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
@@ -71,5 +72,12 @@ public class TestimonialControllerREST {
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PatchMapping("/{id}/next/state")
+    @AdminEditorEndpoint
+    public ResponseEntity<TestimonialResponseDTO> nextState(@PathVariable Long id, Authentication auth) {
+        Testimonial testimonial = testimonialService.nextState(id, authUtils.getRole(auth));
+        return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
     }
 }

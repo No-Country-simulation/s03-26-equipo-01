@@ -4,10 +4,7 @@ import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
 import com.cms.model.testimonial.state.impl.DraftState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -15,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = {"embed"})
 public class Testimonial {
 
     private Long id;
@@ -35,7 +33,7 @@ public class Testimonial {
     private LocalDate createdAt = LocalDate.now();
 
     @Builder.Default
-    private TestimonialState testimonialState = DraftState.builder().build();
+    private TestimonialState testimonialState = new DraftState();
 
     public void nextState() {
         this.testimonialState = testimonialState.next(this);

@@ -34,6 +34,11 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
+    public Testimonial update(Testimonial model) {
+        return testimonialSQLDAO.save(model);
+    }
+
+    @Override
     public Testimonial findById(Long id) {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));

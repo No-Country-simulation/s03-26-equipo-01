@@ -1,9 +1,11 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
@@ -56,5 +58,20 @@ public class TestimonialServiceImpl implements TestimonialService {
         Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
         List<Long> embedIds = embedService.findAllIdsByAdmin(admin);
         return testimonialRepository.findTestimonialByEmbeds(embedIds);
+    }
+
+    @Override
+    public Testimonial nextState(Long id, String role) {
+        Testimonial testimonial = findTestimonialById(id);
+
+        if (testimonial.getState() == StateTestimonial.DRAFT && !role.equals("ROLE_EDITOR")) {
+            throw new BusinessException("Solo un editor puede aprobar un testimonio borrador");
+        }
+        if (testimonial.getState() != StateTestimonial.DRAFT && !role.equals("ROLE_ADMIN")) {
+            throw new BusinessException("Solo un admin puede avanzar este estado");
+        }
+
+        testimonial.nextState();
+        return testimonialRepository.update(testimonial);
     }
 }
