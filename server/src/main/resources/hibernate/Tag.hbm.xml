@@ -11,7 +11,7 @@
             <generator class="identity"/>
         </id>
 
-        <property name="name"      column="name"       not-null="true" unique="true"/>
+        <property name="name"      column="name"       not-null="true"/>
         <property name="active"    column="is_active"  not-null="true"/>
         <property name="createdAt" column="created_at" not-null="true" update="false"/>
 

@@ -10,4 +10,13 @@ public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
     @Query("SELECT a FROM Admin a WHERE a.id = :id AND a.enabled = true")
     Optional<Admin> findByIdAndEnabledTrue(@Param("id") Long id);
 
+    @Query("""
+        SELECT COUNT(t) > 0 
+        FROM Admin a 
+            JOIN a.tags t 
+        WHERE a.id = :idAdmin 
+            AND a.enabled = true 
+            AND t.name = :name
+    """)
+    Boolean hasNameTagInListAdmin(String name, Long idAdmin);
 }

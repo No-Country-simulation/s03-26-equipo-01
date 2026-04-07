@@ -1,5 +1,6 @@
 package com.cms.model.user.impl.admin;
 
+import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.embeds.Embed;
@@ -36,7 +37,13 @@ public class Admin extends User {
         embeds.add(embed);
     }
 
-    public void agregarTag(Tag tag) {
+    public void agregarTag(Tag tag, Boolean hasNamesTagInListAdmin) {
+        validatedIfTagNameDuplicated(tag,hasNamesTagInListAdmin);
         tags.add(tag);
+    }
+
+    private void validatedIfTagNameDuplicated(Tag tag, Boolean hasNamesTagInListAdmin) {
+        if (hasNamesTagInListAdmin) throw new DuplicateResourceException("El admin ya tiene una tag con el nombre: " + tag.getName());
+
     }
 }

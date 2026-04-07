@@ -85,7 +85,7 @@ public class DataSeederImpl implements DataSeeder {
 
         Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
 
-        Tag tag3 = tagService.create(Tag.builder().name("java123").build(), admin2.getId());
+        Tag tag3 = tagService.create(Tag.builder().name("java").build(), admin2.getId());
 
         List<Long> tagIds = List.of(tag1.getId(), tag2.getId());
 

@@ -30,13 +30,15 @@ public class TagServiceImpl implements TagService {
     public Tag create(Tag tag, Long idAdmin) {
         Admin admin = getAdmin(idAdmin);
 
+        Boolean hasNamesTagInListAdmin = adminSQLDAO.hasNameTagInListAdmin(tag.getName(),idAdmin);
+
         String normalizedName = normalizeName(tag.getName());
 
         tag.setName(normalizedName);
 
         tag.setCreator(admin);
 
-        admin.agregarTag(tag);
+        admin.agregarTag(tag, hasNamesTagInListAdmin);
 
         adminSQLDAO.save(admin);
 
