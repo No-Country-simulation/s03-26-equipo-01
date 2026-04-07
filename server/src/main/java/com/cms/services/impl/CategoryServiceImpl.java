@@ -53,19 +53,24 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category update(Long id, Category categoryData) {
-        Category categoryToUpdate = findById(id);
+        try {
+            Category categoryToUpdate = findById(id);
 
-        if (categoryData.getName() != null) {
-            categoryToUpdate.setName(categoryData.getName());
-        }
-        if (categoryData.getSlug() != null) {
-            categoryToUpdate.setSlug(categoryData.getSlug());
-        }
-        if (categoryData.getDescription() != null) {
-            categoryToUpdate.setDescription(categoryData.getDescription());
+            if (categoryData.getName() != null) {
+                categoryToUpdate.setName(categoryData.getName());
+            }
+            if (categoryData.getSlug() != null) {
+                categoryToUpdate.setSlug(categoryData.getSlug());
+            }
+            if (categoryData.getDescription() != null) {
+                categoryToUpdate.setDescription(categoryData.getDescription());
+            }
+
+            return categorySQLDAO.save(categoryToUpdate);
+        } catch (DataIntegrityViolationException e){
+            throw new DuplicateResourceException("ya existe un categoria con el nombre: " + categoryData.getName());
         }
 
-        return categorySQLDAO.save(categoryToUpdate);
     }
 
     @Override
