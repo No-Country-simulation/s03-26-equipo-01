@@ -1,6 +1,5 @@
 package com.cms.services;
 
-import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
@@ -12,12 +11,8 @@ public interface EmbedService {
 
     Embed findById(Long idEmbed);
 
-
     List<Testimonial> getTestimonialEmbed();
 
     List<Long> findAllIdsByAdmin(Admin admin);
-    List<Tag> findByTestimonialId(Long testimonialId);
 
-//    Metodo para filtrar unicamente el nombre de la tag y no todos sus campos
-    TestimonialEmbedResponseDTO convertToDto(Testimonial testimonial);
 }

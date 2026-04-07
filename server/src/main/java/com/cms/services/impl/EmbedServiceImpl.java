@@ -1,6 +1,5 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Tag;
@@ -29,13 +28,11 @@ public class EmbedServiceImpl implements EmbedService {
      private final EmbedSQLDAO embedSQLDAO;
      private final AdminSQLDAO adminSQLDAO;
      private final TestimonialSQLDAO testimonialSQLDAO;
-     private final TagSQLDAO tagSQLDAO;
 
-    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO,TestimonialSQLDAO testimonialSQLDAO,TagSQLDAO tagSQLDAO) {
+    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO,TestimonialSQLDAO testimonialSQLDAO) {
         this.embedSQLDAO = embedSQLDAO;
         this.adminSQLDAO = adminSQLDAO;
         this.testimonialSQLDAO = testimonialSQLDAO;
-        this.tagSQLDAO = tagSQLDAO;
     }
 
 
@@ -53,17 +50,14 @@ public class EmbedServiceImpl implements EmbedService {
         return embedSQLDAO.save(embed);
     }
 
-
     @Override
     public Embed findById(Long idEmbed) {
         return embedSQLDAO.findById(idEmbed).orElseThrow(() -> new EntityNotFoundException(Embed.class.getName(), idEmbed));
     }
 
-
     @Override
     public List<Testimonial> getTestimonialEmbed() {
-       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(0, 5));
-       return testimonialEmbed;
+        return testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(0, 5));
     }
 
     @Override
@@ -71,18 +65,5 @@ public class EmbedServiceImpl implements EmbedService {
         return embedSQLDAO.findAllByAdmin(admin);
     }
 
-    @Override
-    public List<Tag> findByTestimonialId(Long testimonialId) {
-        return  tagSQLDAO.findByTestimonialId(testimonialId);
-    }
 
-    @Override
-    public TestimonialEmbedResponseDTO convertToDto(Testimonial testimonial) {
-        Set<String> tagNames = findByTestimonialId(testimonial.getId())
-                .stream()
-                .map(Tag::getName)
-                .collect(Collectors.toSet());
-
-        return TestimonialEmbedResponseDTO.fromModel(testimonial, tagNames);
-    }
 }
