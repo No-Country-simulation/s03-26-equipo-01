@@ -1,4 +1,4 @@
-.category-dashboard-form-container {
+.category-modal-form-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
     background-color: #FFF;
 }
 
-.category-dashboard-form-container div {
+.category-modal-form-container div {
     justify-self: center;
     display: flex;
     flex-direction: column;
@@ -18,27 +18,32 @@
     height: 90%;
 }
 
-.category-dashboard_title {
+.category-modal-form_title {
     margin: 0 auto;
 }
 
-.category-dashboard_title h3 {
+.category-modal-form_title h3 {
     font-size: 24px;
     font-weight: 100;
 }
 
-.category-dashboard_inputs {
+.category-modal-form_inputs {
     width: 100%;
 }
 
-.category-dashboard_buttons {
+.category-modal-form_inputs p {
+    margin-left: 1.7vw;
+    color: #555
+}
+
+.category-modal-form_buttons {
     display: flex;
     justify-content: center;
     gap: 2vw;
     height: 16%;
 }
 
-.category-dashboard_buttons button {
+.category-modal-form_buttons button {
     height: 100%;
     width: 40%;
     max-width: 120px;

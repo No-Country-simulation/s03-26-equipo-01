@@ -19,7 +19,7 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
 
     return (
         <ModalContainer disable = {isActive}>
-            <form onSubmit = {handleSubmit(handleClick)} className = 'category-dashboard-form-container'>
+            <form onSubmit = {handleSubmit(handleClick)} className = 'category-modal-form-container'>
                 <div>
                     <TitleContainer />
                     <InputsContainer 
@@ -35,27 +35,28 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
 
 const TitleContainer = () => {
     return (
-        <section className = 'category-dashboard_title'>
-            <h3>Crea una Categoria</h3>
+        <section className = 'category-modal-form_title'>
+            <h3>Nuevo Categoria</h3>
         </section>
     )
 }
 
 const InputsContainer = ({register, errorMessage}: InputsContainerProps) => {
     return (
-        <section className = 'category-dashboard_inputs'>
+        <section className = 'category-modal-form_inputs'>
             <TextInput 
                 inputTextData = {inputTextData}
                 register = {register}
                 error = {errorMessage}
             />
+            <p>Crea categorias amplias, no específicas.</p>
         </section>
     )
 }
 
 const ButtonsContainer = ({onActive}: ButtonsContainerProps) => {
     return (
-        <section className = 'category-dashboard_buttons'>
+        <section className = 'category-modal-form_buttons'>
             <button onClick = {onActive}>Cancelar</button>
             <button>Confirmar</button>
         </section>

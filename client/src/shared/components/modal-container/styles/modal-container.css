@@ -1,3 +1,5 @@
+@import '../../../animations/show-container.css';
+
 .modal-form-container {
     position: absolute;
     z-index: 10;
