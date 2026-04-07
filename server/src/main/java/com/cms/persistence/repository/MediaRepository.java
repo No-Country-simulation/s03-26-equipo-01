@@ -5,7 +5,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface MediaRepository {
 
-    Media save(MultipartFile image, String youtubeUrl);
+    Media save(Media imageMedia , Media videoMedia);
 
     Media findById(String id);
+
+    void clearImageFields(String publicId);
+
+    void clearVideoField(String videoId);
 }

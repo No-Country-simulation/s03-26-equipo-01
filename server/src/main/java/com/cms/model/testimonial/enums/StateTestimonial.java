@@ -7,7 +7,7 @@ public enum StateTestimonial {
     APPROVED("Aprobado"),
     DRAFT("Borrador"),
     PUBLISHED("Publicado"),
-    ARCHIVED("Archivado");
+    PENDING("Pendiente"),;
 
     private final String label;
 

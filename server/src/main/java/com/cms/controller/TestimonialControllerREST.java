@@ -65,11 +65,15 @@ public class TestimonialControllerREST {
                 request.toModel(),
                 request.idEmbed(),
                 request.image(),
-                request.youtubeUrl()
+                request.youtubeUrl(),
+                request.idCategoria(),
+                request.idTags()
         );
 
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+
 }
