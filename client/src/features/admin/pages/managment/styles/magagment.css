@@ -6,6 +6,8 @@
 }
 
 .managment-admin-panel_container {
+    display: grid;
+    grid-template-rows: 20% 1fr;
     width: 90%;
     height: 90%;
 }

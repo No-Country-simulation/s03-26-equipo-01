@@ -4,18 +4,19 @@ import CategoryModalForm from "../../../../components/category-modal-form/Catego
 import type { TabContent } from "../../../../components/tab-container/tab-container";
 import { TabValues } from "../../../../components/tab-container/tab-values";
 import useCategory from "../../../../hooks/use-category";
+import './styles/category-table.css';
 
-const CategoryTable = ({currentTab}: TabContent) => {
+const CategorySubPanel = ({currentTab}: TabContent) => {
     
     const {isActive, handleActive} = useActive();
     const {addCategory} = useCategory();
 
     return (
-        <section hidden = {currentTab !== TabValues.CATEGORIA}>
-            <AddButton text = "Crear categoría" onSubmit = {handleActive} />
+        <section hidden = {currentTab !== TabValues.CATEGORIA} className = 'category-subpanel-container'>
+            <AddButton text = "CREAR CATEGORIA" onSubmit = {handleActive} />
             {isActive && <CategoryModalForm onSubmit = {addCategory} />}
         </section>
     )
 }
 
-export default CategoryTable;
+export default CategorySubPanel;

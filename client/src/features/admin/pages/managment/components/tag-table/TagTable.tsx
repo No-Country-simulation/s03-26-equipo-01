@@ -1,14 +1,18 @@
+import useActive from "../../../../../../shared/hooks/use-active";
+import AddButton from "../../../../components/add-button/AddButton";
 import type { TabContent } from "../../../../components/tab-container/tab-container";
 import { TabValues } from "../../../../components/tab-container/tab-values";
-import useTag from "../../../../hooks/use-tag";
+import './styles/tab-table.css';
 
-const TagTable = ({currentTab}: TabContent) => {
+const TagSubPanel = ({currentTab}: TabContent) => {
     
-    const {addTag, editTag, deleteTag} = useTag();
+    const {handleActive} = useActive();
 
     return (
-        <p hidden = {currentTab !== TabValues.TAG}>tags</p>
+        <section hidden = {currentTab !== TabValues.TAG} className = 'tag-subpanel-container'>
+            <AddButton text = "CREAR TAG" onSubmit = {handleActive} />
+        </section>
     )
 }
 
-export default TagTable;
+export default TagSubPanel;

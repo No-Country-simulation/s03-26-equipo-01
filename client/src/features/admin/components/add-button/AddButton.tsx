@@ -1,12 +1,10 @@
-export interface AddButtonProps {
-    text: string
-    onSubmit: () => void
-}
+import type { AddButtonProps } from "./add-button";
+import './styles/add-button.css';
 
 const AddButton = ({text, onSubmit}: AddButtonProps) => {
     return (
-        <button onClick = {onSubmit}>
-            {text}
+        <button onClick = {onSubmit} className = 'add-admin-button'>
+            {'+ ' + text}
         </button>
     )
 }
