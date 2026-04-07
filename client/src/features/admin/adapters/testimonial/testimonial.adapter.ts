@@ -1,4 +1,7 @@
 import type { Testimonial } from "../../models/testimonial";
+import { categoryAdapter } from "../category/category.adapter";
+import { mediaAdapter } from "../media/media.adapter";
+import { tagsAdapter } from "../tag/tag.adapter";
 import type { TestimonialResponse } from "./dtos/response";
 
 function adminTestimonialsAdapter(response: TestimonialResponse[]): Testimonial[] {
@@ -9,12 +12,14 @@ function adminTestimonialAdapter(testimonial: TestimonialResponse): Testimonial 
     return {
         id: testimonial.id, 
         testimonial: testimonial.testimonial,
-        idEmbed: testimonial.idEmbed,
         rating: testimonial.rating,
-        email: testimonial.email, 
+        witness: testimonial.witness,
         state: testimonial.state,
-        image: testimonial.image,
-        createdAt: testimonial.createdAt
+        createdAt: testimonial.createdAt,
+        media: mediaAdapter(testimonial.media),
+        category: categoryAdapter(testimonial.category),
+        tags: tagsAdapter(testimonial.tags),
+
     }
 }
 

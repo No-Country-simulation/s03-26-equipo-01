@@ -4,7 +4,8 @@ import './testimonial.header.css';
 const TestimonialHeader = ({testimonial}: TestimonialHeaderProps) => {
     return (
         <header className = 'testimonial-admin-header'>
-            {testimonial.email}
+            <p>{testimonial.witness}</p>
+            <p>{testimonial.category.name}</p>
         </header>
     )
 }
