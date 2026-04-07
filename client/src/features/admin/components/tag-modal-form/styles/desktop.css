@@ -1,0 +1,6 @@
+@media screen and (min-width: 1024px) {
+    .tag-modal-form-container {
+        min-width: 40vw;
+        min-height: 40vh;
+    }
+}
