@@ -32,8 +32,6 @@ public class TagServiceImpl implements TagService {
 
         tag.setName(normalizedName);
 
-        tag.setSlug(generateSlug(normalizedName));
-
         tag.setCreator(admin);
 
         admin.agregarTag(tag);
@@ -61,9 +59,8 @@ public class TagServiceImpl implements TagService {
         Tag tagToUpdate = findById(id);
 
         String normalizedName = normalizeName(updateTagDto.name());
-        String slug = generateSlug(normalizedName);
 
-        tagToUpdate.updateTag(normalizedName, slug);
+        tagToUpdate.updateTag(normalizedName);
 
         return save(tagToUpdate);
     }
@@ -91,16 +88,5 @@ public class TagServiceImpl implements TagService {
                 .replaceAll("\\s+", " ");
     }
 
-    private String generateSlug(String name) {
-        String slug = Normalizer.normalize(name, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}+", "")
-                .replaceAll("[^a-z0-9]+", "-")
-                .replaceAll("(^-+|-+$)", "");
 
-        if (slug.isBlank()) {
-            throw new BusinessException("El nombre del tag es invalido");
-        }
-
-        return slug;
-    }
 }

@@ -52,7 +52,6 @@ public class TagServiceTest {
 
         assertNotNull(createdTag.getId());
         assertEquals("backend java", createdTag.getName());
-        assertEquals("backend-java", createdTag.getSlug());
         assertTrue(createdTag.isActive());
         assertNotNull(createdTag.getCreatedAt());
     }
@@ -93,7 +92,6 @@ public class TagServiceTest {
 
         assertEquals(createdTag.getId(), recoveredTag.getId());
         assertEquals("arquitectura", recoveredTag.getName());
-        assertEquals("arquitectura", recoveredTag.getSlug());
     }
 
     @Test
@@ -104,7 +102,6 @@ public class TagServiceTest {
 
         assertEquals(createdTag.getId(), updatedTag.getId());
         assertEquals("java avanzado", updatedTag.getName());
-        assertEquals("java-avanzado", updatedTag.getSlug());
     }
 
     @Test

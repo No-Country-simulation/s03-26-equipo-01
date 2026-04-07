@@ -16,7 +16,6 @@ public class Tag {
 
     private Long id;
     private String name;
-    private String slug;
 
     @Builder.Default
     private boolean active = true;
@@ -29,9 +28,8 @@ public class Tag {
 
     private Admin creator;
 
-    public void updateTag(String name, String slug) {
+    public void updateTag(String name) {
         this.name = name;
-        this.slug = slug;
     }
 
     public void clearTestimonials() {
