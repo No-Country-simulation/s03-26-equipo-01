@@ -1,0 +1,30 @@
+.testimonial-admin-state-buttons-container {
+    justify-self: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+}
+
+.testimonial-admin-state_prev-state-button, .testimonial-admin-state_next-state-button  {
+    height: 40%;
+    width: 40%;
+    min-width: 90px;
+    font-size: var(--primary-font);
+    font-weight:bolder;
+    border-radius: 6px;
+    border-style: none;
+    cursor: pointer;
+}
+
+.testimonial-admin-state_prev-state-button {
+    border: 1px solid #EA4A41;
+    color: #EA4A41;
+    background-color: #FFF;
+}
+
+.testimonial-admin-state_next-state-button {
+    color: #FFF;
+    background-color: #1E308A;
+}

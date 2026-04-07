@@ -12,13 +12,20 @@ const createSelectInputData = (adminResources: TestimonialResources): SelectInpu
         },
         {
             id: 2,
+            name: 'tag',
+            placeholder: 'Tags',
+            content: adminResources.tags.map(tag => tag.name),
+            type: 'tag'
+        },
+        {
+            id: 3,
             name: 'editor',
             placeholder: 'Editor',
             content: adminResources.users.map(user => user.completeName), 
             type: 'editorName'
         },
         {
-            id: 3,
+            id: 4,
             name: 'status',
             placeholder: 'Estado',
             content: adminResources.states,

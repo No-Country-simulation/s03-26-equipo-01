@@ -1,0 +1,8 @@
+@media screen and (min-width: 1024px) {
+    .sidebar-menu-icon_container, .sidebar-menu-icon_disable {
+        position: fixed;
+        z-index: 3;
+        width: 20%;
+        height: 10%;
+    }
+}

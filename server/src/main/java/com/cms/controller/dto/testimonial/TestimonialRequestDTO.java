@@ -8,6 +8,7 @@ import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Schema(name = "TestimonialRequest", description = "Payload para crear un nuevo testimonio")
 public record TestimonialRequestDTO(
@@ -51,9 +52,18 @@ public record TestimonialRequestDTO(
         )
         @NotNull
         Long idEmbed,
+        @Schema(
+                description = "Nombre de la persona que hizo el testimonio",
+                example = "Roberto mendez",
+                requiredMode = Schema.RequiredMode.REQUIRED
+        )
+        @NotNull
+        String witness,
 
         @Schema(
                 description = "Imagen del testimonio",
+                type = "string",
+                format = "binary",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
         @ValidImageFile
@@ -63,12 +73,26 @@ public record TestimonialRequestDTO(
                 example = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
-        String youtubeUrl
+        String youtubeUrl,
+
+        @Schema(
+                description = "Id de los tags que van a asociarse al testimonio",
+                example = "[1, 2, 3]",
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED
+        )
+        List<Long> idTags,
+        @Schema(
+                description = "Id de la categoria del testimonio",
+                example = "1",
+                requiredMode = Schema.RequiredMode.NOT_REQUIRED
+        )
+        Long idCategoria
 
 ) {
     public Testimonial toModel() {
         return Testimonial.builder()
                 .testimonial(testimonial)
+                .witness(witness)
                 .email(email)
                 .rating(rating)
                 .state(StateTestimonial.DRAFT)
