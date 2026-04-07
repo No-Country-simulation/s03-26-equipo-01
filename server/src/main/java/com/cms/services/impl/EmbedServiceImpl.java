@@ -61,8 +61,10 @@ public class EmbedServiceImpl implements EmbedService {
 
 
     @Override
-    public List<Testimonial> getTestimonialEmbed() {
-       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(0, 5));
+    public List<Testimonial> getTestimonialEmbed(int pageNumber) {
+       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTopByState(
+               StateTestimonial.PUBLISHED,
+               PageRequest.of(pageNumber, 5));
        return testimonialEmbed;
     }
 

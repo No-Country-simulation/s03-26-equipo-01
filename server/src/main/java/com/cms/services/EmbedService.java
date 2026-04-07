@@ -13,7 +13,7 @@ public interface EmbedService {
     Embed findById(Long idEmbed);
 
 
-    List<Testimonial> getTestimonialEmbed();
+    List<Testimonial> getTestimonialEmbed(int pageNumber);
 
     List<Long> findAllIdsByAdmin(Admin admin);
     List<Tag> findByTestimonialId(Long testimonialId);
