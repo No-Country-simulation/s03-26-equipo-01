@@ -1,0 +1,5 @@
+@media screen and (min-width: 1024px) {
+    .testimonial-admin-state_prev-state-button, .testimonial-admin-state_next-state-button {
+        min-width: 10vw;
+    }
+}

@@ -6,3 +6,44 @@
     width: 90%;
     height: 100%;
 }
+
+.testimonial-admin-header-editor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1vw;
+    height: 100%
+}
+
+.testimonial-admin-header-editor div {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #1B2E45;
+}
+
+.testimonial-admin-header-editor div p {
+    color: #FFF;
+}
+
+.testimonial-admin-header_editor-name {
+    font-size: var(--medium-font);
+    color: #1E308A;
+}
+
+.testimonial-admin-header-category {
+    display: grid;
+    place-items: center;
+    height: 50%;
+    width: 30%;
+    min-width: 90px;
+    border-radius: 50px;
+    background-color: #E4E4E7;
+}
+
+.testimonial-admin-header-category p {
+    font-weight: bold;
+    color: var(--secondary-color)
+}
