@@ -36,7 +36,7 @@
 .testimonial-admin-header-category {
     display: grid;
     place-items: center;
-    height: 60%;
+    height: 50%;
     width: 30%;
     min-width: 90px;
     border-radius: 50px;
