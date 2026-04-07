@@ -5,7 +5,6 @@ import { tagsAdapter } from "../tag/tag.adapter";
 import type { TestimonialResourcesResponse } from "./dtos/response";
 
 function testimonialResourcesAdapter(response: TestimonialResourcesResponse): TestimonialResources {
-    console.log(response)
     return {
         users: editorsAdapter(response.users),
         category: categoriesAdapter(response.category),

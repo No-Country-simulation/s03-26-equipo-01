@@ -12,11 +12,12 @@
             <generator class="sequence"/>
         </id>
 
-        <property name="testimonial" column="testimonial" not-null="true" length="300"/>
-        <property name="rating" column="rating" not-null="true"/>
-        <property name="email" column="email"/>
-        <property name="state" column="state" type="com.cms.model.testimonial.enums.StateTestimonial"/>
-        <property name="createdAt" column="created_at"/>
+        <property name="witness"      column="witness"/>
+        <property name="testimonial"  column="testimonial" not-null="true" length="300"/>
+        <property name="rating"       column="rating" not-null="true"/>
+        <property name="email"        column="email"/>
+        <property name="state"        column="state" type="com.cms.model.testimonial.enums.StateTestimonial"/>
+        <property name="createdAt"    column="created_at"/>
 
         <many-to-one name="embed"
                      class="com.cms.model.embeds.Embed"
@@ -34,6 +35,16 @@
             <property name="thumbnailUrl" column="thumbnail_url"/>
             <property name="channelName"  column="channel_name"/>
         </component>
+
+        <many-to-one name="category"
+                     class="com.cms.model.testimonial.Category"
+                     column="category_id"
+                     cascade="merge"/>
+
+        <bag name="tags" table="testimonial_tags" cascade="merge">
+            <key column="testimonial_id"/>
+            <many-to-many class="com.cms.model.testimonial.Tag" column="tag_id"/>
+        </bag>
 
     </class>
 

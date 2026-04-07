@@ -35,29 +35,6 @@ public class TestimonialControllerREST {
         this.authUtils = authUtils;
     }
 
-    @GetMapping
-    @AdminEndpoint
-    @Operation(
-            summary = "Obtener testimonios del admin",
-            description = "Retorna todos los testimonios asociados a los embeds del admin autenticado"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Lista de testimonios obtenida exitosamente",
-            content = @Content(
-                    schema = @Schema(implementation = TestimonialResponseDTO.class)
-            )
-    )
-    public ResponseEntity<List<TestimonialResponseDTO>> getAllTestimonials(Authentication authentication) {
-        Long idAdmin = authUtils.getUserId(authentication);
-
-        List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(idAdmin);
-
-        List<TestimonialResponseDTO> response = testimonials.stream().map(TestimonialResponseDTO::fromModel).toList();
-
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @SecurityRequirements()
     public ResponseEntity<TestimonialResponseDTO> testify(@ModelAttribute @Valid TestimonialRequestDTO request){
@@ -65,11 +42,15 @@ public class TestimonialControllerREST {
                 request.toModel(),
                 request.idEmbed(),
                 request.image(),
-                request.youtubeUrl()
+                request.youtubeUrl(),
+                request.idCategoria(),
+                request.idTags()
         );
 
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+
 }
