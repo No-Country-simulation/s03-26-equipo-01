@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import type { ButtonsContainerProps, CategoryModalFormProps, InputsContainerProps } from "./category-model-form";
 import TextInput from "../../../../shared/elements/text-input/TextInput";
 import schema from "./types/schema";
-import type { CategoryCreated } from "./model/category-created";
+import type { CategoryCreated } from "../../adapters/category/dtos/category-created";
 import { yupResolver } from "@hookform/resolvers/yup";
 import inputTextData from "./types/input-text-data";
 import ModalContainer from "../../../../shared/components/modal-container/ModalContainer";

@@ -1,5 +1,5 @@
 import { object, string, type ObjectSchema } from "yup";
-import type { CategoryCreated } from "../model/category-created";
+import type { CategoryCreated } from "../../../adapters/category/dtos/category-created";
 
 const schema: ObjectSchema<CategoryCreated> = object().shape({
     name: 

@@ -3,6 +3,7 @@ import TitleContainer from "../../components/title-container/TitleContainer";
 import useTab from "../../hooks/use-tab";
 import CategoryTable from "./components/category-table/CategoryTable";
 import TagTable from "./components/tag-table/TagTable";
+import './styles/magagment.css';
 
 const ManagmentPanel = () => {    
 

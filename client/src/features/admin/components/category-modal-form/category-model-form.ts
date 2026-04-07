@@ -1,9 +1,8 @@
 import type { UseFormRegister } from "react-hook-form"
-import type { Category } from "../../models/category"
-import type { CategoryCreated } from "./model/category-created"
+import type { CategoryCreated } from "../../adapters/category/dtos/category-created"
 
 export interface CategoryModalFormProps {
-    onSubmit: (categoryCreated: CategoryCreated) => Category
+    onSubmit: (categoryCreated: CategoryCreated) => void
 }
 
 export interface InputsContainerProps {
