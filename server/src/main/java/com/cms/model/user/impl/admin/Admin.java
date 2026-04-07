@@ -42,8 +42,9 @@ public class Admin extends User {
         tags.add(tag);
     }
 
-    private void validatedIfTagNameDuplicated(Tag tag, Boolean hasNamesTagInListAdmin) {
+    public void validatedIfTagNameDuplicated(Tag tag, Boolean hasNamesTagInListAdmin) {
         if (hasNamesTagInListAdmin) throw new DuplicateResourceException("El admin ya tiene una tag con el nombre: " + tag.getName());
 
     }
+
 }

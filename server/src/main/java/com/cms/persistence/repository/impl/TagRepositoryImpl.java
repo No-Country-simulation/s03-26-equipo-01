@@ -39,18 +39,13 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     public Tag saveAndFlush(Tag tag) {
-        try {
-            Tag saved = tagSQLDAO.saveAndFlush(tag);
+        Tag saved = tagSQLDAO.saveAndFlush(tag);
 
-            TagElastic elastic = tagMapper.toElastic(saved);
+        TagElastic elastic = tagMapper.toElastic(saved);
 
-            tagElasticDAO.save(elastic);
+        tagElasticDAO.save(elastic);
 
-            return saved;
-        }
-        catch (DataIntegrityViolationException exception) {
-            throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
-        }
+        return saved;
     }
 
     @Override

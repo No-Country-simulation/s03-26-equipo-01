@@ -30,9 +30,9 @@ public class TagServiceImpl implements TagService {
     public Tag create(Tag tag, Long idAdmin) {
         Admin admin = getAdmin(idAdmin);
 
-        Boolean hasNamesTagInListAdmin = adminSQLDAO.hasNameTagInListAdmin(tag.getName(),idAdmin);
-
         String normalizedName = normalizeName(tag.getName());
+
+        Boolean hasNamesTagInListAdmin = getHasNamesTagInListAdmin(normalizedName, idAdmin);
 
         tag.setName(normalizedName);
 
@@ -62,11 +62,17 @@ public class TagServiceImpl implements TagService {
     public Tag update(Long id, TagUpdateRequestDTO updateTagDto) {
         Tag tagToUpdate = findById(id);
 
+        Boolean hasNamesTagInListAdmin = getHasNamesTagInListAdmin(updateTagDto.name(), tagToUpdate.getCreator().getId());
+
         String normalizedName = normalizeName(updateTagDto.name());
 
-        tagToUpdate.updateTag(normalizedName);
+        tagToUpdate.updateTag(normalizedName, hasNamesTagInListAdmin);
 
         return save(tagToUpdate);
+    }
+
+    private Boolean getHasNamesTagInListAdmin(String updateTagDto, Long tagToUpdate) {
+        return adminSQLDAO.hasNameTagInListAdmin(updateTagDto, tagToUpdate);
     }
 
     @Override

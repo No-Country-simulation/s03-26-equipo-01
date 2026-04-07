@@ -28,7 +28,8 @@ public class Tag {
 
     private Admin creator;
 
-    public void updateTag(String name) {
+    public void updateTag(String name, Boolean hasNamesTagInListAdmin) {
+        this.creator.validatedIfTagNameDuplicated(this, hasNamesTagInListAdmin);
         this.name = name;
     }
 
