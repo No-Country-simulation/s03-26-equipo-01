@@ -2,6 +2,8 @@ package com.cms.model.testimonial;
 
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.testimonial.state.TestimonialState;
+import com.cms.model.testimonial.state.impl.DraftState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +34,11 @@ public class Testimonial {
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
+    @Builder.Default
+    private TestimonialState testimonialState = DraftState.builder().build();
+
+    public void nextState() {
+        this.testimonialState = testimonialState.next(this);
+        this.state = StateTestimonial.fromState(this.testimonialState);
+    }
 }
