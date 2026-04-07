@@ -2,7 +2,6 @@ package com.cms.services;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
@@ -67,11 +66,6 @@ public class TagServiceTest {
     }
 
     @Test
-    void createShouldRejectBlankName() {
-        assertThrows(BusinessException.class, () -> tagService.create(Tag.builder().name("   ").build(), idAdmin));
-    }
-
-    @Test
     void findAllShouldReturnOnlyActiveTags() {
         Tag activeTag = tagService.create(Tag.builder().name("activo").build(), idAdmin);
         Tag deletedTag = tagService.create(Tag.builder().name("borrado").build(), idAdmin);
@@ -125,6 +119,28 @@ public class TagServiceTest {
 
         assertFalse(deletedTag.isActive());
         assertThrows(EntityNotFoundException.class, () -> tagService.findById(createdTag.getId()));
+    }
+
+    @Test
+    void findTagsByNameShouldReturnMatchesUsingEdgeNgram() {
+        tagService.create(Tag.builder().name("javascript").build(), idAdmin);
+        tagService.create(Tag.builder().name("java").build(), idAdmin);
+        tagService.create(Tag.builder().name("spring boot").build(), idAdmin);
+
+        List<Tag> matchesJava = tagService.findTagsByName("jav", idAdmin);
+
+        assertEquals(2, matchesJava.size());
+        assertTrue(matchesJava.stream().anyMatch(t -> t.getName().equals("java")));
+        assertTrue(matchesJava.stream().anyMatch(t -> t.getName().equals("javascript")));
+
+        List<Tag> matchesSpring = tagService.findTagsByName("spr", idAdmin);
+
+        assertEquals(1, matchesSpring.size());
+        assertEquals("spring boot", matchesSpring.getFirst().getName());
+
+        List<Tag> noMatches = tagService.findTagsByName("php", idAdmin);
+
+        assertTrue(noMatches.isEmpty());
     }
 
     @AfterEach

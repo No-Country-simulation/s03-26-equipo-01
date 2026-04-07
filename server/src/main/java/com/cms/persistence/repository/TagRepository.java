@@ -11,4 +11,6 @@ public interface TagRepository {
     Optional<Tag> findByIdAndActiveTrue(Long id);
 
     Tag saveAndFlush(Tag tag);
+
+    List<Tag> findTagsByName(String nameTag, Long idAdmin);
 }

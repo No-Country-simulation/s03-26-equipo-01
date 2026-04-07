@@ -1,11 +1,13 @@
 package com.cms.persistence.repository.impl;
 
+import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.persistence.elastic.TagElasticDAO;
 import com.cms.persistence.elastic.entity.TagElastic;
 import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.repository.mapper.TagMapper;
 import com.cms.persistence.sql.TagSQLDAO;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,13 +39,25 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     public Tag saveAndFlush(Tag tag) {
-        Tag saved = tagSQLDAO.save(tag);
+        try {
+            Tag saved = tagSQLDAO.saveAndFlush(tag);
 
-        TagElastic elastic = tagMapper.toElastic(saved);
+            TagElastic elastic = tagMapper.toElastic(saved);
 
-        tagElasticDAO.save(elastic);
+            tagElasticDAO.save(elastic);
 
-        return saved;
+            return saved;
+        }
+        catch (DataIntegrityViolationException exception) {
+            throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
+        }
+    }
+
+    @Override
+    public List<Tag> findTagsByName(String nameTag, Long idAdmin) {
+        List<TagElastic> elastics = tagElasticDAO.findAllByNameAndIdAdmin(nameTag, idAdmin.toString());
+
+        return elastics.stream().map(tagMapper::fromElastic).toList();
     }
 
 

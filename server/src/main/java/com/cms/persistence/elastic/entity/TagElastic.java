@@ -21,4 +21,6 @@ public class TagElastic {
 
     @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
     private String name;
+
+    private String idAdmin;
 }

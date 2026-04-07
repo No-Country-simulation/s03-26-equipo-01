@@ -2,30 +2,33 @@ package com.cms.services.impl;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.services.TagService;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 
     private final AdminSQLDAO adminSQLDAO;
 
     private final TagRepository tagRepository;
 
+    public TagServiceImpl(AdminSQLDAO adminSQLDAO, TagRepository tagRepository) {
+        this.adminSQLDAO = adminSQLDAO;
+        this.tagRepository = tagRepository;
+    }
+
     @Override
     public Tag create(Tag tag, Long idAdmin) {
-        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+        Admin admin = getAdmin(idAdmin);
 
         String normalizedName = normalizeName(tag.getName());
 
@@ -72,12 +75,19 @@ public class TagServiceImpl implements TagService {
         save(tag);
     }
 
+    @Override
+    public List<Tag> findTagsByName(String nameTag, Long idAdmin) {
+        getAdmin(idAdmin);
+
+        return tagRepository.findTagsByName(nameTag, idAdmin);
+    }
+
+    private Admin getAdmin(Long idAdmin) {
+        return adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+    }
+
     private Tag save(Tag tag) {
-        try {
-            return tagRepository.saveAndFlush(tag);
-        } catch (DataIntegrityViolationException exception) {
-            throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
-        }
+        return tagRepository.saveAndFlush(tag);
     }
 
     private String normalizeName(String name) {
