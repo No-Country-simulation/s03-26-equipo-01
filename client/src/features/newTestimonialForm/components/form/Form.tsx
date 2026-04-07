@@ -10,27 +10,39 @@ import UploadButtonWithIcon from '../upload-button-with-icon/UploadButtonWithIco
 import { TextInputWithIcon } from '../text-input-with-icon/TextInputWithIcon';
 import { MultitextInput } from '../multitext-input/MultiTextInput';
 import RatingPicker from '../rating-picker/RatingPicker';
+import createTestimonial from '../../../../shared/testimonial/services/testimonial.service';
+import type { Testimonial } from '../../../../shared/testimonial/models/testimonial';
 
 //Datos de ejemplo hasta integrar la API
 const courses = [{label:"Photoshop", id:0 },{label:"Diseño Web", id:1}, {label: "Canva", id:2}, {label:"Edición de video", id:3}];
 
 const Form = () => {
-    const { control, formState:{isValid}} = useForm({
+    const { control, formState:{isValid}, handleSubmit} = useForm({
     mode: "onChange",
     defaultValues: {
       fullName: "",
       email: "",
-      text: "",
-      course:"",
+      testimonial: "",
+      course: null,
       authorization: false,
       youtubeUrl: "",
       image: null,
       rating: null
     }
   });
+
+  const onSubmit = async (data: Testimonial) => {
+        try {
+            await createTestimonial(data);
+            console.log("¡Testimonio guardado con éxito!");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
   return (
     <section className='new-testimonial_form-container'>
-     <form className='new-testimonial_form' onSubmit={()=>console.log('send')}>
+     <form className='new-testimonial_form' onSubmit={handleSubmit(onSubmit)} >
         <TextInput 
           name="fullName" 
           label="Nombre y Apellido" 
@@ -73,7 +85,7 @@ const Form = () => {
 
        <div className='full-row-grid'>
           <MultitextInput
-            name="text" 
+            name="testimonial" 
             label="Testimonio" 
             control={control} 
             rows={3}
