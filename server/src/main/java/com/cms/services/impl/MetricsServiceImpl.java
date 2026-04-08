@@ -27,18 +27,15 @@ public class MetricsServiceImpl implements MetricsService {
     }
 
     @Override
-    public CategoryMetricDTO getCategoryMetrics(Long categoryId) {
-        return CategoryMetricDTO.fromModel(
-                categoryService.findById(categoryId),
-                metricsRepository.countTestimonialsByCategoryId(categoryId)
-        );
+    public List<CategoryMetricDTO> findAllMetricsCategories(Long adminId) {
+        return metricsRepository.findAllMetricsCategories(adminId);
     }
 
     @Override
     public MetricsResponseDTO getTestimonialsMetrics(Long tagId, Long categoryId) {
         return new MetricsResponseDTO(
                 findTagMetric(tagId),
-                getCategoryMetrics(categoryId)
+                findCategoryMetric(categoryId)
         );
     }
 
@@ -47,5 +44,12 @@ public class MetricsServiceImpl implements MetricsService {
                 .filter(metric -> metric.id().equals(tagId))
                 .findFirst()
                 .orElseGet(() -> TagMetricDTO.fromModel(tagService.findById(tagId), 0L));
+    }
+
+    private CategoryMetricDTO findCategoryMetric(Long categoryId) {
+        return CategoryMetricDTO.fromModel(
+                categoryService.findById(categoryId),
+                metricsRepository.countTestimonialsByCategoryId(categoryId)
+        );
     }
 }

@@ -9,7 +9,7 @@ public interface MetricsService {
 
     List<TagMetricDTO> findAllMetricsTags();
 
-    CategoryMetricDTO getCategoryMetrics(Long categoryId);
+    List<CategoryMetricDTO> findAllMetricsCategories(Long adminId);
 
     MetricsResponseDTO getTestimonialsMetrics(Long tagId, Long categoryId);
 }

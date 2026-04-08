@@ -1,5 +1,6 @@
 package com.cms.persistence.repository.impl;
 
+import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.persistence.repository.MetricsRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
@@ -16,6 +17,11 @@ public class MetricsRepositoryImpl implements MetricsRepository {
     @Override
     public List<TagMetricDTO> findAllMetricsTags() {
         return testimonialSQLDAO.findAllMetricsTags();
+    }
+
+    @Override
+    public List<CategoryMetricDTO> findAllMetricsCategories(Long adminId) {
+        return testimonialSQLDAO.findAllMetricsCategories(adminId);
     }
 
     @Override

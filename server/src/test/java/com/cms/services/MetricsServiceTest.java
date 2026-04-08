@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -37,6 +38,7 @@ class MetricsServiceTest {
     private final TagService tagService;
     private final TestimonialSQLDAO testimonialSQLDAO;
 
+    private Long adminId;
     private Long tagId;
     private Long categoryId;
     private Long tagWithoutTestimonialsId;
@@ -49,8 +51,17 @@ class MetricsServiceTest {
                 .firstName("Metrics")
                 .lastName("Admin")
                 .build());
+        adminId = admin.getId();
+
+        Admin secondAdmin = (Admin) userService.save(Admin.builder()
+                .email("metrics-admin-2@test.com")
+                .password("123")
+                .firstName("Metrics")
+                .lastName("Admin Two")
+                .build());
 
         Embed embed = embedService.registerEmbed(admin.getId(), new Embed());
+        Embed secondEmbed = embedService.registerEmbed(secondAdmin.getId(), new Embed());
 
         Category primaryCategory = categoryService.create(
                 Category.builder()
@@ -70,6 +81,24 @@ class MetricsServiceTest {
                 admin.getId()
         );
 
+        Category categoryWithoutTestimonials = categoryService.create(
+                Category.builder()
+                        .name("Category Without Testimonials")
+                        .slug("category-without-testimonials")
+                        .description("Category without testimonials for metrics")
+                        .build(),
+                admin.getId()
+        );
+
+        Category foreignCategory = categoryService.create(
+                Category.builder()
+                        .name("Foreign Category")
+                        .slug("foreign-category")
+                        .description("Category from another admin")
+                        .build(),
+                secondAdmin.getId()
+        );
+
         Tag primaryTag = tagService.create(Tag.builder().name("Primary Tag").build(), admin.getId());
         Tag secondaryTag = tagService.create(Tag.builder().name("Secondary Tag").build(), admin.getId());
         Tag tagWithoutTestimonials = tagService.create(Tag.builder().name("Tag Without Testimonials").build(), admin.getId());
@@ -81,6 +110,7 @@ class MetricsServiceTest {
         saveTestimonial(embed, primaryCategory, List.of(primaryTag));
         saveTestimonial(embed, primaryCategory, List.of(primaryTag, secondaryTag));
         saveTestimonial(embed, secondaryCategory, List.of(secondaryTag));
+        saveTestimonial(secondEmbed, foreignCategory, List.of());
     }
 
     @Test
@@ -109,13 +139,36 @@ class MetricsServiceTest {
     }
 
     @Test
-    void getCategoryMetricsShouldReturnTestimonialsCountForRequestedCategory() {
-        CategoryMetricDTO metrics = metricsService.getCategoryMetrics(categoryId);
+    void findAllMetricsCategoriesShouldReturnTestimonialsCountForAdminCategories() {
+        List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(adminId);
+        CategoryMetricDTO primaryCategoryMetrics = metrics.stream()
+                .filter(metric -> metric.id().equals(categoryId))
+                .findFirst()
+                .orElseThrow();
+        CategoryMetricDTO secondaryCategoryMetrics = metrics.stream()
+                .filter(metric -> metric.slug().equals("secondary-category"))
+                .findFirst()
+                .orElseThrow();
+        CategoryMetricDTO categoryWithoutTestimonialsMetrics = metrics.stream()
+                .filter(metric -> metric.slug().equals("category-without-testimonials"))
+                .findFirst()
+                .orElseThrow();
 
-        assertEquals(categoryId, metrics.id());
-        assertEquals("Primary Category", metrics.name());
-        assertEquals("primary-category", metrics.slug());
-        assertEquals(2L, metrics.testimonialsCount());
+        assertEquals(3, metrics.size());
+        assertEquals(categoryId, primaryCategoryMetrics.id());
+        assertEquals("Primary Category", primaryCategoryMetrics.name());
+        assertEquals("primary-category", primaryCategoryMetrics.slug());
+        assertEquals(2L, primaryCategoryMetrics.testimonialsCount());
+        assertEquals(1L, secondaryCategoryMetrics.testimonialsCount());
+        assertEquals(0L, categoryWithoutTestimonialsMetrics.testimonialsCount());
+        assertTrue(metrics.stream().noneMatch(metric -> metric.slug().equals("foreign-category")));
+    }
+
+    @Test
+    void findAllMetricsCategoriesShouldReturnEmptyListWhenAdminDoesNotExist() {
+        List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(9999L);
+
+        assertTrue(metrics.isEmpty());
     }
 
     @Test
@@ -129,11 +182,6 @@ class MetricsServiceTest {
     @Test
     void getTestimonialsMetricsShouldFailWhenTagDoesNotExist() {
         assertThrows(EntityNotFoundException.class, () -> metricsService.getTestimonialsMetrics(9999L, categoryId));
-    }
-
-    @Test
-    void getCategoryMetricsShouldFailWhenCategoryDoesNotExist() {
-        assertThrows(EntityNotFoundException.class, () -> metricsService.getCategoryMetrics(9999L));
     }
 
     private void saveTestimonial(Embed embed, Category category, List<Tag> tags) {

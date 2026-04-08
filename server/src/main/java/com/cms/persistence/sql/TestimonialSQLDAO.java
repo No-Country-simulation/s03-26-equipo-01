@@ -1,5 +1,6 @@
 package com.cms.persistence.sql;
 
+import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
@@ -25,6 +26,22 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
             ORDER BY tag.name ASC
             """)
     List<TagMetricDTO> findAllMetricsTags();
+
+    @Query("""
+            SELECT new com.cms.controller.dto.metrics.CategoryMetricDTO(
+                category.id,
+                category.name,
+                category.slug,
+                COUNT(testimonial.id)
+            )
+            FROM Category category
+            LEFT JOIN Testimonial testimonial ON testimonial.category.id = category.id
+            WHERE category.creator.id = :adminId
+              AND category.deleted = false
+            GROUP BY category.id, category.name, category.slug
+            ORDER BY category.name ASC
+            """)
+    List<CategoryMetricDTO> findAllMetricsCategories(@Param("adminId") Long adminId);
 
     @Query("SELECT COUNT(t.id) FROM Testimonial t WHERE t.category.id = :categoryId")
     long countTestimonialsByCategoryId(@Param("categoryId") Long categoryId);
