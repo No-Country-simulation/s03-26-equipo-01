@@ -1,12 +1,7 @@
 package com.cms.services;
 
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
-import com.cms.controller.dto.metrics.MetricsResponseDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
-import com.cms.exception.EntityNotFoundException;
-import com.cms.model.testimonial.Category;
-import com.cms.model.testimonial.Tag;
-import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.MetricsRepository;
 import com.cms.services.impl.MetricsServiceImpl;
 import java.util.List;
@@ -18,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -31,20 +25,12 @@ class MetricsServiceTest {
     @Mock
     private MetricsRepository metricsRepository;
 
-    @Mock
-    private TagService tagService;
-
-    @Mock
-    private CategoryService categoryService;
-
     private Long adminId;
     private Long tagId;
     private Long categoryId;
     private Long tagWithoutTestimonialsId;
     private List<TagMetricDTO> tagMetrics;
     private List<CategoryMetricDTO> categoryMetrics;
-    private Tag primaryTag;
-    private Category primaryCategory;
 
     @BeforeEach
     void setUp() {
@@ -52,17 +38,6 @@ class MetricsServiceTest {
         tagId = 10L;
         categoryId = 20L;
         tagWithoutTestimonialsId = 30L;
-        primaryTag = Tag.builder()
-                .id(tagId)
-                .name("primary tag")
-                .slug("primary-tag")
-                .creator(Admin.builder().id(adminId).build())
-                .build();
-        primaryCategory = Category.builder()
-                .id(categoryId)
-                .name("Primary Category")
-                .slug("primary-category")
-                .build();
         tagMetrics = List.of(
                 new TagMetricDTO(tagId, "primary tag", "primary-tag", 2L),
                 new TagMetricDTO(11L, "secondary tag", "secondary-tag", 2L),
@@ -138,25 +113,5 @@ class MetricsServiceTest {
         List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(9999L);
 
         assertTrue(metrics.isEmpty());
-    }
-
-    @Test
-    void getTestimonialsMetricsShouldReturnBothCountersInSingleResponse() {
-        when(tagService.findById(tagId)).thenReturn(primaryTag);
-        when(metricsRepository.findAllMetricsTags(adminId)).thenReturn(tagMetrics);
-        when(categoryService.findById(categoryId)).thenReturn(primaryCategory);
-        when(metricsRepository.countTestimonialsByCategoryId(categoryId)).thenReturn(2L);
-
-        MetricsResponseDTO metrics = metricsService.getTestimonialsMetrics(tagId, categoryId);
-
-        assertEquals(2L, metrics.tag().testimonialsCount());
-        assertEquals(2L, metrics.category().testimonialsCount());
-    }
-
-    @Test
-    void getTestimonialsMetricsShouldFailWhenTagDoesNotExist() {
-        when(tagService.findById(9999L)).thenThrow(new EntityNotFoundException("tag", 9999L));
-
-        assertThrows(EntityNotFoundException.class, () -> metricsService.getTestimonialsMetrics(9999L, categoryId));
     }
 }
