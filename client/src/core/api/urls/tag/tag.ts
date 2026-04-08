@@ -1,0 +1,1 @@
+export const ADD_TAG_API = '/tags';

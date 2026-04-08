@@ -1,0 +1,27 @@
+.modal-form_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    height: 16%;
+}
+
+.modal-form_buttons button {
+    height: 100%;
+    width: 40%;
+    max-width: 120px;
+    font-size: var(--medium-font);
+    font-weight: bold;
+    border: 1.5px solid var(--primary-blue);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.modal-form--cancel {
+    color: var(--primary-blue);
+    background-color: #FFF;
+}
+
+.modal-form--add {
+    color: #FFF;
+    background-color: var(--primary-blue);
+}

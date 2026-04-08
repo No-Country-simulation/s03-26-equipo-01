@@ -7,6 +7,6 @@ export function mediaAdapter(media: MediaResponse): Media {
         imagePublicId: media.imagePublicId,
         videoUrl: media.videoUrl,
         videoId: media.videoId,
-        videoTitle: media.videoTitle
+        thumbnailUrl: media.thumbnailUrl
     }
 }

@@ -1,0 +1,12 @@
+.add-admin-button {
+    align-self: center;
+    width: 50%;
+    max-width: 200px;
+    height: 10%;
+    font-weight: bold;
+    border: 1px solid var(--secondary-color);
+    border-radius: 4px;
+    color: var(--secondary-color);
+    background-color: #FFF;
+    cursor: pointer;
+}
