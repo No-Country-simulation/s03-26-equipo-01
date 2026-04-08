@@ -1,6 +1,6 @@
 package com.cms.controller;
 
-import com.cms.controller.annotations.AdminEditorEndpoint;
+import com.cms.controller.annotations.AdminEndpoint; // Quitamos la otra porque ya no se usa
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.MetricsResponseDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
@@ -30,20 +30,18 @@ public class MetricsController {
     private final AuthUtils authUtils;
 
     @GetMapping("/tags/testimonials")
-    @AdminEditorEndpoint
+    @AdminEndpoint
     @Operation(summary = "Obtener la cantidad de testimonios asociados a los tags del administrador autenticado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Metricas de tags obtenidas correctamente")
     })
     public ResponseEntity<List<TagMetricDTO>> findAllMetricsTags(Authentication authentication) {
-        // 1. Extraemos el ID del admin logueado
         Long adminId = authUtils.getUserId(authentication);
-        // 2. Se lo pasamos al servicio para que filtre
         return ResponseEntity.ok(metricsService.findAllMetricsTags(adminId));
     }
 
     @GetMapping("/categories/testimonials")
-    @AdminEditorEndpoint
+    @AdminEndpoint
     @Operation(summary = "Obtener la cantidad de testimonios asociados a todas las categorias del admin autenticado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Metricas de categorias obtenidas correctamente")
@@ -54,7 +52,7 @@ public class MetricsController {
     }
 
     @GetMapping("/testimonials")
-    @AdminEditorEndpoint
+    @AdminEndpoint // <--- CORREGIDO: Ahora solo para Admins
     @Operation(summary = "Obtener ambas metricas de testimonios en una sola respuesta")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Metricas obtenidas correctamente"),
@@ -66,6 +64,8 @@ public class MetricsController {
             @Parameter(description = "ID de la categoria", example = "1")
             @RequestParam Long categoryId
     ) {
+        // Nota: Este método ya es seguro porque usa IDs específicos,
+        // pero ahora el acceso queda restringido solo al rol ADMIN.
         return ResponseEntity.ok(metricsService.getTestimonialsMetrics(tagId, categoryId));
     }
 }
