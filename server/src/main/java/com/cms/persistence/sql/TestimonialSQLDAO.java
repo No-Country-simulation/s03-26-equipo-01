@@ -20,12 +20,13 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
                 COUNT(DISTINCT testimonial.id)
             )
             FROM Tag tag
-            LEFT JOIN tag.testimonials testimonial
+            LEFT JOIN tag.testimonials testimonial ON testimonial.embed.admin.id = :adminId
             WHERE tag.active = true
+              AND tag.creator.id = :adminId
             GROUP BY tag.id, tag.name, tag.slug
             ORDER BY tag.name ASC
             """)
-    List<TagMetricDTO> findAllMetricsTags();
+    List<TagMetricDTO> findAllMetricsTags(@Param("adminId") Long adminId);
 
     @Query("""
             SELECT new com.cms.controller.dto.metrics.CategoryMetricDTO(

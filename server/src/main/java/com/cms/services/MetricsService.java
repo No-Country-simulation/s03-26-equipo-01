@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MetricsService {
 
-    List<TagMetricDTO> findAllMetricsTags();
+    List<TagMetricDTO> findAllMetricsTags(Long adminId);
 
     List<CategoryMetricDTO> findAllMetricsCategories(Long adminId);
 

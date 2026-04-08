@@ -15,8 +15,8 @@ public class MetricsRepositoryImpl implements MetricsRepository {
     private final TestimonialSQLDAO testimonialSQLDAO;
 
     @Override
-    public List<TagMetricDTO> findAllMetricsTags() {
-        return testimonialSQLDAO.findAllMetricsTags();
+    public List<TagMetricDTO> findAllMetricsTags(Long adminId) {
+        return testimonialSQLDAO.findAllMetricsTags(adminId);
     }
 
     @Override

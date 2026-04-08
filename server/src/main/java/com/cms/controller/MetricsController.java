@@ -31,12 +31,15 @@ public class MetricsController {
 
     @GetMapping("/tags/testimonials")
     @AdminEditorEndpoint
-    @Operation(summary = "Obtener la cantidad de testimonios asociados a todos los tags")
+    @Operation(summary = "Obtener la cantidad de testimonios asociados a los tags del administrador autenticado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Metricas de tags obtenidas correctamente")
     })
-    public ResponseEntity<List<TagMetricDTO>> findAllMetricsTags() {
-        return ResponseEntity.ok(metricsService.findAllMetricsTags());
+    public ResponseEntity<List<TagMetricDTO>> findAllMetricsTags(Authentication authentication) {
+        // 1. Extraemos el ID del admin logueado
+        Long adminId = authUtils.getUserId(authentication);
+        // 2. Se lo pasamos al servicio para que filtre
+        return ResponseEntity.ok(metricsService.findAllMetricsTags(adminId));
     }
 
     @GetMapping("/categories/testimonials")

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MetricsRepository {
 
-    List<TagMetricDTO> findAllMetricsTags();
+    List<TagMetricDTO> findAllMetricsTags(Long adminId);
 
     List<CategoryMetricDTO> findAllMetricsCategories(Long adminId);
 

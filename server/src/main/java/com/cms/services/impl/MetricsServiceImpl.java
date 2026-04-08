@@ -3,6 +3,7 @@ package com.cms.services.impl;
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.MetricsResponseDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
+import com.cms.model.testimonial.Tag;
 import com.cms.persistence.repository.MetricsRepository;
 import com.cms.services.CategoryService;
 import com.cms.services.MetricsService;
@@ -22,8 +23,8 @@ public class MetricsServiceImpl implements MetricsService {
     private final CategoryService categoryService;
 
     @Override
-    public List<TagMetricDTO> findAllMetricsTags() {
-        return metricsRepository.findAllMetricsTags();
+    public List<TagMetricDTO> findAllMetricsTags(Long adminId) {
+        return metricsRepository.findAllMetricsTags(adminId);
     }
 
     @Override
@@ -40,10 +41,12 @@ public class MetricsServiceImpl implements MetricsService {
     }
 
     private TagMetricDTO findTagMetric(Long tagId) {
-        return findAllMetricsTags().stream()
+        Tag tag = tagService.findById(tagId);
+        TagMetricDTO emptyMetric = TagMetricDTO.fromModel(tag, 0L);
+        return findAllMetricsTags(tag.getCreator().getId()).stream()
                 .filter(metric -> metric.id().equals(tagId))
                 .findFirst()
-                .orElseGet(() -> TagMetricDTO.fromModel(tagService.findById(tagId), 0L));
+                .orElse(emptyMetric);
     }
 
     private CategoryMetricDTO findCategoryMetric(Long categoryId) {
