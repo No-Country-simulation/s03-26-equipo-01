@@ -1,6 +1,6 @@
 package com.cms.services;
 
-import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
+
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;

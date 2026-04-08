@@ -1,10 +1,10 @@
 package com.cms.controller;
 
 import com.cms.controller.dto.embeds.DateEmbedsResponseDTO;
-import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
+import com.cms.controller.dto.testimonial.TestimonialPublicDTO;
 import com.cms.model.embeds.Embed;
-import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 import com.cms.services.EmbedService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

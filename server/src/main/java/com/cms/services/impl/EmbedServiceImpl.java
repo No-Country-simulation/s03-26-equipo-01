@@ -1,6 +1,6 @@
 package com.cms.services.impl;
 
-import com.cms.controller.dto.embeds.TestimonialEmbedResponseDTO;
+
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Tag;
