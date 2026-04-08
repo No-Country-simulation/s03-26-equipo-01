@@ -5,8 +5,8 @@ const MultimediaContent = ({testimonial}: MultimediaContentProps) => {
         <section>
             <p>Contenido multimedia</p>
             <img 
-                src = {testimonial.image?.url} 
-                alt = {testimonial.image ? 'contenido multimedia del testimonio, o es una imagen o bien un vídeo' : ''} />
+                src = {testimonial.media.videoUrl} 
+                alt = {testimonial.media.videoUrl ? 'contenido multimedia del testimonio, o es una imagen o bien un vídeo' : ''} />
         </section>
     )
 }

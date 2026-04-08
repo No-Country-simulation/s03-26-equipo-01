@@ -5,12 +5,14 @@ import './styles/testimonials-container.css';
 const TestimonialsList = ({testimonials}: TestimonialsContainerProps) => {
     return (
         <section className = 'testimonials-admin-list'>
-            {testimonials.map(testimonial => 
+            <div className = 'testimonials-admin-list_container'>
+                {testimonials.map(testimonial => 
                 <TestimonialCard 
                     key = {testimonial.id}
                     testimonial = {testimonial}
                 />
             )}
+            </div>
         </section>
     )
 }

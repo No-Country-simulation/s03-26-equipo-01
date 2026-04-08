@@ -1,13 +1,16 @@
-import type { Image } from "./image"
-import type { State } from "./state"
+import type { Category } from "./category"
+import type { Media } from "./media"
+import type { AdminState } from "./state"
+import type { Tag } from "./tag"
 
 export interface Testimonial {
     id: number, 
     testimonial: string 
-    idEmbed: number 
+    witness: string
     rating: number
-    email: string 
-    state: State
+    state: AdminState
     createdAt: Date
-    image?: Image
+    category: Category
+    tags: Tag[]
+    media: Media
 }

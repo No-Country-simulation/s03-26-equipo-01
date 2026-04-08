@@ -2,41 +2,43 @@ package com.cms.services.impl;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
-import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
-import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.TagService;
-import java.text.Normalizer;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
+
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 
-    private final TagSQLDAO tagSQLDAO;
     private final AdminSQLDAO adminSQLDAO;
+
+    private final TagRepository tagRepository;
+
+    public TagServiceImpl(AdminSQLDAO adminSQLDAO, TagRepository tagRepository) {
+        this.adminSQLDAO = adminSQLDAO;
+        this.tagRepository = tagRepository;
+    }
 
     @Override
     public Tag create(Tag tag, Long idAdmin) {
-        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+        Admin admin = getAdmin(idAdmin);
 
         String normalizedName = normalizeName(tag.getName());
 
-        tag.setName(normalizedName);
+        Boolean hasNamesTagInListAdmin = getHasNamesTagInListAdmin(normalizedName, idAdmin);
 
-        tag.setSlug(generateSlug(normalizedName));
+        tag.setName(normalizedName);
 
         tag.setCreator(admin);
 
-        admin.agregarTag(tag);
+        admin.agregarTag(tag, hasNamesTagInListAdmin);
 
         adminSQLDAO.save(admin);
 
@@ -46,13 +48,13 @@ public class TagServiceImpl implements TagService {
     @Override
     @Transactional(readOnly = true)
     public List<Tag> findAll() {
-        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
+        return tagRepository.findAllByActiveTrueOrderByNameAsc();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Tag findById(Long id) {
-        return tagSQLDAO.findByIdAndActiveTrue(id)
+        return tagRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException(Tag.class.getSimpleName(), id));
     }
 
@@ -60,12 +62,17 @@ public class TagServiceImpl implements TagService {
     public Tag update(Long id, TagUpdateRequestDTO updateTagDto) {
         Tag tagToUpdate = findById(id);
 
-        String normalizedName = normalizeName(updateTagDto.name());
-        String slug = generateSlug(normalizedName);
+        Boolean hasNamesTagInListAdmin = getHasNamesTagInListAdmin(updateTagDto.name(), tagToUpdate.getCreator().getId());
 
-        tagToUpdate.updateTag(normalizedName, slug);
+        String normalizedName = normalizeName(updateTagDto.name());
+
+        tagToUpdate.updateTag(normalizedName, hasNamesTagInListAdmin);
 
         return save(tagToUpdate);
+    }
+
+    private Boolean getHasNamesTagInListAdmin(String updateTagDto, Long tagToUpdate) {
+        return adminSQLDAO.hasNameTagInListAdmin(updateTagDto, tagToUpdate);
     }
 
     @Override
@@ -76,12 +83,19 @@ public class TagServiceImpl implements TagService {
         save(tag);
     }
 
+    @Override
+    public List<Tag> findTagsByName(String nameTag, Long idAdmin) {
+        getAdmin(idAdmin);
+
+        return tagRepository.findTagsByName(nameTag, idAdmin);
+    }
+
+    private Admin getAdmin(Long idAdmin) {
+        return adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
+    }
+
     private Tag save(Tag tag) {
-        try {
-            return tagSQLDAO.saveAndFlush(tag);
-        } catch (DataIntegrityViolationException exception) {
-            throw new DuplicateResourceException("Ya existe un tag con ese nombre o slug");
-        }
+        return tagRepository.saveAndFlush(tag);
     }
 
     private String normalizeName(String name) {
@@ -91,16 +105,5 @@ public class TagServiceImpl implements TagService {
                 .replaceAll("\\s+", " ");
     }
 
-    private String generateSlug(String name) {
-        String slug = Normalizer.normalize(name, Normalizer.Form.NFD)
-                .replaceAll("\\p{M}+", "")
-                .replaceAll("[^a-z0-9]+", "-")
-                .replaceAll("(^-+|-+$)", "");
 
-        if (slug.isBlank()) {
-            throw new BusinessException("El nombre del tag es invalido");
-        }
-
-        return slug;
-    }
 }

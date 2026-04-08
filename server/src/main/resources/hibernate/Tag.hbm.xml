@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
 
@@ -11,8 +11,7 @@
             <generator class="identity"/>
         </id>
 
-        <property name="name"      column="name"       not-null="true" unique="true"/>
-        <property name="slug"      column="slug"       not-null="true" unique="true"/>
+        <property name="name"      column="name"       not-null="true"/>
         <property name="active"    column="is_active"  not-null="true"/>
         <property name="createdAt" column="created_at" not-null="true" update="false"/>
 

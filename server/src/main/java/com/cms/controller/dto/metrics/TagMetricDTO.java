@@ -5,7 +5,6 @@ import com.cms.model.testimonial.Tag;
 public record TagMetricDTO(
         Long id,
         String name,
-        String slug,
         long testimonialsCount
 ) {
 
@@ -13,7 +12,6 @@ public record TagMetricDTO(
         return new TagMetricDTO(
                 tag.getId(),
                 tag.getName(),
-                tag.getSlug(),
                 testimonialsCount
         );
     }

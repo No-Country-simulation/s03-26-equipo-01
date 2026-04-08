@@ -4,10 +4,9 @@ import './testimonial-state.css';
 const TestimonialState = ({testimonial}: TestimonialStateProps) => {
 
     const classOptions = {
-        APROBADO: 'testimonial-admin-approved',
-        BORRADOR: 'testimonial-admin-draft',
-        PUBLICADO: 'testimonial-admin-publish',
-        ARCHIVADO: 'testimonial-admin-archived'
+        Aprobado: 'testimonial-admin-approved',
+        Publicado: 'testimonial-admin-publish',
+        Pendiente: 'testimonial-admin-pending'
     }
 
     return (

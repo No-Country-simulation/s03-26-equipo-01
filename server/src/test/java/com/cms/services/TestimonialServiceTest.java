@@ -77,7 +77,7 @@ public class TestimonialServiceTest {
                 .testimonial("Excelente servicio, lo recomiendo totalmente")
                 .rating(5)
                 .email("user@test.com")
-                .state(StateTestimonial.DRAFT)
+                .state(StateTestimonial.PUBLISHED)
                 .build();
     }
 
@@ -102,7 +102,7 @@ public class TestimonialServiceTest {
                 .testimonial("Muy buen servicio")
                 .rating(4)
                 .email("user2@test.com")
-                .state(StateTestimonial.DRAFT)
+                .state(StateTestimonial.PUBLISHED)
                 .build();
 
         Admin otherAdmin = Admin.builder()

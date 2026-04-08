@@ -10,8 +10,7 @@
 
 .testimonial-admin-panel_container {
     display: grid;
-    grid-template-rows: 20% 1fr;
-    gap: 10vh;
+    grid-template-rows: 1fr 1fr;
     width: 90%;
-    height: 96%;
+    height: 90%;
 }

@@ -1,5 +1,5 @@
 import type { StateButtonContainerProps } from "./state-buttons-container";
-import './state-buttons-container.css'; 
+import './styles/state-buttons-container.css';
 
 const StateButtonContainer = ({changeStateButtons, testimonial}: StateButtonContainerProps) => {
     return (
