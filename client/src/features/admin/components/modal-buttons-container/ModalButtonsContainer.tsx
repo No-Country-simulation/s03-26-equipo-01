@@ -7,8 +7,11 @@ export interface ButtonsContainerProps {
 const ModalButtonsContainer = ({onActive}: ButtonsContainerProps) => {
     return (
         <section className = 'modal-form_buttons'>
-            <button onClick = {onActive} className = 'modal-form--cancel'>CANCELAR</button>
-            <button className = 'modal-form--add'>CONFIRMAR</button>
+            <button 
+                onClick = {onActive} 
+                className = 'modal-form--cancel'>CANCELAR
+            </button>
+            <button type = 'submit' className = 'modal-form--add'>CONFIRMAR</button>
         </section>
     )
 }

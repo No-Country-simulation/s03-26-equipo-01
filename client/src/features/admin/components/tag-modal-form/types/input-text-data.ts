@@ -6,7 +6,7 @@ const inputTextData: InputTextData = {
     label: 'Nombre de tag',
     placeholder: 'Ej: Ahorro de tiempo, Fácil integración...' ,
     id: '2',
-    name: 'nombre' 
+    name: 'name' 
 }
 
 export default inputTextData;
