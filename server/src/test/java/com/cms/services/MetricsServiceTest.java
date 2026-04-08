@@ -2,58 +2,117 @@ package com.cms.services;
 
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
-import com.cms.persistence.repository.MetricsRepository;
-import com.cms.services.impl.MetricsServiceImpl;
+import com.cms.model.embeds.Embed;
+import com.cms.model.testimonial.Category;
+import com.cms.model.testimonial.Tag;
+import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.sql.TestimonialSQLDAO;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+@ActiveProfiles("test")
+@Transactional
+@RequiredArgsConstructor
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class MetricsServiceTest {
 
-    @InjectMocks
-    private MetricsServiceImpl metricsService;
-
-    @Mock
-    private MetricsRepository metricsRepository;
+    private final MetricsService metricsService;
+    private final UserService userService;
+    private final EmbedService embedService;
+    private final CategoryService categoryService;
+    private final TagService tagService;
+    private final TestimonialSQLDAO testimonialSQLDAO;
 
     private Long adminId;
     private Long tagId;
     private Long categoryId;
     private Long tagWithoutTestimonialsId;
-    private List<TagMetricDTO> tagMetrics;
-    private List<CategoryMetricDTO> categoryMetrics;
 
     @BeforeEach
     void setUp() {
-        adminId = 1L;
-        tagId = 10L;
-        categoryId = 20L;
-        tagWithoutTestimonialsId = 30L;
-        tagMetrics = List.of(
-                new TagMetricDTO(tagId, "primary tag", "primary-tag", 2L),
-                new TagMetricDTO(11L, "secondary tag", "secondary-tag", 2L),
-                new TagMetricDTO(tagWithoutTestimonialsId, "tag without testimonials", "tag-without-testimonials", 0L)
+        Admin admin = (Admin) userService.save(Admin.builder()
+                .email("metrics-admin@test.com")
+                .password("123")
+                .firstName("Metrics")
+                .lastName("Admin")
+                .build());
+        adminId = admin.getId();
+
+        Admin otherAdmin = (Admin) userService.save(Admin.builder()
+                .email("metrics-admin-2@test.com")
+                .password("123")
+                .firstName("Metrics")
+                .lastName("Admin Two")
+                .build());
+
+        Embed embed = embedService.registerEmbed(adminId, new Embed());
+        Embed otherEmbed = embedService.registerEmbed(otherAdmin.getId(), new Embed());
+
+        Category primaryCategory = categoryService.create(
+                Category.builder()
+                        .name("Primary Category")
+                        .slug("primary-category")
+                        .description("Primary category for metrics")
+                        .build(),
+                adminId
         );
-        categoryMetrics = List.of(
-                new CategoryMetricDTO(categoryId, "Primary Category", "primary-category", 2L),
-                new CategoryMetricDTO(21L, "Secondary Category", "secondary-category", 1L),
-                new CategoryMetricDTO(22L, "Category Without Testimonials", "category-without-testimonials", 0L)
+
+        Category secondaryCategory = categoryService.create(
+                Category.builder()
+                        .name("Secondary Category")
+                        .slug("secondary-category")
+                        .description("Secondary category for metrics")
+                        .build(),
+                adminId
         );
+
+        Category categoryWithoutTestimonials = categoryService.create(
+                Category.builder()
+                        .name("Category Without Testimonials")
+                        .slug("category-without-testimonials")
+                        .description("Category without testimonials for metrics")
+                        .build(),
+                adminId
+        );
+
+        Category foreignCategory = categoryService.create(
+                Category.builder()
+                        .name("Foreign Category")
+                        .slug("foreign-category")
+                        .description("Category from another admin")
+                        .build(),
+                otherAdmin.getId()
+        );
+
+        Tag primaryTag = tagService.create(Tag.builder().name("Primary Tag").build(), adminId);
+        Tag secondaryTag = tagService.create(Tag.builder().name("Secondary Tag").build(), adminId);
+        Tag tagWithoutTestimonials = tagService.create(Tag.builder().name("Tag Without Testimonials").build(), adminId);
+        Tag foreignTag = tagService.create(Tag.builder().name("Foreign Tag").build(), otherAdmin.getId());
+
+        tagId = primaryTag.getId();
+        categoryId = primaryCategory.getId();
+        tagWithoutTestimonialsId = tagWithoutTestimonials.getId();
+
+        saveTestimonial(embed, primaryCategory, List.of(primaryTag));
+        saveTestimonial(embed, primaryCategory, List.of(primaryTag, secondaryTag));
+        saveTestimonial(embed, secondaryCategory, List.of(secondaryTag));
+        saveTestimonial(otherEmbed, foreignCategory, List.of(foreignTag));
     }
 
     @Test
     void findAllMetricsTagsShouldReturnTestimonialsCountForEveryTag() {
-        when(metricsRepository.findAllMetricsTags(adminId)).thenReturn(tagMetrics);
-
         List<TagMetricDTO> metrics = metricsService.findAllMetricsTags(adminId);
         TagMetricDTO primaryTagMetrics = metrics.stream()
                 .filter(metric -> metric.id().equals(tagId))
@@ -80,8 +139,6 @@ class MetricsServiceTest {
 
     @Test
     void findAllMetricsCategoriesShouldReturnTestimonialsCountForAdminCategories() {
-        when(metricsRepository.findAllMetricsCategories(adminId)).thenReturn(categoryMetrics);
-
         List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(adminId);
         CategoryMetricDTO primaryCategoryMetrics = metrics.stream()
                 .filter(metric -> metric.id().equals(categoryId))
@@ -108,10 +165,20 @@ class MetricsServiceTest {
 
     @Test
     void findAllMetricsCategoriesShouldReturnEmptyListWhenAdminDoesNotExist() {
-        when(metricsRepository.findAllMetricsCategories(9999L)).thenReturn(List.of());
-
         List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(9999L);
 
         assertTrue(metrics.isEmpty());
+    }
+
+    private void saveTestimonial(Embed embed, Category category, List<Tag> tags) {
+        testimonialSQLDAO.saveAndFlush(Testimonial.builder()
+                .testimonial("Metric testimonial for " + category.getSlug())
+                .rating(5)
+                .email(category.getSlug() + "@test.com")
+                .state(StateTestimonial.DRAFT)
+                .embed(embed)
+                .category(category)
+                .tags(tags)
+                .build());
     }
 }
