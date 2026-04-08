@@ -9,12 +9,13 @@ import './styles/tab-table.css';
 const TagSubPanel = ({currentTab}: TabContent) => {
     
     const {isActive, handleActive} = useActive();
-    const {addTag} = useTag();
+    const {tag, addTag} = useTag();
 
     return (
         <section hidden = {currentTab !== TabValues.TAG} className = 'tag-subpanel-container'>
             <AddButton text = "CREAR TAG" onSubmit = {handleActive} />
             {isActive && <TagModalForm onSubmit = {addTag} />}
+            {tag && <p>Se agrego el tag {tag.name}</p>}
         </section>
     )
 }

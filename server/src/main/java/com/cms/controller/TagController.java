@@ -3,6 +3,7 @@ package com.cms.controller;
 import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.tag.TagRequestDTO;
+import com.cms.controller.dto.tag.TagRequestSearchDTO;
 import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.model.testimonial.Tag;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -125,4 +127,15 @@ public class TagController {
         tagService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/search")
+    @SecurityRequirements()
+    public ResponseEntity<List<TagResponseDto>> findByNameTag(@RequestBody @Valid TagRequestSearchDTO request) {
+        List<Tag> tags = tagService.findTagsByName(request.name(), request.idAdmin());
+
+        List<TagResponseDto> response = tags.stream().map(TagResponseDto::fromEntity).toList();
+
+        return ResponseEntity.ok(response);
+    }
+
 }

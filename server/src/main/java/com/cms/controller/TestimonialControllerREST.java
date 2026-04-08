@@ -1,26 +1,17 @@
 package com.cms.controller;
 
-import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.services.TestimonialService;
 import com.cms.utils.AuthUtils;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/testimonial")
