@@ -1,6 +1,5 @@
 package com.cms.model.testimonial;
 
-import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
@@ -48,8 +47,8 @@ public class Testimonial {
     @Builder.Default
     private TestimonialState testimonialState = new DraftState();
 
-    public void nextState() {
-        this.testimonialState = testimonialState.next(this);
+    public void nextStateEditor() {
+        this.testimonialState = testimonialState.nextToEditor(this);
         this.state = StateTestimonial.fromState(this.testimonialState);
     }
 

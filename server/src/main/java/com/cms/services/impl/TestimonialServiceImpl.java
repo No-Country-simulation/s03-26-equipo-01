@@ -1,11 +1,9 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
-import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
@@ -76,9 +74,9 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public Testimonial nextState(Long id, String role) {
+    public Testimonial advanceByEditor(Long id) {
         Testimonial testimonial = findTestimonialById(id);
-        testimonial.nextState();
+        testimonial.nextStateEditor();
         return testimonialRepository.update(testimonial);
     }
 

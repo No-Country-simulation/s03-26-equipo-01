@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 public class DraftState extends TestimonialState {
 
     @Override
-    public TestimonialState next(Testimonial testimonial) {
+    public TestimonialState nextToEditor(Testimonial testimonial) {
         return new PendingState();
     }
 

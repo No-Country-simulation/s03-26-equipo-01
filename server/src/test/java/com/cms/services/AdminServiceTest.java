@@ -181,7 +181,7 @@ public class AdminServiceTest {
                 category.getId(), tagIds
         );
 
-        saved.nextState();
+        saved.nextStateEditor();
         testimonialService.update(saved);
 
         Testimonial recovered = testimonialService.advanceByAdmin(saved.getId());
