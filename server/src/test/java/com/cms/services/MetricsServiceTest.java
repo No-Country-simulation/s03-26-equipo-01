@@ -2,6 +2,7 @@ package com.cms.services;
 
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
@@ -19,6 +20,7 @@ import org.springframework.test.context.TestConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
@@ -38,6 +40,8 @@ class MetricsServiceTest {
     private Long adminId;
     private Long tagId;
     private Long categoryId;
+    private Long categoryWithoutTestimonialsId;
+    private Long foreignCategoryId;
     private Long tagWithoutTestimonialsId;
 
     @BeforeEach
@@ -103,6 +107,8 @@ class MetricsServiceTest {
 
         tagId = primaryTag.getId();
         categoryId = primaryCategory.getId();
+        categoryWithoutTestimonialsId = categoryWithoutTestimonials.getId();
+        foreignCategoryId = foreignCategory.getId();
         tagWithoutTestimonialsId = tagWithoutTestimonials.getId();
 
         saveTestimonial(embed, primaryCategory, List.of(primaryTag));
@@ -168,6 +174,38 @@ class MetricsServiceTest {
         List<CategoryMetricDTO> metrics = metricsService.findAllMetricsCategories(9999L);
 
         assertTrue(metrics.isEmpty());
+    }
+
+    @Test
+    void getCategoryMetricsShouldReturnTestimonialsCountForAdminCategory() {
+        CategoryMetricDTO metric = metricsService.getCategoryMetrics(categoryId, adminId);
+
+        assertEquals(categoryId, metric.id());
+        assertEquals("Primary Category", metric.name());
+        assertEquals("primary-category", metric.slug());
+        assertEquals(2L, metric.testimonialsCount());
+    }
+
+    @Test
+    void getCategoryMetricsShouldReturnZeroWhenCategoryHasNoTestimonials() {
+        CategoryMetricDTO metric = metricsService.getCategoryMetrics(categoryWithoutTestimonialsId, adminId);
+
+        assertEquals(categoryWithoutTestimonialsId, metric.id());
+        assertEquals("Category Without Testimonials", metric.name());
+        assertEquals("category-without-testimonials", metric.slug());
+        assertEquals(0L, metric.testimonialsCount());
+    }
+
+    @Test
+    void getCategoryMetricsShouldThrowWhenCategoryDoesNotBelongToAdmin() {
+        assertThrows(EntityNotFoundException.class,
+                () -> metricsService.getCategoryMetrics(foreignCategoryId, adminId));
+    }
+
+    @Test
+    void getCategoryMetricsShouldThrowWhenCategoryDoesNotExist() {
+        assertThrows(EntityNotFoundException.class,
+                () -> metricsService.getCategoryMetrics(9999L, adminId));
     }
 
     private void saveTestimonial(Embed embed, Category category, List<Tag> tags) {

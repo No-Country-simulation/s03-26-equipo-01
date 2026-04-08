@@ -9,4 +9,6 @@ public interface MetricsService {
     List<TagMetricDTO> findAllMetricsTags(Long adminId);
 
     List<CategoryMetricDTO> findAllMetricsCategories(Long adminId);
+
+    CategoryMetricDTO getCategoryMetrics(Long categoryId, Long adminId);
 }
