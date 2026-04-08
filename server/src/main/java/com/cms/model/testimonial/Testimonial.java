@@ -1,5 +1,6 @@
 package com.cms.model.testimonial;
 
+import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"embed"})
+@ToString(exclude = {"embed", "category", "tags", "testimonialState"})
 public class Testimonial {
 
     private Long id;
@@ -36,7 +37,7 @@ public class Testimonial {
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();
 
-    private StateTestimonial state;
+    private StateTestimonial state = StateTestimonial.DRAFT;
 
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
@@ -49,6 +50,11 @@ public class Testimonial {
 
     public void nextState() {
         this.testimonialState = testimonialState.next(this);
+        this.state = StateTestimonial.fromState(this.testimonialState);
+    }
+
+    public void nextStateAdmin() {
+        this.testimonialState = testimonialState.nextToAdmin(this);
         this.state = StateTestimonial.fromState(this.testimonialState);
     }
 }

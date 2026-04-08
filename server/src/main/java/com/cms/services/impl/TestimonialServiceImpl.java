@@ -78,15 +78,21 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     public Testimonial nextState(Long id, String role) {
         Testimonial testimonial = findTestimonialById(id);
-
-        if (testimonial.getState() == StateTestimonial.DRAFT && !role.equals("ROLE_EDITOR")) {
-            throw new BusinessException("Solo un editor puede aprobar un testimonio borrador");
-        }
-        if (testimonial.getState() != StateTestimonial.DRAFT && !role.equals("ROLE_ADMIN")) {
-            throw new BusinessException("Solo un admin puede avanzar este estado");
-        }
-
         testimonial.nextState();
         return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Testimonial advanceByAdmin(Long idTestimonial) {
+        Testimonial testimonial = findTestimonialById(idTestimonial);
+
+        testimonial.nextStateAdmin();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public void update(Testimonial recovered) {
+        testimonialRepository.update(recovered);
     }
 }

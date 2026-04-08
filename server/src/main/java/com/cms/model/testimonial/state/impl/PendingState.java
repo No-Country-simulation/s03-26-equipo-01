@@ -11,6 +11,11 @@ public class PendingState extends TestimonialState {
 
     @Override
     public TestimonialState next(Testimonial testimonial) {
+        return null;
+    }
+
+    @Override
+    public TestimonialState nextToAdmin(Testimonial testimonial) {
         return new ApprovedState();
     }
 }

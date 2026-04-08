@@ -9,4 +9,6 @@ import lombok.experimental.SuperBuilder;
 public abstract class TestimonialState {
 
     public abstract TestimonialState next(Testimonial testimonial);
+
+    public abstract TestimonialState nextToAdmin(Testimonial testimonial);
 }

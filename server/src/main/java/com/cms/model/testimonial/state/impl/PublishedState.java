@@ -13,4 +13,9 @@ public class PublishedState extends TestimonialState {
     public TestimonialState next(Testimonial testimonial) {
         throw new UnsupportedOperationException("No se permite esta operacion");
     }
+
+    @Override
+    public TestimonialState nextToAdmin(Testimonial testimonial) {
+        return new ApprovedState();
+    }
 }

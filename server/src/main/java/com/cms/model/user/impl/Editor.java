@@ -5,12 +5,14 @@ import com.cms.model.user.impl.admin.Admin;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @NoArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
+@ToString(exclude = {"createdBy"})
 public class Editor extends User {
 
     private Admin createdBy;

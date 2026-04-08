@@ -25,6 +25,8 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
 
     @Override
     public Testimonial save(Testimonial model) {
+        model.setState(StateTestimonial.DRAFT);
+        resolveState(model);
         return testimonialSQLDAO.save(model);
     }
 
@@ -38,6 +40,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));
         resolveMedia(testimonial);
+        resolveState(testimonial);
         return testimonial;
     }
 
@@ -48,11 +51,17 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         return testimonials;
     }
 
+
     private void resolveMedia(Testimonial testimonial) {
         String mediaId = testimonial.getMedia() != null ? testimonial.getMedia().getId() : null;
 
         if (mediaId != null) {
             testimonial.setMedia(mediaRepository.findById(mediaId));
+        }
+    }
+    private void resolveState(Testimonial testimonial) {
+        if (testimonial.getState() != null) {
+            testimonial.setTestimonialState(testimonial.getState().toState());
         }
     }
 

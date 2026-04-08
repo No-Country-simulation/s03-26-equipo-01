@@ -13,4 +13,8 @@ public interface TestimonialService {
     List<Testimonial> findTestimonialByAdmin(Long idAdmin);
 
     Testimonial nextState(Long id, String role);
+
+    Testimonial advanceByAdmin(Long idTestimonial);
+
+    void update(Testimonial recovered);
 }
