@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type {  CreatedTag } from "../adapters/tag/dtos/create-tag";
-import type { Tag } from "../models/tag";
-import useApi from "../../../core/api/hooks/use-api";
-import addTagService from "../services/tag/add-tag-service";
+import type {  CreatedTag } from "../../../adapters/tag/dtos/create-tag";
+import type { Tag } from "../../../models/tag";
+import useApi from "../../../../../core/api/hooks/use-api";
+import addTagService from "../../../services/tag/add-tag-service";
 
 const useTag = () => {
 

@@ -3,7 +3,7 @@ import AddButton from "../../../../components/add-button/AddButton";
 import type { TabContent } from "../../../../components/tab-container/tab-container";
 import { TabValues } from "../../../../components/tab-container/tab-values";
 import TagModalForm from "../../../../components/tag-modal-form/TagModalForm";
-import useTag from "../../../../hooks/use-tag";
+import useTag from "../../hooks/use-tag";
 import './styles/tab-table.css';
 
 const TagSubPanel = ({currentTab}: TabContent) => {

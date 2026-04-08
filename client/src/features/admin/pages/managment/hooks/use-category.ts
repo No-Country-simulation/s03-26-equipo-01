@@ -1,8 +1,9 @@
 import { useState } from "react"
-import type { CategoryCreated } from "../adapters/category/dtos/category-created"
-import type { Category } from "../models/category";
+import type { CategoryCreated } from "../../../adapters/category/dtos/category-created"
+import type { Category } from "../../../models/category";
 
 const useCategory = () => {
+    
     const [category, setCategory] = useState<CategoryCreated | null>(null);
 
     const addCategory = (category: CategoryCreated) => setCategory(category);
