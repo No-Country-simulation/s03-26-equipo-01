@@ -26,6 +26,7 @@ public class DataSeederImpl implements DataSeeder {
 
     private Editor editor;
     private Admin admin;
+    private Admin admin2;
 
     public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
         this.userService = userService;
@@ -43,8 +44,16 @@ public class DataSeederImpl implements DataSeeder {
                 .firstName("admin")
                 .lastName("administra")
                 .build();
+        admin2 = Admin.builder()
+                .email("admin2@gmail.com")
+                .password("123")
+                .firstName("admin")
+                .lastName("administra")
+                .build();
 
         Admin adminSaved = (Admin) userService.save(admin);
+
+        admin2 = (Admin) userService.save(admin2);
 
         editor = Editor.builder()
                 .email("editor@gmail.com")
@@ -73,7 +82,11 @@ public class DataSeederImpl implements DataSeeder {
         );
 
         Tag tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+
         Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
+
+        Tag tag3 = tagService.create(Tag.builder().name("java").build(), admin2.getId());
+
         List<Long> tagIds = List.of(tag1.getId(), tag2.getId());
 
         List<Testimonial> testimonials = List.of(

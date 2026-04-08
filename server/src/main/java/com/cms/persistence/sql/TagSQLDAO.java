@@ -14,15 +14,4 @@ public interface TagSQLDAO extends JpaRepository<Tag, Long> {
     List<Tag> findAllByActiveTrueOrderByNameAsc();
 
     Optional<Tag> findByIdAndActiveTrue(Long id);
-
-    boolean existsByName(String name);
-
-    boolean existsByNameAndIdNot(String name, Long id);
-
-    boolean existsBySlug(String slug);
-
-    boolean existsBySlugAndIdNot(String slug, Long id);
-
-    @Query("SELECT t FROM Tag t JOIN t.testimonials testimonial WHERE testimonial.id = :testimonialId")
-    List<Tag> findByTestimonialId(@Param("testimonialId") Long testimonialId);
 }
