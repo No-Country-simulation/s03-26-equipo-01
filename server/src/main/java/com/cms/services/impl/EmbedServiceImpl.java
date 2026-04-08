@@ -29,13 +29,11 @@ public class EmbedServiceImpl implements EmbedService {
      private final EmbedSQLDAO embedSQLDAO;
      private final AdminSQLDAO adminSQLDAO;
      private final TestimonialSQLDAO testimonialSQLDAO;
-     private final TagSQLDAO tagSQLDAO;
 
-    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO,TestimonialSQLDAO testimonialSQLDAO,TagSQLDAO tagSQLDAO) {
+    public EmbedServiceImpl(EmbedSQLDAO embedSQLDAO, AdminSQLDAO adminSQLDAO,TestimonialSQLDAO testimonialSQLDAO) {
         this.embedSQLDAO = embedSQLDAO;
         this.adminSQLDAO = adminSQLDAO;
         this.testimonialSQLDAO = testimonialSQLDAO;
-        this.tagSQLDAO = tagSQLDAO;
     }
 
 
@@ -62,10 +60,7 @@ public class EmbedServiceImpl implements EmbedService {
 
     @Override
     public List<Testimonial> getTestimonialEmbed(int pageNumber) {
-       List<Testimonial> testimonialEmbed = testimonialSQLDAO.findTopByState(
-               StateTestimonial.PUBLISHED,
-               PageRequest.of(pageNumber, 5));
-       return testimonialEmbed;
+        return testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(pageNumber, 5));
     }
 
     @Override
@@ -73,18 +68,5 @@ public class EmbedServiceImpl implements EmbedService {
         return embedSQLDAO.findAllByAdmin(admin);
     }
 
-    @Override
-    public List<Tag> findByTestimonialId(Long testimonialId) {
-        return  tagSQLDAO.findByTestimonialId(testimonialId);
-    }
 
-    @Override
-    public TestimonialEmbedResponseDTO convertToDto(Testimonial testimonial) {
-        Set<String> tagNames = findByTestimonialId(testimonial.getId())
-                .stream()
-                .map(Tag::getName)
-                .collect(Collectors.toSet());
-
-        return TestimonialEmbedResponseDTO.fromModel(testimonial, tagNames);
-    }
 }

@@ -12,12 +12,8 @@ public interface EmbedService {
 
     Embed findById(Long idEmbed);
 
-
     List<Testimonial> getTestimonialEmbed(int pageNumber);
 
     List<Long> findAllIdsByAdmin(Admin admin);
-    List<Tag> findByTestimonialId(Long testimonialId);
 
-//    Metodo para filtrar unicamente el nombre de la tag y no todos sus campos
-    TestimonialEmbedResponseDTO convertToDto(Testimonial testimonial);
 }

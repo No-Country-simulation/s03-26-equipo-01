@@ -50,16 +50,12 @@ public class EmbedController {
             @ApiResponse(responseCode = "200", description = "Testimonios recuperados con éxito"),
             @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
     })
-    @PostMapping("/testimonial/published")
-    public ResponseEntity<List<TestimonialEmbedResponseDTO>> testimonialPublished(
-            @RequestParam(defaultValue = "0")int page
+    @PostMapping("/published")
+    public ResponseEntity<List<TestimonialPublicDTO>> testimonialPublished( @RequestParam(defaultValue = "0")int page
     ){
        List<Testimonial> testimonialEmbed = embedService.getTestimonialEmbed(page);
 
-        List<TestimonialEmbedResponseDTO> response = testimonialEmbed.stream()
-                .map(embedService::convertToDto)
-                .collect(Collectors.toList());
-
+       List<TestimonialPublicDTO> response = testimonialEmbed.stream().map(TestimonialPublicDTO::fromModel).toList();
 
         return ResponseEntity.ok(response);
     }
