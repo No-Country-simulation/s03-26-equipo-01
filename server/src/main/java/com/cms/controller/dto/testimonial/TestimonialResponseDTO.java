@@ -1,12 +1,16 @@
 package com.cms.controller.dto.testimonial;
 
+import com.cms.controller.dto.category.CategoryResponseSimpleDTO;
+import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.testimonial.media.MediaResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Schema(name = "TestimonialResponse", description = "Respuesta con los datos de un testimonio")
 public record TestimonialResponseDTO(
@@ -19,6 +23,11 @@ public record TestimonialResponseDTO(
 
         @Schema(description = "ID del recurso embebido asociado", example = "1")
         long idEmbed,
+        @Schema(
+                description = "Nombre de la persona que hizo el testimonio",
+                example = "Roberto mendez"
+        )
+        String witness,
 
         @Schema(description = "Puntuación del testimonio (1 a 10)", example = "5")
         int rating,
@@ -30,21 +39,28 @@ public record TestimonialResponseDTO(
         String email,
 
         @Schema(description = "Estado del testimonio", example = "DRAFT")
-        StateTestimonial state,
+        String state,
 
         @Schema(description = "Fecha de creación del testimonio", example = "2026-04-02")
-        LocalDate createdAt
+        LocalDate createdAt,
+
+        CategoryResponseSimpleDTO category,
+
+        List<TagResponseDto> tags
 ) {
     public static TestimonialResponseDTO fromModel(Testimonial testimonial) {
         return new TestimonialResponseDTO(
                 testimonial.getId(),
                 testimonial.getTestimonial(),
                 testimonial.getEmbed().getId(),
+                testimonial.getWitness(),
                 testimonial.getRating(),
                 MediaResponseDTO.fromModel(testimonial.getMedia()),
                 testimonial.getEmail(),
-                testimonial.getState(),
-                testimonial.getCreatedAt()
+                testimonial.getState().getLabel(),
+                testimonial.getCreatedAt(),
+                CategoryResponseSimpleDTO.fromModel(testimonial.getCategory()),
+                testimonial.getTags().stream().map(TagResponseDto::fromEntity).toList()
         );
     }
 }

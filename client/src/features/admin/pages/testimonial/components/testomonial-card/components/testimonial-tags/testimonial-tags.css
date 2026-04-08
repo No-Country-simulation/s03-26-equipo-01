@@ -1,0 +1,20 @@
+.testimonial-admin-tags {
+    justify-self: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 20%));
+    gap: 1vw;
+    width: 92%;
+    height: 100%;
+}
+
+.testimonial-admin-tag-container {
+    display: grid;
+    place-items: center;
+    min-width: 70px;
+    height: 4vh;
+    font-size: var(--medium-font);
+    border: 1px solid #1E308A;
+    border-radius: 90px;
+    color: #1E308A;
+    background-color: #FFF;
+}

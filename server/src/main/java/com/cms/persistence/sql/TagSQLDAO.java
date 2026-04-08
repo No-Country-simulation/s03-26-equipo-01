@@ -13,11 +13,4 @@ public interface TagSQLDAO extends JpaRepository<Tag, Long> {
 
     Optional<Tag> findByIdAndActiveTrue(Long id);
 
-    boolean existsByName(String name);
-
-    boolean existsByNameAndIdNot(String name, Long id);
-
-    boolean existsBySlug(String slug);
-
-    boolean existsBySlugAndIdNot(String slug, Long id);
 }

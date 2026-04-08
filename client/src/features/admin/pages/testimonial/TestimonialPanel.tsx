@@ -1,7 +1,7 @@
 import useTestimonialPanel from '../../hooks/use-testimonial-panel';
 import FiltersContainer from './components/filters-container/FiltersContainer';
 import TestimonialsList from './components/testimonials-container/TestimonialContainer';
-import TitleContainer from './components/title-container/TitleContainer';
+import TitleContainer from '../../components/title-container/TitleContainer';
 import './styles/testimonial-panel.css';
 
 const TestimonialPanel = () => {
@@ -12,7 +12,10 @@ const TestimonialPanel = () => {
         <section className = 'testimonial-admin-panel'>
             <div className = 'testimonial-admin-panel_container'>
                 <div className = 'testimonial-admin-panel_container--info'>
-                    <TitleContainer />
+                    <TitleContainer 
+                        title = 'Testimonios'
+                        text = 'Administra qué testimonios se publican: apruébalos, envíalos a edición o retíralos cuando quieras.'    
+                    />
                     {adminResources && <FiltersContainer 
                         adminResources = {adminResources} 
                         onFilter = {sendFilter} />

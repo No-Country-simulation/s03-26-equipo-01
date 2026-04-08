@@ -1,10 +1,11 @@
+import { Rating } from "@mui/material";
 import type { TestimonialDescriptionProps } from "./testimonial-description";
 import './testimonial-description.css';
 
 const TestimonialDescription = ({testimonial}: TestimonialDescriptionProps) => {
     return (
         <section className = 'testimonial-admin-description'>
-            <p>{testimonial.rating}</p>
+            <Rating name = "testimonial-ranting" defaultValue = {testimonial.rating} precision = {1} />
             <p>{testimonial.testimonial}</p>
         </section>
     )

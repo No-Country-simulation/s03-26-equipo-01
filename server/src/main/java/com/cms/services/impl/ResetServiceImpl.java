@@ -1,6 +1,10 @@
 package com.cms.services.impl;
 
 import com.cms.services.ResetService;
+import org.bson.Document;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,9 +21,19 @@ public class ResetServiceImpl implements ResetService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final MongoTemplate mongoTemplate;
+    private final ElasticsearchOperations elasticsearchOperations;
+
+    public ResetServiceImpl(MongoTemplate mongoTemplate, ElasticsearchOperations elasticsearchOperations) {
+        this.mongoTemplate = mongoTemplate;
+        this.elasticsearchOperations = elasticsearchOperations;
+    }
+
     @Override
     public void resetAll() {
         resetSQL();
+        resetMongo();
+        resetElastic();
     }
 
     private void resetSQL() {
@@ -32,6 +46,16 @@ public class ResetServiceImpl implements ResetService {
         for (String tableName : tablasExistentes) {
             limpiarTabla(tableName);
         }
+    }
+
+    private void resetMongo() {
+        mongoTemplate.getDb().listCollectionNames().forEach(name ->
+                mongoTemplate.getDb().getCollection(name).deleteMany(new Document())
+        );
+    }
+
+    private void resetElastic() {
+        elasticsearchOperations.indexOps(IndexCoordinates.of("tag")).delete();
     }
 
     private Set<String> obtenerTablasExistentes() {

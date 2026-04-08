@@ -7,6 +7,8 @@ import com.cms.model.testimonial.state.impl.DraftState;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +18,8 @@ import java.time.LocalDate;
 public class Testimonial {
 
     private Long id;
+
+    private String witness;
 
     private String testimonial;
 
@@ -27,11 +31,19 @@ public class Testimonial {
 
     private Media media;
 
+    private Category category;
+
+    @Builder.Default
+    private List<Tag> tags = new ArrayList<>();
+
     private StateTestimonial state;
 
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
+    public void agregarTags(List<Tag> tags) {
+        this.tags.addAll(tags);
+    }
     @Builder.Default
     private TestimonialState testimonialState = new DraftState();
 

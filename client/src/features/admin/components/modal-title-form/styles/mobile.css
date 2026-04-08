@@ -1,0 +1,9 @@
+.modal-form_title {
+    margin: 0 auto;
+}
+
+.modal-form_title h3 {
+    font-size: 24px;
+    font-weight: 100;
+    color: var(--primary-title-color)
+}

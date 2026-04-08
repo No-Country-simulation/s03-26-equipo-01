@@ -14,4 +14,5 @@ public interface TestimonialRepository {
     Testimonial save(Testimonial model, MultipartFile image, String youtubeUrl);
 
     Testimonial update(Testimonial model);
+    Testimonial save(Testimonial model);
 }

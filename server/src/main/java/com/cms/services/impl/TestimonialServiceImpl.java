@@ -9,10 +9,9 @@ import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
-import com.cms.services.EmbedService;
-import com.cms.services.ImageService;
-import com.cms.services.TestimonialService;
-import com.cms.services.YoutubeService;
+import com.cms.persistence.sql.CategorySQLDAO;
+import com.cms.persistence.sql.TagSQLDAO;
+import com.cms.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,28 +23,44 @@ import java.util.List;
 public class TestimonialServiceImpl implements TestimonialService {
 
     private final TestimonialRepository testimonialRepository;
-    private final ImageService imageService;
+
     private final EmbedService embedService;
-    private final YoutubeService youtubeService;
+
+    private final MediaService mediaService;
+
     private final AdminSQLDAO adminSQLDAO;
 
+    private final CategorySQLDAO categoryDAO;
+
+    private final TagSQLDAO  tagDAO;
+
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
-                                  ImageService imageService,
-                                  EmbedService embedService,
-                                  YoutubeService youtubeService,
-                                  AdminSQLDAO adminSQLDAO) {
+                                  EmbedService embedService, MediaService mediaService,
+                                  AdminSQLDAO adminSQLDAO, CategorySQLDAO categoryDAO, TagSQLDAO tagDAO) {
+
         this.testimonialRepository = testimonialRepository;
-        this.imageService = imageService;
+
         this.embedService = embedService;
-        this.youtubeService = youtubeService;
+
+        this.mediaService = mediaService;
+
         this.adminSQLDAO = adminSQLDAO;
+
+        this.categoryDAO = categoryDAO;
+        this.tagDAO = tagDAO;
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl) {
+    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, Long idCategory, List<Long> idTags) {
         Embed embed = embedService.findById(idEmbed);
+        Media media = mediaService.save(image, youtubeUrl);
+
         model.setEmbed(embed);
-        return testimonialRepository.save(model, image, youtubeUrl);
+        model.setMedia(media);
+        model.setCategory(categoryDAO.findById(idCategory).orElse(null));
+        model.agregarTags(tagDAO.findAllById(idTags));
+
+        return testimonialRepository.save(model);
     }
 
     @Override
