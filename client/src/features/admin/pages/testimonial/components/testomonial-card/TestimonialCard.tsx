@@ -5,9 +5,13 @@ import TestimonialState from "./components/testimonial-state/TestimonialState";
 import TestimonialTags from "./components/testimonial-tags/TestimonialTags";
 import type { TestimonialCardProps } from "./testimonial-card";
 import './styles/testomonial-card.css';
+import StateButtonContainer from "../state-buttons-container/StateButtonContainer";
+import buttonsStateData from "./buttons-data";
 
-//<DecisionsContainer testimonial = {testimonial} />
 const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
+
+    console.log(testimonial)
+
     return (
         <article className = 'testimonial-admin-card-container'>
             <TestimonialHeader testimonial = {testimonial} />
@@ -15,7 +19,9 @@ const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
             <TestimonialDescription testimonial = {testimonial} />
             <TestimonialTags testimonial = {testimonial} />
             <MultimediaContent testimonial = {testimonial} />
-            
+            <StateButtonContainer 
+                changeStateButtons = {buttonsStateData[testimonial.state]} 
+                testimonial = {testimonial} />
         </article>
     )
 }

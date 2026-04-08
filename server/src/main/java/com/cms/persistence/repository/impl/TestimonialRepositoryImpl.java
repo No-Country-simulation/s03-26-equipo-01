@@ -3,6 +3,7 @@ package com.cms.persistence.repository.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.persistence.repository.MediaRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.persistence.repository.TestimonialRepository;
@@ -23,13 +24,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
-    public Testimonial save(Testimonial model, MultipartFile image, String youtubeUrl) {
-        Media media = buildMedia(image, youtubeUrl);
-
-        if (media != null) {
-            model.setMedia(media);
-        }
-
+    public Testimonial save(Testimonial model) {
         return testimonialSQLDAO.save(model);
     }
 
@@ -43,7 +38,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
 
     @Override
     public List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds) {
-        List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds);
+        List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds, StateTestimonial.DRAFT);
         testimonials.forEach(this::resolveMedia);
         return testimonials;
     }
@@ -56,14 +51,4 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         }
     }
 
-    private Media buildMedia(MultipartFile image, String youtubeUrl) {
-        boolean hasImage = image != null && !image.isEmpty();
-        boolean hasYoutube = youtubeUrl != null && !youtubeUrl.isBlank();
-
-        if (!hasImage && !hasYoutube) {
-            return null;
-        }
-
-        return mediaRepository.save(image, youtubeUrl);
-    }
 }

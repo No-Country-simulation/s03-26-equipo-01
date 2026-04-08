@@ -3,19 +3,19 @@
 .testimonial-admin-approved, 
 .testimonial-admin-draft, 
 .testimonial-admin-publish, 
-.testimonial-admin-archived {
+.testimonial-admin-pending {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
-    width: 35%;
+    margin-left: 4%;
+    width: 30%;
     height: 100%;
 }
 
 .testimonial-admin-approved div, 
 .testimonial-admin-draft div, 
 .testimonial-admin-publish div, 
-.testimonial-admin-archived div{
+.testimonial-admin-pending div{
     width: 10px;
     height: 10px;
     border-radius: 100%;

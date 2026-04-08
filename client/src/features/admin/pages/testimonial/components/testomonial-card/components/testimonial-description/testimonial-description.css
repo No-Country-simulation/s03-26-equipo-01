@@ -1,0 +1,15 @@
+.testimonial-admin-description {
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 92%;
+    height: 50%;
+    gap: 10px
+}
+
+.testimonial-admin-description p {
+    font-size: var(--medium-font);
+    opacity: 0.8;
+    color: var( --primary-color-text);
+}

@@ -7,4 +7,6 @@ import javax.sql.RowSet;
 
 public interface ImageService {
     Media guardarImagen(MultipartFile image);
+
+    void deleteImage(String publicId);
 }

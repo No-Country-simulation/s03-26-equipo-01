@@ -1,1 +1,1 @@
-export const ADMIN_TESTIMONIALS_URL = '/testimonial';
+export const ADMIN_TESTIMONIALS_URL = '/admin/testimonial';

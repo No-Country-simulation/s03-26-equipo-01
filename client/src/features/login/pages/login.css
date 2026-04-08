@@ -3,10 +3,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100vw;
-    min-height: 100vh;
-    height: auto;
+    height: 100vh;
     background-color: var(--clean-background)
 }
 

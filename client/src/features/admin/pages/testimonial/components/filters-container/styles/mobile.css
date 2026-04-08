@@ -3,13 +3,12 @@
     flex-direction: column;
     justify-content: space-evenly;
     width: 100%;
-    height: 90%;
+    height: 50%;
 }
 
 .admin-filters-container form {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(10%, 160px));
     width: 100%;
-    height: 80%;
     gap: 2vw;
 }

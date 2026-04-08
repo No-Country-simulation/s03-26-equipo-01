@@ -1,4 +1,5 @@
 @media screen and (min-width: 1024px) {
-    .testimonials-admin-list {
+    .testimonials-admin-list_container {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 40%));
     }
 }
