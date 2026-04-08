@@ -7,7 +7,6 @@ import type { Tag } from "../../models/tag";
 
 async function addTagService(tag: CreatedTag): Promise<Tag> {
     const newTag = await api.post<TagResponse>(ADD_TAG_API, tag);
-    console.log(newTag)
     return tagAdapter(newTag.data);
 }
 
