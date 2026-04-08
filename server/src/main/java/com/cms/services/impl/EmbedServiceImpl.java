@@ -14,6 +14,7 @@ import com.cms.persistence.sql.EmbedSQLDAO;
 import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.services.EmbedService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
@@ -59,7 +60,7 @@ public class EmbedServiceImpl implements EmbedService {
 
 
     @Override
-    public List<Testimonial> getTestimonialEmbed(int pageNumber) {
+    public Page<Testimonial> getTestimonialEmbed(int pageNumber) {
         return testimonialSQLDAO.findTopByState(StateTestimonial.PUBLISHED, PageRequest.of(pageNumber, 5));
     }
 

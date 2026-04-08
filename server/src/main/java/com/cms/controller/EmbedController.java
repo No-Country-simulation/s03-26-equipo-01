@@ -2,10 +2,13 @@ package com.cms.controller;
 
 import com.cms.controller.dto.embeds.DateEmbedsResponseDTO;
 import com.cms.controller.dto.testimonial.TestimonialPublicDTO;
+import com.cms.controller.dto.user.UserResponseSimpleDTO;
+import com.cms.controller.dto.utils.PageResponseDTO;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.embeds.dto.DateEmbedsRequestDTO;
 import com.cms.services.EmbedService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,13 +53,14 @@ public class EmbedController {
             @ApiResponse(responseCode = "200", description = "Testimonios recuperados con éxito"),
             @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
     })
+    @SecurityRequirements()
     @PostMapping("/published")
-    public ResponseEntity<List<TestimonialPublicDTO>> testimonialPublished( @RequestParam(defaultValue = "0")int page
+    public ResponseEntity<PageResponseDTO<TestimonialPublicDTO>> testimonialPublished( @RequestParam(defaultValue = "0")int page
     ){
-       List<Testimonial> testimonialEmbed = embedService.getTestimonialEmbed(page);
 
-       List<TestimonialPublicDTO> response = testimonialEmbed.stream().map(TestimonialPublicDTO::fromModel).toList();
-
+        PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
+                embedService.getTestimonialEmbed(page).map(TestimonialPublicDTO::fromModel)
+        );
         return ResponseEntity.ok(response);
     }
 

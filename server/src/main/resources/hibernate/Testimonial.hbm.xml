@@ -39,9 +39,10 @@
         <many-to-one name="category"
                      class="com.cms.model.testimonial.Category"
                      column="category_id"
+                     lazy="false"
                      cascade="merge"/>
 
-        <bag name="tags" table="testimonial_tags" cascade="merge">
+        <bag name="tags" table="testimonial_tags" cascade="merge" lazy="false">
             <key column="testimonial_id"/>
             <many-to-many class="com.cms.model.testimonial.Tag" column="tag_id"/>
         </bag>
