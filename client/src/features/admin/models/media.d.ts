@@ -3,5 +3,5 @@ export interface Media {
     imagePublicId: string 
     videoUrl: string
     videoId: string
-    videoTitle: string
+    thumbnailUrl: string
 }

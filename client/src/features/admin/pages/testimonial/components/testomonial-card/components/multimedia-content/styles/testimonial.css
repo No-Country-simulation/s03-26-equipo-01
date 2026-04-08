@@ -1,0 +1,49 @@
+.testimonial-admin-media {
+    position: relative;
+    justify-self: center;
+    gap: 2vh;
+    width: 90%;
+}
+
+.testimonial-admin-media p {
+    align-self: end;
+    font-weight: bold;
+    color: #444;
+}
+
+.testimonial-admin-media_link {
+    display: grid;
+    position: relative;
+    overflow-y: hidden;
+    margin-top: 2vh;
+
+}
+
+.testimonial-admin-media_link img {
+    justify-self: center;
+    width: 90%;
+    height: 160px;
+    border-radius: 30px;
+    transition: transform 0.3s ease;
+}
+
+.play-button {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  background: rgba(0,0,0,0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.play-button::before {
+  content: '';
+  position: absolute;
+  left: 22px;
+  top: 18px;
+  border-left: 20px solid white;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+}
