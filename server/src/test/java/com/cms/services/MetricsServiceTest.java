@@ -39,6 +39,7 @@ class MetricsServiceTest {
 
     private Long tagId;
     private Long categoryId;
+    private Long tagWithoutTestimonialsId;
 
     @BeforeEach
     void setUp() {
@@ -71,9 +72,11 @@ class MetricsServiceTest {
 
         Tag primaryTag = tagService.create(Tag.builder().name("Primary Tag").build(), admin.getId());
         Tag secondaryTag = tagService.create(Tag.builder().name("Secondary Tag").build(), admin.getId());
+        Tag tagWithoutTestimonials = tagService.create(Tag.builder().name("Tag Without Testimonials").build(), admin.getId());
 
         tagId = primaryTag.getId();
         categoryId = primaryCategory.getId();
+        tagWithoutTestimonialsId = tagWithoutTestimonials.getId();
 
         saveTestimonial(embed, primaryCategory, List.of(primaryTag));
         saveTestimonial(embed, primaryCategory, List.of(primaryTag, secondaryTag));
@@ -81,13 +84,28 @@ class MetricsServiceTest {
     }
 
     @Test
-    void getTagMetricsShouldReturnTestimonialsCountForRequestedTag() {
-        TagMetricDTO metrics = metricsService.getTagMetrics(tagId);
+    void findAllMetricsTagsShouldReturnTestimonialsCountForEveryTag() {
+        List<TagMetricDTO> metrics = metricsService.findAllMetricsTags();
+        TagMetricDTO primaryTagMetrics = metrics.stream()
+                .filter(metric -> metric.id().equals(tagId))
+                .findFirst()
+                .orElseThrow();
+        TagMetricDTO secondaryTagMetrics = metrics.stream()
+                .filter(metric -> metric.slug().equals("secondary-tag"))
+                .findFirst()
+                .orElseThrow();
+        TagMetricDTO tagWithoutTestimonialsMetrics = metrics.stream()
+                .filter(metric -> metric.id().equals(tagWithoutTestimonialsId))
+                .findFirst()
+                .orElseThrow();
 
-        assertEquals(tagId, metrics.id());
-        assertEquals("primary tag", metrics.name());
-        assertEquals("primary-tag", metrics.slug());
-        assertEquals(2L, metrics.testimonialsCount());
+        assertEquals(3, metrics.size());
+        assertEquals(tagId, primaryTagMetrics.id());
+        assertEquals("primary tag", primaryTagMetrics.name());
+        assertEquals("primary-tag", primaryTagMetrics.slug());
+        assertEquals(2L, primaryTagMetrics.testimonialsCount());
+        assertEquals(2L, secondaryTagMetrics.testimonialsCount());
+        assertEquals(0L, tagWithoutTestimonialsMetrics.testimonialsCount());
     }
 
     @Test
@@ -109,8 +127,8 @@ class MetricsServiceTest {
     }
 
     @Test
-    void getTagMetricsShouldFailWhenTagDoesNotExist() {
-        assertThrows(EntityNotFoundException.class, () -> metricsService.getTagMetrics(9999L));
+    void getTestimonialsMetricsShouldFailWhenTagDoesNotExist() {
+        assertThrows(EntityNotFoundException.class, () -> metricsService.getTestimonialsMetrics(9999L, categoryId));
     }
 
     @Test

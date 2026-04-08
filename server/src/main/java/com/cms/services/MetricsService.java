@@ -3,10 +3,11 @@ package com.cms.services;
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.MetricsResponseDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
+import java.util.List;
 
 public interface MetricsService {
 
-    TagMetricDTO getTagMetrics(Long tagId);
+    List<TagMetricDTO> findAllMetricsTags();
 
     CategoryMetricDTO getCategoryMetrics(Long categoryId);
 

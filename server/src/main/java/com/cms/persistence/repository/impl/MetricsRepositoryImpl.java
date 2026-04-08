@@ -1,7 +1,9 @@
 package com.cms.persistence.repository.impl;
 
+import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.persistence.repository.MetricsRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,8 +14,8 @@ public class MetricsRepositoryImpl implements MetricsRepository {
     private final TestimonialSQLDAO testimonialSQLDAO;
 
     @Override
-    public long countTestimonialsByTagId(Long tagId) {
-        return testimonialSQLDAO.countTestimonialsByTagId(tagId);
+    public List<TagMetricDTO> findAllMetricsTags() {
+        return testimonialSQLDAO.findAllMetricsTags();
     }
 
     @Override

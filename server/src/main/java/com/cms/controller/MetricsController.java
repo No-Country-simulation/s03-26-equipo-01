@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,18 +27,14 @@ public class MetricsController {
 
     private final MetricsService metricsService;
 
-    @GetMapping("/tags/{tagId}/testimonials")
+    @GetMapping("/tags/testimonials")
     @AdminEditorEndpoint
-    @Operation(summary = "Obtener la cantidad de testimonios asociados a un tag")
+    @Operation(summary = "Obtener la cantidad de testimonios asociados a todos los tags")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Metrica de tag obtenida correctamente"),
-            @ApiResponse(responseCode = "404", description = "Tag no encontrado")
+            @ApiResponse(responseCode = "200", description = "Metricas de tags obtenidas correctamente")
     })
-    public ResponseEntity<TagMetricDTO> getTagMetrics(
-            @Parameter(description = "ID del tag", example = "1")
-            @PathVariable Long tagId
-    ) {
-        return ResponseEntity.ok(metricsService.getTagMetrics(tagId));
+    public ResponseEntity<List<TagMetricDTO>> findAllMetricsTags() {
+        return ResponseEntity.ok(metricsService.findAllMetricsTags());
     }
 
     @GetMapping("/categories/{categoryId}/testimonials")

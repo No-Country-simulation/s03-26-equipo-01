@@ -7,6 +7,7 @@ import com.cms.persistence.repository.MetricsRepository;
 import com.cms.services.CategoryService;
 import com.cms.services.MetricsService;
 import com.cms.services.TagService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,8 @@ public class MetricsServiceImpl implements MetricsService {
     private final CategoryService categoryService;
 
     @Override
-    public TagMetricDTO getTagMetrics(Long tagId) {
-        return TagMetricDTO.fromModel(
-                tagService.findById(tagId),
-                metricsRepository.countTestimonialsByTagId(tagId)
-        );
+    public List<TagMetricDTO> findAllMetricsTags() {
+        return metricsRepository.findAllMetricsTags();
     }
 
     @Override
@@ -39,8 +37,15 @@ public class MetricsServiceImpl implements MetricsService {
     @Override
     public MetricsResponseDTO getTestimonialsMetrics(Long tagId, Long categoryId) {
         return new MetricsResponseDTO(
-                getTagMetrics(tagId),
+                findTagMetric(tagId),
                 getCategoryMetrics(categoryId)
         );
+    }
+
+    private TagMetricDTO findTagMetric(Long tagId) {
+        return findAllMetricsTags().stream()
+                .filter(metric -> metric.id().equals(tagId))
+                .findFirst()
+                .orElseGet(() -> TagMetricDTO.fromModel(tagService.findById(tagId), 0L));
     }
 }
