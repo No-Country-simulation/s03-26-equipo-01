@@ -2,6 +2,8 @@ package com.cms.services;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.model.testimonial.Tag;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.List;
 
 public interface TagService {
@@ -14,4 +16,6 @@ public interface TagService {
     Tag update(Long id, TagUpdateRequestDTO updateTagDto);
 
     void deleteById(Long id);
+
+    List<Tag> findTagsByName(String nameTag, Long aLong);
 }
