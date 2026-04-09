@@ -11,13 +11,12 @@ import TableData from '../../../../../../shared/components/table-container/Table
 const TagSubPanel = ({currentTab}: TabContent) => {
     
     const {isActive, handleActive} = useActive();
-    const {tag, tags, addTag} = useTag();
+    const {tags, addTag} = useTag();
 
     return (
         <section hidden = {currentTab !== TabValues.TAG} className = 'tag-subpanel-container'>
             <AddButton text = "CREAR TAG" onSubmit = {handleActive} />
             {isActive && <TagModalForm onSubmit = {addTag} />}
-            {tag && <p>Se agrego el tag {tag.name}</p>}
             <TableData tableData = {tableData(tags)}>
                 <button>Editar</button>
                 <button>Eliminar</button>
