@@ -20,4 +20,11 @@ const TagSubPanel = ({currentTab}: TabContent) => {
     )
 }
 
+/*
+    <Table tableData = {tableData(getAll())}>
+                <DeleteButton onSubmit = {deleteTag} />
+                <EditButton onSubmit = {editTag} />
+            </Table>
+*/
+
 export default TagSubPanel;
