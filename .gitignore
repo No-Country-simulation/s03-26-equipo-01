@@ -1,1 +1,4 @@
 .idea/
+
+# Variables de entorno locales
+.env
