@@ -49,6 +49,8 @@ public record TestimonialResponseDTO(
         List<TagResponseDto> tags
 ) {
     public static TestimonialResponseDTO fromModel(Testimonial testimonial) {
+        CategoryResponseSimpleDTO category = testimonial.getCategory() == null ? null : CategoryResponseSimpleDTO.fromModel(testimonial.getCategory());
+
         return new TestimonialResponseDTO(
                 testimonial.getId(),
                 testimonial.getTestimonial(),
@@ -59,7 +61,7 @@ public record TestimonialResponseDTO(
                 testimonial.getEmail(),
                 testimonial.getState().getLabel(),
                 testimonial.getCreatedAt(),
-                CategoryResponseSimpleDTO.fromModel(testimonial.getCategory()),
+                category,
                 testimonial.getTags().stream().map(TagResponseDto::fromEntity).toList()
         );
     }
