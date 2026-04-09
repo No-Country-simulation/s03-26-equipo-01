@@ -69,6 +69,7 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/error",
                                 "/testimonial",
+                                "/embed/published",
                                 "/tags/search"
                         ).permitAll()
                         .anyRequest().authenticated()

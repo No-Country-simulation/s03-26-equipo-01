@@ -6,7 +6,6 @@ import type { Testimonial } from "../models/testimonial";
 
 async function adminTestimonials(): Promise<Testimonial[]> {
     const testimonials = await api.get<TestimonialResponse[]>(ADMIN_TESTIMONIALS_URL);
-    console.log(testimonials)
     return adminTestimonialsAdapter(testimonials.data);
 }
 

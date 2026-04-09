@@ -18,7 +18,7 @@ const TextInput = <T extends FieldValues>({inputTextData, error, register}: Text
                         onBlur: () => changeFocus()
                     }
                 )}
-                error = {error !== undefined}
+                error = {!!error}
                 onFocus = {() => changeFocus()}
                 id = {inputTextData.id} 
                 name = {inputTextData.name}

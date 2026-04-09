@@ -1,0 +1,12 @@
+@media screen and (min-width: 1024px) {
+
+    .modal-form_buttons {
+        min-width: 20vw;
+        min-height: 5vh;
+    }
+
+    .modal-form_buttons button {
+        min-width: 10vw;
+        min-height: 6vh;
+    }
+}

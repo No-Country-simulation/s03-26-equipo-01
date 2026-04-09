@@ -1,0 +1,10 @@
+.tabs-admin-container {
+    display: grid;
+    grid-template-rows: 0.1fr 1fr;
+    gap: 2vh;
+    width: 100%;
+}
+.tabs-admin-list {
+    width: 100%;
+    border-bottom: 1px solid #DDD;
+}

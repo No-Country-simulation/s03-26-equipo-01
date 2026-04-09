@@ -2,8 +2,11 @@ import type { TabContent } from "../../../../components/tab-container/tab-contai
 import { TabValues } from "../../../../components/tab-container/tab-values";
 
 const CategoryDashboard = ({currentTab}: TabContent) => {
+    
     return (
-        <p hidden = {currentTab !== TabValues.CATEGORIA}>categorias</p>
+        <p hidden = {currentTab !== TabValues.CATEGORIA}>
+            categoria
+        </p>
     )
 }
 

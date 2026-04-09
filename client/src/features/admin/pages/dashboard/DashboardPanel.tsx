@@ -1,9 +1,10 @@
 import useAuthContext from "../../../../shared/auth/context/use-auth-context";
 import TitleContainer from "../../components/title-container/TitleContainer";
-import TabContainer from "../../components/tab-container/TabContainer";
 import CategoryDashboard from "./components/category-dashboard/CategoryDashboard";
 import TagDashboard from "./components/tag-dashboard/TagDashboard";
 import useTab from "../../hooks/use-tab";
+import './styles/dashboard-panel.css';
+import TabContainer from "../../components/tab-container/TabContainer";
 
 const DashboardPanel = () => {    
 
