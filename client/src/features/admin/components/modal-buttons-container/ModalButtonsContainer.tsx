@@ -1,22 +1,36 @@
+import type { ButtonsContainerProps, ButtonsDeleteContainerProps } from './modal-buttons-container';
 import './styles/modal-buttons-container.css';
 
-export interface ButtonsContainerProps {
-    onActive: () => void
-}
-
-const ModalButtonsContainer = ({onActive}: ButtonsContainerProps) => {
+export const ButtonsCommitContainer = ({onActive}: ButtonsContainerProps) => {
     return (
-        <section className = 'modal-form_buttons'>
+        <section className = 'commit-form_buttons'>
             <button 
+                type = 'button'
                 onClick = {onActive} 
-                className = 'modal-form--cancel'>CANCELAR
+                className = 'commit-form--cancel'>CANCELAR
             </button>
             <button 
                 type = 'submit' 
-                className = 'modal-form--add'>CONFIRMAR
+                className = 'commit-form---commit'>CONFIRMAR
             </button>
         </section>
     )
 }
 
-export default ModalButtonsContainer;
+export const ButtonsDeleteContainer = ({onActive, onDelete}: ButtonsDeleteContainerProps) => {
+    return (
+        <section className = 'commit-form_buttons'>
+            <button 
+                type = 'button'
+                onClick = {onActive} 
+                className = 'commit_delete--cancel'>CANCELAR
+            </button>
+            <button 
+                type = 'submit' 
+                onClick = {onDelete}
+                className = 'commit_delete--commit'>CONFIRMAR
+            </button>
+        </section>
+    )
+}
+

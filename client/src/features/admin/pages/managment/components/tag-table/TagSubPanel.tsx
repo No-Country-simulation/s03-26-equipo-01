@@ -1,6 +1,7 @@
 import TableEditData from "../../../../../../shared/components/table-container/TableContainer";
 import useActive from "../../../../../../shared/hooks/use-active";
 import AddButton from "../../../../components/add-button/AddButton";
+import DeleteModal from "../../../../components/delete-modal/DeleteModal";
 import type { TabContent } from "../../../../components/tab-container/tab-container";
 import { TabValues } from "../../../../components/tab-container/tab-values";
 import TagModalForm from "../../../../components/tag-modal-form/TagModalForm";
@@ -22,7 +23,7 @@ const TagSubPanel = ({currentTab}: TabContent) => {
             <AddButton text = "CREAR TAG" onSubmit = {addActive.handleActive} />
             {addActive.isActive && <TagModalForm onSubmit = {addTag} />}
             {editActive.isActive && <TagModalForm onSubmit = {(tag) => editTag(tag, editActive.id)} />}
-            {deleteActive.isActive && <TagModalForm onSubmit = {() => deleteTag(deleteActive.id)} />}
+            {deleteActive.isActive && <DeleteModal onDelete = {deleteTag} id = {deleteActive.id}/>}
             <TableEditData 
                 tableData = {tableData(tags)}
                 activeEdit = {handleEdit}
