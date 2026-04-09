@@ -37,4 +37,12 @@ public class Media {
         this.thumbnailUrl = videoMedia.getThumbnailUrl();
         this.channelName = videoMedia.getChannelName();
     }
+
+    public boolean hasImage() {
+        return !this.url.isEmpty();
+    }
+
+    public boolean hasVideo() {
+        return !this.videoId.isEmpty();
+    }
 }

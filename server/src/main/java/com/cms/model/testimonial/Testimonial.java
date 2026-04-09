@@ -1,5 +1,6 @@
 package com.cms.model.testimonial;
 
+import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
@@ -55,5 +56,9 @@ public class Testimonial {
     public void nextStateAdmin() {
         this.testimonialState = testimonialState.nextToAdmin(this);
         this.state = StateTestimonial.fromState(this.testimonialState);
+    }
+
+    public void validateMedia() {
+        if (media.hasImage() && media.hasVideo()) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio tiene una imagen y video");
     }
 }
