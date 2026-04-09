@@ -34,7 +34,6 @@ public class TestimonialControllerREST {
                 request.idEmbed(),
                 request.image(),
                 request.youtubeUrl(),
-                request.idCategoria(),
                 request.idTags()
         );
 
@@ -42,6 +41,4 @@ public class TestimonialControllerREST {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-
 }

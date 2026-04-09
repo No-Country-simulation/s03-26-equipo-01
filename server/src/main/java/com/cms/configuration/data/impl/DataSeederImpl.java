@@ -169,6 +169,6 @@ public class DataSeederImpl implements DataSeeder {
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds));
+        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds));
     }
 }
