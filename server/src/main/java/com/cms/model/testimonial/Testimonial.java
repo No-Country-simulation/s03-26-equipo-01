@@ -37,6 +37,7 @@ public class Testimonial {
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();
 
+    @Builder.Default
     private StateTestimonial state = StateTestimonial.DRAFT;
 
     @Builder.Default
@@ -45,8 +46,7 @@ public class Testimonial {
     public void agregarTags(List<Tag> tags) {
         this.tags.addAll(tags);
     }
-    @Builder.Default
-    private TestimonialState testimonialState = new DraftState();
+    private TestimonialState testimonialState;
 
     public void nextStateEditor() {
         this.testimonialState = testimonialState.nextToEditor(this);
@@ -59,6 +59,6 @@ public class Testimonial {
     }
 
     public void validateMedia() {
-        if (media.hasImage() && media.hasVideo()) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio tiene una imagen y video");
+        if (media.isNextState()) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio tiene una imagen y video");
     }
 }

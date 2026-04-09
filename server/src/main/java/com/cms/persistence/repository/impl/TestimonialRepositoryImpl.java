@@ -25,13 +25,6 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
 
     @Override
     public Testimonial save(Testimonial model) {
-        model.setState(StateTestimonial.DRAFT);
-        resolveState(model);
-        return testimonialSQLDAO.save(model);
-    }
-
-    @Override
-    public Testimonial update(Testimonial model) {
         return testimonialSQLDAO.save(model);
     }
 
@@ -48,9 +41,14 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     public List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds) {
         List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds, StateTestimonial.DRAFT);
         testimonials.forEach(this::resolveMedia);
+        testimonials.forEach(this::resolveState);
         return testimonials;
     }
 
+    @Override
+    public Testimonial update(Testimonial model) {
+        return save(model);
+    }
 
     private void resolveMedia(Testimonial testimonial) {
         String mediaId = testimonial.getMedia() != null ? testimonial.getMedia().getId() : null;
@@ -59,10 +57,9 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
             testimonial.setMedia(mediaRepository.findById(mediaId));
         }
     }
+
     private void resolveState(Testimonial testimonial) {
-        if (testimonial.getState() != null) {
-            testimonial.setTestimonialState(testimonial.getState().toState());
-        }
+        testimonial.setTestimonialState(testimonial.getState().toState());
     }
 
 }

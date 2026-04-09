@@ -10,4 +10,5 @@ public abstract class TestimonialState {
     public abstract TestimonialState nextToEditor(Testimonial testimonial);
 
     public abstract TestimonialState nextToAdmin(Testimonial testimonial);
+
 }

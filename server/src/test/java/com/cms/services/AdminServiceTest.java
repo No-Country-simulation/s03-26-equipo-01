@@ -6,6 +6,7 @@ import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.testimonial.state.impl.PendingState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -181,8 +182,7 @@ public class AdminServiceTest {
                 category.getId(), tagIds
         );
 
-        saved.nextStateEditor();
-        testimonialService.update(saved);
+        testimonialService.advanceByEditor(saved.getId());
 
         Testimonial recovered = testimonialService.advanceByAdmin(saved.getId());
         assertEquals(StateTestimonial.APPROVED, recovered.getState());

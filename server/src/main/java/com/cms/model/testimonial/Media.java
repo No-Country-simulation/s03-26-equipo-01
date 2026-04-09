@@ -39,10 +39,14 @@ public class Media {
     }
 
     public boolean hasImage() {
-        return !this.url.isEmpty();
+        return this.url != null && !this.url.isEmpty();
     }
 
     public boolean hasVideo() {
-        return !this.videoId.isEmpty();
+        return this.videoId != null && !this.videoId.isEmpty();
+    }
+
+    public boolean isNextState() {
+        return hasImage() && hasVideo();
     }
 }

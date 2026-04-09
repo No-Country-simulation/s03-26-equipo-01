@@ -23,7 +23,6 @@
                      class="com.cms.model.embeds.Embed"
                      column="embed_id"
                      cascade="merge"
-                     lazy="false"
                      not-null="true"/>
 
         <component name="media" class="com.cms.model.testimonial.Media">
@@ -45,7 +44,7 @@
 
         <bag name="tags" table="testimonial_tags" cascade="merge" lazy="false">
             <key column="testimonial_id"/>
-            <many-to-many class="com.cms.model.testimonial.Tag" column="tag_id" lazy="false"/>
+            <many-to-many class="com.cms.model.testimonial.Tag" column="tag_id"/>
         </bag>
 
     </class>
