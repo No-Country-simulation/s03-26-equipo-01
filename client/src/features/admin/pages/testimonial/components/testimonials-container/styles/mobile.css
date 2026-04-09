@@ -9,7 +9,7 @@
     display: grid;
     place-items: center;
     grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
-    gap: 5%;
+    gap: 20px;
     justify-content: center; 
     align-content: center;
     width: 100%;

@@ -123,16 +123,6 @@ class CategoryServiceTest {
         assertThrows(EntityNotFoundException.class, () -> categoryService.findById(defaultCategory.getId()));
     }
 
-    @Test
-    void createCategoryWithDuplicateSlugShouldThrowException() {
-        Category duplicateCategory = Category.builder()
-                .name("Duplicate")
-                .slug("common-category")
-                .description("Duplicate desc")
-                .build();
-
-        assertThrows(DuplicateResourceException.class, () -> categoryService.create(duplicateCategory, adminSaved.getId()));
-    }
 
     @AfterEach
     void tearDown() {

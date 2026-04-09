@@ -119,7 +119,7 @@ public class TestimonialServiceTest {
                 .testimonial("Testimonio de otro admin")
                 .rating(3)
                 .email("other@test.com")
-                .state(StateTestimonial.DRAFT)
+                .state(StateTestimonial.PUBLISHED)
                 .build();
 
         testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
