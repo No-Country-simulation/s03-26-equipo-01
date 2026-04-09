@@ -14,7 +14,7 @@ const useTag = () => {
         get<CreatedTag[]>(getAllTags)
             .then(newsTag => setTags(newsTag))
             .catch(error => console.log(error))
-    });
+    }, []);
 
     const addTag = async (tag: CreatedTag) => {
         const newTag = await post<CreatedTag>(addTagService, tag);

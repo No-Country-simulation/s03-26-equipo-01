@@ -12,7 +12,6 @@ const ModalButtonsContainer = ({onActive}: ButtonsContainerProps) => {
                 className = 'modal-form--cancel'>CANCELAR
             </button>
             <button 
-                onClick = {onActive} 
                 type = 'submit' 
                 className = 'modal-form--add'>CONFIRMAR
             </button>

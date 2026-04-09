@@ -1,4 +1,4 @@
-export interface Table {
+export interface TableDataContent {
     headers: string[]
     rows: string[][]
 }

@@ -1,3 +1,4 @@
+import TableData from "../../../../../../shared/components/table-container/TableContainer";
 import useActive from "../../../../../../shared/hooks/use-active";
 import AddButton from "../../../../components/add-button/AddButton";
 import type { TabContent } from "../../../../components/tab-container/tab-container";
@@ -6,7 +7,6 @@ import TagModalForm from "../../../../components/tag-modal-form/TagModalForm";
 import useTag from "../../hooks/use-tag";
 import './styles/tab-table.css';
 import tableData from "./types/table-data";
-import TableData from '../../../../../../shared/components/table-container/TableContainer';
 
 const TagSubPanel = ({currentTab}: TabContent) => {
     

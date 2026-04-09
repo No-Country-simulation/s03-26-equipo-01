@@ -1,9 +1,9 @@
-import type { Table } from "../../../../../../../shared/types/table/table";
+import type { TableDataContent } from "../../../../../../../shared/types/table/table";
 import type { CreatedTag } from "../../../../../adapters/tag/dtos/create-tag";
 
-const headers = ['id', 'name'];
+const headers = ['ID', 'NAME'];
 
-const tableData = (tags: CreatedTag[]): Table => {
+const tableData = (tags: CreatedTag[]): TableDataContent => {
 
     return {
         headers: headers,
