@@ -1,16 +1,14 @@
-import type { Tag } from "../../../../../models/tag";
+import type { Table } from "../../../../../../../shared/types/table/table";
+import type { CreatedTag } from "../../../../../adapters/tag/dtos/create-tag";
 
 const headers = ['id', 'name'];
 
-const tableData = (tags: Tag[]): TableData => {
-    return {
-        headers: headers
-            
-    }
-}
+const tableData = (tags: CreatedTag[]): Table => {
 
-interface TableData {
-    headers: string[]
+    return {
+        headers: headers,
+        rows: tags.map(tag => Object.values(tag))
+    }
 }
 
 export default tableData;

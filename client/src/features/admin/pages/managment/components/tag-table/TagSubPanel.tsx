@@ -5,17 +5,23 @@ import { TabValues } from "../../../../components/tab-container/tab-values";
 import TagModalForm from "../../../../components/tag-modal-form/TagModalForm";
 import useTag from "../../hooks/use-tag";
 import './styles/tab-table.css';
+import tableData from "./types/table-data";
+import TableData from '../../../../../../shared/components/table-container/TableContainer';
 
 const TagSubPanel = ({currentTab}: TabContent) => {
     
     const {isActive, handleActive} = useActive();
-    const {tag, addTag} = useTag();
+    const {tag, tags, addTag} = useTag();
 
     return (
         <section hidden = {currentTab !== TabValues.TAG} className = 'tag-subpanel-container'>
             <AddButton text = "CREAR TAG" onSubmit = {handleActive} />
             {isActive && <TagModalForm onSubmit = {addTag} />}
             {tag && <p>Se agrego el tag {tag.name}</p>}
+            <TableData tableData = {tableData(tags)}>
+                <button>Editar</button>
+                <button>Eliminar</button>
+            </TableData>
         </section>
     )
 }
