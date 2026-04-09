@@ -16,5 +16,5 @@
 }
 
 .dark-color {
-    background-color: #FAFAFA;
+    background-color: var(--clean-backgrond);
 }

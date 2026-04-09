@@ -1,4 +1,9 @@
 export interface TableDataContent {
     headers: string[]
-    rows: string[][]
+    rows: Row[]
+}
+
+interface Row {
+    id: number 
+    fields: string[]
 }
