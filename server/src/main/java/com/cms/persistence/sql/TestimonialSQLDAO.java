@@ -1,7 +1,9 @@
 package com.cms.persistence.sql;
 
-import com.cms.model.embeds.Embed;
+import com.cms.controller.dto.metrics.CategoryMetricDTO;
+import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
+import java.util.List;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +12,41 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
-
 public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
+    @Query("""
+            SELECT new com.cms.controller.dto.metrics.TagMetricDTO(
+                tag.id,
+                tag.name,
+                COUNT(DISTINCT testimonial.id)
+            )
+            FROM Tag tag
+            LEFT JOIN tag.testimonials testimonial ON testimonial.embed.admin.id = :adminId
+            WHERE tag.active = true
+              AND tag.creator.id = :adminId
+            GROUP BY tag.id, tag.name
+            ORDER BY tag.name ASC
+            """)
+    List<TagMetricDTO> findAllMetricsTags(@Param("adminId") Long adminId);
+
+    @Query("""
+            SELECT new com.cms.controller.dto.metrics.CategoryMetricDTO(
+                category.id,
+                category.name,
+                category.slug,
+                COUNT(testimonial.id)
+            )
+            FROM Category category
+            LEFT JOIN Testimonial testimonial ON testimonial.category.id = category.id
+            WHERE category.creator.id = :adminId
+              AND category.deleted = false
+            GROUP BY category.id, category.name, category.slug
+            ORDER BY category.name ASC
+            """)
+    List<CategoryMetricDTO> findAllMetricsCategories(@Param("adminId") Long adminId);
+
+    @Query("SELECT COUNT(t.id) FROM Testimonial t WHERE t.category.id = :categoryId")
+    long countTestimonialsByCategoryId(@Param("categoryId") Long categoryId);
+
 
     //Traemos a 5 testimonios publicados si hay más se puede usar la paginación para traer más de 5 testimonios en caso de que exista
     @Query("SELECT t FROM Testimonial t WHERE t.state = :state ORDER BY t.createdAt DESC")
