@@ -1,27 +1,40 @@
-.modal-form_buttons {
+.commit-form_buttons {
     display: flex;
     justify-content: center;
     gap: 2vw;
     height: 16%;
 }
 
-.modal-form_buttons button {
+.commit-form_buttons button {
     height: 100%;
     width: 40%;
     max-width: 120px;
     font-size: var(--medium-font);
     font-weight: bold;
-    border: 1.5px solid var(--primary-blue);
     border-radius: 6px;
     cursor: pointer;
 }
 
-.modal-form--cancel {
+.commit-form--cancel {
+    border: 1.5px solid var(--primary-blue);
     color: var(--primary-blue);
     background-color: #FFF;
 }
 
-.modal-form--add {
+.commit-form---commit {
+    border: 1.5px solid var(--primary-blue);
     color: #FFF;
     background-color: var(--primary-blue);
+}
+
+.commit_delete--cancel {
+    border: 1.5px solid var(--semantic-error);
+    background-color: #FFF;
+    color: var(--semantic-error);
+}
+
+.commit_delete--commit {
+    border: 1.5px solid var(--semantic-error);
+    color: #FFF;
+    background-color: var(--semantic-error);
 }

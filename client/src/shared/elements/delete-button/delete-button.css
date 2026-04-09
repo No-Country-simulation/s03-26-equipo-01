@@ -1,0 +1,14 @@
+.deleted-button_container {
+    display: flex;
+    width: 25px;
+    max-width: 1vw;
+    gap: 40%;
+}
+
+.deleted-button_container button {
+    font-weight: bold;
+    border-style: none;
+    color: #EA4A41;
+    background-color: transparent;
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-.tag-modal-form-container {
+.delete-modal_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,12 +9,11 @@
     background-color: #FFF;
 }
 
-.tag-modal-form-container div {
+.delete-modal_container div {
     justify-self: center;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 90%;
     height: 90%;
-    text-align: center;
 }

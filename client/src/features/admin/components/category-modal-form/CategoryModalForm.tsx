@@ -9,7 +9,7 @@ import './styles/category-model-form.css';
 import useActive from "../../../../shared/hooks/use-active";
 import ModalTitleContainer from "../modal-title-form/ModalTitleContainer";
 import ModalInputsContainer from "../modal-input-container/ModalInputContainer";
-import ModalButtonsContainer from "../modal-buttons-container/ModalButtonsContainer";
+import {ButtonsCommitContainer} from "../modal-buttons-container/ModalButtonsContainer";
 
 const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
 
@@ -30,7 +30,7 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Crea categorias amplias, no específicas."
                     />
-                    <ModalButtonsContainer onActive = {handleActive} />
+                    <ButtonsCommitContainer onActive = {handleActive} />
                 </div>
             </form>
         </ModalContainer>

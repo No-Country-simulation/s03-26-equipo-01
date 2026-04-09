@@ -8,9 +8,9 @@ interface ModalContainerProps {
 
 const ModalContainer = ({disable, children}: ModalContainerProps) => {
     return (
-        <div className = {disable ? 'modal-form-container_disable' : 'modal-form-container falling-container'}>
+        <section className = {disable ? 'modal-form-container_disable' : 'modal-form-container falling-container'}>
             {children}
-        </div>
+        </section>
     )
 }
 

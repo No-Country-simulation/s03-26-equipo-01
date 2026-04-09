@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import useApi from "../../../core/api/hooks/use-api";
-import adminTestimonialResource from "../services/admin-testimonial-resource.service";
+import adminTestimonialResource from "../services/testimonial-resource/admin-testimonial-resource.service";
 import type TestimonialResources from "../models/testimonial-resources";
 import type { FilterData } from "../../../shared/types/filter-data/filter-data";
 import type { Testimonial } from "../models/testimonial";
-import adminTestimonials from "../services/admin-testimonials";
+import adminTestimonials from "../services/testimonial/admin-testimonials";
 
 const useTestimonialPanel = () => {
 
