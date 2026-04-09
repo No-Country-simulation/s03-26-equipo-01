@@ -12,4 +12,6 @@ public interface TestimonialRepository {
     List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds);
 
     Testimonial save(Testimonial model);
+
+    void deleteById(Long id);
 }

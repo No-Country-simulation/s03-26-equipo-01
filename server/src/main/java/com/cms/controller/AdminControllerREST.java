@@ -16,16 +16,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController()
 @RequestMapping("/admin")
 @Tag(name = "Admin", description = "Operaciones relacionadas con la gestión del administrador")
-public class AdminControllerREST {
+public class
+AdminControllerREST {
 
     private final AuthUtils  authUtils;
     private final AdminService adminService;
@@ -78,4 +77,36 @@ public class AdminControllerREST {
 
         return ResponseEntity.ok(adminResourceResponseDTO);
     }
+
+    @DeleteMapping("/testimonial/{id}")
+    @AdminEndpoint
+    @Operation(
+            summary = "Eliminar testimonio",
+            description = "Elimina un testimonio por su ID. Solo se pueden eliminar testimonios en estados APPROVED o PUBLISHED."
+    )
+    @ApiResponse(responseCode = "204", description = "Testimonio eliminado exitosamente")
+    @ApiResponse(responseCode = "404", description = "Testimonio no encontrado")
+    @ApiResponse(responseCode = "409", description = "No se puede eliminar testimonio en estado DRAFT o PENDING")
+    public ResponseEntity<Void> deleteTestimonial(
+            @PathVariable Long id,
+            Authentication authentication
+    ) {
+        Long idAdmin = authUtils.getUserId(authentication);
+
+        Testimonial testimonial = testimonialService.findTestimonialById(id);
+        if (testimonial == null) {
+            return ResponseEntity.notFound().build();
+        }
+        List<Testimonial> adminTestimonials = testimonialService.findTestimonialByAdmin(idAdmin);
+        boolean belongsToAdmin = adminTestimonials.stream()
+                .anyMatch(t -> t.getId().equals(id));
+
+        if (!belongsToAdmin) {
+            return ResponseEntity.status(403).build();
+        }
+
+
+        testimonialService.deleteTestimonial(id);
+        return ResponseEntity.noContent().build();
+}
 }

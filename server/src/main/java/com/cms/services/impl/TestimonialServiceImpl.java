@@ -4,6 +4,7 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
@@ -13,7 +14,7 @@ import com.cms.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.lang.Exception;
 import java.util.List;
 
 @Service
@@ -71,5 +72,43 @@ public class TestimonialServiceImpl implements TestimonialService {
         Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
         List<Long> embedIds = embedService.findAllIdsByAdmin(admin);
         return testimonialRepository.findTestimonialByEmbeds(embedIds);
+    }
+
+    @Override
+    @Transactional
+    public Testimonial deleteTestimonial(Long id) {
+
+        try {
+            Testimonial testimonial = findTestimonialById(id);
+            if (testimonial == null) {
+                throw new EntityNotFoundException(Testimonial.class.getName(), id);
+            }
+
+
+            StateTestimonial state = testimonial.getState();
+            if (state == StateTestimonial.DRAFT || state == StateTestimonial.PENDING) {
+                throw new IllegalStateException(
+                        "No se puede eliminar testimonio para este estado " + state.getLabel()
+                );
+            }
+
+            if (testimonial.getMedia() != null) {
+                Media media = testimonial.getMedia();
+                if (media.getPublicId() != null) {
+                    mediaService.deleteImage(media.getPublicId());
+                }
+                if (media.getVideoId() != null) {
+                    mediaService.deleteVideo(media.getVideoId());
+                }
+            }
+
+            testimonialRepository.deleteById(id);
+            return testimonial;
+
+        } catch (Exception e) {
+            // Convertir checked exceptions a RuntimeException para forzar rollback
+            throw new RuntimeException("Error deleting testimonial", e);
+        }
+
     }
 }
