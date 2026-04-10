@@ -4,6 +4,7 @@ import com.cms.model.testimonial.Testimonial;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TestimonialRepository {
 
@@ -15,5 +16,10 @@ public interface TestimonialRepository {
 
     Testimonial save(Testimonial model);
 
+
+    Optional<Testimonial> findTestimonialByIdAndAdminId(Long id, Long idAdmin);
+
     void deleteById(Long id);
+
+
 }

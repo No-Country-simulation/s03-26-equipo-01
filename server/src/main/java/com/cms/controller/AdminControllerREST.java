@@ -101,21 +101,7 @@ AdminControllerREST {
             Authentication authentication
     ) {
         Long idAdmin = authUtils.getUserId(authentication);
-
-        Testimonial testimonial = testimonialService.findTestimonialById(id);
-        if (testimonial == null) {
-            return ResponseEntity.notFound().build();
-        }
-        List<Testimonial> adminTestimonials = testimonialService.findTestimonialByAdmin(idAdmin);
-        boolean belongsToAdmin = adminTestimonials.stream()
-                .anyMatch(t -> t.getId().equals(id));
-
-        if (!belongsToAdmin) {
-            return ResponseEntity.status(403).build();
-        }
-
-
-        testimonialService.deleteTestimonial(id);
+        testimonialService.deleteTestimonial(id, idAdmin);
         return ResponseEntity.noContent().build();
 }
 }

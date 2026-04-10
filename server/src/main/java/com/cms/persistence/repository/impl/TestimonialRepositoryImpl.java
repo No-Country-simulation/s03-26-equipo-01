@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TestimonialRepositoryImpl implements TestimonialRepository {
@@ -61,5 +62,15 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     private void resolveState(Testimonial testimonial) {
         testimonial.setTestimonialState(testimonial.getState().toState());
     }
+    @Override
+    public Optional<Testimonial> findTestimonialByIdAndAdminId(Long id, Long idAdmin) {
+        return testimonialSQLDAO.findTestimonialByIdAndAdminId(id, idAdmin);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        testimonialSQLDAO.deleteById(id);
+    }
+
 
 }

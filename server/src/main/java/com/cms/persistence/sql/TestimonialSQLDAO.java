@@ -4,6 +4,8 @@ import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
+import java.util.Optional;
+
 import com.cms.model.testimonial.enums.StateTestimonial;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,4 +59,8 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     List<Testimonial> findAllByEmbedIs(
             @Param("ids") List<Long> ids,
             @Param("state") StateTestimonial state);
+
+
+    @Query("SELECT t FROM Testimonial t WHERE t.id = :id AND t.embed.admin.id = :idAdmin")
+    Optional<Testimonial> findTestimonialByIdAndAdminId(@Param("id") Long id, @Param("idAdmin") Long idAdmin);
 }

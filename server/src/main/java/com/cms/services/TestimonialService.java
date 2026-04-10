@@ -7,14 +7,15 @@ import java.util.List;
 
 public interface TestimonialService {
 
-    Testimonial save(Testimonial model, Long id, MultipartFile image, String youtubeUrl, Long idCategory, List<Long> idTags);
+
     Testimonial save(Testimonial model, Long id, MultipartFile image, String youtubeUrl, List<Long> idTags);
 
     Testimonial findTestimonialById(Long id);
 
     List<Testimonial> findTestimonialByAdmin(Long idAdmin);
 
-    Testimonial deleteTestimonial(Long id);
+    Testimonial deleteTestimonial(Long id, Long idAdmin);
+    Testimonial evaluateTestimonialState(Testimonial testimonial);
 
     Testimonial advanceByEditor(Long id);
 
