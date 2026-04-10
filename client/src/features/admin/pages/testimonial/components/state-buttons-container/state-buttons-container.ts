@@ -4,4 +4,6 @@ import type { Testimonial } from "../../../../models/testimonial"
 export interface StateButtonContainerProps {
     changeStateButtons: ChangeStateButtons
     testimonial: Testimonial
+    nextState: (id: number) => void
+    prevState: (id: number) => void
 }

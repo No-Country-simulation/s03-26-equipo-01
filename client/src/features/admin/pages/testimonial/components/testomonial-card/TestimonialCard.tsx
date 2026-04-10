@@ -7,21 +7,25 @@ import type { TestimonialCardProps } from "./testimonial-card";
 import './styles/testomonial-card.css';
 import StateButtonContainer from "../state-buttons-container/StateButtonContainer";
 import buttonsStateData from "./buttons-data";
+import useTestimonialState from "../../hooks/use-testimonial-state";
 
 const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
 
-    console.log(testimonial)
+    const {updateTestimonial, nextState, prevState} = useTestimonialState(testimonial);
 
     return (
         <article className = 'testimonial-admin-card-container'>
-            <TestimonialHeader testimonial = {testimonial} />
-            <TestimonialState testimonial = {testimonial} />
-            <TestimonialDescription testimonial = {testimonial} />
-            <TestimonialTags testimonial = {testimonial} />
-            <MultimediaContent testimonial = {testimonial} />
+            <TestimonialHeader testimonial = {updateTestimonial} />
+            <TestimonialState testimonial = {updateTestimonial} />
+            <TestimonialDescription testimonial = {updateTestimonial} />
+            <TestimonialTags testimonial = {updateTestimonial} />
+            <MultimediaContent testimonial = {updateTestimonial} />
             <StateButtonContainer 
-                changeStateButtons = {buttonsStateData[testimonial.state]} 
-                testimonial = {testimonial} />
+                changeStateButtons = {buttonsStateData[updateTestimonial.state]} 
+                testimonial = {updateTestimonial} 
+                nextState = {nextState}
+                prevState = {prevState}
+            />
         </article>
     )
 }
