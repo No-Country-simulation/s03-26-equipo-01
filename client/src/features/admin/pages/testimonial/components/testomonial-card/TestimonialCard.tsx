@@ -9,9 +9,7 @@ import StateButtonContainer from "../state-buttons-container/StateButtonContaine
 import buttonsStateData from "./buttons-data";
 
 const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
-
-    console.log(testimonial)
-
+    
     return (
         <article className = 'testimonial-admin-card-container'>
             <TestimonialHeader testimonial = {testimonial} />

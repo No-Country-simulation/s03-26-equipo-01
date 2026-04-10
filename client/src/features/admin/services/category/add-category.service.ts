@@ -6,7 +6,6 @@ import type { CategoryResponse } from "../../adapters/category/dtos/response";
 import type { Category } from "../../models/category";
 
 async function addCategoryService(category: CategoryCreated): Promise<Category> {
-    console.log(category)
     const newCategory = await api.post<CategoryResponse>(ADD_CATEGORY_API, category);
     return categoryAdapter(newCategory.data);
 }
