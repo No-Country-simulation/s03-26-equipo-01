@@ -209,7 +209,7 @@ public class EmbedServiceTest {
 
         return testimonialService.save(t, embed.getId(), null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds);
+                 tagIds);
     }
 
     @AfterEach

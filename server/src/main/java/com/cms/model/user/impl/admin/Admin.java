@@ -33,6 +33,8 @@ public class Admin extends User {
     @Builder.Default
     private List<Category> categories = new ArrayList<>();
 
+    private ApiKey apiKey;
+
     public void agregarEmbed(Embed embed) {
         embeds.add(embed);
     }
