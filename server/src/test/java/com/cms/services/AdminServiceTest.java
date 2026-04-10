@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
@@ -189,6 +190,30 @@ public class AdminServiceTest {
 
         recovered = testimonialService.advanceByAdmin(recovered.getId());
         assertEquals(StateTestimonial.PUBLISHED, recovered.getState());
+    }
+
+    @Test
+    public void deleteTestimonialByAdmin(){
+        Testimonial saved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=test", tagIds);
+        assertNotNull(saved.getId());
+        Testimonial deleted = testimonialService.deleteTestimonial(saved.getId(), admin.getId());
+        assertNotNull(deleted);
+        assertEquals(saved.getId(), deleted.getId());
+        assertThrows(EntityNotFoundException.class, () ->
+                testimonialService.findTestimonialById(saved.getId())
+        );
+
+    }
+    @Test
+    public void deleteTestimonialUnauthorizedAdmin() {
+
+        Testimonial saved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=test", tagIds);
+        assertThrows(EntityNotFoundException.class, () ->
+                testimonialService.deleteTestimonial(saved.getId(), otroAdmin.getId())
+        );
+        Testimonial stillExists = testimonialService.findTestimonialById(saved.getId());
+        assertNotNull(stillExists);
+
     }
 
     @AfterEach
