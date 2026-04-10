@@ -24,4 +24,10 @@ public class AuthUtilsImpl implements AuthUtils {
     public Long getUserId(String token) {
         return jwtService.extractUserId(token);
     }
+
+    @Override
+    public String getRole(Authentication auth) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+        return userDetails.getAuthorities().iterator().next().getAuthority();
+    }
 }

@@ -11,5 +11,7 @@ public interface TestimonialRepository {
 
     List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds);
 
+    Testimonial update(Testimonial model);
+
     Testimonial save(Testimonial model);
 }

@@ -35,9 +35,6 @@ public class JwtServiceImpl implements JwtService {
                         .map(GrantedAuthority::getAuthority)
                         .orElse(""))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(
-                        System.currentTimeMillis() + 3600000
-                ))
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
