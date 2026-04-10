@@ -4,7 +4,6 @@ import com.cms.exception.EntityNotFoundException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
-import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
@@ -14,7 +13,7 @@ import com.cms.services.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import java.lang.Exception;
+
 import java.util.List;
 
 @Service
@@ -29,13 +28,11 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     private final AdminSQLDAO adminSQLDAO;
 
-    private final CategorySQLDAO categoryDAO;
-
     private final TagSQLDAO  tagDAO;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
                                   EmbedService embedService, MediaService mediaService,
-                                  AdminSQLDAO adminSQLDAO, CategorySQLDAO categoryDAO, TagSQLDAO tagDAO) {
+                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO) {
 
         this.testimonialRepository = testimonialRepository;
 
@@ -45,12 +42,11 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         this.adminSQLDAO = adminSQLDAO;
 
-        this.categoryDAO = categoryDAO;
         this.tagDAO = tagDAO;
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, Long idCategory, List<Long> idTags) {
+    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, List<Long> idTags) {
         Embed embed = embedService.findById(idEmbed);
         Media media = mediaService.save(image, youtubeUrl);
 
@@ -72,6 +68,27 @@ public class TestimonialServiceImpl implements TestimonialService {
         Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
         List<Long> embedIds = embedService.findAllIdsByAdmin(admin);
         return testimonialRepository.findTestimonialByEmbeds(embedIds);
+    }
+
+    @Override
+    public Testimonial advanceByEditor(Long id) {
+        Testimonial testimonial = findTestimonialById(id);
+        testimonial.nextStateEditor();
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Testimonial advanceByAdmin(Long idTestimonial) {
+        Testimonial testimonial = findTestimonialById(idTestimonial);
+
+        testimonial.nextStateAdmin();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public void update(Testimonial recovered) {
+        testimonialRepository.update(recovered);
     }
 
     @Override

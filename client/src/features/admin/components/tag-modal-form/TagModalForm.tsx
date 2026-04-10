@@ -4,7 +4,7 @@ import ModalContainer from "../../../../shared/components/modal-container/ModalC
 import useActive from "../../../../shared/hooks/use-active";
 import ModalTitleContainer from "../modal-title-form/ModalTitleContainer";
 import ModalInputsContainer from "../modal-input-container/ModalInputContainer";
-import ModalButtonsContainer from "../modal-buttons-container/ModalButtonsContainer";
+import {ButtonsCommitContainer} from "../modal-buttons-container/ModalButtonsContainer";
 import type { TagModalFormProps } from "./tag-model-form";
 import schema from "./types/schema";
 import inputTextData from "./types/input-text-data";
@@ -30,7 +30,7 @@ const TagModalForm = ({onSubmit}: TagModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Usa palabras que tu cliente usaría."
                     />
-                    <ModalButtonsContainer onActive = {handleActive} />
+                    <ButtonsCommitContainer onActive = {handleActive} />
                 </div>
             </form>
         </ModalContainer>

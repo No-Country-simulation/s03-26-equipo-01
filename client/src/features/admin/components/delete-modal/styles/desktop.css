@@ -1,0 +1,6 @@
+@media screen and (min-width: 1024px) {
+    .delete-modal_container {
+        min-width: 30vw;
+        min-height: 40vh;
+    }
+}

@@ -1,8 +1,8 @@
 import TabContainer from "../../components/tab-container/TabContainer";
 import TitleContainer from "../../components/title-container/TitleContainer";
 import useTab from "../../hooks/use-tab";
-import CategorySubPanel from "./components/category-table/CategoryTable";
-import TagSubPanel from "./components/tag-table/TagTable";
+import CategorySubPanel from "./components/category-table/CategorySubPanel";
+import TagSubPanel from "./components/tag-table/TagSubPanel";
 import './styles/magagment.css';
 
 const ManagmentPanel = () => {    

@@ -78,6 +78,15 @@ AdminControllerREST {
         return ResponseEntity.ok(adminResourceResponseDTO);
     }
 
+    @PatchMapping("/testimonials/{idTestimonial}/advance")
+    @AdminEndpoint
+    public ResponseEntity<TestimonialResponseDTO> advance(@PathVariable Long idTestimonial) {
+
+        TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonialService.advanceByAdmin(idTestimonial));
+
+        return ResponseEntity.ok(response);
+    }
+
     @DeleteMapping("/testimonial/{id}")
     @AdminEndpoint
     @Operation(

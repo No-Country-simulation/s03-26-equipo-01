@@ -1,0 +1,14 @@
+.edit-button_container {
+    display: flex;
+    width: 25px;
+    max-width: 1vw;
+    gap: 40%;
+}
+
+.edit-button_container button {
+    font-weight: bold;
+    border-style: none;
+    color: var( --primary-blue);
+    background-color: transparent;
+    cursor: pointer;
+}

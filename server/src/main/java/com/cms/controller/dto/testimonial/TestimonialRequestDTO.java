@@ -52,6 +52,7 @@ public record TestimonialRequestDTO(
         )
         @NotNull
         Long idEmbed,
+
         @Schema(
                 description = "Nombre de la persona que hizo el testimonio",
                 example = "Roberto mendez",
@@ -68,6 +69,7 @@ public record TestimonialRequestDTO(
         )
         @ValidImageFile
         MultipartFile image,
+
         @Schema(
                 description = "URL del video de YouTube",
                 example = "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -80,23 +82,17 @@ public record TestimonialRequestDTO(
                 example = "[1, 2, 3]",
                 requiredMode = Schema.RequiredMode.NOT_REQUIRED
         )
-        List<Long> idTags,
-        @Schema(
-                description = "Id de la categoria del testimonio",
-                example = "1",
-                requiredMode = Schema.RequiredMode.NOT_REQUIRED
-        )
-        Long idCategoria
+        List<Long> idTags
 
 ) {
-    public Testimonial toModel() {
-        return Testimonial.builder()
-                .testimonial(testimonial)
-                .witness(witness)
-                .email(email)
-                .rating(rating)
-                .state(StateTestimonial.DRAFT)
-                .createdAt(LocalDate.now())
-                .build();
-    }
+        public Testimonial toModel() {
+                return Testimonial.builder()
+                        .testimonial(testimonial)
+                        .witness(witness)
+                        .email(email)
+                        .rating(rating)
+                        .state(StateTestimonial.DRAFT)
+                        .createdAt(LocalDate.now())
+                        .build();
+        }
 }

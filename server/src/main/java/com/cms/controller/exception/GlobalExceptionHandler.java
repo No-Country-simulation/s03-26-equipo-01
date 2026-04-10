@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
         return ErrorResponseDTO.buildResponse(HttpStatus.NOT_FOUND, exception.getMessage(), request);
     }
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler({BusinessException.class, UnsupportedOperationException.class})
     public ResponseEntity<ErrorResponseDTO> handleBusinessException(
             BusinessException exception,
             HttpServletRequest request

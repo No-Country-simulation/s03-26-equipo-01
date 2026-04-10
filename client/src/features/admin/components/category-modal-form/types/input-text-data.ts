@@ -7,7 +7,7 @@ const inputTextData: InputTextData = {
     label: 'Nombre de categoria',
     placeholder: 'Ej: Enterprise, Onboarding, Soporte...' ,
     id: '1',
-    name: 'nombre' 
+    name: 'name' 
 }
 
 export default inputTextData;
