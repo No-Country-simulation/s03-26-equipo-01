@@ -11,4 +11,11 @@ public interface TestimonialService {
     Testimonial findTestimonialById(Long id);
 
     List<Testimonial> findTestimonialByAdmin(Long idAdmin);
+
+    Testimonial advanceByEditor(Long id);
+
+    Testimonial advanceByAdmin(Long idTestimonial);
+
+    void update(Testimonial recovered);
+
 }
