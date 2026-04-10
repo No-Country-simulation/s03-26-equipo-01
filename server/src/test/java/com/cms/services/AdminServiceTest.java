@@ -6,7 +6,6 @@ import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.testimonial.state.impl.PendingState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -14,172 +13,184 @@ import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestConstructor;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
+@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class AdminServiceTest {
 
-    @Autowired
-    private AdminService adminService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private ResetService resetService;
-
-    @Autowired
-    private TagService tagService;
-
-    @Autowired
-    private TestimonialService testimonialService;
-
-    @Autowired
-    private EmbedService embedService;
+    private final AdminService adminService;
+    private final UserService userService;
+    private final CategoryService categoryService;
+    private final ResetService resetService;
+    private final TagService tagService;
+    private final TestimonialService testimonialService;
+    private final EmbedService embedService;
 
     private Admin admin;
-    private Admin otroAdmin;
+    private Admin otherAdmin;
     private Editor editor;
-    private Editor editor2;
-    private Category category1;
-    private Category category2;
-    private Category categoryDeOtroAdmin;
-    private Tag tag1;
-    private Tag tag2;
-    private Tag tagDeOtroAdmin;
-
+    private Editor secondEditor;
+    private Category firstCategory;
+    private Category secondCategory;
+    private Category otherAdminCategory;
+    private Tag firstTag;
+    private Tag secondTag;
+    private Tag otherAdminTag;
     private Embed embed;
-    private Category category;
+    private Category testimonialCategory;
     private List<Long> tagIds;
     private Testimonial testimonial;
 
+    public AdminServiceTest(
+            AdminService adminService,
+            UserService userService,
+            CategoryService categoryService,
+            ResetService resetService,
+            TagService tagService,
+            TestimonialService testimonialService,
+            EmbedService embedService
+    ) {
+        this.adminService = adminService;
+        this.userService = userService;
+        this.categoryService = categoryService;
+        this.resetService = resetService;
+        this.tagService = tagService;
+        this.testimonialService = testimonialService;
+        this.embedService = embedService;
+    }
+
     @BeforeEach
-    public void setup() {
+    public void setUp() {
         admin = Admin.builder()
-                .email("12312@gmail.com")
+                .email("admin.one@test.com")
                 .password("123")
-                .firstName("tomas")
-                .lastName("kumar")
+                .firstName("Thomas")
+                .lastName("Kumar")
                 .build();
         admin = (Admin) userService.save(admin);
 
-        otroAdmin = Admin.builder()
-                .email("otro@gmail.com")
+        otherAdmin = Admin.builder()
+                .email("admin.two@test.com")
                 .password("123")
-                .firstName("otro")
-                .lastName("admin")
+                .firstName("Other")
+                .lastName("Admin")
                 .build();
-        otroAdmin = (Admin) userService.save(otroAdmin);
+        otherAdmin = (Admin) userService.save(otherAdmin);
 
         editor = Editor.builder()
-                .email("tm@gmail.com")
+                .email("editor.one@test.com")
                 .password("123")
-                .firstName("tomas")
-                .lastName("kumar")
+                .firstName("Thomas")
+                .lastName("Editor")
                 .createdBy(admin)
                 .build();
         editor = (Editor) userService.save(editor);
         admin.getEditors().add(editor);
 
-        editor2 = Editor.builder()
-                .email("tm123@gmail.com")
+        secondEditor = Editor.builder()
+                .email("editor.two@test.com")
                 .password("123")
-                .firstName("otro")
-                .lastName("usuario")
+                .firstName("Second")
+                .lastName("Editor")
                 .createdBy(admin)
                 .build();
-        editor2 = (Editor) userService.save(editor2);
-        admin.getEditors().add(editor2);
+        secondEditor = (Editor) userService.save(secondEditor);
+        admin.getEditors().add(secondEditor);
 
-        category1 = categoryService.create(
-                Category.builder().name("Tech").slug("tech").description("Tecnología").build(),
+        firstCategory = categoryService.create(
+                Category.builder().name("Tech").slug("tech").description("Technology").build(),
                 admin.getId()
         );
-        admin.getCategories().add(category1);
+        admin.getCategories().add(firstCategory);
 
-        category2 = categoryService.create(
+        secondCategory = categoryService.create(
                 Category.builder().name("Marketing").slug("marketing").description("Marketing").build(),
                 admin.getId()
         );
-        admin.getCategories().add(category2);
+        admin.getCategories().add(secondCategory);
 
-        categoryDeOtroAdmin = categoryService.create(
-                Category.builder().name("Ajena").slug("ajena").description("De otro admin").build(),
-                otroAdmin.getId()
+        otherAdminCategory = categoryService.create(
+                Category.builder().name("External").slug("external").description("Owned by another admin").build(),
+                otherAdmin.getId()
         );
 
-        tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
-        admin.getTags().add(tag1);
+        firstTag = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+        admin.getTags().add(firstTag);
 
-        tag2 = tagService.create(Tag.builder().name("frontend").build(), admin.getId());
-        admin.getTags().add(tag2);
+        secondTag = tagService.create(Tag.builder().name("frontend").build(), admin.getId());
+        admin.getTags().add(secondTag);
 
-        tagDeOtroAdmin = tagService.create(Tag.builder().name("devops").build(), otroAdmin.getId());
+        otherAdminTag = tagService.create(Tag.builder().name("devops").build(), otherAdmin.getId());
 
         embed = embedService.registerEmbed(admin.getId(), new Embed());
-        category = categoryService.create(
+        testimonialCategory = categoryService.create(
                 Category.builder().name("Test Category").slug("test-category").description("Category for tests").build(),
                 admin.getId()
         );
 
-        Tag tTag1 = tagService.create(Tag.builder().name("java").build(), admin.getId());
-        Tag tTag2 = tagService.create(Tag.builder().name("spring").build(), admin.getId());
-        tagIds = List.of(tTag1.getId(), tTag2.getId());
+        Tag testimonialTagOne = tagService.create(Tag.builder().name("java").build(), admin.getId());
+        Tag testimonialTagTwo = tagService.create(Tag.builder().name("spring").build(), admin.getId());
+        tagIds = List.of(testimonialTagOne.getId(), testimonialTagTwo.getId());
 
         testimonial = Testimonial.builder()
-                .testimonial("Excelente servicio")
+                .testimonial("Excellent service")
                 .rating(5)
                 .email("user@test.com")
+                .category(testimonialCategory)
                 .build();
     }
 
     @Test
-    public void getResourceAdmin() {
+    public void shouldGetAdminResource() {
         AdminResource adminResource = adminService.getResource(admin.getId());
 
         assertNotNull(adminResource.getUsers());
         assertTrue(adminResource.getUsers().contains(editor));
-        assertTrue(adminResource.getUsers().contains(editor2));
+        assertTrue(adminResource.getUsers().contains(secondEditor));
 
-        assertTrue(adminResource.getCategories().contains(category1));
-        assertTrue(adminResource.getCategories().contains(category2));
-        assertFalse(adminResource.getCategories().contains(categoryDeOtroAdmin));
+        assertTrue(adminResource.getCategories().contains(firstCategory));
+        assertTrue(adminResource.getCategories().contains(secondCategory));
+        assertFalse(adminResource.getCategories().contains(otherAdminCategory));
 
-        assertTrue(adminResource.getTags().contains(tag1));
-        assertTrue(adminResource.getTags().contains(tag2));
-        assertFalse(adminResource.getTags().contains(tagDeOtroAdmin));
+        assertTrue(adminResource.getTags().contains(firstTag));
+        assertTrue(adminResource.getTags().contains(secondTag));
+        assertFalse(adminResource.getTags().contains(otherAdminTag));
     }
 
     @Test
-    public void advanceByAdminFromDraftThrowsBusinessException() {
+    public void shouldThrowWhenAdminAdvancesDraftTestimonial() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
+                testimonial,
+                embed.getId(),
+                null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                tagIds
         );
 
-        assertThrows(BusinessException.class, () ->
-                testimonialService.advanceByAdmin(saved.getId())
-        );
+        assertThrows(BusinessException.class, () -> testimonialService.advanceByAdmin(saved.getId()));
     }
 
     @Test
-    public void advanceByAdminFromApprovedToPublished() {
+    public void shouldAdvanceFromApprovedToPublished() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
+                testimonial,
+                embed.getId(),
+                null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                tagIds
         );
 
         testimonialService.advanceByEditor(saved.getId());

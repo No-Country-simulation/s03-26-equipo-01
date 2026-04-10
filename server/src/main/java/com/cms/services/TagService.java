@@ -2,14 +2,12 @@ package com.cms.services;
 
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.model.testimonial.Tag;
-import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 public interface TagService {
     Tag create(Tag tag, Long idAdmin);
 
-    List<Tag> findAll();
+    List<Tag> findAllByAdmin(Long idAdmin);
 
     Tag findById(Long id);
 

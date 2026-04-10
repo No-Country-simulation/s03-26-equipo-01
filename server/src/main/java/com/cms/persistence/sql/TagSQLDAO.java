@@ -11,7 +11,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TagSQLDAO extends JpaRepository<Tag, Long> {
 
-    List<Tag> findAllByActiveTrueOrderByNameAsc();
+    @Query("""
+            SELECT tag
+            FROM Tag tag
+            WHERE tag.active = true
+              AND tag.creator.id = :adminId
+            ORDER BY tag.name ASC
+            """)
+    List<Tag> findAllByActiveTrueAndCreatorIdOrderByNameAsc(@Param("adminId") Long adminId);
 
     Optional<Tag> findByIdAndActiveTrue(Long id);
 }
