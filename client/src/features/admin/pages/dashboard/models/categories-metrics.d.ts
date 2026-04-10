@@ -4,5 +4,4 @@ export type CategoryMetrics = Category & CategoryData
 
 interface CategoryData {
     testimonialsCount: number
-    slug: string
 }
