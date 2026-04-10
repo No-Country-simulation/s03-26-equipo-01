@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(of = "id")
+@ToString(exclude = {"testimonials"})
 public class Tag {
 
     private Long id;

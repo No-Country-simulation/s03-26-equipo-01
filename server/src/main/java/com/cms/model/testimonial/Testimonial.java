@@ -1,11 +1,11 @@
 package com.cms.model.testimonial;
 
+import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.cms.model.testimonial.state.TestimonialState;
+import com.cms.model.testimonial.state.impl.DraftState;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude = {"embed", "category", "tags", "testimonialState"})
 public class Testimonial {
 
     private Long id;
@@ -36,12 +37,28 @@ public class Testimonial {
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();
 
-    private StateTestimonial state;
+    @Builder.Default
+    private StateTestimonial state = StateTestimonial.DRAFT;
 
     @Builder.Default
     private LocalDate createdAt = LocalDate.now();
 
     public void agregarTags(List<Tag> tags) {
         this.tags.addAll(tags);
+    }
+    private TestimonialState testimonialState;
+
+    public void nextStateEditor() {
+        this.testimonialState = testimonialState.nextToEditor(this);
+        this.state = StateTestimonial.fromState(this.testimonialState);
+    }
+
+    public void nextStateAdmin() {
+        this.testimonialState = testimonialState.nextToAdmin(this);
+        this.state = StateTestimonial.fromState(this.testimonialState);
+    }
+
+    public void validateMedia() {
+        if (media.isNextState()) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio tiene una imagen y video");
     }
 }

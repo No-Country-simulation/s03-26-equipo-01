@@ -33,6 +33,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));
         resolveMedia(testimonial);
+        resolveState(testimonial);
         return testimonial;
     }
 
@@ -40,7 +41,13 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     public List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds) {
         List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds, StateTestimonial.DRAFT);
         testimonials.forEach(this::resolveMedia);
+        testimonials.forEach(this::resolveState);
         return testimonials;
+    }
+
+    @Override
+    public Testimonial update(Testimonial model) {
+        return save(model);
     }
 
     private void resolveMedia(Testimonial testimonial) {
@@ -49,6 +56,10 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         if (mediaId != null) {
             testimonial.setMedia(mediaRepository.findById(mediaId));
         }
+    }
+
+    private void resolveState(Testimonial testimonial) {
+        testimonial.setTestimonialState(testimonial.getState().toState());
     }
 
 }
