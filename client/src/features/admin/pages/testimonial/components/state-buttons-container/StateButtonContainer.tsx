@@ -6,14 +6,14 @@ const StateButtonContainer = ({changeStateButtons, testimonial}: StateButtonCont
         <section className = "testimonial-admin-state-buttons-container">
             <button 
                 className = 'testimonial-admin-state_prev-state-button'
-                onClick = {() => changeStateButtons.prevState.event(testimonial.id)}
+                onClick = {() => changeStateButtons.discartTestimonial.event(testimonial.id)}
             >
-                {changeStateButtons.prevState.text}</button>
+                {changeStateButtons.discartTestimonial.textButton}</button>
             <button 
                 className = 'testimonial-admin-state_next-state-button'
                 onClick = {() => changeStateButtons.nextState.event(testimonial.id)}
             >
-                {changeStateButtons.nextState.text}</button>
+                {changeStateButtons.nextState.textButton}</button>
         </section>
     )
 }

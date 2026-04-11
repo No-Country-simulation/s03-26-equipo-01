@@ -28,6 +28,9 @@ public class JwtServiceImpl implements JwtService {
         UserDetailsImpl userDetails = (UserDetailsImpl) user;
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .setExpiration(new Date(
+                        System.currentTimeMillis() + 3600000
+                ))
                 .claim("id", userDetails.getId())
                 .claim("role", user.getAuthorities()
                         .stream()

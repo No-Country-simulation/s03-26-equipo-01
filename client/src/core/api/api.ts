@@ -3,7 +3,7 @@ import handleErrors from "./middlewares/error-handler/middlewares";
 import sendToken from "./middlewares/send-headers/send-token.middleware";
 
 const api = axios.create({
-    baseURL: 'http://localhost:8090/api/v1'
+    baseURL: 'http://localhost:8080/api/v1'
 })
 
 api.interceptors.request.use(
