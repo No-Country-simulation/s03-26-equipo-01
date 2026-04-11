@@ -2,9 +2,11 @@ package com.cms.controller;
 
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.admin.AdminResourceResponseDTO;
+import com.cms.controller.dto.admin.ApiKeyResponseDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.AdminResource;
+import com.cms.model.user.impl.admin.ApiKey;
 import com.cms.services.AdminService;
 import com.cms.services.TestimonialService;
 import com.cms.utils.AuthUtils;
@@ -12,10 +14,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -85,4 +90,17 @@ public class AdminControllerREST {
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/api-key")
+    @AdminEndpoint
+    @Operation(
+            summary = "Obtener API Key del administrador",
+            description = "Retorna la API Key asociada al admin."
+    )
+    @ApiResponse(responseCode = "200", description = "API Key obtenida exitosamente")
+    public ResponseEntity<ApiKeyResponseDTO> getApiKey(@RequestAttribute("userId") Long idAdmin) {
+        ApiKey key = adminService.getApiKey(idAdmin);
+        return ResponseEntity.ok(ApiKeyResponseDTO.fromModel(key));
+    }
+
 }
