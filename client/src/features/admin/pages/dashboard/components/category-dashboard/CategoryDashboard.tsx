@@ -7,18 +7,11 @@ interface CategoryDashboardProps {
     metrics: CategoryMetrics[]
 }
 
-const CategoryDashboard = ({currentTab, metrics}: CategoryDashboardProps) => {
-    
+const CategoryDashboard = ({currentTab, metrics}: CategoryDashboardProps) => {    
     return (
-        <> 
-            <p hidden = {currentTab !== TabValues.TAG}>categorias</p>
-            {metrics.map(metric => {
-                <div>
-                    <p>{metric.name}</p>
-                    <p>{metric.testimonialsCount}</p>
-                </div>
-            })}
-        </>
+            <section hidden = {currentTab !== TabValues.TAG}>
+                {metrics.map(metric => <p key={metric.id}>{metric.name}</p>)}
+            </section>
     )
 }
 
