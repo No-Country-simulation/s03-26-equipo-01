@@ -1,7 +1,6 @@
 package com.cms.model.testimonial;
 
 import com.cms.exception.business.BusinessException;
-import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
 import com.cms.model.testimonial.state.impl.DraftState;
@@ -16,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"embed", "category", "tags", "testimonialState"})
+@ToString(exclude = {"category", "tags", "testimonialState", "admin"})
 public class Testimonial {
 
     private Long id;
@@ -25,7 +24,6 @@ public class Testimonial {
 
     private String testimonial;
 
-    private Embed embed;
 
     private int rating;
 

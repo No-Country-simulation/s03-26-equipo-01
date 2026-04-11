@@ -181,7 +181,7 @@ public class AdminServiceTest {
     @Test
     public void advanceByAdminFromDraftThrowsBusinessException() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), admin, null,
+                testimonial,admin, null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",tagIds
         );
 
@@ -193,7 +193,7 @@ public class AdminServiceTest {
     @Test
     public void advanceByAdminFromApprovedToPublished() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), admin, null,
+                testimonial,admin, null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
         );
 

@@ -84,7 +84,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialSaved = testimonialService.save(testimonial,admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -94,7 +94,6 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
-        assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
     }
 
     @Test
@@ -113,7 +112,6 @@ public class TestimonialServiceTest {
                 .lastName("Admin")
                 .build();
         otherAdmin = (Admin) userService.save(otherAdmin);
-        Embed otherEmbed = embedService.registerEmbed(otherAdmin.getId(), new Embed());
 
         Testimonial testimonialOtherAdmin = Testimonial.builder()
                 .testimonial("Testimonio de otro admin")
@@ -122,9 +120,9 @@ public class TestimonialServiceTest {
                 .state(StateTestimonial.PUBLISHED)
                 .build();
 
-        testimonialService.save(testimonial,           embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(testimonial2,          embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial, admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial2,admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonialOtherAdmin, otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
 
@@ -150,7 +148,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), admin, file, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, admin, file, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -160,7 +158,6 @@ public class TestimonialServiceTest {
         assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
         assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
         assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
-        assertEquals(embed.getId(),                     testimonialRecovered.getEmbed().getId());
         assertNotNull(testimonialRecovered.getMedia());
         assertNotNull(testimonialRecovered.getMedia().getUrl());
         assertNotNull(testimonialRecovered.getMedia().getPublicId());
@@ -173,7 +170,7 @@ public class TestimonialServiceTest {
                 .rating(5)
                 .email("user@test.com")
                 .state(StateTestimonial.DRAFT)
-                .build(), embed.getId(), admin, null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+                .build(), admin, null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         testimonialService.advanceByEditor(testimonial2.getId());
 

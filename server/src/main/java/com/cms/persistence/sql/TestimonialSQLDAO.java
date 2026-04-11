@@ -20,7 +20,7 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
                 COUNT(DISTINCT testimonial.id)
             )
             FROM Tag tag
-            LEFT JOIN tag.testimonials testimonial ON testimonial.embed.admin.id = :adminId
+            LEFT JOIN tag.testimonials testimonial ON testimonial.admin.id = :adminId
             WHERE tag.active = true
               AND tag.creator.id = :adminId
             GROUP BY tag.id, tag.name

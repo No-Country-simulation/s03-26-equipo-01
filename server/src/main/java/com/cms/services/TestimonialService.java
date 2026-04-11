@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface TestimonialService {
-    Testimonial save(Testimonial model, Long id, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags);
+    Testimonial save(Testimonial model, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags);
 
     Testimonial findTestimonialById(Long id);
 

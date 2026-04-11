@@ -21,8 +21,6 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     private final TestimonialRepository testimonialRepository;
 
-    private final EmbedService embedService;
-
     private final MediaService mediaService;
 
     private final AdminSQLDAO adminSQLDAO;
@@ -30,12 +28,10 @@ public class TestimonialServiceImpl implements TestimonialService {
     private final TagSQLDAO  tagDAO;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
-                                  EmbedService embedService, MediaService mediaService,
+                                  MediaService mediaService,
                                   AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO) {
 
         this.testimonialRepository = testimonialRepository;
-
-        this.embedService = embedService;
 
         this.mediaService = mediaService;
 
@@ -45,12 +41,10 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags) {
-        Embed embed = embedService.findById(idEmbed);
+    public Testimonial save(Testimonial model, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags) {
         Media media = mediaService.save(image, youtubeUrl);
 
         model.setAdmin(admin);
-        model.setEmbed(embed);
         model.setMedia(media);
         model.agregarTags(tagDAO.findAllById(idTags));
 

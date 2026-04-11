@@ -34,7 +34,6 @@ public class TestimonialControllerREST {
 
         Testimonial testimonial = testimonialService.save(
                 request.toModel(),
-                request.idEmbed(),
                 admin,
                 request.image(),
                 request.youtubeUrl(),

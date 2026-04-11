@@ -110,10 +110,10 @@ class MetricsServiceTest {
         foreignCategoryId = foreignCategory.getId();
         tagWithoutTestimonialsId = tagWithoutTestimonials.getId();
 
-        saveTestimonial(embed, admin, primaryCategory, List.of(primaryTag.getId()));
-        saveTestimonial(embed, admin, primaryCategory, List.of(primaryTag.getId(), secondaryTag.getId()));
-        saveTestimonial(embed, admin, secondaryCategory, List.of(secondaryTag.getId()));
-        saveTestimonial(otherEmbed, otherAdmin, foreignCategory, List.of(foreignTag.getId()));
+        saveTestimonial(admin, primaryCategory, List.of(primaryTag.getId()));
+        saveTestimonial(admin, primaryCategory, List.of(primaryTag.getId(), secondaryTag.getId()));
+        saveTestimonial( admin, secondaryCategory, List.of(secondaryTag.getId()));
+        saveTestimonial(otherAdmin, foreignCategory, List.of(foreignTag.getId()));
     }
 
     @Test
@@ -186,7 +186,7 @@ class MetricsServiceTest {
                 () -> metricsService.getCategoryMetrics(9999L, adminId));
     }
 
-    private void saveTestimonial(Embed embed, Admin admin, Category category, List<Long> tagIds) {
+    private void saveTestimonial(Admin admin, Category category, List<Long> tagIds) {
         testimonialService.save(
                 Testimonial.builder()
                         .testimonial("Metric testimonial for ")
@@ -195,7 +195,6 @@ class MetricsServiceTest {
                         .state(StateTestimonial.DRAFT)
                         .category(category)
                         .build(),
-                embed.getId(),
                 admin,
                 null,
                 null,
