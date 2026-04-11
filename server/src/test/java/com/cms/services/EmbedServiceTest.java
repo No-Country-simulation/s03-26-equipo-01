@@ -93,7 +93,6 @@ public class EmbedServiceTest {
             assertNotNull(testimonial.getWitness(), "El witness no debe ser nulo");
             assertTrue(testimonial.getRating() >= 1 && testimonial.getRating() <= 5);
             assertNotNull(testimonial.getEmail(), "El email no debe ser nulo");
-            assertNotNull(testimonial.getCategory(), "La categoría no debe ser nula");
             assertNotNull(testimonial.getTags(), "Los tags no deben ser nulos");
         }
     }
@@ -168,9 +167,6 @@ public class EmbedServiceTest {
 
         Testimonial testimonial = content.get(0);
 
-        assertNotNull(testimonial.getCategory(), "La categoría debe estar cargada");
-        assertEquals(category.getId(), testimonial.getCategory().getId());
-
         assertNotNull(testimonial.getTags(), "Los tags deben estar cargados");
         assertFalse(testimonial.getTags().isEmpty(), "Debe tener al menos un tag");
 
@@ -209,7 +205,7 @@ public class EmbedServiceTest {
 
         return testimonialService.save(t, embed.getId(), null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds);
+                 tagIds);
     }
 
     @AfterEach

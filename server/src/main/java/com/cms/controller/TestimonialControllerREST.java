@@ -19,15 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class TestimonialControllerREST {
 
     private final TestimonialService testimonialService;
-    private final AuthUtils authUtils;
 
-    public TestimonialControllerREST(TestimonialService testimonialService, AuthUtils authUtils) {
+
+    public TestimonialControllerREST(TestimonialService testimonialService) {
         this.testimonialService = testimonialService;
-        this.authUtils = authUtils;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @SecurityRequirements()
     public ResponseEntity<TestimonialResponseDTO> testify(@ModelAttribute @Valid TestimonialRequestDTO request){
         Testimonial testimonial = testimonialService.save(
                 request.toModel(),
