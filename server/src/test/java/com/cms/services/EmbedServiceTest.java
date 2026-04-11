@@ -203,7 +203,7 @@ public class EmbedServiceTest {
                 .state(state)
                 .build();
 
-        return testimonialService.save(t, embed.getId(), null,
+        return testimonialService.save(t, embed.getId(), admin, null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",
                  tagIds);
     }

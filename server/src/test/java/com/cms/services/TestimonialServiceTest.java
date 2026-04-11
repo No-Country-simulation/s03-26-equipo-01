@@ -84,7 +84,7 @@ public class TestimonialServiceTest {
 
     @Test
     public void testifyAndGetTestimonialWithoutFile() {
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -122,9 +122,9 @@ public class TestimonialServiceTest {
                 .state(StateTestimonial.PUBLISHED)
                 .build();
 
-        testimonialService.save(testimonial,           embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(testimonial2,          embed.getId(),      null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial,           embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial2,          embed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonialOtherAdmin, otherEmbed.getId(), admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
 
@@ -150,7 +150,7 @@ public class TestimonialServiceTest {
                 is.readAllBytes()
         );
 
-        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), file, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialSaved = testimonialService.save(testimonial, embed.getId(), admin, file, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
         Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
         assertNotNull(testimonialSaved.getId());
@@ -173,7 +173,7 @@ public class TestimonialServiceTest {
                 .rating(5)
                 .email("user@test.com")
                 .state(StateTestimonial.DRAFT)
-                .build(), embed.getId(), null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+                .build(), embed.getId(), admin, null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         testimonialService.advanceByEditor(testimonial2.getId());
 

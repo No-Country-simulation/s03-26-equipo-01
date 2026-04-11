@@ -31,12 +31,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class MetricsServiceTest {
 
+
     private final MetricsService metricsService;
     private final UserService userService;
     private final EmbedService embedService;
     private final CategoryService categoryService;
     private final TagService tagService;
-    private final TestimonialSQLDAO testimonialSQLDAO;
+    private final TestimonialService testimonialService;
     private final ResetService resetService;
 
     private Long adminId;
@@ -109,10 +110,10 @@ class MetricsServiceTest {
         foreignCategoryId = foreignCategory.getId();
         tagWithoutTestimonialsId = tagWithoutTestimonials.getId();
 
-        saveTestimonial(embed, primaryCategory, List.of(primaryTag));
-        saveTestimonial(embed, primaryCategory, List.of(primaryTag, secondaryTag));
-        saveTestimonial(embed, secondaryCategory, List.of(secondaryTag));
-        saveTestimonial(otherEmbed, foreignCategory, List.of(foreignTag));
+        saveTestimonial(embed, admin, primaryCategory, List.of(primaryTag.getId()));
+        saveTestimonial(embed, admin, primaryCategory, List.of(primaryTag.getId(), secondaryTag.getId()));
+        saveTestimonial(embed, admin, secondaryCategory, List.of(secondaryTag.getId()));
+        saveTestimonial(otherEmbed, otherAdmin, foreignCategory, List.of(foreignTag.getId()));
     }
 
     @Test
@@ -185,16 +186,21 @@ class MetricsServiceTest {
                 () -> metricsService.getCategoryMetrics(9999L, adminId));
     }
 
-    private void saveTestimonial(Embed embed, Category category, List<Tag> tags) {
-        testimonialSQLDAO.saveAndFlush(Testimonial.builder()
-                .testimonial("Metric testimonial for ")
-                .rating(5)
-                .email( "@test.com")
-                .state(StateTestimonial.DRAFT)
-                .embed(embed)
-                .category(category)
-                .tags(tags)
-                .build());
+    private void saveTestimonial(Embed embed, Admin admin, Category category, List<Long> tagIds) {
+        testimonialService.save(
+                Testimonial.builder()
+                        .testimonial("Metric testimonial for ")
+                        .rating(5)
+                        .email("@test.com")
+                        .state(StateTestimonial.DRAFT)
+                        .category(category)
+                        .build(),
+                embed.getId(),
+                admin,
+                null,
+                null,
+                tagIds
+        );
     }
 
     @AfterEach

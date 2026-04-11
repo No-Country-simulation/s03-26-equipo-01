@@ -1,5 +1,6 @@
 package com.cms.security.filters;
 
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.services.ApiKeyService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -49,6 +50,11 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
                         null,
                         List.of(new SimpleGrantedAuthority("ROLE_API_CLIENT"))
                 );
+
+        Admin admin = apiKeyService.getAdminByApiKey(rawKey);
+        request.setAttribute("admin", admin);
+
+
         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(auth);
 

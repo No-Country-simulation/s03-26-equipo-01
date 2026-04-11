@@ -45,15 +45,22 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public Testimonial save(Testimonial model, Long idEmbed, MultipartFile image, String youtubeUrl, List<Long> idTags) {
+    public Testimonial save(Testimonial model, Long idEmbed, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags) {
         Embed embed = embedService.findById(idEmbed);
         Media media = mediaService.save(image, youtubeUrl);
 
+        model.setAdmin(admin);
         model.setEmbed(embed);
         model.setMedia(media);
         model.agregarTags(tagDAO.findAllById(idTags));
 
-        return testimonialRepository.save(model);
+        adminSQLDAO.save(admin);
+
+        Testimonial testimonial = testimonialRepository.save(model);
+
+        admin.addTestimonial(testimonial);
+
+        return testimonial;
     }
 
     @Override

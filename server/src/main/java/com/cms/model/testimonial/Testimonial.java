@@ -5,6 +5,7 @@ import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
 import com.cms.model.testimonial.state.impl.DraftState;
+import com.cms.model.user.impl.admin.Admin;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -33,6 +34,8 @@ public class Testimonial {
     private Media media;
 
     private Category category;
+
+    private Admin admin;
 
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();

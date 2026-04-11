@@ -42,6 +42,12 @@
                      lazy="false"
                      cascade="merge"/>
 
+        <many-to-one name="admin"
+                     class="com.cms.model.user.impl.admin.Admin"
+                     column="admin_id"
+                     not-null="true"
+                     cascade="none"/>
+
         <bag name="tags" table="testimonial_tags" cascade="merge" lazy="false">
             <key column="testimonial_id"/>
             <many-to-many class="com.cms.model.testimonial.Tag" column="tag_id"/>

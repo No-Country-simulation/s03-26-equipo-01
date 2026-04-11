@@ -6,7 +6,6 @@ import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.testimonial.state.impl.PendingState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -21,8 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -184,7 +181,7 @@ public class AdminServiceTest {
     @Test
     public void advanceByAdminFromDraftThrowsBusinessException() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
+                testimonial, embed.getId(), admin, null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c",tagIds
         );
 
@@ -196,7 +193,7 @@ public class AdminServiceTest {
     @Test
     public void advanceByAdminFromApprovedToPublished() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
+                testimonial, embed.getId(), admin, null,
                 "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
         );
 

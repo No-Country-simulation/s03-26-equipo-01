@@ -1,5 +1,6 @@
 package com.cms.services.impl;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.ApiKey;
 import com.cms.persistence.sql.ApiKeyDAOSQL;
@@ -43,5 +44,13 @@ public class ApiKeyServiceImpl implements ApiKeyService {
         return apiKeyDAOSQL.findByPrefixAndActiveTrue(prefix)
                 .map(apiKey -> apiKey.getKeyHash().equals(rawKey))
                 .orElse(false);
+    }
+
+    @Override
+    public Admin getAdminByApiKey(String rawKey) {
+        String prefix = rawKey.substring(0, 12);
+        return apiKeyDAOSQL.findByPrefixAndActiveTrue(prefix)
+                .map(ApiKey::getAdmin)
+                .orElseThrow(() -> new EntityNotFoundException("ApiKey", 0L));
     }
 }
