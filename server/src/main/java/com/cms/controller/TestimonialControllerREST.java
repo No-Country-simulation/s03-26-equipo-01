@@ -62,7 +62,6 @@ public class TestimonialControllerREST {
     ){
         Admin admin = (Admin) httpRequest.getAttribute("admin");
 
-
         PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
                 testimonialService.findAllTestimonialPublished(page,size, admin).map(TestimonialPublicDTO::fromModel)
         );

@@ -1,0 +1,49 @@
+package com.cms.services.impl;
+
+import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Testimonial;
+import com.cms.model.user.impl.Editor;
+import com.cms.persistence.sql.EditorSQLDAO;
+import com.cms.services.EditorService;
+import com.cms.services.TestimonialService;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
+public class EditorServiceImpl implements EditorService {
+
+    private final TestimonialService testimonialService;
+
+    private final EditorSQLDAO editorSQLDAO;
+
+    public EditorServiceImpl(TestimonialService testimonialService, EditorSQLDAO editorSQLDAO) {
+        this.testimonialService = testimonialService;
+        this.editorSQLDAO = editorSQLDAO;
+    }
+
+    @Override
+    public void asocTestimonial(Long idTestimonial, Long idEditor) {
+        Editor editor = findById(idEditor);
+        Testimonial testimonial = testimonialService.findTestimonialById(idTestimonial);
+
+        editor.addDrafts(testimonial);
+
+        editorSQLDAO.save(editor);
+    }
+
+    private Editor findById(Long idEditor) {
+        return editorSQLDAO.findById(idEditor).orElseThrow(() -> new EntityNotFoundException(Editor.class.getName(), idEditor));
+    }
+
+    @Override
+    public Testimonial advanceByEditor(Long idTestimonial, Long idEditor) {
+        Testimonial testimonial = testimonialService.advanceByEditor(idTestimonial);
+
+        Editor editor = findById(idEditor);
+
+        editor.removeDraft(testimonial);
+
+        return testimonial;
+    }
+}

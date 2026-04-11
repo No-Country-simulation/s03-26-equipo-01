@@ -30,6 +30,12 @@
             <property name="channelName"  column="channel_name"/>
         </component>
 
+        <many-to-one name="editor"
+                     class="com.cms.model.user.impl.Editor"
+                     column="editor_id"
+                     not-null="false"
+                     cascade="none"/>
+
         <many-to-one name="category"
                      class="com.cms.model.testimonial.Category"
                      column="category_id"

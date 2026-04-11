@@ -4,6 +4,7 @@ import com.cms.exception.business.BusinessException;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
 import com.cms.model.testimonial.state.impl.DraftState;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import lombok.*;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(of = "id")
 @ToString(exclude = {"category", "tags", "testimonialState", "admin"})
 public class Testimonial {
 
@@ -34,6 +36,8 @@ public class Testimonial {
     private Category category;
 
     private Admin admin;
+
+    private Editor editor;
 
     @Builder.Default
     private List<Tag> tags = new ArrayList<>();
