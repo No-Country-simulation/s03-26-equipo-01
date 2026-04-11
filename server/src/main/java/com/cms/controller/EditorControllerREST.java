@@ -74,6 +74,18 @@ public class EditorControllerREST {
 
     @GetMapping("/bank/testimonial")
     @EditorEndpoint
+    @Operation(
+            summary = "Obtener banco de testimonios",
+            description = "Recupera los testimonios en estado Borrador del admin asociado al editor, disponibles para ser tomados y revisados."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Testimonios recuperados correctamente",
+                    content = @Content(schema = @Schema(implementation = PageResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Editor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado",
+                    content = @Content)
+    })
     public ResponseEntity<PageResponseDTO<TestimonialResponseDTO>> getTestimonialsToBank(
             @RequestAttribute("userId") Long idEditor,
             @RequestParam(defaultValue = "0") int page,
