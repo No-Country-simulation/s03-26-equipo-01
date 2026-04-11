@@ -3,6 +3,10 @@ import com.cms.controller.annotations.EditorEndpoint;
 
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 
+import com.cms.controller.dto.testimonial.TestimonialResponseSimpleDTO;
+import com.cms.controller.dto.utils.PageResponseDTO;
+import com.cms.controller.dto.utils.table.TableResponseDTO;
+import com.cms.model.testimonial.Testimonial;
 import com.cms.services.EditorService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,8 +15,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController()
@@ -51,7 +58,7 @@ public class EditorControllerREST {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/asoc/testiominal/{idTestimonial}")
+    @PatchMapping("/asoc/testimonial/{idTestimonial}")
     @EditorEndpoint
     @Operation(
             summary = "Asociar testimonio al editor",
@@ -67,5 +74,36 @@ public class EditorControllerREST {
             @RequestAttribute("userId") Long idEditor){
         editorService.asocTestimonial(idTestimonial, idEditor);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/bank/testimonial")
+    @EditorEndpoint
+    @Operation(
+            summary = "Obtener banco de testimonios",
+            description = "Recupera los testimonios en estado Borrador del admin asociado al editor, disponibles para ser tomados y revisados."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Testimonios recuperados correctamente",
+                    content = @Content(schema = @Schema(implementation = PageResponseDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Editor no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado",
+                    content = @Content)
+    })
+    public ResponseEntity<TableResponseDTO<TestimonialResponseSimpleDTO>> getTestimonialsToBank(
+            @RequestAttribute("userId") Long idEditor,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Page<Testimonial> testimonialPage = editorService.getTestimonialsToBank(idEditor,page,size);
+
+        Page<TestimonialResponseSimpleDTO> testimonialDTO = testimonialPage.map(TestimonialResponseSimpleDTO::fromModel);
+
+        return ResponseEntity.ok(
+                TableResponseDTO.fromPage(
+                        List.of("Nº", "Testimonio","video", "imagen", "Tags", "Rating"),
+                        testimonialDTO,
+                        TestimonialResponseSimpleDTO::id
+                )
+        );
     }
 }

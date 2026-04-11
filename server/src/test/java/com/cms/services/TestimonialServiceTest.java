@@ -208,7 +208,7 @@ public class TestimonialServiceTest {
                         .state(StateTestimonial.PUBLISHED).build(),
                 otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
-        Page<Testimonial> result = testimonialService.findAllTestimonialPublished(0, 5, admin);
+        Page<Testimonial> result = testimonialService.findAllTestimonial(0, 5, admin, StateTestimonial.PUBLISHED);
 
         assertEquals(2, result.getTotalElements());
         assertTrue(result.getContent().stream()
@@ -216,6 +216,8 @@ public class TestimonialServiceTest {
         assertTrue(result.getContent().stream()
                 .allMatch(t -> t.getAdmin().getId().equals(admin.getId())));
     }
+
+
 
     @AfterEach
     public void tearDown() {

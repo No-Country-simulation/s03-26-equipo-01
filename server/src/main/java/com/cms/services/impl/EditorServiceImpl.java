@@ -2,11 +2,13 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.persistence.sql.EditorSQLDAO;
 import com.cms.services.EditorService;
 import com.cms.services.TestimonialService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,4 +57,13 @@ public class EditorServiceImpl implements EditorService {
 
         return testimonial;
     }
+
+    @Override
+    public Page<Testimonial> getTestimonialsToBank(Long idEditor, int page, int size) {
+        Editor editor = findById(idEditor);
+
+        return testimonialService.findAllTestimonial(page, size, editor.getCreatedBy(), StateTestimonial.DRAFT);
+    }
+
+
 }

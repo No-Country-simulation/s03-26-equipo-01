@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -91,6 +92,42 @@ public class EditorServiceTest {
         assertFalse(editorRecovered.isContains(testimonial));
 
         assertThrows(BusinessException.class, () -> editorService.advanceByEditor(testimonial.getId(), editor.getId()));
+    }
+
+    @Test
+    public void getTestimonialsToBank_shouldReturnDraftTestimonialsFromAdminOfEditor() {
+        testimonialService.save(
+                Testimonial.builder()
+                        .testimonial("Borrador 2").rating(4).email("draft2@test.com")
+                        .state(StateTestimonial.DRAFT).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        testimonialService.save(
+                Testimonial.builder()
+                        .testimonial("Publicado").rating(5).email("pub@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        Admin otherAdmin = (Admin) userService.save(Admin.builder()
+                .email("other@test.com").password("123")
+                .firstName("Other").lastName("Admin").build());
+
+        testimonialService.save(
+                Testimonial.builder()
+                        .testimonial("Borrador de otro admin").rating(3).email("other@test.com")
+                        .state(StateTestimonial.DRAFT).build(),
+                otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        Page<Testimonial> result = editorService.getTestimonialsToBank(editor.getId(), 0, 5);
+
+        assertEquals(2, result.getTotalElements());
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getState() == StateTestimonial.DRAFT));
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getAdmin().getId().equals(admin.getId())));
     }
 
     @AfterEach

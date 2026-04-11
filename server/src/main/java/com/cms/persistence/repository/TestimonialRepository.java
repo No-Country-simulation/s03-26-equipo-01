@@ -1,10 +1,10 @@
 package com.cms.persistence.repository;
 
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,5 +17,5 @@ public interface TestimonialRepository {
 
     List<Testimonial> findByAdminId(Long idAdmin);
 
-    Page<Testimonial> findAllTestimonialPublishedPage(PageRequest of, Admin admin);
+    Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state);
 }

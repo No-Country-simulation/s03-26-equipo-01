@@ -5,12 +5,12 @@ import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.services.TestimonialService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -63,7 +63,7 @@ public class TestimonialControllerREST {
         Admin admin = (Admin) httpRequest.getAttribute("admin");
 
         PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
-                testimonialService.findAllTestimonialPublished(page,size, admin).map(TestimonialPublicDTO::fromModel)
+                testimonialService.findAllTestimonial(page,size, admin, StateTestimonial.PUBLISHED).map(TestimonialPublicDTO::fromModel)
         );
         return ResponseEntity.ok(response);
     }
