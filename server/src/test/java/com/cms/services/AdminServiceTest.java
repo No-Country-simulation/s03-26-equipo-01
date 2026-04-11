@@ -5,6 +5,7 @@ import com.cms.model.testimonial.Tag;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
+import com.cms.model.user.impl.admin.ApiKey;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -114,6 +114,22 @@ public class AdminServiceTest {
         assertTrue(adminResource.getTags().contains(tag2));
         assertFalse(adminResource.getTags().contains(tagDeOtroAdmin));
     }
+
+    @Test
+    public void save_shouldGenerateApiKeyAndAssignItToAdmin() {
+        Admin savedAdmin = adminService.save(admin);
+
+        ApiKey apiKey = savedAdmin.getApiKey();
+
+        assertNotNull(apiKey);
+        assertNotNull(apiKey.getKeyHash());
+        assertTrue(apiKey.getKeyHash().startsWith("vza_"));
+        assertNotNull(apiKey.getPrefix());
+        assertEquals(apiKey.getKeyHash().substring(0, 12), apiKey.getPrefix());
+        assertTrue(apiKey.isActive());
+        assertEquals(savedAdmin, apiKey.getAdmin());
+    }
+
 
     @AfterEach
     public void tearDown(){
