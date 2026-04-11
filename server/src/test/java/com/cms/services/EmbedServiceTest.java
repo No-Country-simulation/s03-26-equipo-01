@@ -204,8 +204,7 @@ public class EmbedServiceTest {
                 .build();
 
         return testimonialService.save(t, embed.getId(), null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                 tagIds);
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
     }
 
     @AfterEach

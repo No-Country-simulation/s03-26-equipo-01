@@ -1,2 +1,2 @@
-export type State = 'Aprobado' | 'Borrador' | 'Publicado' | 'Pendiente'
-export type AdminState = Exclude<State, 'Borrador'>
+export type StateTestimonial = 'Aprobado' | 'Borrador' | 'Publicado' | 'Pendiente'
+export type AdminTestimonialState = Exclude<StateTestimonial, 'Borrador'>

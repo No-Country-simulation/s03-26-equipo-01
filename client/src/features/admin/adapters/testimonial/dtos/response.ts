@@ -1,5 +1,5 @@
 import type { MediaResponse } from "../../media/dtos/media"
-import type { AdminState } from "../../../models/state"
+import type { AdminTestimonialState } from "../../../models/state"
 import type { CategoryResponse } from "../../category/dtos/response"
 import type { TagResponse } from "../../tag/dtos/response"
 
@@ -10,7 +10,7 @@ export interface TestimonialResponse {
     witness: string
     rating: number
     email: string 
-    state: AdminState
+    state: AdminTestimonialState
     createdAt: Date
     category: CategoryResponse
     tags: TagResponse[]

@@ -1,37 +1,41 @@
 import type { ChangeStateButtons } from "../../../../../../shared/types/change-state-button-data/change-state-button"
-import type { AdminState } from "../../../../models/state"
+import type { AdminTestimonialState } from "../../../../models/state"
 
-const buttonsStateData: Record<AdminState, ChangeStateButtons> = {
-    Aprobado: {
-        nextState: {
-            text: 'PUBLICAR',
-            event: (id: number) => console.log(id)
+const buttonsStateData = (nextState: (id: number) => void, discart: (id: number) => void): Record<AdminTestimonialState, ChangeStateButtons> => {
+    return {
+        Aprobado: {
+            nextState: {
+                textButton: 'PUBLICAR',
+                event: nextState
+            },
+            discartTestimonial: {
+                textButton: 'ELIMINAR',
+                event: discart
+            }
         },
-        prevState: {
-            text: 'ELIMINAR',
-            event: (id: number) => console.log(id)
-        }
-    },
-    Pendiente: {
-        nextState: {
-            text: 'APROBAR',
-            event: (id: number) => console.log(id)
+        Pendiente: {
+            nextState: {
+                textButton: 'APROBAR',
+                event: nextState
+            },
+            discartTestimonial: {
+                textButton: 'RECHAZAR',
+                event: nextState
+            }
         },
-        prevState: {
-            text: 'RECHAZAR',
-            event: (id: number) => console.log(id)
-        }
-    },
-    Publicado: {
-        nextState: {
-            text: 'DESPUBLICAR',
-            event: (id: number) => console.log(id)
-        },
-        prevState: {
-            text: 'ELIMINAR',
-            event: (id: number) => console.log(id)
+        Publicado: {
+            nextState: {
+                textButton: 'DESPUBLICAR',
+                event: nextState
+            },
+            discartTestimonial: {
+                textButton: 'ELIMINAR',
+                event:discart
+            }  
         }
     }
 }
+
+
 
 export default buttonsStateData
