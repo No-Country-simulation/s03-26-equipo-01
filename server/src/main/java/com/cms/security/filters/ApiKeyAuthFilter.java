@@ -69,8 +69,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
                 path.startsWith("/auth/") ||
                 path.startsWith("/error");
 
-        boolean isApiKeyPath = path.startsWith("/testimonial") ||
-                path.startsWith("/embed/published");
+        boolean isApiKeyPath = path.startsWith("/testimonial");
 
         return isPublicPath || !isApiKeyPath;
     }

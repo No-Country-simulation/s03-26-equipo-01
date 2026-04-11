@@ -96,6 +96,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Excelente servicio, lo recomiendo totalmente.")
                         .witness("Robert")
                         .rating(5)
+                        .category(category)
                         .email("maria@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
@@ -103,6 +104,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Muy buena atención, quedé muy conforme.")
                         .witness("Robert2")
                         .rating(4)
+                        .category(category)
                         .email("carlos@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
@@ -110,6 +112,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("El producto superó mis expectativas.")
                         .witness("Robert3")
                         .rating(5)
+                        .category(category)
                         .email("lucia@gmail.com")
                         .state(StateTestimonial.DRAFT)
                         .build(),
@@ -117,6 +120,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -124,6 +128,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -131,6 +136,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -138,6 +144,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -145,6 +152,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -152,6 +160,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -159,6 +168,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -166,6 +176,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build()

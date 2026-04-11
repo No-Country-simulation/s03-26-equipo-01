@@ -20,7 +20,7 @@ public interface TestimonialService {
 
     void update(Testimonial recovered);
 
-    Page<Testimonial> findAllTestimonialPublished(int pageNumber, Admin admin);
+    Page<Testimonial> findAllTestimonialPublished(int pageNumber, int size, Admin admin);
 
 
 }

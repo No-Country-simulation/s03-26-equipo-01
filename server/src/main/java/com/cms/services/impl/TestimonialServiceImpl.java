@@ -1,7 +1,6 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.Admin;
@@ -94,7 +93,7 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public Page<Testimonial> findAllTestimonialPublished(int pageNumber, Admin admin) {
-        return testimonialRepository.findAllTestimonialPublishedPage(PageRequest.of(pageNumber, 5), admin);
+    public Page<Testimonial> findAllTestimonialPublished(int pageNumber, int size, Admin admin) {
+        return testimonialRepository.findAllTestimonialPublishedPage(PageRequest.of(pageNumber, size), admin);
     }
 }

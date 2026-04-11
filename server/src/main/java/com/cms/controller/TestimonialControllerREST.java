@@ -54,17 +54,17 @@ public class TestimonialControllerREST {
             @ApiResponse(responseCode = "200", description = "Testimonios recuperados con éxito"),
             @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
     })
-    @SecurityRequirements()
     @PostMapping("/published")
     public ResponseEntity<PageResponseDTO<TestimonialPublicDTO>> testimonialPublished(
             @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
             HttpServletRequest httpRequest
     ){
         Admin admin = (Admin) httpRequest.getAttribute("admin");
 
 
         PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
-                testimonialService.findAllTestimonialPublished(page, admin).map(TestimonialPublicDTO::fromModel)
+                testimonialService.findAllTestimonialPublished(page,size, admin).map(TestimonialPublicDTO::fromModel)
         );
         return ResponseEntity.ok(response);
     }
