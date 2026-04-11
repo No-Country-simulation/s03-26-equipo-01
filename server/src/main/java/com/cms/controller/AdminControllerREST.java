@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -79,6 +80,15 @@ public class AdminControllerREST {
         AdminResourceResponseDTO adminResourceResponseDTO = AdminResourceResponseDTO.fromModel(adminResource);
 
         return ResponseEntity.ok(adminResourceResponseDTO);
+    }
+
+    @PatchMapping("/testimonials/{idTestimonial}/advance")
+    @AdminEndpoint
+    public ResponseEntity<TestimonialResponseDTO> advance(@PathVariable Long idTestimonial) {
+
+        TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonialService.advanceByAdmin(idTestimonial));
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/api-key")

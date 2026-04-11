@@ -67,4 +67,25 @@ public class TestimonialServiceImpl implements TestimonialService {
         List<Long> embedIds = embedService.findAllIdsByAdmin(admin);
         return testimonialRepository.findTestimonialByEmbeds(embedIds);
     }
+
+    @Override
+    public Testimonial advanceByEditor(Long id) {
+        Testimonial testimonial = findTestimonialById(id);
+        testimonial.nextStateEditor();
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Testimonial advanceByAdmin(Long idTestimonial) {
+        Testimonial testimonial = findTestimonialById(idTestimonial);
+
+        testimonial.nextStateAdmin();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public void update(Testimonial recovered) {
+        testimonialRepository.update(recovered);
+    }
 }

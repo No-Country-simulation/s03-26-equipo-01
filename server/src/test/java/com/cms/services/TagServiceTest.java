@@ -129,6 +129,7 @@ public class TagServiceTest {
 
         List<Tag> matchesJava = tagService.findTagsByName("jav", idAdmin);
 
+
         assertEquals(2, matchesJava.size());
         assertTrue(matchesJava.stream().anyMatch(t -> t.getName().equals("java")));
         assertTrue(matchesJava.stream().anyMatch(t -> t.getName().equals("javascript")));
