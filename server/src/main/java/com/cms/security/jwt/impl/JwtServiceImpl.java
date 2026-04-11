@@ -63,20 +63,8 @@ public class JwtServiceImpl implements JwtService {
 
     public boolean tokenValido(String token, UserDetails user) {
         final String username = extraerUsername(token);
-        return username.equals(user.getUsername()) && !tokenExpirado(token);
+        return username.equals(user.getUsername());
     }
 
-    private boolean tokenExpirado(String token) {
-        return extraerExpiracion(token).before(new Date());
-    }
-
-    private Date extraerExpiracion(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
-    }
 
 }

@@ -7,4 +7,6 @@ public interface ApiKeyService {
     ApiKey genereteApi(Admin admin);
 
     boolean validateApiKey(String rawKey);
+
+    Admin getAdminByApiKey(String rawKey);
 }

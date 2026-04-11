@@ -46,14 +46,6 @@ public record TestimonialRequestDTO(
         int rating,
 
         @Schema(
-                description = "ID del recurso embebido asociado al testimonio",
-                example = "1",
-                requiredMode = Schema.RequiredMode.REQUIRED
-        )
-        @NotNull
-        Long idEmbed,
-
-        @Schema(
                 description = "Nombre de la persona que hizo el testimonio",
                 example = "Roberto mendez",
                 requiredMode = Schema.RequiredMode.REQUIRED
