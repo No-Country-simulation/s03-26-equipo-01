@@ -29,6 +29,10 @@ public class EditorServiceImpl implements EditorService {
 
         editor.addDrafts(testimonial);
 
+        testimonial.setEditor(editor);
+
+        testimonialService.update(testimonial);
+
         editorSQLDAO.save(editor);
     }
 
