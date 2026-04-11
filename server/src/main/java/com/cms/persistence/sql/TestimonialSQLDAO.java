@@ -5,9 +5,9 @@ import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.cms.model.testimonial.enums.StateTestimonial;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -47,10 +47,8 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     @Query("SELECT COUNT(t.id) FROM Testimonial t WHERE t.category.id = :categoryId")
     long countTestimonialsByCategoryId(@Param("categoryId") Long categoryId);
 
-
-    //Traemos a 5 testimonios publicados si hay más se puede usar la paginación para traer más de 5 testimonios en caso de que exista
-    @Query("SELECT t FROM Testimonial t WHERE t.state = :state ORDER BY t.createdAt DESC")
-    Page<Testimonial> findTopByState(@Param("state") StateTestimonial state, Pageable pageable);
+    @Query("SELECT t FROM Testimonial t WHERE t.state = :state AND t.admin = :admin ORDER BY t.createdAt DESC")
+    Page<Testimonial> findTopByState(@Param("state") StateTestimonial state, Pageable pageable, @Param("admin") Admin admin);
 
     @Query("SELECT t FROM Testimonial t WHERE t.admin.id = :idAdmin AND t.state != :state")
     List<Testimonial> findByAdminIdAndNotDraft(

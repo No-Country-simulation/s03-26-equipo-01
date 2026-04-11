@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -179,6 +180,41 @@ public class TestimonialServiceTest {
         assertEquals(StateTestimonial.PENDING, recovered.getState());
 
         assertThrows(BusinessException.class, () -> testimonialService.advanceByEditor(recovered.getId()));
+    }
+
+    @Test
+    public void findAllTestimonialPublishedReturnsOnlyPublishedForAdmin() {
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado 1").rating(5).email("pub1@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado 2").rating(4).email("pub2@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Borrador").rating(3).email("draft@test.com")
+                        .state(StateTestimonial.DRAFT).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        Admin otherAdmin = (Admin) userService.save(Admin.builder()
+                .email("other@test.com").password("123")
+                .firstName("Other").lastName("Admin").build());
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado de otro admin").rating(5).email("other@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        Page<Testimonial> result = testimonialService.findAllTestimonialPublished(0, admin);
+
+        assertEquals(2, result.getTotalElements());
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getState() == StateTestimonial.PUBLISHED));
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getAdmin().getId().equals(admin.getId())));
     }
 
     @AfterEach

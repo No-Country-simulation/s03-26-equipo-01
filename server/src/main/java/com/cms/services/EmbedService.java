@@ -13,8 +13,4 @@ public interface EmbedService {
 
     Embed findById(Long idEmbed);
 
-    Page<Testimonial> getTestimonialEmbed(int pageNumber);
-
-    List<Long> findAllIdsByAdmin(Admin admin);
-
 }

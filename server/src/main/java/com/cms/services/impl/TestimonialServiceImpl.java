@@ -10,6 +10,8 @@ import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.TagSQLDAO;
 import com.cms.services.*;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -89,5 +91,10 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     public void update(Testimonial recovered) {
         testimonialRepository.update(recovered);
+    }
+
+    @Override
+    public Page<Testimonial> findAllTestimonialPublished(int pageNumber, Admin admin) {
+        return testimonialRepository.findAllTestimonialPublishedPage(PageRequest.of(pageNumber, 5), admin);
     }
 }

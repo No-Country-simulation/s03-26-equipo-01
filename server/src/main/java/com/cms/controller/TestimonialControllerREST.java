@@ -1,11 +1,15 @@
 package com.cms.controller;
 
+import com.cms.controller.dto.testimonial.TestimonialPublicDTO;
 import com.cms.controller.dto.testimonial.TestimonialRequestDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
+import com.cms.controller.dto.utils.PageResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.services.TestimonialService;
-import com.cms.utils.AuthUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,5 +47,25 @@ public class TestimonialControllerREST {
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonial);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @Operation(summary = "Testimonio Publicados", description = "Recupera una lista de todos los testimonios publicados disponibles para incrustar.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Testimonios recuperados con éxito"),
+            @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
+    })
+    @SecurityRequirements()
+    @PostMapping("/published")
+    public ResponseEntity<PageResponseDTO<TestimonialPublicDTO>> testimonialPublished(
+            @RequestParam(defaultValue = "0") int page,
+            HttpServletRequest httpRequest
+    ){
+        Admin admin = (Admin) httpRequest.getAttribute("admin");
+
+
+        PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
+                testimonialService.findAllTestimonialPublished(page, admin).map(TestimonialPublicDTO::fromModel)
+        );
+        return ResponseEntity.ok(response);
     }
 }
