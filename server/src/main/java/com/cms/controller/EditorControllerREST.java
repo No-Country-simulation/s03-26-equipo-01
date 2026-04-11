@@ -53,6 +53,15 @@ public class EditorControllerREST {
 
     @PatchMapping("/asoc/testiominal/{idTestimonial}")
     @EditorEndpoint
+    @Operation(
+            summary = "Asociar testimonio al editor",
+            description = "Asigna un testimonio en estado Borrador al editor, agregándolo a su lista de drafts para su revisión."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Testimonio asociado correctamente", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Testimonio o editor no encontrado", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado", content = @Content)
+    })
     public ResponseEntity<Void> asocTestimonial(
             @PathVariable Long idTestimonial,
             @RequestAttribute("userId") Long idEditor){
