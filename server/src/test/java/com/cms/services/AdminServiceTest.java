@@ -165,8 +165,7 @@ public class AdminServiceTest {
     public void advanceByAdminFromDraftThrowsBusinessException() {
         Testimonial saved = testimonialService.save(
                 testimonial, embed.getId(), null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
         );
 
         assertThrows(BusinessException.class, () ->
@@ -178,8 +177,7 @@ public class AdminServiceTest {
     public void advanceByAdminFromApprovedToPublished() {
         Testimonial saved = testimonialService.save(
                 testimonial, embed.getId(), null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
         );
 
         testimonialService.advanceByEditor(saved.getId());

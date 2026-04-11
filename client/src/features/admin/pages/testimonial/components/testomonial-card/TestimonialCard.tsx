@@ -3,7 +3,7 @@ import TestimonialHeader from "./components/testimonia-header/TestimonialHeader"
 import TestimonialDescription from "./components/testimonial-description/TestimonialDescription";
 import TestimonialState from "./components/testimonial-state/TestimonialState";
 import TestimonialTags from "./components/testimonial-tags/TestimonialTags";
-import type { TestimonialCardProps } from "./testimonial-card";
+import type { TestimonialCardContentProps, TestimonialCardProps } from "./testimonial-card";
 import './styles/testomonial-card.css';
 import StateButtonContainer from "../state-buttons-container/StateButtonContainer";
 import buttonsStateData from "./buttons-data";
@@ -11,20 +11,22 @@ import useTestimonialState from "../../hooks/use-testimonial-state";
 
 const TestimonialCard = ({testimonial}: TestimonialCardProps) => {
 
-    const {updateTestimonial, nextState, prevState} = useTestimonialState(testimonial);
+    const {updateTestimonial, advance, deleted} = useTestimonialState(testimonial);
 
+    return updateTestimonial && <TestimonialCardContent testimonial={updateTestimonial} advance={advance} deleted={deleted} />
+}
+
+const TestimonialCardContent = ({testimonial, advance, deleted}: TestimonialCardContentProps) => {
     return (
         <article className = 'testimonial-admin-card-container'>
-            <TestimonialHeader testimonial = {updateTestimonial} />
-            <TestimonialState testimonial = {updateTestimonial} />
-            <TestimonialDescription testimonial = {updateTestimonial} />
-            <TestimonialTags testimonial = {updateTestimonial} />
-            <MultimediaContent testimonial = {updateTestimonial} />
+            <TestimonialHeader testimonial = {testimonial} />
+            <TestimonialState testimonial = {testimonial} />
+            <TestimonialDescription testimonial = {testimonial} />
+            <TestimonialTags testimonial = {testimonial} />
+            <MultimediaContent testimonial = {testimonial} />
             <StateButtonContainer 
-                changeStateButtons = {buttonsStateData[updateTestimonial.state]} 
-                testimonial = {updateTestimonial} 
-                nextState = {nextState}
-                prevState = {prevState}
+                changeStateButtons = {buttonsStateData(advance, deleted)[testimonial.state]} 
+                testimonial = {testimonial} 
             />
         </article>
     )

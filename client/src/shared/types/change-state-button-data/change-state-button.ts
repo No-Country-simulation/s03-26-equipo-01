@@ -1,5 +1,6 @@
+import type { ChangeStateButtonsData } from "./change-state-button-date"
 
 export interface ChangeStateButtons {
-    nextButtonName: string
-    prevButtonName: string
+    nextState: ChangeStateButtonsData
+    discartTestimonial: ChangeStateButtonsData
 }

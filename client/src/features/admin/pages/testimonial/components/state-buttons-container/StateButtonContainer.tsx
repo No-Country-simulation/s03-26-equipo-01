@@ -1,19 +1,19 @@
 import type { StateButtonContainerProps } from "./state-buttons-container";
 import './styles/state-buttons-container.css';
 
-const StateButtonContainer = ({changeStateButtons, testimonial, nextState, prevState}: StateButtonContainerProps) => {
+const StateButtonContainer = ({changeStateButtons, testimonial}: StateButtonContainerProps) => {
     return (
         <section className = "testimonial-admin-state-buttons-container">
             <button 
                 className = 'testimonial-admin-state_prev-state-button'
-                onClick = {() => prevState(testimonial.id)}
+                onClick = {() => changeStateButtons.discartTestimonial.event(testimonial.id)}
             >
-                {changeStateButtons.prevButtonName}</button>
+                {changeStateButtons.discartTestimonial.textButton}</button>
             <button 
                 className = 'testimonial-admin-state_next-state-button'
-                onClick = {() => nextState(testimonial.id)}
+                onClick = {() => changeStateButtons.nextState.event(testimonial.id)}
             >
-                {changeStateButtons.nextButtonName}</button>
+                {changeStateButtons.nextState.textButton}</button>
         </section>
     )
 }

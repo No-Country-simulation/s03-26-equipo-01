@@ -173,7 +173,7 @@ public class TestimonialServiceTest {
                 .rating(5)
                 .email("user@test.com")
                 .state(StateTestimonial.DRAFT)
-                .build(), embed.getId(), null,"https://www.youtube.com/watch?v=KhXTwEypI6c", category.getId(), tagIds);
+                .build(), embed.getId(), null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         testimonialService.advanceByEditor(testimonial2.getId());
 
