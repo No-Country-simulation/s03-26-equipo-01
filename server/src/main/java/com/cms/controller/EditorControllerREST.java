@@ -36,10 +36,22 @@ public class EditorControllerREST {
 
     @PatchMapping("/testimonials/{idTestimonial}/advance")
     @EditorEndpoint
+    @Operation(
+            summary = "Avanzar testimonio de Borrador a Pendiente",
+            description = "Permite al editor enviar un testimonio en estado Borrador para revisión, cambiando su estado a Pendiente."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Testimonio avanzado a Pendiente correctamente",
+                    content = @Content(schema = @Schema(implementation = TestimonialResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "El testimonio no está en estado Borrador",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Testimonio no encontrado",
+                    content = @Content),
+            @ApiResponse(responseCode = "403", description = "Acceso denegado",
+                    content = @Content)
+    })
     public ResponseEntity<TestimonialResponseDTO> advance(@PathVariable Long idTestimonial) {
-
         TestimonialResponseDTO response = TestimonialResponseDTO.fromModel(testimonialService.advanceByEditor(idTestimonial));
-
         return ResponseEntity.ok(response);
     }
 }

@@ -54,11 +54,11 @@ public class TestimonialServiceImpl implements TestimonialService {
         model.setMedia(media);
         model.agregarTags(tagDAO.findAllById(idTags));
 
-        adminSQLDAO.save(admin);
-
         Testimonial testimonial = testimonialRepository.save(model);
 
         admin.addTestimonial(testimonial);
+
+        adminSQLDAO.save(admin);
 
         return testimonial;
     }
@@ -70,9 +70,10 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     @Override
     public List<Testimonial> findTestimonialByAdmin(Long idAdmin) {
-        Admin admin = adminSQLDAO.findById(idAdmin).orElseThrow(() -> new EntityNotFoundException(Admin.class.getName(), idAdmin));
-        List<Long> embedIds = embedService.findAllIdsByAdmin(admin);
-        return testimonialRepository.findTestimonialByEmbeds(embedIds);
+        if (!adminSQLDAO.existsById(idAdmin)) {
+            throw new EntityNotFoundException(Admin.class.getName(), idAdmin);
+        }
+        return testimonialRepository.findByAdminId(idAdmin);
     }
 
     @Override

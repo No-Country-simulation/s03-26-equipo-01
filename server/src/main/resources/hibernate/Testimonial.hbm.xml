@@ -46,7 +46,7 @@
                      class="com.cms.model.user.impl.admin.Admin"
                      column="admin_id"
                      not-null="true"
-                     cascade="none"/>
+                     cascade="save-update"/>
 
         <bag name="tags" table="testimonial_tags" cascade="merge" lazy="false">
             <key column="testimonial_id"/>

@@ -8,10 +8,9 @@ import java.util.List;
 public interface TestimonialRepository {
 
     Testimonial findById(Long id);
-
-    List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds);
-
     Testimonial update(Testimonial model);
 
     Testimonial save(Testimonial model);
+
+    List<Testimonial> findByAdminId(Long idAdmin);
 }

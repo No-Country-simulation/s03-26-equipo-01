@@ -29,6 +29,14 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
+    public List<Testimonial> findByAdminId(Long idAdmin) {
+        List<Testimonial> testimonials = testimonialSQLDAO.findByAdminIdAndNotDraft(idAdmin, StateTestimonial.DRAFT );
+        testimonials.forEach(this::resolveMedia);
+        testimonials.forEach(this::resolveState);
+        return testimonials;
+    }
+
+    @Override
     public Testimonial findById(Long id) {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));
@@ -37,13 +45,6 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         return testimonial;
     }
 
-    @Override
-    public List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds) {
-        List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds, StateTestimonial.DRAFT);
-        testimonials.forEach(this::resolveMedia);
-        testimonials.forEach(this::resolveState);
-        return testimonials;
-    }
 
     @Override
     public Testimonial update(Testimonial model) {

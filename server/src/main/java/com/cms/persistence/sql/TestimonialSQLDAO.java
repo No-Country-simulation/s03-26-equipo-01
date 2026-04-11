@@ -52,9 +52,8 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     @Query("SELECT t FROM Testimonial t WHERE t.state = :state ORDER BY t.createdAt DESC")
     Page<Testimonial> findTopByState(@Param("state") StateTestimonial state, Pageable pageable);
 
-
-    @Query("SELECT t FROM Testimonial t WHERE t.embed.id IN :ids AND t.state != :state")
-    List<Testimonial> findAllByEmbedIs(
-            @Param("ids") List<Long> ids,
+    @Query("SELECT t FROM Testimonial t WHERE t.admin.id = :idAdmin AND t.state != :state")
+    List<Testimonial> findByAdminIdAndNotDraft(
+            @Param("idAdmin") Long idAdmin,
             @Param("state") StateTestimonial state);
 }
