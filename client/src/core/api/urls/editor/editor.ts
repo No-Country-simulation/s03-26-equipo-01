@@ -1,1 +1,1 @@
-export const TESTIMONIAL_BANK = 'editor/bank';
+export const TESTIMONIAL_BANK = 'editor/bank/testimonial';
