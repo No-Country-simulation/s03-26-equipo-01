@@ -19,5 +19,6 @@
         <mapping resource="hibernate/Tag.hbm.xml"/>
         <mapping resource="hibernate/User.hbm.xml"/>
         <mapping resource="hibernate/Testimonial.hbm.xml"/>
+        <mapping resource="hibernate/ApiKey.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

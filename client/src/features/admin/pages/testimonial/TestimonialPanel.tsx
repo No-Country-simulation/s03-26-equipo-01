@@ -1,4 +1,4 @@
-import useTestimonialPanel from '../../hooks/use-testimonial-panel';
+import useTestimonialPanel from './hooks/use-testimonial-panel';
 import FiltersContainer from './components/filters-container/FiltersContainer';
 import TestimonialsList from './components/testimonials-container/TestimonialContainer';
 import TitleContainer from '../../components/title-container/TitleContainer';

@@ -19,6 +19,7 @@ import java.util.List;
 public class DataSeederImpl implements DataSeeder {
 
     private final UserService userService;
+    private final AdminService adminService;
     private final EmbedService embedService;
     private final TestimonialService testimonialService;
     private final CategoryService categoryService;
@@ -28,8 +29,9 @@ public class DataSeederImpl implements DataSeeder {
     private Admin admin;
     private Admin admin2;
 
-    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
+    public DataSeederImpl(UserService userService, AdminService adminService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
         this.userService = userService;
+        this.adminService = adminService;
         this.embedService = embedService;
         this.testimonialService = testimonialService;
         this.categoryService = categoryService;
@@ -51,9 +53,9 @@ public class DataSeederImpl implements DataSeeder {
                 .lastName("administra")
                 .build();
 
-        Admin adminSaved = (Admin) userService.save(admin);
+        Admin adminSaved = adminService.save(admin);
 
-        admin2 = (Admin) userService.save(admin2);
+        admin2 = adminService.save(admin2);
 
         editor = Editor.builder()
                 .email("editor@gmail.com")
@@ -94,6 +96,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Excelente servicio, lo recomiendo totalmente.")
                         .witness("Robert")
                         .rating(5)
+                        .category(category)
                         .email("maria@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
@@ -101,6 +104,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Muy buena atención, quedé muy conforme.")
                         .witness("Robert2")
                         .rating(4)
+                        .category(category)
                         .email("carlos@gmail.com")
                         .state(StateTestimonial.APPROVED)
                         .build(),
@@ -108,6 +112,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("El producto superó mis expectativas.")
                         .witness("Robert3")
                         .rating(5)
+                        .category(category)
                         .email("lucia@gmail.com")
                         .state(StateTestimonial.DRAFT)
                         .build(),
@@ -115,6 +120,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -122,6 +128,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -129,6 +136,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -136,6 +144,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -143,6 +152,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -150,6 +160,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -157,6 +168,7 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build(),
@@ -164,11 +176,12 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("Buena experiencia en general.")
                         .witness("Robert4")
                         .rating(3)
+                        .category(category)
                         .email("jorge@gmail.com")
                         .state(StateTestimonial.PUBLISHED)
                         .build()
         );
 
-        testimonials.forEach(t -> testimonialService.save(t, embedId, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds));
+        testimonials.forEach(t -> testimonialService.save(t, admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds));
     }
 }

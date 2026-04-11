@@ -6,10 +6,10 @@ import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
-import com.cms.model.testimonial.state.impl.PendingState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
+import com.cms.model.user.impl.admin.ApiKey;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,9 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -55,6 +54,8 @@ public class AdminServiceTest {
     private Category category1;
     private Category category2;
     private Category categoryDeOtroAdmin;
+
+
     private Tag tag1;
     private Tag tag2;
     private Tag tagDeOtroAdmin;
@@ -162,11 +163,26 @@ public class AdminServiceTest {
     }
 
     @Test
+    public void save_shouldGenerateApiKeyAndAssignItToAdmin() {
+        Admin savedAdmin = adminService.save(admin);
+
+        ApiKey apiKey = savedAdmin.getApiKey();
+
+        assertNotNull(apiKey);
+        assertNotNull(apiKey.getKeyHash());
+        assertTrue(apiKey.getKeyHash().startsWith("vza_"));
+        assertNotNull(apiKey.getPrefix());
+        assertEquals(apiKey.getKeyHash().substring(0, 12), apiKey.getPrefix());
+        assertTrue(apiKey.isActive());
+        assertEquals(savedAdmin, apiKey.getAdmin());
+    }
+
+
+    @Test
     public void advanceByAdminFromDraftThrowsBusinessException() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                testimonial,admin, null,
+                "https://www.youtube.com/watch?v=KhXTwEypI6c",tagIds
         );
 
         assertThrows(BusinessException.class, () ->
@@ -177,9 +193,8 @@ public class AdminServiceTest {
     @Test
     public void advanceByAdminFromApprovedToPublished() {
         Testimonial saved = testimonialService.save(
-                testimonial, embed.getId(), null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                category.getId(), tagIds
+                testimonial,admin, null,
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
         );
 
         testimonialService.advanceByEditor(saved.getId());
