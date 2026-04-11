@@ -19,6 +19,7 @@ import java.util.List;
 public class DataSeederImpl implements DataSeeder {
 
     private final UserService userService;
+    private final AdminService adminService;
     private final EmbedService embedService;
     private final TestimonialService testimonialService;
     private final CategoryService categoryService;
@@ -28,8 +29,9 @@ public class DataSeederImpl implements DataSeeder {
     private Admin admin;
     private Admin admin2;
 
-    public DataSeederImpl(UserService userService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
+    public DataSeederImpl(UserService userService, AdminService adminService, EmbedService embedService, TestimonialService testimonialService, CategoryService categoryService, TagService tagService) {
         this.userService = userService;
+        this.adminService = adminService;
         this.embedService = embedService;
         this.testimonialService = testimonialService;
         this.categoryService = categoryService;
@@ -51,9 +53,9 @@ public class DataSeederImpl implements DataSeeder {
                 .lastName("administra")
                 .build();
 
-        Admin adminSaved = (Admin) userService.save(admin);
+        Admin adminSaved = adminService.save(admin);
 
-        admin2 = (Admin) userService.save(admin2);
+        admin2 = adminService.save(admin2);
 
         editor = Editor.builder()
                 .email("editor@gmail.com")

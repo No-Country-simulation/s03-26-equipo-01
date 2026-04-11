@@ -49,6 +49,13 @@
                 <one-to-many class="com.cms.model.testimonial.Category"/>
             </bag>
 
+            <one-to-one name="apiKey"
+                        class="com.cms.model.user.impl.admin.ApiKey"
+                        property-ref="admin"
+                        cascade="all"
+                        lazy="false"/>
+
+
         </subclass>
 
         <subclass name="com.cms.model.user.impl.Editor"

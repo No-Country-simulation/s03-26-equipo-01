@@ -11,30 +11,31 @@ const useTag = () => {
 
     const {post, put, deleted, get} = useApi<Tag>()
     const [tags, setTags] = useState<Tag[]>([]);
-    const [tag, setTag] = useState<Tag | null>(null);
 
     useEffect(() => {
         get<Tag[]>(getAllTags)
             .then(newsTag => setTags(newsTag))
             .catch(error => console.log(error))
-    }, [tag]);
+    }, []);
 
     const addTag = async (tag: CreatedTag) => {
         const newTag = await post<CreatedTag>(addTagService, tag);
-        setTag(newTag);
+        setTags(prev => [...prev, newTag]);
         return newTag;
     }
 
     const editTag = async (tag: CreatedTag, id: number | undefined): Promise<Tag> => {
         const editTag = await put<CreatedTag>(editTagService, tag, id);
-        setTag(editTag);
+        setTags(prev => prev.map(tag => tag.id === editTag.id ? editTag : tag))
         return editTag;
     }
 
     const deleteTag = async (id?: number): Promise<void> => {
         await deleted(deleteTagService, id);
-        setTag(null);
+        setTags(prev => removeTag(prev, id));
     }
+
+    const removeTag = (tags: Tag[], id?: number) => tags.filter(tag => tag.id !== id)
 
     return {tags, addTag, editTag, deleteTag}
 }

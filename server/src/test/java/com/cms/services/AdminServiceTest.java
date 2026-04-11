@@ -10,6 +10,7 @@ import com.cms.model.testimonial.state.impl.PendingState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
+import com.cms.model.user.impl.admin.ApiKey;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,6 +57,8 @@ public class AdminServiceTest {
     private Category category1;
     private Category category2;
     private Category categoryDeOtroAdmin;
+
+
     private Tag tag1;
     private Tag tag2;
     private Tag tagDeOtroAdmin;
@@ -160,6 +164,22 @@ public class AdminServiceTest {
         assertTrue(adminResource.getTags().contains(tag2));
         assertFalse(adminResource.getTags().contains(tagDeOtroAdmin));
     }
+
+    @Test
+    public void save_shouldGenerateApiKeyAndAssignItToAdmin() {
+        Admin savedAdmin = adminService.save(admin);
+
+        ApiKey apiKey = savedAdmin.getApiKey();
+
+        assertNotNull(apiKey);
+        assertNotNull(apiKey.getKeyHash());
+        assertTrue(apiKey.getKeyHash().startsWith("vza_"));
+        assertNotNull(apiKey.getPrefix());
+        assertEquals(apiKey.getKeyHash().substring(0, 12), apiKey.getPrefix());
+        assertTrue(apiKey.isActive());
+        assertEquals(savedAdmin, apiKey.getAdmin());
+    }
+
 
     @Test
     public void advanceByAdminFromDraftThrowsBusinessException() {
