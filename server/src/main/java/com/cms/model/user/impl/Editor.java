@@ -1,5 +1,6 @@
 package com.cms.model.user.impl;
 
+import com.cms.exception.business.BusinessException;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.admin.Admin;
@@ -27,5 +28,13 @@ public class Editor extends User {
 
     public void removeDraft(Testimonial testimonial) {
         drafts.remove(testimonial);
+    }
+
+    public void validateAdvance(Testimonial testimonial) {
+        if(!isContains(testimonial)) throw new BusinessException("El testimonio no pertenece al editor!");
+    }
+
+    public boolean isContains(Testimonial testimonial) {
+        return drafts.contains(testimonial);
     }
 }

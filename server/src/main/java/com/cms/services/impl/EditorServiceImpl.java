@@ -42,11 +42,16 @@ public class EditorServiceImpl implements EditorService {
 
     @Override
     public Testimonial advanceByEditor(Long idTestimonial, Long idEditor) {
-        Testimonial testimonial = testimonialService.advanceByEditor(idTestimonial);
-
         Editor editor = findById(idEditor);
+        Testimonial testimonial = testimonialService.findTestimonialById(idTestimonial);
+
+        editor.validateAdvance(testimonial);
+
+        testimonial = testimonialService.advanceByEditor(idTestimonial);
 
         editor.removeDraft(testimonial);
+
+        editorSQLDAO.save(editor);
 
         return testimonial;
     }

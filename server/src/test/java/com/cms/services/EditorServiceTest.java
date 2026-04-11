@@ -74,11 +74,13 @@ public class EditorServiceTest {
 
         Editor editorRecovered = editorSQLDAO.findById(editor.getId()).orElseThrow();
 
-        assertTrue(editorRecovered.getDrafts().contains(testimonial));
+        assertTrue(editorRecovered.isContains(testimonial));
     }
 
     @Test
     public void advanceByEditor_shouldMoveToPendingAndRemoveFromDrafts() {
+        assertThrows(BusinessException.class, () -> editorService.advanceByEditor(testimonial.getId(), editor.getId()));
+
         editorService.asocTestimonial(testimonial.getId(), editor.getId());
 
         Testimonial advanced = editorService.advanceByEditor(testimonial.getId(), editor.getId());
@@ -86,8 +88,7 @@ public class EditorServiceTest {
         assertEquals(StateTestimonial.PENDING, advanced.getState());
 
         Editor editorRecovered = editorSQLDAO.findById(editor.getId()).orElseThrow();
-        assertTrue(editorRecovered.getDrafts().stream()
-                .noneMatch(t -> t.getId().equals(testimonial.getId())));
+        assertFalse(editorRecovered.isContains(testimonial));
 
         assertThrows(BusinessException.class, () -> editorService.advanceByEditor(testimonial.getId(), editor.getId()));
     }

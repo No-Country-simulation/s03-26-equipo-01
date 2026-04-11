@@ -74,7 +74,6 @@
                          cascade="none"/>
 
             <bag name="drafts"
-                 inverse="true"
                  lazy="false">
                 <key column="editor_id"/>
                 <one-to-many class="com.cms.model.testimonial.Testimonial"/>
