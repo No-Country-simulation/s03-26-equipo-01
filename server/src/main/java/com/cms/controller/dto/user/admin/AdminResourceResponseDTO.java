@@ -1,4 +1,4 @@
-package com.cms.controller.dto.admin;
+package com.cms.controller.dto.user.admin;
 
 import com.cms.controller.dto.category.CategoryResponseSimpleDTO;
 import com.cms.controller.dto.tag.TagResponseDto;
