@@ -2,6 +2,7 @@ package com.cms.controller.exception;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException; // <-- Verifica que este import coincida con tu superclase
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
@@ -72,6 +73,14 @@ public class GlobalExceptionHandler {
             HttpServletRequest request
     ) {
         return ErrorResponseDTO.buildResponse(HttpStatus.UNAUTHORIZED, "Credenciales inválidas", request);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ErrorResponseDTO> handleExpiredJwt(
+            ExpiredJwtException exception,
+            HttpServletRequest request
+    ) {
+        return ErrorResponseDTO.buildResponse(HttpStatus.UNAUTHORIZED, "Token expirado", request);
     }
 
     @ExceptionHandler(Exception.class)

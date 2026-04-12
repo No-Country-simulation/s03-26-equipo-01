@@ -66,4 +66,8 @@ public class Testimonial {
     public void validateMedia() {
         if (media.isNextState()) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio tiene una imagen y video");
     }
+
+    public void validateCategory() {
+        if(category == null) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio no tiene una categoria");
+    }
 }

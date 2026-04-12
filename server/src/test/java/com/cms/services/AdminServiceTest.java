@@ -199,7 +199,14 @@ public class AdminServiceTest {
 
         testimonialService.advanceByEditor(saved.getId());
 
+        assertThrows(BusinessException.class, () -> testimonialService.advanceByAdmin(saved.getId()));
+
+        saved.setCategory(category2);
+
+        testimonialService.update(saved);
+
         Testimonial recovered = testimonialService.advanceByAdmin(saved.getId());
+
         assertEquals(StateTestimonial.APPROVED, recovered.getState());
 
         recovered = testimonialService.advanceByAdmin(recovered.getId());
