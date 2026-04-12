@@ -12,12 +12,12 @@ const BodyOneAction = ({
     <TableBody>
       {tableData.rows.map((row) => (
         <TableRow
-          key={tableData.rows.indexOf(row)}
+          key={row.id}
           className={classColor(tableData.rows.indexOf(row))}
         >
           {row.fields.map((field) => (
-            <TableCell key={row.fields.indexOf(field)}>
-              {field.toString()}
+            <TableCell key={field}>
+              {field}
             </TableCell>
           ))}
           <TableCell
