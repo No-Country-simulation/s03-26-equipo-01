@@ -22,7 +22,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
+      SPRING_ELASTICSEARCH_URIS: ${ELASTIC_URL}
 
   postgres:
     container_name: cms-postgres
