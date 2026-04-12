@@ -100,7 +100,7 @@ public class EditorControllerREST {
 
         return ResponseEntity.ok(
                 TableResponseDTO.fromPage(
-                        List.of("Nº", "Testimonio","video", "imagen", "Tags", "Rating"),
+                        List.of("Nº", "TESTIMONIO","VIDEO", "IMAGEN", "TAGS", "CALIFICACIÓN"),
                         testimonialDTO,
                         TestimonialResponseSimpleDTO::id
                 )

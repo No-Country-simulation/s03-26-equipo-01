@@ -2,6 +2,7 @@ package com.cms.security.filters;
 
 import com.cms.security.jwt.JwtService;
 import com.cms.security.user.UserDetailsImpl;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,11 +58,18 @@ public class JwtAuthFilterImpl extends OncePerRequestFilter {
         if (token != null) {
             try {
                 autenticarSiCorresponde(token, request);
+            } catch (ExpiredJwtException e) {
+                log.warn("Token expirado: {}", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"error\": \"UNAUTHORIZED\", \"message\": \"Token expirado\"}");
+                return;
             } catch (Exception e) {
                 log.error("Error en JWT filter: {}", e.getMessage(), e);
                 SecurityContextHolder.clearContext();
             }
         }
+
 
         chain.doFilter(request, response);
     }

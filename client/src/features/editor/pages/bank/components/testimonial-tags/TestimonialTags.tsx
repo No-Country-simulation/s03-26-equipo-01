@@ -3,7 +3,7 @@ import './testimonial-tags.css';
 
 const TestimonialTags = ({ tags }: TestimonialTagsProps) => {
   return (
-    <section className='testimonial-admin-tags'>
+    <section className='testimonial-editor-tags'>
       {tags.map((tag) => (
         <Tag key={tag.id} name={tag.name} />
       ))}
@@ -13,7 +13,7 @@ const TestimonialTags = ({ tags }: TestimonialTagsProps) => {
 
 const Tag = ({ name }: { name: string }) => {
   return (
-    <div className='testimonial-admin-tag-container'>
+    <div className='testimonial-editor-tag-container'>
       <p>{name}</p>
     </div>
   );

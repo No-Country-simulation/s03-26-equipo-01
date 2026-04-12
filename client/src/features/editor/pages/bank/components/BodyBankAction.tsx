@@ -1,13 +1,9 @@
 import { TableBody, TableCell, TableRow, Button } from '@mui/material';
-import type { TestimonialSimpleDTO } from './testimonial';
-import type { Row } from './table';
-
-interface BodyBankActionProps {
-  rows: Row<TestimonialSimpleDTO>[];
-  onAsoc: (id: number) => void;
-  currentPage: number;
-  pageSize: number;
-}
+import { Video, VideoOff, Image, ImageOff, Inbox } from 'lucide-react';
+import type BodyBankActionProps from './BodyBankActionProps';
+import TestimonialTags from './testimonial-tags/TestimonialTags';
+import MediaIcon from './rows/Media';
+import RatingDisplay from './rows/Rating';
 
 const BodyBankAction = ({
   rows,
@@ -21,14 +17,36 @@ const BodyBankAction = ({
         <TableRow key={row.id} className={classColor(index)}>
           <TableCell>{currentPage * pageSize + index + 1}</TableCell>
           <TableCell>{row.data.testimonial}</TableCell>
-          <TableCell>{row.data.media?.videoUrl ? '✅' : '❌'}</TableCell>
-          <TableCell>{row.data.media?.thumbnailUrl ? '✅' : '❌'}</TableCell>
-          <TableCell>{row.data.tags.map((t) => t.name).join(', ')}</TableCell>
-          <TableCell>{row.data.rating}</TableCell>
+
+          <TableCell>
+            <MediaIcon
+              url={row.data.media?.videoUrl}
+              IconOn={Video}
+              IconOff={VideoOff}
+            />
+          </TableCell>
+
+          <TableCell>
+            <MediaIcon
+              url={row.data.media?.imageUrl}
+              IconOn={Image}
+              IconOff={ImageOff}
+            />
+          </TableCell>
+
+          <TableCell>
+            <TestimonialTags tags={row.data.tags} />
+          </TableCell>
+
+          <TableCell>
+            <RatingDisplay rating={row.data.rating} />
+          </TableCell>
+
           <TableCell>
             <Button
               variant='outlined'
               size='small'
+              startIcon={<Inbox size={16} />}
               onClick={() => onAsoc(row.id)}
             >
               Pasar a trabajo

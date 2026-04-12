@@ -4,11 +4,7 @@ import TitleContainer from '../../../editor/components/title-container/TitleCont
 import Paginator from '../../../../shared/components/pagination/Paginator';
 
 const TestimonialBank = () => {
-  const { data, page, setPage } = useTestimonialBank();
-
-  const handleAsoc = (id: number) => {
-    console.log('Pasar a trabajo:', id);
-  };
+  const { data, page, setPage, asocTestimonial } = useTestimonialBank();
 
   return (
     <section>
@@ -18,7 +14,7 @@ const TestimonialBank = () => {
       />
       {data && (
         <>
-          <TableBank tableData={data} onAsoc={handleAsoc} />
+          <TableBank tableData={data} onAsoc={asocTestimonial} />
           <Paginator
             totalPages={data.totalPages}
             currentPage={page}

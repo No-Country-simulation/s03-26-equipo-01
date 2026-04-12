@@ -1,5 +1,8 @@
 import api from '../../../../core/api/api';
-import { TESTIMONIAL_BANK } from '../../../../core/api/urls/urls';
+import {
+  TESTIMONIAL_BANK,
+  TESTIMONIAL_ASOC,
+} from '../../../../core/api/urls/urls';
 import type { TableResponseDTO } from '../../pages/bank/components/table';
 import type { TestimonialSimpleDTO } from '../../pages/bank/components/testimonial';
 
@@ -12,6 +15,12 @@ async function testimonialBankService(
     { params: { page, size } },
   );
   return response.data;
+}
+
+export async function asocTestimonialService(
+  idTestimonial: number,
+): Promise<void> {
+  await api.patch(TESTIMONIAL_ASOC(idTestimonial));
 }
 
 export default testimonialBankService;
