@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -104,19 +106,19 @@ public class AdminServiceTest {
         admin.getEditors().add(editor2);
 
         category1 = categoryService.create(
-                Category.builder().name("Tech").slug("tech").description("Tecnología").build(),
+                Category.builder().name("Tech").slug("tech").build(),
                 admin.getId()
         );
         admin.getCategories().add(category1);
 
         category2 = categoryService.create(
-                Category.builder().name("Marketing").slug("marketing").description("Marketing").build(),
+                Category.builder().name("Marketing").slug("marketing").build(),
                 admin.getId()
         );
         admin.getCategories().add(category2);
 
         categoryDeOtroAdmin = categoryService.create(
-                Category.builder().name("Ajena").slug("ajena").description("De otro admin").build(),
+                Category.builder().name("Ajena").slug("ajena").build(),
                 otroAdmin.getId()
         );
 
@@ -130,7 +132,7 @@ public class AdminServiceTest {
 
         embed = embedService.registerEmbed(admin.getId(), new Embed());
         category = categoryService.create(
-                Category.builder().name("Test Category").slug("test-category").description("Category for tests").build(),
+                Category.builder().name("Test Category").slug("test-category").build(),
                 admin.getId()
         );
 
@@ -211,6 +213,142 @@ public class AdminServiceTest {
 
         recovered = testimonialService.advanceByAdmin(recovered.getId());
         assertEquals(StateTestimonial.PUBLISHED, recovered.getState());
+    }
+
+    @Test
+    public void createEditor_shouldCreateEditorAndAssignItToAdmin() {
+        Editor newEditor = Editor.builder()
+                .email("neweditor@gmail.com")
+                .password("securepass")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertNotNull(created);
+        assertNotNull(created.getId());
+        assertEquals("neweditor@gmail.com", created.getEmail());
+        assertEquals("John", created.getFirstName());
+        assertEquals("Doe", created.getLastName());
+        assertEquals(admin, created.getCreatedBy());
+    }
+
+    @Test
+    public void createEditor_shouldBeEnabledByDefault() {
+        Editor newEditor = Editor.builder()
+                .email("enabled@gmail.com")
+                .password("pass")
+                .firstName("Ana")
+                .lastName("Lopez")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertTrue(created.isEnabled());
+    }
+
+    @Test
+    public void createEditor_withNonExistentAdmin_shouldThrowEntityNotFoundException() {
+        Editor newEditor = Editor.builder()
+                .email("ghost@gmail.com")
+                .password("pass")
+                .firstName("Ghost")
+                .lastName("User")
+                .build();
+
+        long nonExistentAdminId = -999L;
+
+        assertThrows(EntityNotFoundException.class, () ->
+                adminService.createEditor(newEditor, nonExistentAdminId)
+        );
+    }
+
+    @Test
+    public void createEditor_shouldHaveEditorRole() {
+        Editor newEditor = Editor.builder()
+                .email("role@gmail.com")
+                .password("pass")
+                .firstName("Role")
+                .lastName("Test")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertEquals("EDITOR", created.getRole());
+    }
+
+    @Test
+    public void createEditor_multipleEditorsUnderSameAdmin_shouldAllBeAssigned() {
+        Editor first = Editor.builder()
+                .email("first@gmail.com")
+                .password("pass")
+                .firstName("First")
+                .lastName("Editor")
+                .build();
+
+        Editor second = Editor.builder()
+                .email("second@gmail.com")
+                .password("pass")
+                .firstName("Second")
+                .lastName("Editor")
+                .build();
+
+        Editor createdFirst  = adminService.createEditor(first,  admin.getId());
+        Editor createdSecond = adminService.createEditor(second, admin.getId());
+
+        assertEquals(admin, createdFirst.getCreatedBy());
+        assertEquals(admin, createdSecond.getCreatedBy());
+        assertNotEquals(createdFirst.getId(), createdSecond.getId());
+    }
+
+    @Test
+    public void createEditor_editorCreatedByOneAdmin_shouldNotBelongToAnother() {
+        Editor newEditor = Editor.builder()
+                .email("isolated@gmail.com")
+                .password("pass")
+                .firstName("Isolated")
+                .lastName("Editor")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertNotEquals(otroAdmin, created.getCreatedBy());
+    }
+    @Test
+    public void findAllEditors_shouldReturnEditorsOfAdmin() {
+        Page<Editor> result = adminService.findAllEditors(admin.getId(), 0, 10);
+
+        assertNotNull(result);
+        assertTrue(result.getTotalElements() >= 2);
+        assertTrue(result.getContent().contains(editor));
+        assertTrue(result.getContent().contains(editor2));
+    }
+
+    @Test
+    public void findAllEditors_shouldNotReturnEditorsOfOtherAdmins() {
+        Editor editorDeOtroAdmin = Editor.builder()
+                .email("otro@editor.com")
+                .password("pass")
+                .firstName("Ajeno")
+                .lastName("Editor")
+                .createdBy(otroAdmin)
+                .build();
+        userService.save(editorDeOtroAdmin);
+
+        Page<Editor> result = adminService.findAllEditors(admin.getId(), 0, 10);
+
+        assertFalse(result.getContent().contains(editorDeOtroAdmin));
+    }
+
+    @Test
+    public void findAllEditors_shouldRespectPagination() {
+        Page<Editor> firstPage  = adminService.findAllEditors(admin.getId(), 0, 1);
+        Page<Editor> secondPage = adminService.findAllEditors(admin.getId(), 1, 1);
+
+        assertEquals(1, firstPage.getContent().size());
+        assertEquals(1, secondPage.getContent().size());
+        assertNotEquals(firstPage.getContent().get(0), secondPage.getContent().get(0));
     }
 
     @AfterEach

@@ -50,7 +50,6 @@ class CategoryServiceTest {
         Category categoryToCreate = Category.builder()
                 .name("Common Category")
                 .slug("common-category")
-                .description("Common description for tests")
                 .build();
 
         defaultCategory = categoryService.create(categoryToCreate, adminSaved.getId());
@@ -61,7 +60,6 @@ class CategoryServiceTest {
         Category categoryToCreate = Category.builder()
                 .name("Technology")
                 .slug("technology")
-                .description("Technology testimonials")
                 .build();
 
         Category createdCategory = categoryService.create(categoryToCreate, adminSaved.getId());
@@ -69,7 +67,6 @@ class CategoryServiceTest {
         assertNotNull(createdCategory.getId());
         assertEquals("Technology", createdCategory.getName());
         assertEquals("technology", createdCategory.getSlug());
-        assertEquals("Technology testimonials", createdCategory.getDescription());
         assertFalse(createdCategory.getDeleted());
         assertNotNull(createdCategory.getCreatedAt());
         assertNotNull(createdCategory.getUpdatedAt());
@@ -83,8 +80,8 @@ class CategoryServiceTest {
     void findAllTest() {
         int initialSize = categoryService.findAll().size();
 
-        categoryService.create(Category.builder().name("Marketing").slug("marketing").description("Marketing testimonials").build(), adminSaved.getId());
-        categoryService.create(Category.builder().name("Sales").slug("sales").description("Sales testimonials").build(), adminSaved.getId());
+        categoryService.create(Category.builder().name("Marketing").slug("marketing").build(), adminSaved.getId());
+        categoryService.create(Category.builder().name("Sales").slug("sales").build(), adminSaved.getId());
 
         assertEquals(initialSize + 2, categoryService.findAll().size());
     }
@@ -99,14 +96,13 @@ class CategoryServiceTest {
 
     @Test
     void updateTest() {
-        Category updateData = Category.builder().name("Updated").description("Updated description").build();
+        Category updateData = Category.builder().name("Updated").build();
 
         Category updatedCategory = categoryService.update(defaultCategory.getId(), updateData);
 
         assertEquals(defaultCategory.getId(), updatedCategory.getId());
         assertEquals("Updated", updatedCategory.getName());
         assertEquals("common-category", updatedCategory.getSlug());
-        assertEquals("Updated description", updatedCategory.getDescription());
     }
 
     @Test

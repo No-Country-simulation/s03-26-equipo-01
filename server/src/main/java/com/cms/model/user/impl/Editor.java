@@ -37,4 +37,8 @@ public class Editor extends User {
     public boolean isContains(Testimonial testimonial) {
         return drafts.contains(testimonial);
     }
+
+    public Integer getNroTestimonials() {
+        return drafts.size();
+    }
 }
