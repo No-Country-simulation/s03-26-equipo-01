@@ -18,6 +18,7 @@ public class PendingState extends TestimonialState {
     @Override
     public TestimonialState nextToAdmin(Testimonial testimonial) {
         testimonial.validateMedia();
+        testimonial.validateCategory();
 
         return new ApprovedState();
     }
