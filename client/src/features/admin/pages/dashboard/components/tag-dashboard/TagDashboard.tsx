@@ -1,10 +1,5 @@
 import { TabValues } from "../../../../components/tab-container/tab-values";
-import type { TagMetrics } from "../../models/tag-metrics";
-
-interface TagDashboardProps {
-    currentTab: TabValues
-    metrics: TagMetrics[]
-}
+import type { TagDashboardProps } from "./tag-dashboard";
 
 const TagDashboard = ({currentTab, metrics}: TagDashboardProps) => {
     return (

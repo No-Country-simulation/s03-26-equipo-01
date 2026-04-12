@@ -1,11 +1,5 @@
 import { TabValues } from "../../../../components/tab-container/tab-values";
-import type { CategoryMetrics } from "../../models/categories-metrics";
-
-
-interface CategoryDashboardProps {
-    currentTab: TabValues
-    metrics: CategoryMetrics[]
-}
+import type { CategoryDashboardProps } from "./category-dashboard";
 
 const CategoryDashboard = ({currentTab, metrics}: CategoryDashboardProps) => {    
     return (
