@@ -1,5 +1,2 @@
-.category-dashboard-container {
-    justify-self: center;
-    width: 100%;
-    margin: 15px;
-}
+@import './mobile.css';
+@import './tablet.css';

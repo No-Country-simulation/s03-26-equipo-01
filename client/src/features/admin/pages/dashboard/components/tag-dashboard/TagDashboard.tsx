@@ -5,14 +5,15 @@ import './styles/tag-dashboard.css';
 
 const TagDashboard = ({currentTab, metrics}: TagDashboardProps) => {
     return (
-        <section hidden = {currentTab !== TabValues.TAG} className = 'tag-dashboard-container'>
+        currentTab === TabValues.TAG && 
+        <section className = 'tag-dashboard-container'>
                 {metrics.map(metric =>
                     <MetricCard 
                         key = {metric.id} 
                         metric = {metric} 
                     />
                 )}
-            </section>
+        </section>
     )
 }
 
