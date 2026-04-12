@@ -1,5 +1,5 @@
 .category-dashboard-container {
-    width: 40%;
-    height: 40%;
-    background-color: #FFF;
+    justify-self: center;
+    width: 100%;
+    margin: 15px;
 }

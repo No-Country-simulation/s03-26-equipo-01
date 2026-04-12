@@ -1,4 +1,5 @@
 import type { MetricCardProps } from "./metric-card"
+import './styles/metric-card.css';
 
 const MetricCard = ({metric}: MetricCardProps) => {
     return (
@@ -7,7 +8,7 @@ const MetricCard = ({metric}: MetricCardProps) => {
                 <h4>{metric.name}</h4>
             </div >
             <div className = 'metric-card_testionial-data'>
-                <p>Testimonios</p>
+                <p className = 'metric-card_testionial-data--title'>Testimonios</p>
                 <p className = 'metric-card_testionial-data--count'>{metric.testimonialsCount}</p>
             </div>
         </article>
