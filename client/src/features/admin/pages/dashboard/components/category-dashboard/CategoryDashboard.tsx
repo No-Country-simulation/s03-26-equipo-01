@@ -9,7 +9,7 @@ interface CategoryDashboardProps {
 
 const CategoryDashboard = ({currentTab, metrics}: CategoryDashboardProps) => {    
     return (
-            <section hidden = {currentTab !== TabValues.TAG}>
+            <section hidden = {currentTab !== TabValues.CATEGORIA}>
                 {metrics.map(metric => <p key={metric.id}>{metric.name}</p>)}
             </section>
     )
