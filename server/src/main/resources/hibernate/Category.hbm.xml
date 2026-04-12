@@ -13,7 +13,6 @@
 
         <property name="name"        column="name"        not-null="true"/>
         <property name="slug"        column="slug"        />
-        <property name="description" column="description"/>
         <property name="deleted"     column="deleted"     not-null="true"/>
         <property name="createdAt"   column="created_at"  not-null="true"/>
         <property name="updatedAt"   column="updated_at"  not-null="true"/>

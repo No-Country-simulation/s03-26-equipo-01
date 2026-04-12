@@ -78,7 +78,6 @@ public class DataSeederImpl implements DataSeeder {
                 Category.builder()
                         .name("Test Category")
                         .slug("test-category")
-                        .description("Category for tests")
                         .build(),
                 admin.getId()
         );

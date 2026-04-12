@@ -66,7 +66,6 @@ public class TestimonialServiceTest {
                 Category.builder()
                         .name("Test Category")
                         .slug("test-category")
-                        .description("Category for tests")
                         .build(),
                 admin.getId()
         );

@@ -104,19 +104,19 @@ public class AdminServiceTest {
         admin.getEditors().add(editor2);
 
         category1 = categoryService.create(
-                Category.builder().name("Tech").slug("tech").description("Tecnología").build(),
+                Category.builder().name("Tech").slug("tech").build(),
                 admin.getId()
         );
         admin.getCategories().add(category1);
 
         category2 = categoryService.create(
-                Category.builder().name("Marketing").slug("marketing").description("Marketing").build(),
+                Category.builder().name("Marketing").slug("marketing").build(),
                 admin.getId()
         );
         admin.getCategories().add(category2);
 
         categoryDeOtroAdmin = categoryService.create(
-                Category.builder().name("Ajena").slug("ajena").description("De otro admin").build(),
+                Category.builder().name("Ajena").slug("ajena").build(),
                 otroAdmin.getId()
         );
 
@@ -130,7 +130,7 @@ public class AdminServiceTest {
 
         embed = embedService.registerEmbed(admin.getId(), new Embed());
         category = categoryService.create(
-                Category.builder().name("Test Category").slug("test-category").description("Category for tests").build(),
+                Category.builder().name("Test Category").slug("test-category").build(),
                 admin.getId()
         );
 
