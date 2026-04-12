@@ -1,6 +1,9 @@
 package com.cms.persistence.repository;
 
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.user.impl.admin.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -8,10 +11,11 @@ import java.util.List;
 public interface TestimonialRepository {
 
     Testimonial findById(Long id);
-
-    List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds);
-
     Testimonial update(Testimonial model);
 
     Testimonial save(Testimonial model);
+
+    List<Testimonial> findByAdminId(Long idAdmin);
+
+    Page<Testimonial> findAllTestimonialPublishedPage(PageRequest of, Admin admin);
 }

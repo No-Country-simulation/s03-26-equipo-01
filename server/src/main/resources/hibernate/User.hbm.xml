@@ -55,6 +55,12 @@
                         cascade="all"
                         lazy="false"/>
 
+            <bag name="testimonials"
+                 inverse="true"
+                 lazy="false">
+                <key column="admin_id"/>
+                <one-to-many class="com.cms.model.testimonial.Testimonial"/>
+            </bag>
 
         </subclass>
 
@@ -66,6 +72,12 @@
                          column="created_by"
                          not-null="false"
                          cascade="none"/>
+
+            <bag name="drafts"
+                 lazy="false">
+                <key column="editor_id"/>
+                <one-to-many class="com.cms.model.testimonial.Testimonial"/>
+            </bag>
         </subclass>
 
     </class>

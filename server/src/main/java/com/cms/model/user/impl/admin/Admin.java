@@ -4,6 +4,7 @@ import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.embeds.Embed;
+import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.Editor;
 import lombok.Builder;
@@ -35,6 +36,9 @@ public class Admin extends User {
 
     private ApiKey apiKey;
 
+    @Builder.Default
+    private List<Testimonial> testimonials = new ArrayList<>();
+
     public void agregarEmbed(Embed embed) {
         embeds.add(embed);
     }
@@ -49,4 +53,7 @@ public class Admin extends User {
 
     }
 
+    public void addTestimonial(Testimonial testimonial) {
+        testimonials.add(testimonial);
+    }
 }

@@ -48,21 +48,6 @@ public class EmbedController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @Operation(summary = "Testimonio Publicados", description = "Recupera una lista de todos los testimonios publicados disponibles para incrustar.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Testimonios recuperados con éxito"),
-            @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
-    })
-    @SecurityRequirements()
-    @PostMapping("/published")
-    public ResponseEntity<PageResponseDTO<TestimonialPublicDTO>> testimonialPublished( @RequestParam(defaultValue = "0")int page
-    ){
-
-        PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
-                embedService.getTestimonialEmbed(page).map(TestimonialPublicDTO::fromModel)
-        );
-        return ResponseEntity.ok(response);
-    }
 
 
 }

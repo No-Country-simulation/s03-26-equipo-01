@@ -1,6 +1,6 @@
-import type { ChangeStateButtonsData as ChangeStateData } from "./change-state-button-date"
+import type { ChangeStateButtonsData } from "./change-state-button-date"
 
 export interface ChangeStateButtons {
-    nextState: ChangeStateData
-    prevState: ChangeStateData
+    nextState: ChangeStateButtonsData
+    discartTestimonial: ChangeStateButtonsData
 }

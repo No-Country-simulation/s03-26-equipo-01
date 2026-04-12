@@ -8,7 +8,7 @@ function adminTestimonialsAdapter(response: TestimonialResponse[]): Testimonial[
     return response.map(testimonial => adminTestimonialAdapter(testimonial));
 }
 
-function adminTestimonialAdapter(testimonial: TestimonialResponse): Testimonial {
+export function adminTestimonialAdapter(testimonial: TestimonialResponse): Testimonial {
     return {
         id: testimonial.id, 
         testimonial: testimonial.testimonial,

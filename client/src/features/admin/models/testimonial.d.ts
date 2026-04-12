@@ -1,6 +1,6 @@
 import type { Category } from "./category"
 import type { Media } from "./media"
-import type { AdminState } from "./state"
+import type { AdminTestimonialState } from "./state"
 import type { Tag } from "./tag"
 
 export interface Testimonial {
@@ -8,9 +8,9 @@ export interface Testimonial {
     testimonial: string 
     witness: string
     rating: number
-    state: AdminState
+    state: AdminTestimonialState
     createdAt: Date
-    category: Category
+    category?: Category
     tags: Tag[]
     media: Media
 }

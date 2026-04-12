@@ -1,12 +1,14 @@
 package com.cms.model.user.impl;
 
+import com.cms.exception.business.BusinessException;
+import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.User;
 import com.cms.model.user.impl.admin.Admin;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,4 +18,23 @@ import lombok.experimental.SuperBuilder;
 public class Editor extends User {
 
     private Admin createdBy;
+
+    @Builder.Default
+    private List<Testimonial> drafts = new ArrayList<>();
+
+    public void addDrafts(Testimonial testimonial) {
+        drafts.add(testimonial);
+    }
+
+    public void removeDraft(Testimonial testimonial) {
+        drafts.remove(testimonial);
+    }
+
+    public void validateAdvance(Testimonial testimonial) {
+        if(!isContains(testimonial)) throw new BusinessException("El testimonio no pertenece al editor!");
+    }
+
+    public boolean isContains(Testimonial testimonial) {
+        return drafts.contains(testimonial);
+    }
 }
