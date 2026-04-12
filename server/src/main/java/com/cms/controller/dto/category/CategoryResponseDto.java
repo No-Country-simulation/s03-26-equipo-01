@@ -7,7 +7,6 @@ public record CategoryResponseDto(
         Long id,
         String name,
         String slug,
-        String description,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {
@@ -16,7 +15,6 @@ public record CategoryResponseDto(
                 category.getId(),
                 category.getName(),
                 category.getSlug(),
-                category.getDescription(),
                 category.getCreatedAt(),
                 category.getUpdatedAt()
         );

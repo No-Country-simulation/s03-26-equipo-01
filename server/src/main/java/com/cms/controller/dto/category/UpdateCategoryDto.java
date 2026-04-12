@@ -5,19 +5,13 @@ import java.text.Normalizer;
 import java.util.Locale;
 
 public record UpdateCategoryDto(
-        String name,
-        String description
+        String name
 ) {
         public void aplicar(Category category) {
 
                 if (this.name() != null && !this.name().isBlank()) {
                         category.setName(this.name().trim());
                         category.setSlug(generarSlug(this.name()));
-                }
-
-
-                if (this.description() != null) {
-                        category.setDescription(this.description().trim());
                 }
         }
 

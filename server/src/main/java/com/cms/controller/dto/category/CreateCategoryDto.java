@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 
 
 public record CreateCategoryDto(
-        @NotBlank String name,
-        String description
+        @NotBlank String name
 ) {
     public Category aModelo() {
         return Category.builder()
                 .name(this.name())
-                .description(this.description())
                 .build();
     }
 }
