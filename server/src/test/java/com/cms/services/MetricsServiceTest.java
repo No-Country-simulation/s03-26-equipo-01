@@ -70,7 +70,6 @@ class MetricsServiceTest {
         Category primaryCategory = categoryService.create(
                 Category.builder()
                         .name("Primary Category")
-                        .description("Primary category for metrics")
                         .build(),
                 adminId
         );
@@ -78,7 +77,6 @@ class MetricsServiceTest {
         Category secondaryCategory = categoryService.create(
                 Category.builder()
                         .name("Secondary Category")
-                        .description("Secondary category for metrics")
                         .build(),
                 adminId
         );
@@ -86,7 +84,6 @@ class MetricsServiceTest {
         Category categoryWithoutTestimonials = categoryService.create(
                 Category.builder()
                         .name("Category Without Testimonials")
-                        .description("Category without testimonials for metrics")
                         .build(),
                 adminId
         );
@@ -94,7 +91,6 @@ class MetricsServiceTest {
         Category foreignCategory = categoryService.create(
                 Category.builder()
                         .name("Foreign Category")
-                        .description("Category from another admin")
                         .build(),
                 otherAdmin.getId()
         );
