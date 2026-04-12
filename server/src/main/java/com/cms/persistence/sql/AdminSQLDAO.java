@@ -1,6 +1,9 @@
 package com.cms.persistence.sql;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +22,11 @@ public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
             AND t.name = :name
     """)
     Boolean hasNameTagInListAdmin(String name, Long idAdmin);
+
+    @Query("""
+            SELECT a.editors
+            FROM Admin a
+            WHERE a.id = :idAdmin
+    """)
+    Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, PageRequest of);
 }

@@ -10,6 +10,9 @@ import com.cms.services.AdminService;
 import com.cms.services.ApiKeyService;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,6 +67,11 @@ public class AdminServiceImpl implements AdminService {
         modelEditor.setCreatedBy(admin);
 
         return (Editor) userService.save(modelEditor);
+    }
+
+    @Override
+    public Page<Editor> findAllEditors(Long idAdmin, int page, int size) {
+        return adminDAO.findEditorsByAdmin(idAdmin, PageRequest.of(page, size));
     }
 
     @Override

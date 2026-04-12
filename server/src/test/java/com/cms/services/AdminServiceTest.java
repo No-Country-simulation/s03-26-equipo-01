@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -313,6 +314,41 @@ public class AdminServiceTest {
         Editor created = adminService.createEditor(newEditor, admin.getId());
 
         assertNotEquals(otroAdmin, created.getCreatedBy());
+    }
+    @Test
+    public void findAllEditors_shouldReturnEditorsOfAdmin() {
+        Page<Editor> result = adminService.findAllEditors(admin.getId(), 0, 10);
+
+        assertNotNull(result);
+        assertTrue(result.getTotalElements() >= 2);
+        assertTrue(result.getContent().contains(editor));
+        assertTrue(result.getContent().contains(editor2));
+    }
+
+    @Test
+    public void findAllEditors_shouldNotReturnEditorsOfOtherAdmins() {
+        Editor editorDeOtroAdmin = Editor.builder()
+                .email("otro@editor.com")
+                .password("pass")
+                .firstName("Ajeno")
+                .lastName("Editor")
+                .createdBy(otroAdmin)
+                .build();
+        userService.save(editorDeOtroAdmin);
+
+        Page<Editor> result = adminService.findAllEditors(admin.getId(), 0, 10);
+
+        assertFalse(result.getContent().contains(editorDeOtroAdmin));
+    }
+
+    @Test
+    public void findAllEditors_shouldRespectPagination() {
+        Page<Editor> firstPage  = adminService.findAllEditors(admin.getId(), 0, 1);
+        Page<Editor> secondPage = adminService.findAllEditors(admin.getId(), 1, 1);
+
+        assertEquals(1, firstPage.getContent().size());
+        assertEquals(1, secondPage.getContent().size());
+        assertNotEquals(firstPage.getContent().get(0), secondPage.getContent().get(0));
     }
 
     @AfterEach
