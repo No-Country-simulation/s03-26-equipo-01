@@ -14,7 +14,14 @@ const TableBank = ({ tableData, onAsoc }: TableBankProps) => {
       tableData={{ headers: tableData.headers, rows: [] }}
       activeEdit={() => {}}
       activeDelete={() => {}}
-      customBody={<BodyBankAction rows={tableData.rows} onAsoc={onAsoc} />}
+      customBody={
+        <BodyBankAction
+          rows={tableData.rows}
+          onAsoc={onAsoc}
+          currentPage={tableData.page}
+          pageSize={tableData.size}
+        />
+      }
     />
   );
 };

@@ -5,14 +5,21 @@ import type { Row } from './table';
 interface BodyBankActionProps {
   rows: Row<TestimonialSimpleDTO>[];
   onAsoc: (id: number) => void;
+  currentPage: number;
+  pageSize: number;
 }
 
-const BodyBankAction = ({ rows, onAsoc }: BodyBankActionProps) => {
+const BodyBankAction = ({
+  rows,
+  onAsoc,
+  currentPage,
+  pageSize,
+}: BodyBankActionProps) => {
   return (
     <TableBody>
       {rows.map((row, index) => (
         <TableRow key={row.id} className={classColor(index)}>
-          <TableCell>{index + 1}</TableCell>
+          <TableCell>{currentPage * pageSize + index + 1}</TableCell>
           <TableCell>{row.data.testimonial}</TableCell>
           <TableCell>{row.data.media?.videoUrl ? '✅' : '❌'}</TableCell>
           <TableCell>{row.data.media?.thumbnailUrl ? '✅' : '❌'}</TableCell>
