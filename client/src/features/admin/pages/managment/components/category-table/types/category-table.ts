@@ -1,7 +1,7 @@
 import type { TableDataContent } from "../../../../../../../shared/types/table/table";
 import type { Category } from "../../../../../models/category";
 
-const headers = ['ID', 'NAME'];
+const headers = ['ID', 'NAME', 'FECHA DE CREACIÓN', 'FECHA DE ACTUALIZACIÓN'];
 
 const tableData = (categories: Category[]): TableDataContent => {
 
