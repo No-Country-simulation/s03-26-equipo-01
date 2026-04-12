@@ -1,0 +1,100 @@
+package com.cms.services.impl;
+
+import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Media;
+import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TestimonialRepository;
+import com.cms.persistence.sql.AdminSQLDAO;
+import com.cms.persistence.sql.TagSQLDAO;
+import com.cms.services.*;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class TestimonialServiceImpl implements TestimonialService {
+
+    private final TestimonialRepository testimonialRepository;
+
+    private final MediaService mediaService;
+
+    private final AdminSQLDAO adminSQLDAO;
+
+    private final TagSQLDAO  tagDAO;
+
+    public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
+                                  MediaService mediaService,
+                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO) {
+
+        this.testimonialRepository = testimonialRepository;
+
+        this.mediaService = mediaService;
+
+        this.adminSQLDAO = adminSQLDAO;
+
+        this.tagDAO = tagDAO;
+    }
+
+    @Override
+    public Testimonial save(Testimonial model, Admin admin, MultipartFile image, String youtubeUrl, List<Long> idTags) {
+        Media media = mediaService.save(image, youtubeUrl);
+
+        model.setAdmin(admin);
+        model.setMedia(media);
+        model.agregarTags(tagDAO.findAllById(idTags));
+
+        Testimonial testimonial = testimonialRepository.save(model);
+
+        admin.addTestimonial(testimonial);
+
+        adminSQLDAO.save(admin);
+
+        return testimonial;
+    }
+
+    @Override
+    public Testimonial findTestimonialById(Long id) {
+        return testimonialRepository.findById(id);
+    }
+
+    @Override
+    public List<Testimonial> findTestimonialByAdmin(Long idAdmin) {
+        if (!adminSQLDAO.existsById(idAdmin)) {
+            throw new EntityNotFoundException(Admin.class.getName(), idAdmin);
+        }
+        return testimonialRepository.findByAdminId(idAdmin);
+    }
+
+    @Override
+    public Testimonial advanceByEditor(Long id) {
+        Testimonial testimonial = findTestimonialById(id);
+        testimonial.nextStateEditor();
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Testimonial advanceByAdmin(Long idTestimonial) {
+        Testimonial testimonial = findTestimonialById(idTestimonial);
+
+        testimonial.nextStateAdmin();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public void update(Testimonial recovered) {
+        testimonialRepository.update(recovered);
+    }
+
+    @Override
+    public Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state) {
+        return testimonialRepository.findAllTestimonial(PageRequest.of(pageNumber, size), admin, state);
+    }
+}

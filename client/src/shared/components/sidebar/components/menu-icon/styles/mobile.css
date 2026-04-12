@@ -1,0 +1,13 @@
+.sidebar-menu-icon_container, .sidebar-menu-icon_disable {
+    justify-self: start;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--secondary-dark-color);
+}
+
+.sidebar-menu-icon_container img, .sidebar-menu-icon_disable img {
+    height: 70%;
+    margin-left: 1vh;
+    cursor: pointer;
+}

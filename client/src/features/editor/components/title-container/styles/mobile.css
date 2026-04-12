@@ -1,0 +1,17 @@
+.testimonial-editor-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.testimonial-editor-title-container h2 {
+  font-size: var(--large-font);
+  font-weight: 100;
+  color: var(--primary-color-text);
+}
+
+.testimonial-editor-title-container p {
+  opacity: 0.9;
+  color: var(--secondary-color-text);
+}

@@ -1,0 +1,1 @@
+export type Rol = 'ROLE_ADMIN' | 'ROLE_EDITOR';

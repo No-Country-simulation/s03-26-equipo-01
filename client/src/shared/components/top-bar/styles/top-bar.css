@@ -1,0 +1,12 @@
+.top-bar {
+    display: grid;
+    width: 100%;
+    background-color: var(--secondary-dark-color);
+}
+
+@media screen and (min-width: 1024px) {
+    .top-bar {
+        position: fixed;
+        z-index: 2;
+    }
+}

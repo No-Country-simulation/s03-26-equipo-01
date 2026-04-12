@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.cms.model.testimonial.Category" table="categories">
+
+        <id name="id" column="id">
+            <generator class="sequence"/>
+        </id>
+
+        <property name="name"        column="name"        not-null="true"/>
+        <property name="slug"        column="slug"        />
+        <property name="deleted"     column="deleted"     not-null="true"/>
+        <property name="createdAt"   column="created_at"  not-null="true"/>
+        <property name="updatedAt"   column="updated_at"  not-null="true"/>
+
+        <many-to-one name="creator"
+                     class="com.cms.model.user.impl.admin.Admin"
+                     column="created_by"
+                     not-null="false"
+                     cascade="none"/>
+
+    </class>
+
+</hibernate-mapping>

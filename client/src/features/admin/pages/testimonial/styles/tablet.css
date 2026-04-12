@@ -1,0 +1,7 @@
+@media screen and (min-width: 768px) {
+    .testimonial-admin-panel_container {
+        margin-top: 4vw;
+        padding-bottom: 4vw;
+        gap: 4vw;
+    }
+}

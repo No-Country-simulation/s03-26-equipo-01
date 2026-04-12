@@ -1,0 +1,28 @@
+.testimonial-admin-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFC 100%);
+}
+
+.testimonial-admin-panel_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    gap: 20px;
+    width: 90%;
+    height: 90%;
+}
+
+.testimonial-admin-panel_container--info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%
+}

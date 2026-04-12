@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">${POSTGRES_USER}</property>
+        <property name="connection.password">${POSTGRES_PASSWORD}</property>
+
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <mapping resource="hibernate/Category.hbm.xml"/>
+        <mapping resource="hibernate/Embed.hbm.xml"/>
+        <mapping resource="hibernate/Tag.hbm.xml"/>
+        <mapping resource="hibernate/User.hbm.xml"/>
+        <mapping resource="hibernate/Testimonial.hbm.xml"/>
+        <mapping resource="hibernate/ApiKey.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

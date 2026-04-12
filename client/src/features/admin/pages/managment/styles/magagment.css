@@ -1,0 +1,13 @@
+.managment-admin-panel {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.managment-admin-panel_container {
+    display: grid;
+    grid-template-rows: 20% 1fr;
+    width: 90%;
+    height: 90%;
+}
