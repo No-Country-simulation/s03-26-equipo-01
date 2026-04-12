@@ -1,6 +1,7 @@
 package com.cms.services;
 
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ public interface TestimonialService {
 
     void update(Testimonial recovered);
 
-    Page<Testimonial> findAllTestimonialPublished(int pageNumber, int size, Admin admin);
+    Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state);
 
 
 }

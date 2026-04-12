@@ -2,10 +2,11 @@
     display: grid;
     place-items: center;
     width: 100%;
-    min-height: 90vh;
+    height: 100%;
 }
 
 .dashboard-admin-panel_container {
+    display: grid;
     width: 90%;
     height: 90%;
 }
