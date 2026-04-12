@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.BusinessException;
 import com.cms.model.embeds.Embed;
 import com.cms.model.testimonial.Category;
@@ -211,6 +212,107 @@ public class AdminServiceTest {
 
         recovered = testimonialService.advanceByAdmin(recovered.getId());
         assertEquals(StateTestimonial.PUBLISHED, recovered.getState());
+    }
+
+    @Test
+    public void createEditor_shouldCreateEditorAndAssignItToAdmin() {
+        Editor newEditor = Editor.builder()
+                .email("neweditor@gmail.com")
+                .password("securepass")
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertNotNull(created);
+        assertNotNull(created.getId());
+        assertEquals("neweditor@gmail.com", created.getEmail());
+        assertEquals("John", created.getFirstName());
+        assertEquals("Doe", created.getLastName());
+        assertEquals(admin, created.getCreatedBy());
+    }
+
+    @Test
+    public void createEditor_shouldBeEnabledByDefault() {
+        Editor newEditor = Editor.builder()
+                .email("enabled@gmail.com")
+                .password("pass")
+                .firstName("Ana")
+                .lastName("Lopez")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertTrue(created.isEnabled());
+    }
+
+    @Test
+    public void createEditor_withNonExistentAdmin_shouldThrowEntityNotFoundException() {
+        Editor newEditor = Editor.builder()
+                .email("ghost@gmail.com")
+                .password("pass")
+                .firstName("Ghost")
+                .lastName("User")
+                .build();
+
+        long nonExistentAdminId = -999L;
+
+        assertThrows(EntityNotFoundException.class, () ->
+                adminService.createEditor(newEditor, nonExistentAdminId)
+        );
+    }
+
+    @Test
+    public void createEditor_shouldHaveEditorRole() {
+        Editor newEditor = Editor.builder()
+                .email("role@gmail.com")
+                .password("pass")
+                .firstName("Role")
+                .lastName("Test")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertEquals("EDITOR", created.getRole());
+    }
+
+    @Test
+    public void createEditor_multipleEditorsUnderSameAdmin_shouldAllBeAssigned() {
+        Editor first = Editor.builder()
+                .email("first@gmail.com")
+                .password("pass")
+                .firstName("First")
+                .lastName("Editor")
+                .build();
+
+        Editor second = Editor.builder()
+                .email("second@gmail.com")
+                .password("pass")
+                .firstName("Second")
+                .lastName("Editor")
+                .build();
+
+        Editor createdFirst  = adminService.createEditor(first,  admin.getId());
+        Editor createdSecond = adminService.createEditor(second, admin.getId());
+
+        assertEquals(admin, createdFirst.getCreatedBy());
+        assertEquals(admin, createdSecond.getCreatedBy());
+        assertNotEquals(createdFirst.getId(), createdSecond.getId());
+    }
+
+    @Test
+    public void createEditor_editorCreatedByOneAdmin_shouldNotBelongToAnother() {
+        Editor newEditor = Editor.builder()
+                .email("isolated@gmail.com")
+                .password("pass")
+                .firstName("Isolated")
+                .lastName("Editor")
+                .build();
+
+        Editor created = adminService.createEditor(newEditor, admin.getId());
+
+        assertNotEquals(otroAdmin, created.getCreatedBy());
     }
 
     @AfterEach

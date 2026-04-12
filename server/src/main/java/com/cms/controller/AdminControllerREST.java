@@ -4,7 +4,10 @@ import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.admin.AdminResourceResponseDTO;
 import com.cms.controller.dto.admin.ApiKeyResponseDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
+import com.cms.controller.dto.user.UserRequestSimpleDTO;
+import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.model.testimonial.Testimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.AdminResource;
 import com.cms.model.user.impl.admin.ApiKey;
 import com.cms.services.AdminService;
@@ -101,6 +104,21 @@ public class AdminControllerREST {
     public ResponseEntity<ApiKeyResponseDTO> getApiKey(@RequestAttribute("userId") Long idAdmin) {
         ApiKey key = adminService.getApiKey(idAdmin);
         return ResponseEntity.ok(ApiKeyResponseDTO.fromModel(key));
+    }
+
+    @PostMapping
+    @AdminEndpoint
+    @Operation(
+            summary = "Crear un editor",
+            description = "Retorna al editor generado por el admin."
+    )
+    @ApiResponse(responseCode = "200", description = "Editor generado exitosamente")
+    public ResponseEntity<UserResponseSimpleDTO> createEditor(
+            @RequestBody UserRequestSimpleDTO request,
+            @RequestAttribute("userId") Long idAdmin) {
+        Editor editor = adminService.createEditor(request.toModelEditor(), idAdmin);
+
+        return  ResponseEntity.ok(UserResponseSimpleDTO.fromModel(editor));
     }
 
 }
