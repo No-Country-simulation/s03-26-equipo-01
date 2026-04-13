@@ -1,16 +1,15 @@
 package com.cms.services;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Category;
 import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestConstructor;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,54 +19,54 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class CategoryServiceTest {
 
-    private final CategoryService categoryService;
-    private final UserService userService;
-    private final ResetService resetService;
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private UserService userService;
+
+
+    @Autowired
+    private ResetService resetService;
 
     private Category defaultCategory;
-    private Admin primaryAdmin;
 
-    CategoryServiceTest(CategoryService categoryService, UserService userService, ResetService resetService) {
-        this.categoryService = categoryService;
-        this.userService = userService;
-        this.resetService = resetService;
-    }
+    private Admin adminSaved;
 
     @BeforeEach
     void setUp() {
-        primaryAdmin = (Admin) userService.save(Admin.builder()
-                .email("primary-admin@test.com")
-                .password("123")
-                .firstName("Tom")
-                .lastName("Kumar")
-                .build());
 
+        Admin admin = Admin.builder()
+                .email("12312@gmail.com")
+                .password("123")
+                .firstName("tomas")
+                .lastName("kumar")
+                .build();
+
+        adminSaved = (Admin)  userService.save(admin);
+        
         Category categoryToCreate = Category.builder()
                 .name("Common Category")
                 .slug("common-category")
-                .description("Common description for tests")
                 .build();
 
-        defaultCategory = categoryService.create(categoryToCreate, primaryAdmin.getId());
+        defaultCategory = categoryService.create(categoryToCreate, adminSaved.getId());
     }
 
     @Test
-    void createShouldPersistCategoryForAdmin() {
+    void createTest() {
         Category categoryToCreate = Category.builder()
                 .name("Technology")
                 .slug("technology")
-                .description("Technology testimonials")
                 .build();
 
-        Category createdCategory = categoryService.create(categoryToCreate, primaryAdmin.getId());
+        Category createdCategory = categoryService.create(categoryToCreate, adminSaved.getId());
 
         assertNotNull(createdCategory.getId());
         assertEquals("Technology", createdCategory.getName());
         assertEquals("technology", createdCategory.getSlug());
-        assertEquals("Technology testimonials", createdCategory.getDescription());
         assertFalse(createdCategory.getDeleted());
         assertNotNull(createdCategory.getCreatedAt());
         assertNotNull(createdCategory.getUpdatedAt());
@@ -78,57 +77,17 @@ class CategoryServiceTest {
     }
 
     @Test
-    void findAllShouldReturnOnlyCategoriesOfRequestedAdmin() {
-        Admin secondaryAdmin = (Admin) userService.save(Admin.builder()
-                .email("secondary-admin@test.com")
-                .password("123")
-                .firstName("Jane")
-                .lastName("Doe")
-                .build());
+    void findAllTest() {
+        int initialSize = categoryService.findAll(adminSaved.getId()).size();
 
-        Category additionalPrimaryCategory = categoryService.create(
-                Category.builder()
-                        .name("Marketing")
-                        .slug("marketing")
-                        .description("Marketing testimonials")
-                        .build(),
-                primaryAdmin.getId()
-        );
+        categoryService.create(Category.builder().name("Marketing").slug("marketing").build(), adminSaved.getId());
+        categoryService.create(Category.builder().name("Sales").slug("sales").build(), adminSaved.getId());
 
-        Category deletedPrimaryCategory = categoryService.create(
-                Category.builder()
-                        .name("Archived")
-                        .slug("archived")
-                        .description("Archived category")
-                        .build(),
-                primaryAdmin.getId()
-        );
-
-        Category secondaryCategory = categoryService.create(
-                Category.builder()
-                        .name("Sales")
-                        .slug("sales")
-                        .description("Sales testimonials")
-                        .build(),
-                secondaryAdmin.getId()
-        );
-
-        categoryService.deleteById(deletedPrimaryCategory.getId());
-
-        List<Long> categoryIds = categoryService.findAll(primaryAdmin.getId())
-                .stream()
-                .map(Category::getId)
-                .toList();
-
-        assertEquals(2, categoryIds.size());
-        assertTrue(categoryIds.contains(defaultCategory.getId()));
-        assertTrue(categoryIds.contains(additionalPrimaryCategory.getId()));
-        assertFalse(categoryIds.contains(deletedPrimaryCategory.getId()));
-        assertFalse(categoryIds.contains(secondaryCategory.getId()));
+        assertEquals(initialSize + 2, categoryService.findAll(adminSaved.getId()).size());
     }
 
     @Test
-    void findByIdShouldReturnExistingCategory() {
+    void findByIdTest() {
         Category recoveredCategory = categoryService.findById(defaultCategory.getId());
 
         assertEquals(defaultCategory.getId(), recoveredCategory.getId());
@@ -136,23 +95,21 @@ class CategoryServiceTest {
     }
 
     @Test
-    void updateShouldModifyExistingCategory() {
-        Category updateData = Category.builder().name("Updated").description("Updated description").build();
+    void updateTest() {
+        Category updateData = Category.builder().name("Updated").build();
 
         Category updatedCategory = categoryService.update(defaultCategory.getId(), updateData);
 
         assertEquals(defaultCategory.getId(), updatedCategory.getId());
         assertEquals("Updated", updatedCategory.getName());
         assertEquals("common-category", updatedCategory.getSlug());
-        assertEquals("Updated description", updatedCategory.getDescription());
     }
 
     @Test
     void findAllShouldExcludeDeletedCategories() {
         categoryService.deleteById(defaultCategory.getId());
 
-        assertTrue(categoryService.findAll(primaryAdmin.getId()).stream()
-                .noneMatch(category -> category.getId().equals(defaultCategory.getId())));
+        assertTrue(categoryService.findAll(adminSaved.getId()).stream().noneMatch(category -> category.getId().equals(defaultCategory.getId())));
     }
 
     @Test

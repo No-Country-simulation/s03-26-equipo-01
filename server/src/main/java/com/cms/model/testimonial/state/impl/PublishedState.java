@@ -17,6 +17,6 @@ public class PublishedState extends TestimonialState {
 
     @Override
     public TestimonialState nextToAdmin(Testimonial testimonial) {
-        return new ApprovedState();
+        return new DraftState();
     }
 }

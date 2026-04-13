@@ -1,14 +1,15 @@
 package com.cms.persistence.repository.impl;
 
 import com.cms.exception.EntityNotFoundException;
-import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.MediaRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.persistence.repository.TestimonialRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,6 +30,19 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
+    public List<Testimonial> findByAdminId(Long idAdmin) {
+        List<Testimonial> testimonials = testimonialSQLDAO.findByAdminIdAndNotDraft(idAdmin, StateTestimonial.DRAFT );
+        testimonials.forEach(this::resolveMedia);
+        testimonials.forEach(this::resolveState);
+        return testimonials;
+    }
+
+    @Override
+    public Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state) {
+        return testimonialSQLDAO.findTopByState(state, of, admin);
+    }
+
+    @Override
     public Testimonial findById(Long id) {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));
@@ -37,13 +51,6 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
         return testimonial;
     }
 
-    @Override
-    public List<Testimonial> findTestimonialByEmbeds(List<Long> embedIds) {
-        List<Testimonial> testimonials = testimonialSQLDAO.findAllByEmbedIs(embedIds, StateTestimonial.DRAFT);
-        testimonials.forEach(this::resolveMedia);
-        testimonials.forEach(this::resolveState);
-        return testimonials;
-    }
 
     @Override
     public Testimonial update(Testimonial model) {

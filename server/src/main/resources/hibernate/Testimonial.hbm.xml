@@ -19,12 +19,6 @@
         <property name="state"        column="state" type="com.cms.model.testimonial.enums.StateTestimonial"/>
         <property name="createdAt"    column="created_at"/>
 
-        <many-to-one name="embed"
-                     class="com.cms.model.embeds.Embed"
-                     column="embed_id"
-                     cascade="merge"
-                     not-null="true"/>
-
         <component name="media" class="com.cms.model.testimonial.Media">
             <property name="id"           column="media_id"/>
             <property name="url"          column="image_url"/>
@@ -36,11 +30,23 @@
             <property name="channelName"  column="channel_name"/>
         </component>
 
+        <many-to-one name="editor"
+                     class="com.cms.model.user.impl.Editor"
+                     column="editor_id"
+                     not-null="false"
+                     cascade="none"/>
+
         <many-to-one name="category"
                      class="com.cms.model.testimonial.Category"
                      column="category_id"
                      lazy="false"
                      cascade="merge"/>
+
+        <many-to-one name="admin"
+                     class="com.cms.model.user.impl.admin.Admin"
+                     column="admin_id"
+                     not-null="true"
+                     cascade="save-update"/>
 
         <bag name="tags" table="testimonial_tags" cascade="merge" lazy="false">
             <key column="testimonial_id"/>
