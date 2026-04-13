@@ -1,5 +1,5 @@
 import type { TableDataContent, TablePaginator } from "../../../../../../shared/types/table/table";
-import type { EditableUser } from "../../model/user";
+import type { EditableUser } from "../../model/editable-user";
 
 const tableData = (table: TablePaginator<EditableUser>): TableDataContent => {
     return {
