@@ -24,10 +24,9 @@ public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
     """)
     Boolean hasNameTagInListAdmin(String name, Long idAdmin);
 
-    @Query("""
-            SELECT a.editors
-            FROM Admin a
-            WHERE a.id = :idAdmin
-    """)
+    @Query(
+            value = "SELECT e FROM Editor e WHERE e.createdBy.id = :idAdmin",
+            countQuery = "SELECT COUNT(e) FROM Editor e WHERE e.createdBy.id = :idAdmin"
+    )
     Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, Pageable pageable);
 }
