@@ -3,6 +3,7 @@
     justify-content: center;
     gap: 2vw;
     height: 16%;
+    max-height: 20px;
 }
 
 .commit-form_buttons button {

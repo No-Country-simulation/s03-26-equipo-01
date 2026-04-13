@@ -1,0 +1,6 @@
+@media screen and (min-width: 768px) {
+    .users-modal-form-container {
+        min-width: 30vw;
+        min-height: 40vh;
+    }
+}

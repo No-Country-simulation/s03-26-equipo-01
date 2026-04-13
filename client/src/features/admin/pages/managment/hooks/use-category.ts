@@ -31,7 +31,7 @@ const useCategory = () => {
     }
 
     const deleteCategory = async (id?: number): Promise<void> => {
-        await deleted(deleteCategoryService, id);
+        await deleted(deleteCategoryService, id as number);
         setCategories(categories => categories.filter(category => category.id !== id));
     }
 

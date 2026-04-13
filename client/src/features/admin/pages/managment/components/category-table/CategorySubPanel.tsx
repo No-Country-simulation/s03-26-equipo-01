@@ -6,6 +6,7 @@ import DeleteModal from "../../../../components/delete-modal/DeleteModal";
 import type { TabContent } from "../../../../components/tab-container/tab-container";
 import { TabValues } from "../../../../components/tab-container/tab-values";
 import useCategory from "../../hooks/use-category";
+import TableButtons from "../table-buttons/TableButtons";
 import './styles/category-table.css';
 import tableData from "./types/category-table";
 
@@ -25,10 +26,9 @@ const CategorySubPanel = ({currentTab}: TabContent) => {
             {editActive.isActive && <CategoryModalForm onSubmit = {(category) => editCategory(category, editActive.id)} />}
             {deleteActive.isActive && <DeleteModal onDelete = {deleteCategory} id = {deleteActive.id}/>}
             <TableEditData 
-                tableData = {tableData(categories)}
-                activeEdit = {handleEdit}
-                activeDelete = {handleDelete}
-            />
+                tableData = {tableData(categories)}>
+                {(id: number) => <TableButtons onEdit={handleEdit} onDelete={handleDelete} id={id} />}
+            </TableEditData>
         </section>
     )
 }
