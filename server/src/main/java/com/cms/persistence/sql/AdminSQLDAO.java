@@ -4,6 +4,7 @@ import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +29,5 @@ public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
             FROM Admin a
             WHERE a.id = :idAdmin
     """)
-    Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, PageRequest of);
+    Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, Pageable pageable);
 }

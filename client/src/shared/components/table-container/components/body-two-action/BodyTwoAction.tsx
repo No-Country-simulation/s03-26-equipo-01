@@ -1,12 +1,9 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
-import EditButton from '../../../../elements/edit-button/EditButton';
-import type { BodyOneActionProps as BodyTwoActionProps } from './body-two-action';
-import DeleteButton from '../../../../elements/delete-button/DeleteButton';
+import type {BodyOneActionProps as BodyTwoActionProps } from './body-two-action';
 
 const BodyTwoAction = ({
   tableData,
-  activeEdit,
-  activeDelete,
+  children
 }: BodyTwoActionProps) => {
   return (
     <TableBody>
@@ -27,8 +24,7 @@ const BodyTwoAction = ({
               maxWidth: '140px',
             }}
           >
-            <DeleteButton onSubmit={activeDelete} id={row.id} />
-            <EditButton onSubmit={activeEdit} id={row.id} />
+            {children(row.id)}
           </TableCell>
         </TableRow>
       ))}

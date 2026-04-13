@@ -1,8 +1,8 @@
+import type React from "react";
 import type { TableDataContent } from "../../types/table/table";
 
 export interface TableContainerProps {
   tableData: TableDataContent;
-  activeEdit: (id: number) => void;
-  activeDelete: (id: number) => void;
   customBody?: React.ReactNode;
+  children: (id: number) => React.ReactNode
 }

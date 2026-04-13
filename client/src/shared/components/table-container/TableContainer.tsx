@@ -4,15 +4,14 @@ import {
   TableContainer,
 } from '@mui/material';
 import './table.css';
+import HeaderTable from './components/header-table/HeaderTable';
 import BodyTwoAction from './components/body-two-action/BodyTwoAction';
 import type { TableContainerProps } from './table-container';
-import HeaderTable from './components/header-table/HeaderTable';
 
 const TableEditData = ({
-  activeEdit,
-  activeDelete,
   tableData,
   customBody,
+  children
 }: TableContainerProps) => {
   return (
     <div className='table-data-container'>
@@ -21,9 +20,8 @@ const TableEditData = ({
           <HeaderTable tableData={tableData} />
           {customBody ?? (
             <BodyTwoAction
-              activeEdit={activeEdit}
-              activeDelete={activeDelete}
               tableData={tableData}
+              children={children}
             />
           )}
         </Table>
