@@ -6,9 +6,9 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import type { HeaderProps, TableContainerProps } from './table-container';
 import './table.css';
 import BodyTwoAction from './components/body-one-action/BodyOneAction';
+import type { HeaderProps, TableContainerProps } from './table-container';
 
 const TableEditData = ({
   activeEdit,

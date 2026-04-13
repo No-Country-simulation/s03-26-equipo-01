@@ -1,4 +1,4 @@
-import type { TableDataContent } from '../../types/table/table';
+import type { TableDataContent } from "../../types/table/table";
 
 export interface TableContainerProps {
   tableData: TableDataContent;

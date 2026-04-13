@@ -1,7 +1,7 @@
-import Paginator from "../../../../shared/components/pagination/Paginator";
 import useActive from "../../../../shared/hooks/use-active";
 import AddButton from "../../components/add-button/AddButton";
 import TitleContainer from "../../components/title-container/TitleContainer";
+import UsersTable from "./components/users-table/UsersTable";
 import useAdminUser from "./hooks/use-admin-user";
 
 const UsersPanel = () => {    
@@ -18,15 +18,14 @@ const UsersPanel = () => {
                         text = 'Administra usuarios y gestiona sus roles.'
                     />
                     <AddButton text = "CREAR USUARIO" onSubmit = {handleActive} />
-                    {data && <>
-                        <Paginator
-                            totalPages={data.totalPages}
-                            currentPage={page}
-                            onPageChange={setPage}
-                            totalElements={data.totalElements}
-                            pageSize={data.size}
-                        />
-                    </>}
+                    {data && 
+                    <UsersTable 
+                        data={data} 
+                        setPage={setPage} 
+                        page={page} 
+                        discharge={discharge} 
+                        unsuscribe={unsuscribe} 
+                    />}
                 </div>
             </div>
         </section>
