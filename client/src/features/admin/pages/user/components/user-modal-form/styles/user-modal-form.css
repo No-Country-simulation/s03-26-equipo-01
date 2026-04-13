@@ -1,19 +1,2 @@
-.users-modal-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80%;
-    max-width: 400px;
-    height: 70%;
-    border-radius: 1vw;
-    background-color: #FFF;
-}
-
-.users-modal-form-container div {
-    justify-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 90%;
-    height: 90%;
-}
+@import './mobile.css';
+@import './tablet.css';
