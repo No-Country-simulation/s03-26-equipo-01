@@ -82,6 +82,14 @@ public class DataSeederImpl implements DataSeeder {
                 admin.getId()
         );
 
+        Category category2 = categoryService.create(
+                Category.builder()
+                        .name("Test Category2")
+                        .slug("test-category2")
+                        .build(),
+                admin2.getId()
+        );
+
         Tag tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
 
         Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
