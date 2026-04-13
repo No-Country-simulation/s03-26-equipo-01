@@ -38,7 +38,22 @@ const useApi = <T extends object>() => {
         }
     }
 
-    async function deleted(execute: (id?: number) => Promise<void>, id?: number): Promise<void> {
+    async function patch(execute: (id: number) => Promise<void>, id: number): Promise<void> {
+        try {
+            setIsLoading(true);
+            await execute(id);
+            refreshError();
+        } 
+        catch (error) {
+            if (error instanceof ApiError) setError(error);
+            throw error;
+        }
+        finally {
+            setIsLoading(false)
+        }
+    }
+
+    async function deleted(execute: (id: number) => Promise<void>, id: number): Promise<void> {
         try {
             setIsLoading(true);
             await execute(id);
@@ -71,7 +86,7 @@ const useApi = <T extends object>() => {
 
     const refreshError = () => setError(null);
 
-    return {get, post, put, deleted, error, refreshError, isLoading}
+    return {get, post, put, patch, deleted, error, refreshError, isLoading}
 }
 
 export default useApi;

@@ -78,12 +78,12 @@ class CategoryServiceTest {
 
     @Test
     void findAllTest() {
-        int initialSize = categoryService.findAll().size();
+        int initialSize = categoryService.findAll(adminSaved.getId()).size();
 
         categoryService.create(Category.builder().name("Marketing").slug("marketing").build(), adminSaved.getId());
         categoryService.create(Category.builder().name("Sales").slug("sales").build(), adminSaved.getId());
 
-        assertEquals(initialSize + 2, categoryService.findAll().size());
+        assertEquals(initialSize + 2, categoryService.findAll(adminSaved.getId()).size());
     }
 
     @Test
@@ -109,7 +109,7 @@ class CategoryServiceTest {
     void findAllShouldExcludeDeletedCategories() {
         categoryService.deleteById(defaultCategory.getId());
 
-        assertTrue(categoryService.findAll().stream().noneMatch(category -> category.getId().equals(defaultCategory.getId())));
+        assertTrue(categoryService.findAll(adminSaved.getId()).stream().noneMatch(category -> category.getId().equals(defaultCategory.getId())));
     }
 
     @Test

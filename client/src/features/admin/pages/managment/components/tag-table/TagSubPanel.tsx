@@ -6,6 +6,7 @@ import type { TabContent } from "../../../../components/tab-container/tab-contai
 import { TabValues } from "../../../../components/tab-container/tab-values";
 import TagModalForm from "../../../../components/tag-modal-form/TagModalForm";
 import useTag from "../../hooks/use-tag";
+import TableButtons from "../table-buttons/TableButtons";
 import './styles/tab-table.css';
 import tableData from "./types/table-data";
 
@@ -25,10 +26,9 @@ const TagSubPanel = ({currentTab}: TabContent) => {
             {editActive.isActive && <TagModalForm onSubmit = {(tag) => editTag(tag, editActive.id)} />}
             {deleteActive.isActive && <DeleteModal onDelete = {deleteTag} id = {deleteActive.id}/>}
             <TableEditData 
-                tableData = {tableData(tags)}
-                activeEdit = {handleEdit}
-                activeDelete = {handleDelete}
-            />
+                tableData = {tableData(tags)}>
+                {(id: number) => <TableButtons onEdit={handleEdit} onDelete={handleDelete} id={id} />}
+            </TableEditData>
         </section>
     )
 }

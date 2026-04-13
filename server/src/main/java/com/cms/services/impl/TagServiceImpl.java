@@ -8,8 +8,6 @@ import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.services.TagService;
 import java.util.List;
-
-import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +45,9 @@ public class TagServiceImpl implements TagService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Tag> findAll() {
-        return tagRepository.findAllByActiveTrueOrderByNameAsc();
+    public List<Tag> findAllByAdmin(Long idAdmin) {
+        getAdmin(idAdmin);
+        return tagRepository.findAllByActiveTrueAndCreatorIdOrderByNameAsc(idAdmin);
     }
 
     @Override
