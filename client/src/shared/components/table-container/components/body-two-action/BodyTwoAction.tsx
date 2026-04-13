@@ -1,6 +1,6 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
 import EditButton from '../../../../elements/edit-button/EditButton';
-import type { BodyOneActionProps as BodyTwoActionProps } from './body-one-action';
+import type { BodyOneActionProps as BodyTwoActionProps } from './body-two-action';
 import DeleteButton from '../../../../elements/delete-button/DeleteButton';
 
 const BodyTwoAction = ({

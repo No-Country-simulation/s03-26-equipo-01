@@ -19,7 +19,12 @@ const usePaginator = <T>(execute: (page: number, size: number) => Promise<TableP
     fetchData();
   }, [page]);
 
-  return { data, page, setPage };
+  const addRow = (row: T, id: number) => data?.rows.push({
+    id: id, 
+    data: row
+  });
+
+  return { data, page, setPage, addRow };
 };
 
 export default usePaginator;

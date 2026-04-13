@@ -117,12 +117,12 @@ public class AdminControllerREST {
             description = "Retorna al editor generado por el admin."
     )
     @ApiResponse(responseCode = "200", description = "Editor generado exitosamente")
-    public ResponseEntity<UserResponseSimpleDTO> createEditor(
+    public ResponseEntity<EditorResponseSimpleDTO> createEditor(
             @RequestBody UserRequestSimpleDTO request,
             @RequestAttribute("userId") Long idAdmin) {
         Editor editor = adminService.createEditor(request.toModelEditor(), idAdmin);
 
-        return  ResponseEntity.ok(UserResponseSimpleDTO.fromModel(editor));
+        return  ResponseEntity.ok(EditorResponseSimpleDTO.fromModel(editor));
     }
 
     @GetMapping("/users")
@@ -167,7 +167,7 @@ public class AdminControllerREST {
 
         return ResponseEntity.ok(
                 TableResponseDTO.fromPage(
-                        List.of("NOMBRE DE USUARIO", "MAIL", "ROL", "NºTESTIMONIOS", "ESTADO"),
+                        List.of("ID", "MAIL", "ROL", "NºTESTIMONIOS", "ESTADO"),
                         dtos,
                         EditorResponseSimpleDTO::id
                 )

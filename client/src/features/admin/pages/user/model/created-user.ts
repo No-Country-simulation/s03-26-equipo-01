@@ -3,5 +3,4 @@ export interface CreatedUser {
     lastName: string
     email: string 
     password: string 
-
 }

@@ -6,7 +6,3 @@ export interface TableContainerProps {
   activeDelete: (id: number) => void;
   customBody?: React.ReactNode;
 }
-
-export interface HeaderProps {
-  tableData: TableDataContent;
-}
