@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import type { HeaderProps, TableContainerProps } from './table-container';
 import './table.css';
-import BodyOneAction from './components/body-one-action/BodyOneAction';
+import BodyTwoAction from './components/body-one-action/BodyOneAction';
 
 const TableEditData = ({
   activeEdit,
@@ -22,7 +22,7 @@ const TableEditData = ({
         <Table>
           <Header tableData={tableData} />
           {customBody ?? (
-            <BodyOneAction
+            <BodyTwoAction
               activeEdit={activeEdit}
               activeDelete={activeDelete}
               tableData={tableData}

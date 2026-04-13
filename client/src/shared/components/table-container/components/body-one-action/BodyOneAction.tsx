@@ -1,13 +1,13 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
 import EditButton from '../../../../elements/edit-button/EditButton';
-import type { BodyOneActionProps } from './body-one-action';
+import type { BodyOneActionProps as BodyTwoActionProps } from './body-one-action';
 import DeleteButton from '../../../../elements/delete-button/DeleteButton';
 
-const BodyOneAction = ({
+const BodyTwoAction = ({
   tableData,
   activeEdit,
   activeDelete,
-}: BodyOneActionProps) => {
+}: BodyTwoActionProps) => {
   return (
     <TableBody>
       {tableData.rows.map((row) => (
@@ -39,4 +39,4 @@ const BodyOneAction = ({
 const classColor = (index: number): string =>
   index % 2 === 0 ? 'clean-color' : 'dark-color';
 
-export default BodyOneAction;
+export default BodyTwoAction;
