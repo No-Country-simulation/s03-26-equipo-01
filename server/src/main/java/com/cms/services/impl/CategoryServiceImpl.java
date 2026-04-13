@@ -62,9 +62,6 @@ public class CategoryServiceImpl implements CategoryService {
             if (categoryData.getSlug() != null) {
                 categoryToUpdate.setSlug(categoryData.getSlug());
             }
-            if (categoryData.getDescription() != null) {
-                categoryToUpdate.setDescription(categoryData.getDescription());
-            }
 
             return categorySQLDAO.save(categoryToUpdate);
         } catch (DataIntegrityViolationException e){

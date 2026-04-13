@@ -21,8 +21,6 @@ public record TestimonialResponseDTO(
         @Schema(description = "Contenido del testimonio", example = "Excelente servicio, muy recomendable.")
         String testimonial,
 
-        @Schema(description = "ID del recurso embebido asociado", example = "1")
-        long idEmbed,
         @Schema(
                 description = "Nombre de la persona que hizo el testimonio",
                 example = "Roberto mendez"
@@ -54,7 +52,6 @@ public record TestimonialResponseDTO(
         return new TestimonialResponseDTO(
                 testimonial.getId(),
                 testimonial.getTestimonial(),
-                testimonial.getEmbed().getId(),
                 testimonial.getWitness(),
                 testimonial.getRating(),
                 MediaResponseDTO.fromModel(testimonial.getMedia()),

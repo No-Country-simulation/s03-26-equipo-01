@@ -5,11 +5,13 @@ import TagDashboard from "./components/tag-dashboard/TagDashboard";
 import useTab from "../../hooks/use-tab";
 import './styles/dashboard-panel.css';
 import TabContainer from "../../components/tab-container/TabContainer";
+import useMetrics from "./hooks/use-metrics";
 
 const DashboardPanel = () => {    
 
     const {user} = useAuthContext()
     const {tabName, handleTab} = useTab();
+    const {categoriesMetrics, tagsMetrics} = useMetrics()
 
     return (
         <section className = 'dashboard-admin-panel'>
@@ -19,8 +21,8 @@ const DashboardPanel = () => {
                         title = {`Bienvenido ${user?.firstName + ' ' + user?.lastName}`}
                     />
                     <TabContainer onTab = {handleTab}>
-                        <CategoryDashboard currentTab = {tabName} />
-                        <TagDashboard currentTab = {tabName} />
+                        <CategoryDashboard currentTab = {tabName} metrics = {categoriesMetrics} />
+                        <TagDashboard currentTab = {tabName} metrics = {tagsMetrics} />
                     </TabContainer>
                 </div>
             </div>

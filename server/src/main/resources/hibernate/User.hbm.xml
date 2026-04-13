@@ -49,6 +49,19 @@
                 <one-to-many class="com.cms.model.testimonial.Category"/>
             </bag>
 
+            <one-to-one name="apiKey"
+                        class="com.cms.model.user.impl.admin.ApiKey"
+                        property-ref="admin"
+                        cascade="all"
+                        lazy="false"/>
+
+            <bag name="testimonials"
+                 inverse="true"
+                 lazy="false">
+                <key column="admin_id"/>
+                <one-to-many class="com.cms.model.testimonial.Testimonial"/>
+            </bag>
+
         </subclass>
 
         <subclass name="com.cms.model.user.impl.Editor"
@@ -59,6 +72,12 @@
                          column="created_by"
                          not-null="false"
                          cascade="none"/>
+
+            <bag name="drafts"
+                 lazy="false">
+                <key column="editor_id"/>
+                <one-to-many class="com.cms.model.testimonial.Testimonial"/>
+            </bag>
         </subclass>
 
     </class>

@@ -1,5 +1,5 @@
-import type { Testimonial } from "../../../../../../models/testimonial";
+import type { Tag } from '../../../../../../models/tag';
 
 export interface TestimonialTagsProps {
-    testimonial: Testimonial
+  tags: Tag[];
 }

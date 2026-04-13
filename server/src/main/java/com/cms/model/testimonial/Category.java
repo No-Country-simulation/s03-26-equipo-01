@@ -19,8 +19,6 @@ public class Category {
 
     private String slug;
 
-    private String description;
-
     @Builder.Default
     private Boolean deleted = false;
 

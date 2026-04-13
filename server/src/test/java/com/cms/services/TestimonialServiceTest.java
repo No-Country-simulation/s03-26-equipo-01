@@ -11,51 +11,44 @@ import com.cms.model.user.impl.admin.Admin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestConstructor;
 
 import java.io.InputStream;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 public class TestimonialServiceTest {
 
-    private final ResetService resetService;
-    private final UserService userService;
-    private final TestimonialService testimonialService;
-    private final EmbedService embedService;
-    private final CategoryService categoryService;
-    private final TagService tagService;
+    @Autowired
+    private ResetService resetService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TestimonialService testimonialService;
+
+    @Autowired
+    private EmbedService embedService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private TagService tagService;
 
     private Admin admin;
     private Testimonial testimonial;
     private Embed embed;
     private Category category;
     private List<Long> tagIds;
-
-    public TestimonialServiceTest(
-            ResetService resetService,
-            UserService userService,
-            TestimonialService testimonialService,
-            EmbedService embedService,
-            CategoryService categoryService,
-            TagService tagService
-    ) {
-        this.resetService = resetService;
-        this.userService = userService;
-        this.testimonialService = testimonialService;
-        this.embedService = embedService;
-        this.categoryService = categoryService;
-        this.tagService = tagService;
-    }
 
     @BeforeEach
     public void setUp() {
@@ -73,53 +66,43 @@ public class TestimonialServiceTest {
                 Category.builder()
                         .name("Test Category")
                         .slug("test-category")
-                        .description("Category for tests")
                         .build(),
                 admin.getId()
         );
 
-        Tag firstTag = tagService.create(Tag.builder().name("backend").build(), admin.getId());
-        Tag secondTag = tagService.create(Tag.builder().name("java").build(), admin.getId());
-        tagIds = List.of(firstTag.getId(), secondTag.getId());
+        Tag tag1 = tagService.create(Tag.builder().name("backend").build(), admin.getId());
+        Tag tag2 = tagService.create(Tag.builder().name("java").build(), admin.getId());
+        tagIds = List.of(tag1.getId(), tag2.getId());
 
         testimonial = Testimonial.builder()
-                .testimonial("Excellent service, I fully recommend it")
+                .testimonial("Excelente servicio, lo recomiendo totalmente")
                 .rating(5)
                 .email("user@test.com")
                 .state(StateTestimonial.PUBLISHED)
-                .category(category)
                 .build();
     }
 
     @Test
-    public void shouldSaveAndRecoverTestimonialWithoutFile() {
-        Testimonial savedTestimonial = testimonialService.save(
-                testimonial,
-                embed.getId(),
-                null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                tagIds
-        );
-        Testimonial recoveredTestimonial = testimonialService.findTestimonialById(savedTestimonial.getId());
+    public void testifyAndGetTestimonialWithoutFile() {
+        Testimonial testimonialSaved = testimonialService.save(testimonial,admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
-        assertNotNull(savedTestimonial.getId());
-        assertEquals(savedTestimonial.getId(), recoveredTestimonial.getId());
-        assertEquals(savedTestimonial.getTestimonial(), recoveredTestimonial.getTestimonial());
-        assertEquals(savedTestimonial.getRating(), recoveredTestimonial.getRating());
-        assertEquals(savedTestimonial.getEmail(), recoveredTestimonial.getEmail());
-        assertEquals(savedTestimonial.getState(), recoveredTestimonial.getState());
-        assertEquals(savedTestimonial.getCreatedAt(), recoveredTestimonial.getCreatedAt());
-        assertEquals(embed.getId(), recoveredTestimonial.getEmbed().getId());
+        assertNotNull(testimonialSaved.getId());
+        assertEquals(testimonialSaved.getId(),          testimonialRecovered.getId());
+        assertEquals(testimonialSaved.getTestimonial(), testimonialRecovered.getTestimonial());
+        assertEquals(testimonialSaved.getRating(),      testimonialRecovered.getRating());
+        assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
+        assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
+        assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
     }
 
     @Test
-    public void shouldFindTestimonialsByAdminWithMultipleTestimonials() {
-        Testimonial secondTestimonial = Testimonial.builder()
-                .testimonial("Very good service")
+    public void findTestimonialByAdminWithMultipleTestimonials() {
+        Testimonial testimonial2 = Testimonial.builder()
+                .testimonial("Muy buen servicio")
                 .rating(4)
                 .email("user2@test.com")
                 .state(StateTestimonial.PUBLISHED)
-                .category(category)
                 .build();
 
         Admin otherAdmin = Admin.builder()
@@ -129,19 +112,17 @@ public class TestimonialServiceTest {
                 .lastName("Admin")
                 .build();
         otherAdmin = (Admin) userService.save(otherAdmin);
-        Embed otherEmbed = embedService.registerEmbed(otherAdmin.getId(), new Embed());
 
-        Testimonial otherAdminTestimonial = Testimonial.builder()
-                .testimonial("Testimonial from another admin")
+        Testimonial testimonialOtherAdmin = Testimonial.builder()
+                .testimonial("Testimonio de otro admin")
                 .rating(3)
                 .email("other@test.com")
                 .state(StateTestimonial.PUBLISHED)
-                .category(category)
                 .build();
 
-        testimonialService.save(testimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(secondTestimonial, embed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
-        testimonialService.save(otherAdminTestimonial, otherEmbed.getId(), null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial, admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonial2,admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        testimonialService.save(testimonialOtherAdmin, otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
 
         List<Testimonial> testimonials = testimonialService.findTestimonialByAdmin(admin.getId());
 
@@ -149,70 +130,93 @@ public class TestimonialServiceTest {
     }
 
     @Test
-    public void shouldThrowWhenAdminIsNotFound() {
-        assertThrows(EntityNotFoundException.class, () -> testimonialService.findTestimonialByAdmin(-1L));
+    public void findTestimonialByAdminNotFound() {
+        assertThrows(EntityNotFoundException.class, () ->
+                testimonialService.findTestimonialByAdmin(-1L)
+        );
     }
 
     @Test
-    public void shouldSaveTestimonialWithImage() throws Exception {
-        try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("logo.jpg")) {
-            if (inputStream == null) {
-                throw new IllegalStateException("logo.jpg was not found in src/test/resources");
-            }
+    public void testifyWithImage() throws Exception {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("logo.jpg");
+        if (is == null) throw new IllegalStateException("logo.jpg no encontrado en src/test/resources/");
 
-            MockMultipartFile file = new MockMultipartFile(
-                    "image",
-                    "logo.jpg",
-                    "image/jpeg",
-                    inputStream.readAllBytes()
-            );
-
-            Testimonial savedTestimonial = testimonialService.save(
-                    testimonial,
-                    embed.getId(),
-                    file,
-                    "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                    tagIds
-            );
-            Testimonial recoveredTestimonial = testimonialService.findTestimonialById(savedTestimonial.getId());
-
-            assertNotNull(savedTestimonial.getId());
-            assertEquals(savedTestimonial.getId(), recoveredTestimonial.getId());
-            assertEquals(savedTestimonial.getTestimonial(), recoveredTestimonial.getTestimonial());
-            assertEquals(savedTestimonial.getRating(), recoveredTestimonial.getRating());
-            assertEquals(savedTestimonial.getEmail(), recoveredTestimonial.getEmail());
-            assertEquals(savedTestimonial.getState(), recoveredTestimonial.getState());
-            assertEquals(savedTestimonial.getCreatedAt(), recoveredTestimonial.getCreatedAt());
-            assertEquals(embed.getId(), recoveredTestimonial.getEmbed().getId());
-            assertNotNull(recoveredTestimonial.getMedia());
-            assertNotNull(recoveredTestimonial.getMedia().getUrl());
-            assertNotNull(recoveredTestimonial.getMedia().getPublicId());
-        }
-    }
-
-    @Test
-    public void shouldAdvanceByEditor() {
-        Testimonial draftTestimonial = testimonialService.save(
-                Testimonial.builder()
-                        .testimonial("Excellent service, I fully recommend it")
-                        .rating(5)
-                        .email("user@test.com")
-                        .state(StateTestimonial.DRAFT)
-                        .category(category)
-                        .build(),
-                embed.getId(),
-                null,
-                "https://www.youtube.com/watch?v=KhXTwEypI6c",
-                tagIds
+        MockMultipartFile file = new MockMultipartFile(
+                "image",
+                "logo.jpg",
+                "image/jpeg",
+                is.readAllBytes()
         );
 
-        testimonialService.advanceByEditor(draftTestimonial.getId());
+        Testimonial testimonialSaved = testimonialService.save(testimonial, admin, file, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+        Testimonial testimonialRecovered = testimonialService.findTestimonialById(testimonialSaved.getId());
 
-        Testimonial recovered = testimonialService.findTestimonialById(draftTestimonial.getId());
+        assertNotNull(testimonialSaved.getId());
+        assertEquals(testimonialSaved.getId(),          testimonialRecovered.getId());
+        assertEquals(testimonialSaved.getTestimonial(), testimonialRecovered.getTestimonial());
+        assertEquals(testimonialSaved.getRating(),      testimonialRecovered.getRating());
+        assertEquals(testimonialSaved.getEmail(),       testimonialRecovered.getEmail());
+        assertEquals(testimonialSaved.getState(),       testimonialRecovered.getState());
+        assertEquals(testimonialSaved.getCreatedAt(),   testimonialRecovered.getCreatedAt());
+        assertNotNull(testimonialRecovered.getMedia());
+        assertNotNull(testimonialRecovered.getMedia().getUrl());
+        assertNotNull(testimonialRecovered.getMedia().getPublicId());
+    }
+
+    @Test
+    public void advanceByEditor(){
+        Testimonial testimonial2 = testimonialService.save(Testimonial.builder()
+                .testimonial("Excelente servicio, lo recomiendo totalmente")
+                .rating(5)
+                .email("user@test.com")
+                .state(StateTestimonial.DRAFT)
+                .build(), admin, null,"https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        testimonialService.advanceByEditor(testimonial2.getId());
+
+        Testimonial recovered = testimonialService.findTestimonialById(testimonial2.getId());
 
         assertEquals(StateTestimonial.PENDING, recovered.getState());
+
         assertThrows(BusinessException.class, () -> testimonialService.advanceByEditor(recovered.getId()));
     }
+
+    @Test
+    public void findAllTestimonialPublishedReturnsOnlyPublishedForAdmin() {
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado 1").rating(5).email("pub1@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado 2").rating(4).email("pub2@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Borrador").rating(3).email("draft@test.com")
+                        .state(StateTestimonial.DRAFT).build(),
+                admin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        Admin otherAdmin = (Admin) userService.save(Admin.builder()
+                .email("other@test.com").password("123")
+                .firstName("Other").lastName("Admin").build());
+
+        testimonialService.save(Testimonial.builder()
+                        .testimonial("Publicado de otro admin").rating(5).email("other@test.com")
+                        .state(StateTestimonial.PUBLISHED).build(),
+                otherAdmin, null, "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds);
+
+        Page<Testimonial> result = testimonialService.findAllTestimonial(0, 5, admin, StateTestimonial.PUBLISHED);
+
+        assertEquals(2, result.getTotalElements());
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getState() == StateTestimonial.PUBLISHED));
+        assertTrue(result.getContent().stream()
+                .allMatch(t -> t.getAdmin().getId().equals(admin.getId())));
+    }
+
+
 
     @AfterEach
     public void tearDown() {

@@ -1,4 +1,4 @@
 export interface ChangeStateButtonsData {
-    text: string 
+    textButton: string 
     event: (id: number) => void
 }
