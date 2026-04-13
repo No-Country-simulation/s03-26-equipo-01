@@ -24,7 +24,7 @@ const usePaginator = <T>(execute: (page: number, size: number) => Promise<TableP
     data: row
   });
 
-  return { data, page, setPage, addRow };
+  return { data, page, setPage, addRow, fetchData };
 };
 
 export default usePaginator;
