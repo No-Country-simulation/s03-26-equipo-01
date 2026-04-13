@@ -66,16 +66,29 @@ public class TagServiceTest {
     }
 
     @Test
-    void findAllShouldReturnOnlyActiveTags() {
+    void findAllByAdminShouldReturnOnlyActiveTagsBelongingToAdmin() {
         Tag activeTag = tagService.create(Tag.builder().name("activo").build(), idAdmin);
         Tag deletedTag = tagService.create(Tag.builder().name("borrado").build(), idAdmin);
+        Admin otherAdmin = (Admin) userService.save(Admin.builder()
+                .email("other-admin@gmail.com")
+                .password("123")
+                .firstName("otro")
+                .lastName("admin")
+                .build());
+
+        tagService.create(Tag.builder().name("ajeno").build(), otherAdmin.getId());
 
         tagService.deleteById(deletedTag.getId());
 
-        List<Tag> tags = tagService.findAll();
+        List<Tag> tags = tagService.findAllByAdmin(idAdmin);
 
         assertEquals(1, tags.size());
         assertEquals(activeTag.getId(), tags.getFirst().getId());
+    }
+
+    @Test
+    void findAllByAdminShouldThrowWhenAdminDoesNotExist() {
+        assertThrows(EntityNotFoundException.class, () -> tagService.findAllByAdmin(9999L));
     }
 
     @Test

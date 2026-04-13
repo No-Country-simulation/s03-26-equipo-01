@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TagRepository {
-    List<Tag> findAllByActiveTrueOrderByNameAsc();
+    List<Tag> findAllByActiveTrueAndCreatorIdOrderByNameAsc(Long adminId);
 
     Optional<Tag> findByIdAndActiveTrue(Long id);
 
