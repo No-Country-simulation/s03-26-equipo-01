@@ -2,6 +2,7 @@ package com.cms.services;
 
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,4 +25,5 @@ public interface TestimonialService {
     Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state);
 
 
+    Testimonial findByIdAndEditor(Long id, Editor editor);
 }

@@ -110,5 +110,14 @@ public class EditorControllerREST {
         );
     }
 
+    @GetMapping("/testimonial/{id}")
+    @EditorEndpoint
+    @Operation(summary = "Obtener testimonio del editor por ID")
+    public ResponseEntity<TestimonialResponseDTO> getById(
+            @PathVariable Long id,
+            @RequestAttribute("userId") Long editorId) {
+        Testimonial testimonial = editorService.findTestimonialByIdAndEditor(id, editorId);
+        return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
+    }
 
 }

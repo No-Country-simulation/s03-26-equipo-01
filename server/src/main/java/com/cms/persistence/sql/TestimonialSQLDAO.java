@@ -5,6 +5,7 @@ import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,4 +55,6 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     List<Testimonial> findByAdminIdAndNotDraft(
             @Param("idAdmin") Long idAdmin,
             @Param("state") StateTestimonial state);
+
+    Testimonial findByIdAndEditor(Long id, Editor editor);
 }

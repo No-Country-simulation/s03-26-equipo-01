@@ -9,4 +9,6 @@ public interface EditorService {
     Testimonial advanceByEditor(Long idTestimonial, Long idEditor);
 
     Page<Testimonial> getTestimonialsToBank(Long idEditor, int page, int size);
+
+    Testimonial findTestimonialByIdAndEditor(Long id, Long editorId);
 }

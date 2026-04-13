@@ -65,5 +65,12 @@ public class EditorServiceImpl implements EditorService {
         return testimonialService.findAllTestimonial(page, size, editor.getCreatedBy(), StateTestimonial.DRAFT);
     }
 
+    @Override
+    public Testimonial findTestimonialByIdAndEditor(Long id, Long editorId) {
+        Editor editor = findById(editorId);
+
+        return testimonialService.findByIdAndEditor(id, editor);
+    }
+
 
 }
