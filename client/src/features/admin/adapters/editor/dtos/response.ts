@@ -1,8 +1,9 @@
-
+import type { Rol } from "../../../../../shared/user/models/rol"
 
 export interface EditorResponse {
-    firstName: string 
-    lastName: string 
-    id: number
-    email: string
+    id: number,
+    mail: string,
+    Rol: Rol,
+    testimonialsNumber: number,
+    enable: boolean
 }
