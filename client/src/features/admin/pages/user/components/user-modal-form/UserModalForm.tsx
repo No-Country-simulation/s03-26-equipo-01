@@ -32,7 +32,7 @@ const UserModalForm = ({onSubmit}: UserModalFormProps) => {
                             error = {errors[inputData.name as keyof CreatedUser]?.message}
                         />
                     )}
-                    <ButtonsCommitContainer onActive = {handleActive} />
+                    <ButtonsCommitContainer onClose = {handleActive} />
                 </div>
             </form>
         </ModalContainer>
