@@ -1,19 +1,23 @@
 import ModalContainer from "../../../../../../../../shared/components/modal-container/ModalContainer";
 import useActive from "../../../../../../../../shared/hooks/use-active";
 import { ButtonsCommitContainer } from "../../../../../../components/modal-buttons-container/ModalButtonsContainer";
+import ModalCommitContainer from "../../../../../../components/modal-commit-container/ModalCommitContainer";
 import ModalTitleContainer from "../../../../../../components/modal-title-form/ModalTitleContainer";
 import type { RejectModalProps } from "./reject-modal";
 
-const RejectModal = ({onAcept, id}: RejectModalProps) => {
+const RejectModal = ({onChangeState, onClose, id}: RejectModalProps) => {
 
     const {isActive, handleActive} = useActive();
+
+    const handleClose = () => onClose(handleActive)
+    const handleAcept = () => onChangeState(id, handleActive)
     
     return (
         <ModalContainer disable = {isActive}>
-            <div>
+            <ModalCommitContainer>
                 <ModalTitleContainer title = "Testimonio Rechazado" />
-                <ButtonsCommitContainer onClose = {handleActive} onAcept = {() => onAcept(id)} />
-            </div>
+                <ButtonsCommitContainer onClose = {handleClose} onAcept = {handleAcept} />
+            </ModalCommitContainer>
         </ModalContainer>
     )
 }

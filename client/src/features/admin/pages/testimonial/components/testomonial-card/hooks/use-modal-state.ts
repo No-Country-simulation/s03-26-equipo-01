@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { StateTestimonial } from "../../../../../models/state";
 
-
 const useChangeState = () => {
-    const [id, setId] = useState<number>();
-    const [state, setState] = useState<StateTestimonial>();
+    
+    const [id, setId] = useState<number | null>(null);
+    const [state, setState] = useState<StateTestimonial | null>(null);
     const [isDiscart, setIsDiscart] = useState<boolean>(false);
 
     const changeToAproved = (id: number) => {
@@ -27,9 +27,15 @@ const useChangeState = () => {
         setIsDiscart(true);
     }
 
+    const refresh = () => {
+        setId(null);
+        setState(null)
+        setIsDiscart(false)
+    }
+
     const isState = (adminState: StateTestimonial) => state === adminState;
 
-    return { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft }
+    return { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh }
 }
 
 export default useChangeState;

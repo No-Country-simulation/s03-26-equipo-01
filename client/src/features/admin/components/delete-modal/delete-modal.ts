@@ -1,4 +1,4 @@
 export interface DeleteModalProps {
-    onDelete: (id: number) => void
+    onDelete: (id: number, onClose: () => void) => void
     id: number
 }

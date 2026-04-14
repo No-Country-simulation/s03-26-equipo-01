@@ -1,4 +1,5 @@
 export interface AprobedModalProps {
-    onAcept: (id: number) => void
+    onChangeState: (id: number, closeModal: () => void) => void
+    onClose: (close: () => void) => void
     id: number
 }

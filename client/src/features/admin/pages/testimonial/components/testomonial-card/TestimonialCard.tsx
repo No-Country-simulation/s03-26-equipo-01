@@ -15,6 +15,7 @@ import useChangeState from './hooks/use-modal-state';
 import AprobedModal from './components/aprobed-modal/AprobedModal';
 import DeleteModal from '../../../../components/delete-modal/DeleteModal';
 import PublishedModal from './components/published-modal/PublishedModal';
+import RejectModal from './components/reject-modal/RejectModal';
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const { updateTestimonial, advance, deleted } =
@@ -37,7 +38,18 @@ const TestimonialCardContent = ({
   deleted,
 }: TestimonialCardContentProps) => {
 
-  const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft  } = useChangeState();
+  const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh } = useChangeState();
+
+  const handleAdvanceActive = (id: number, close: () => void) => {
+    advance(id)
+    close();
+    refresh();
+  }
+  const handleDiscartActive = (id: number, close: () => void) => {
+    deleted(id)
+    close();
+    refresh();
+  }
 
   return (
     <>
@@ -54,10 +66,10 @@ const TestimonialCardContent = ({
         testimonial={testimonial}
         />
       </article>
-      {isState('Aprobado') && id && <AprobedModal onAcept = {advance} id = {id} /> }
-      {isState('Publicado') && id && <PublishedModal onAcept = {advance} id = {id} /> }
-      {isState('Borrador') && id && <RejectModal onAcept = {advance} id = {id} /> }
-      {isDiscart && id && <DeleteModal onDelete = {deleted} id = {id} /> }
+      {isState('Aprobado') && id && <AprobedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Publicado') && id && <PublishedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Borrador') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isDiscart && id && <DeleteModal onDelete = {handleDiscartActive} id = {id} /> }
     </>
   );
 };

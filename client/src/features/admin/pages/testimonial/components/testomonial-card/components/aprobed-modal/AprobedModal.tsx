@@ -5,15 +5,18 @@ import ModalCommitContainer from "../../../../../../components/modal-commit-cont
 import ModalTitleContainer from "../../../../../../components/modal-title-form/ModalTitleContainer";
 import type { AprobedModalProps } from "./aproved-modal";
 
-const AprobedModal = ({onAcept, id}: AprobedModalProps) => {
+const AprobedModal = ({onChangeState, onClose, id}: AprobedModalProps) => {
 
     const {isActive, handleActive} = useActive();
+
+    const handleClose = () => onClose(handleActive)
+    const handleAcept = () => onChangeState(id, handleActive)
     
     return (
         <ModalContainer disable = {isActive}>
             <ModalCommitContainer>
                 <ModalTitleContainer title = "¿Aprobar Testimonio?" />
-                <ButtonsCommitContainer onClose = {handleActive} onAcept = {() => onAcept(id)} />
+                <ButtonsCommitContainer onClose = {handleClose} onAcept = {handleAcept} />
             </ModalCommitContainer>
         </ModalContainer>
     )
