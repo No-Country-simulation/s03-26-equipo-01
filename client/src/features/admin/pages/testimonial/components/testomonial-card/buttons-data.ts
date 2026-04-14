@@ -1,36 +1,43 @@
 import type { ChangeStateButtons } from "../../../../../../shared/types/change-state-button-data/change-state-button"
 import type { AdminTestimonialState } from "../../../../models/state"
 
-const buttonsStateData = (nextState: (id: number) => void, discart: (id: number) => void): Record<AdminTestimonialState, ChangeStateButtons> => {
+interface ButtonsStateData {
+    openDiscartModal: (id: number) => void,
+    openPublishModal: (id: number) => void,
+    openAprovedModal: (id: number) => void,
+    openDraftModal: (id: number) => void
+}
+
+const buttonsStateData = ({openDiscartModal, openPublishModal, openAprovedModal, openDraftModal}: ButtonsStateData): Record<AdminTestimonialState, ChangeStateButtons> => {
     return {
         Aprobado: {
             nextState: {
                 textButton: 'PUBLICAR',
-                event: nextState
+                event: openPublishModal
             },
             discartTestimonial: {
                 textButton: 'ELIMINAR',
-                event: discart
+                event: openDiscartModal
             }
         },
         Pendiente: {
             nextState: {
                 textButton: 'APROBAR',
-                event: nextState
+                event: openAprovedModal
             },
             discartTestimonial: {
                 textButton: 'RECHAZAR',
-                event: nextState
+                event: openDraftModal
             }
         },
         Publicado: {
             nextState: {
                 textButton: 'DESPUBLICAR',
-                event: nextState
+                event: openAprovedModal
             },
             discartTestimonial: {
                 textButton: 'ELIMINAR',
-                event:discart
+                event: openDiscartModal
             }  
         }
     }

@@ -11,6 +11,10 @@ import './styles/testomonial-card.css';
 import StateButtonContainer from '../state-buttons-container/StateButtonContainer';
 import buttonsStateData from './buttons-data';
 import useTestimonialState from '../../hooks/use-testimonial-state';
+import useModalState from './hooks/use-modal-state';
+import AprobedModal from '../aprobed-modal/AprobedModal';
+import DeleteModal from '../../../../components/delete-modal/DeleteModal';
+import PublishedModal from '../published-modal/PublishedModal';
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const { updateTestimonial, advance, deleted } =
@@ -32,8 +36,12 @@ const TestimonialCardContent = ({
   advance,
   deleted,
 }: TestimonialCardContentProps) => {
+
+  const { id, isDiscart, isState, openDiscartModal, openPublishModal, openAprovedModal, openDraftModal } = useModalState();
+
   return (
-    <article className='testimonial-admin-card-container'>
+    <>
+      <article className='testimonial-admin-card-container'>
       <TestimonialHeader testimonial={testimonial} />
       <TestimonialState testimonial={testimonial} />
       <TestimonialDescription testimonial={testimonial} />
@@ -41,11 +49,16 @@ const TestimonialCardContent = ({
       <MultimediaContent testimonial={testimonial} />
       <StateButtonContainer
         changeStateButtons={
-          buttonsStateData(advance, deleted)[testimonial.state]
+          buttonsStateData({openDiscartModal, openPublishModal, openAprovedModal, openDraftModal})[testimonial.state]
         }
         testimonial={testimonial}
-      />
-    </article>
+        />
+      </article>
+      {isState('Aprobado') && id && <AprobedModal onAcept = {advance} id = {id} /> }
+      {isState('Publicado') && id && <PublishedModal onAcept = {advance} id = {id} /> }
+      {isState('Borrador') && id && <RejectModal onAcept = {advance} id = {id} /> }
+      {isDiscart && id && <DeleteModal onDelete = {deleted} id = {id} /> }
+    </>
   );
 };
 

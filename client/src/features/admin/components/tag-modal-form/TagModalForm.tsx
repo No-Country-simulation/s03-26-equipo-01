@@ -30,7 +30,7 @@ const TagModalForm = ({onSubmit}: TagModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Usa palabras que tu cliente usaría."
                     />
-                    <ButtonsCommitContainer onActive = {handleActive} />
+                    <ButtonsCommitContainer onClose = {handleActive} />
                 </div>
             </form>
         </ModalContainer>

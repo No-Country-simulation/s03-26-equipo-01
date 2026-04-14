@@ -1,4 +1,4 @@
 export interface DeleteModalProps {
-    onDelete: (id?: number) => Promise<void>
-    id?: number
+    onDelete: (id: number) => void
+    id: number
 }
