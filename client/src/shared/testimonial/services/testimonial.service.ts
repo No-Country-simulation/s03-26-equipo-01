@@ -1,5 +1,5 @@
 import api from "../../../core/api/api";
-import { ADMIN_TESTIMONIALS_URL } from "../../../core/api/urls/urls";
+import { ADMIN_TESTIMONIALS_API } from "../../../core/api/urls/urls";
 import getToken from "../../../core/services/token/get-token";
 import type { Testimonial } from "../models/testimonial";
 
@@ -22,7 +22,7 @@ async function createTestimonial(data: Testimonial) {
         formData.append("idEmbed", "1");
         
         
-        const response = await api.post(ADMIN_TESTIMONIALS_URL, formData, {
+        const response = await api.post(ADMIN_TESTIMONIALS_API, formData, {
             headers: {
                 'Authorization': `Bearer ${token}`
             },
