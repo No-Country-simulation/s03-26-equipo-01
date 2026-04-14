@@ -97,4 +97,13 @@ public class TestimonialServiceImpl implements TestimonialService {
     public Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state) {
         return testimonialRepository.findAllTestimonial(PageRequest.of(pageNumber, size), admin, state);
     }
+
+    @Override
+    public Testimonial archiveTestimonial(Long idTestimonial, Admin admin) {
+        Testimonial testimonial = testimonialRepository.findTestimonialByIdAndAdmin(idTestimonial, admin);
+
+        testimonial.archived();
+
+        return testimonialRepository.update(testimonial);
+    }
 }

@@ -3,6 +3,7 @@ package com.cms.model.testimonial;
 import com.cms.exception.business.BusinessException;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.testimonial.state.TestimonialState;
+import com.cms.model.testimonial.state.impl.ArchivedState;
 import com.cms.model.testimonial.state.impl.DraftState;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
@@ -25,7 +26,6 @@ public class Testimonial {
     private String witness;
 
     private String testimonial;
-
 
     private int rating;
 
@@ -69,5 +69,10 @@ public class Testimonial {
 
     public void validateCategory() {
         if(category == null) throw new BusinessException("No se puede pasar de estado PENDING, si el testimonio no tiene una categoria");
+    }
+
+    public void archived() {
+        this.testimonialState = new ArchivedState();
+        this.state = StateTestimonial.fromState(this.testimonialState);
     }
 }

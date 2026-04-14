@@ -33,14 +33,16 @@ public class TagController {
     private final TagService tagService;
     private final AuthUtils authUtils;
 
-    @Operation(summary = "Obtener todos los tags activos")
+    @Operation(summary = "Obtener todos los tags activos del admin autenticado")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Lista de tags obtenida correctamente")
     })
     @GetMapping
-    @AdminEditorEndpoint
-    public ResponseEntity<List<TagResponseDto>> findAll() {
-        List<TagResponseDto> tags = tagService.findAll()
+    @AdminEndpoint
+    public ResponseEntity<List<TagResponseDto>> findAll(Authentication auth) {
+        Long idAdmin = authUtils.getUserId(auth);
+
+        List<TagResponseDto> tags = tagService.findAllByAdmin(idAdmin)
                 .stream()
                 .map(TagResponseDto::fromEntity)
                 .toList();

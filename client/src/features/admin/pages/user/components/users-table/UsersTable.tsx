@@ -7,7 +7,6 @@ import type { UsersTableProps } from "./user-table"
 
 
 const UsersTable = ({data, page, setPage, discharge, unsuscribe}: UsersTableProps) => {
-
     return (
         <>
             <TableEditData 
