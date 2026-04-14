@@ -23,5 +23,5 @@ public interface TestimonialService {
 
     Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state);
 
-
+    Testimonial archiveTestimonial(Long idTestimonial, Admin admin);
 }

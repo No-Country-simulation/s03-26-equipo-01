@@ -10,7 +10,6 @@ export function categoryAdapter(categoryResponse: CategoryResponse): Category {
     return {
         id: categoryResponse.id,
         name: categoryResponse.name,
-        createdAt: categoryResponse.createdAt,
-        updatedAt: categoryResponse.updatedAt
+        createdAt: categoryResponse.createdAt
     }
 }

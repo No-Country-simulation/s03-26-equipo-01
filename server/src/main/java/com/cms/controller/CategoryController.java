@@ -52,13 +52,18 @@ public class CategoryController {
     }
 
     @GetMapping
-    @Operation(summary = "Obtener todas las categorías activas", description = "Retorna una lista de todas las categorías que no fueron eliminadas.")
+    @AdminEndpoint
+    @Operation(summary = "Obtener todas las categorías del administrador logueado", description = "Retorna una lista de las categorías activas pertenecientes al admin que realiza la petición.")
     @ApiResponse(responseCode = "200", description = "Lista de categorías obtenida exitosamente")
-    public ResponseEntity<List<CategoryResponseDto>> findAll() {
-        List<CategoryResponseDto> categories = categoryService.findAll()
+    public ResponseEntity<List<CategoryResponseDto>> findAll(Authentication auth) {
+
+        Long idAdmin = authUtils.getUserId(auth);
+
+        List<CategoryResponseDto> categories = categoryService.findAll(idAdmin)
                 .stream()
                 .map(CategoryResponseDto::fromModel)
                 .toList();
+
         return ResponseEntity.ok(categories);
     }
 

@@ -41,8 +41,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        return categorySQLDAO.findAllByDeletedFalse();
+    public List<Category> findAll(Long idAdmin) {
+        return categorySQLDAO.findAllByCreatorIdAndDeletedFalse(idAdmin);
     }
 
     @Override

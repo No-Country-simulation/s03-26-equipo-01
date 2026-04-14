@@ -18,4 +18,6 @@ public interface TestimonialRepository {
     List<Testimonial> findByAdminId(Long idAdmin);
 
     Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state);
+
+    Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin);
 }

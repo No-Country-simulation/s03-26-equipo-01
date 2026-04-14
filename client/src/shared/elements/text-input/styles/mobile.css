@@ -3,6 +3,7 @@
 .text-input-container {
     position: relative;
     width: 100%;
+    max-height: 50px;
 }
 
 .text-input-container label {
