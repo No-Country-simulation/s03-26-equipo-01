@@ -1,15 +1,11 @@
-/* Contenedor principal de la ruta */
 .edit-page-container {
-  display: block; /* Forzamos flujo de bloque vertical */
   width: 100%;
   padding: 40px 60px;
-  /* IMPORTANTE: Este margen debe ser igual al ancho de tu sidebar azul */
-  margin-left: 280px;
   box-sizing: border-box;
   background-color: #fcfcfc;
   min-height: 100vh;
+  /* Sacá el margin-left: 280px */
 }
-
 /* Título alineado a la izquierda del formulario, no de la pantalla */
 .edit-page-container .title-container {
   margin-bottom: 30px;
