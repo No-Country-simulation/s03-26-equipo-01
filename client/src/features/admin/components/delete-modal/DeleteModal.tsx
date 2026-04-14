@@ -5,10 +5,11 @@ import ModalTitleContainer from "../modal-title-form/ModalTitleContainer";
 import type { DeleteModalProps } from "./delete-modal";
 import './styles/delete-modal.css';
 
-const DeleteModal = ({onDelete, id}: DeleteModalProps) => {
+const DeleteModal = ({onDelete, id, onClose}: DeleteModalProps) => {
 
     const {isActive, handleActive} = useActive();
     const handleCommit = () => onDelete(id, handleActive);
+    const handleClose = () => onClose && onClose();
 
     return (
         <ModalContainer disable = {isActive}>
@@ -16,7 +17,7 @@ const DeleteModal = ({onDelete, id}: DeleteModalProps) => {
                 <div>
                 <ModalTitleContainer title = "¿Estas seguro que quieres eliminar de forma permanente?" />
                 <ButtonsDeleteContainer 
-                    onActive = {handleActive} 
+                    onActive = {onClose ? handleClose : handleActive} 
                     onDelete = {handleCommit}
                 />
                 </div>
