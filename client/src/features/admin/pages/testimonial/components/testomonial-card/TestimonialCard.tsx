@@ -6,15 +6,15 @@ import TestimonialTags from './components/testimonial-tags/TestimonialTags';
 import type {
   TestimonialCardContentProps,
   TestimonialCardProps,
-} from './testimonial-card';
+} from './types/testimonial-card';
 import './styles/testomonial-card.css';
 import StateButtonContainer from '../state-buttons-container/StateButtonContainer';
-import buttonsStateData from './buttons-data';
+import buttonsStateData from './types/buttons-data';
 import useTestimonialState from '../../hooks/use-testimonial-state';
 import useChangeState from './hooks/use-modal-state';
-import AprobedModal from '../aprobed-modal/AprobedModal';
+import AprobedModal from './components/aprobed-modal/AprobedModal';
 import DeleteModal from '../../../../components/delete-modal/DeleteModal';
-import PublishedModal from '../published-modal/PublishedModal';
+import PublishedModal from './components/published-modal/PublishedModal';
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const { updateTestimonial, advance, deleted } =

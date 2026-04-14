@@ -1,5 +1,5 @@
-import type { ChangeStateButtons } from "../../../../../../shared/types/change-state-button-data/change-state-button"
-import type { AdminTestimonialState } from "../../../../models/state"
+import type { ChangeStateButtons } from "../../../../../../../shared/types/change-state-button-data/change-state-button"
+import type { AdminTestimonialState } from "../../../../../models/state"
 
 interface ButtonsStateData {
     changeToDiscart: (id: number) => void,
