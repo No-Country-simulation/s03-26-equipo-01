@@ -1,9 +1,10 @@
-import type { Rol } from "../../../../../shared/user/models/rol"
 
+
+type Enable = 'Activo' | 'Inactivo'
 export interface EditableUser {
     id: number, 
     email: string 
-    rol: Rol
     testimonialsNumber: number
-    enable: boolean
+    enableName: Enable
+    rol: string
 }

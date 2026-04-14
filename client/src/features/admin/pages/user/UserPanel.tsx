@@ -10,7 +10,6 @@ const UsersPanel = () => {
 
     const {isActive, handleActive} = useActive();
     const {created, discharge, unsuscribe, data, page, setPage} = useAdminUser();
-    console.log(data)
 
     return (
         <section className = 'users-admin-panel'>
