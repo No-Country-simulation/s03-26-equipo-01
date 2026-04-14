@@ -11,7 +11,7 @@ import './styles/testomonial-card.css';
 import StateButtonContainer from '../state-buttons-container/StateButtonContainer';
 import buttonsStateData from './buttons-data';
 import useTestimonialState from '../../hooks/use-testimonial-state';
-import useModalState from './hooks/use-modal-state';
+import useChangeState from './hooks/use-modal-state';
 import AprobedModal from '../aprobed-modal/AprobedModal';
 import DeleteModal from '../../../../components/delete-modal/DeleteModal';
 import PublishedModal from '../published-modal/PublishedModal';
@@ -37,7 +37,7 @@ const TestimonialCardContent = ({
   deleted,
 }: TestimonialCardContentProps) => {
 
-  const { id, isDiscart, isState, openDiscartModal, openPublishModal, openAprovedModal, openDraftModal } = useModalState();
+  const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft  } = useChangeState();
 
   return (
     <>
@@ -49,7 +49,7 @@ const TestimonialCardContent = ({
       <MultimediaContent testimonial={testimonial} />
       <StateButtonContainer
         changeStateButtons={
-          buttonsStateData({openDiscartModal, openPublishModal, openAprovedModal, openDraftModal})[testimonial.state]
+          buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]
         }
         testimonial={testimonial}
         />

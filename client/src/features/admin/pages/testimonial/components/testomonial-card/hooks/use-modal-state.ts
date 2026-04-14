@@ -2,34 +2,34 @@ import { useState } from "react";
 import type { StateTestimonial } from "../../../../../models/state";
 
 
-const useModalState = () => {
+const useChangeState = () => {
     const [id, setId] = useState<number>();
     const [state, setState] = useState<StateTestimonial>();
     const [isDiscart, setIsDiscart] = useState<boolean>(false);
 
-    const openAprovedModal = (id: number) => {
+    const changeToAproved = (id: number) => {
         setId(id);
         setState('Aprobado');
     }
 
-    const openDraftModal = (id: number) => {
+    const changeToDraft = (id: number) => {
         setId(id);
         setState('Borrador');
     }
 
-    const openPublishModal = (id: number) => {
+    const changeToPublished = (id: number) => {
         setId(id);
         setState('Publicado');
     }
 
-    const openDiscartModal = (id: number) => {
+    const changeToDiscart = (id: number) => {
         setId(id);
         setIsDiscart(true);
     }
 
     const isState = (adminState: StateTestimonial) => state === adminState;
 
-    return { id, isDiscart, isState, openDiscartModal, openPublishModal, openAprovedModal, openDraftModal }
+    return { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft }
 }
 
-export default useModalState;
+export default useChangeState;
