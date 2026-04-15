@@ -7,10 +7,7 @@ export type EmbedSnippet = {
 };
 
 const DEFAULT_SITE_URL = 'http://localhost:5173';
-
-export const EMBED_API_KEY =
-  import.meta.env.VITE_TESTIMONIAL_EMBED_API_KEY ||
-  'vza_i2345678980abcdef123456789abcdef';
+const EMBED_API_KEY_PLACEHOLDER = 'YOUR_API_KEY';
 
 export const EMBED_INSTRUCTIONS = [
   'Copiá el HTML del formulario.',
@@ -24,14 +21,14 @@ function sanitizeBaseUrl(baseUrl: string) {
   return baseUrl.replace(/\/+$/, '');
 }
 
-function buildEmbedUrl(baseUrl: string, apiKeyPlaceholder = 'YOUR_API_KEY') {
+function buildEmbedUrl(baseUrl: string, apiKey = EMBED_API_KEY_PLACEHOLDER) {
   const testimonialUrl = `${sanitizeBaseUrl(baseUrl)}/testimonial`;
-  const query = new URLSearchParams({ apiKey: apiKeyPlaceholder });
+  const query = new URLSearchParams({ apiKey });
   return `${testimonialUrl}?${query.toString()}`;
 }
 
-export function getEmbedSnippets(baseUrl: string): EmbedSnippet[] {
-  const iframeUrl = buildEmbedUrl(baseUrl);
+export function getEmbedSnippets(baseUrl: string, apiKey = EMBED_API_KEY_PLACEHOLDER): EmbedSnippet[] {
+  const iframeUrl = buildEmbedUrl(baseUrl, apiKey);
 
   return [
     {

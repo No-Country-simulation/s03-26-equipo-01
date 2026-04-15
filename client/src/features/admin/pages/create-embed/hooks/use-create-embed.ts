@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import {
-  EMBED_API_KEY,
   EMBED_INSTRUCTIONS,
   getEmbedBaseUrl,
   getEmbedSnippets,
 } from "../create-embed";
+import adminApiKeyService from "../../../services/api-key/admin-api-key.service";
 
 const MASK_CHARACTER = "*";
 const COPY_SUCCESS_MESSAGE = "Texto copiado al cortapapeles";
 const COPY_ERROR_MESSAGE = "No se pudo copiar el texto al cortapapeles.";
+const API_KEY_ERROR_MESSAGE = "No se pudo obtener la API key del administrador.";
 
 const useCreateEmbed = () => {
   const [toastMessage, setToastMessage] = useState("");
@@ -16,6 +17,17 @@ const useCreateEmbed = () => {
     "success"
   );
   const [isApiKeyVisible, setIsApiKeyVisible] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    adminApiKeyService()
+      .then((responseApiKey) => setApiKey(responseApiKey))
+      .catch((error) => {
+        console.error(error);
+        setToastType("error");
+        setToastMessage(API_KEY_ERROR_MESSAGE);
+      });
+  }, []);
 
   useEffect(() => {
     if (!toastMessage) return;
@@ -44,16 +56,16 @@ const useCreateEmbed = () => {
   const handleCloseToast = () => setToastMessage("");
 
   const displayApiKey = isApiKeyVisible
-    ? EMBED_API_KEY
-    : MASK_CHARACTER.repeat(EMBED_API_KEY.length);
+    ? apiKey
+    : MASK_CHARACTER.repeat(apiKey.length);
 
   const embedBaseUrl = getEmbedBaseUrl();
 
   return {
-    apiKey: EMBED_API_KEY,
+    apiKey,
     displayApiKey,
     embedBaseUrl,
-    embedSnippets: getEmbedSnippets(embedBaseUrl),
+    embedSnippets: getEmbedSnippets(embedBaseUrl, apiKey || undefined),
     handleCloseToast,
     instructions: EMBED_INSTRUCTIONS,
     isApiKeyVisible,
