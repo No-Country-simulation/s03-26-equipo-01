@@ -6,11 +6,16 @@ import TestimonialTags from './components/testimonial-tags/TestimonialTags';
 import type {
   TestimonialCardContentProps,
   TestimonialCardProps,
-} from './testimonial-card';
+} from './types/testimonial-card';
 import './styles/testomonial-card.css';
 import StateButtonContainer from '../state-buttons-container/StateButtonContainer';
-import buttonsStateData from './buttons-data';
+import buttonsStateData from './types/buttons-data';
 import useTestimonialState from '../../hooks/use-testimonial-state';
+import useChangeState from './hooks/use-modal-state';
+import AprobedModal from './components/aprobed-modal/AprobedModal';
+import DeleteModal from '../../../../components/delete-modal/DeleteModal';
+import PublishedModal from './components/published-modal/PublishedModal';
+import RejectModal from './components/reject-modal/RejectModal';
 
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   const { updateTestimonial, advance, deleted } =
@@ -32,8 +37,23 @@ const TestimonialCardContent = ({
   advance,
   deleted,
 }: TestimonialCardContentProps) => {
+
+  const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh } = useChangeState();
+
+  const handleAdvanceActive = (id: number, close: () => void) => {
+    advance(id)
+    close();
+    refresh();
+  }
+  const handleDiscartActive = (id: number, close: () => void) => {
+    deleted(id)
+    close();
+    refresh();
+  }
+
   return (
-    <article className='testimonial-admin-card-container'>
+    <>
+      <article className='testimonial-admin-card-container'>
       <TestimonialHeader testimonial={testimonial} />
       <TestimonialState testimonial={testimonial} />
       <TestimonialDescription testimonial={testimonial} />
@@ -41,11 +61,16 @@ const TestimonialCardContent = ({
       <MultimediaContent testimonial={testimonial} />
       <StateButtonContainer
         changeStateButtons={
-          buttonsStateData(advance, deleted)[testimonial.state]
+          buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]
         }
         testimonial={testimonial}
-      />
-    </article>
+        />
+      </article>
+      {isState('Aprobado') && id && <AprobedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Publicado') && id && <PublishedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Borrador') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isDiscart && id && <DeleteModal onDelete = {handleDiscartActive} onClose={refresh} id = {id} /> }
+    </>
   );
 };
 

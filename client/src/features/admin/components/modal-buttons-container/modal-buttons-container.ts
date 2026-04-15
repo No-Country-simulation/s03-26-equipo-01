@@ -1,8 +1,9 @@
 export interface ButtonsContainerProps {
-    onActive: () => void
+    onClose: () => void
+    onAcept?: () => void
 }
 
 export interface ButtonsDeleteContainerProps {
     onActive: () => void
-    onDelete: () => Promise<void>
+    onDelete: () => void
 }

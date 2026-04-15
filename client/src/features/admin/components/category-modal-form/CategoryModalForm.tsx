@@ -30,7 +30,7 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Crea categorias amplias, no específicas."
                     />
-                    <ButtonsCommitContainer onActive = {handleActive} />
+                    <ButtonsCommitContainer onClose = {handleActive} />
                 </div>
             </form>
         </ModalContainer>

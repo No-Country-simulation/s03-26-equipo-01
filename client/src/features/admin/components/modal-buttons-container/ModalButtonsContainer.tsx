@@ -1,15 +1,16 @@
 import type { ButtonsContainerProps, ButtonsDeleteContainerProps } from './modal-buttons-container';
 import './styles/modal-buttons-container.css';
 
-export const ButtonsCommitContainer = ({onActive}: ButtonsContainerProps) => {
+export const ButtonsCommitContainer = ({onClose, onAcept}: ButtonsContainerProps) => {
     return (
         <section className = 'commit-form_buttons'>
             <button 
                 type = 'button'
-                onClick = {onActive} 
+                onClick = {onClose} 
                 className = 'commit-form--cancel'>CANCELAR
             </button>
             <button 
+                onClick = {onAcept}
                 type = 'submit' 
                 className = 'commit-form---commit'>CONFIRMAR
             </button>

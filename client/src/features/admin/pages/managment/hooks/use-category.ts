@@ -24,14 +24,14 @@ const useCategory = () => {
         return newCategory;
     }
 
-    const editCategory = async (category: CategoryCreated, id: number | undefined): Promise<Category> => {
+    const editCategory = async (category: CategoryCreated, id: number | undefined) => {
         const editCategory = await put<CategoryCreated>(editCategoryService, category, id);
         setCategories(categories => categories.map(category => category.id === id ? editCategory : category));
         return editCategory;
     }
 
-    const deleteCategory = async (id?: number): Promise<void> => {
-        await deleted(deleteCategoryService, id as number);
+    const deleteCategory = async (id: number) => {
+        await deleted(deleteCategoryService, id);
         setCategories(categories => categories.filter(category => category.id !== id));
     }
 
