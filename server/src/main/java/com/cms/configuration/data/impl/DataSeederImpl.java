@@ -70,7 +70,7 @@ public class DataSeederImpl implements DataSeeder {
 
         userService.save(editor);
 
-        seedTestimonials(embed.getId());
+        //seedTestimonials(embed.getId());
     }
 
     private void seedTestimonials(Long embedId) {

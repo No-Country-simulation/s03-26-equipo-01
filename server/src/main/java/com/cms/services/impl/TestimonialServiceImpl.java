@@ -48,7 +48,7 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         model.setAdmin(admin);
         model.setMedia(media);
-        model.agregarTags(tagDAO.findAllById(idTags));
+        if(idTags != null)        model.agregarTags(tagDAO.findAllById(idTags));
 
         Testimonial testimonial = testimonialRepository.save(model);
 

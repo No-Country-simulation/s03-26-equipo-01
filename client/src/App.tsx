@@ -17,17 +17,15 @@ import Editor from './features/editor/pages/home/Editor';
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path={LOGIN_PATH} element={<Login />}></Route>
-          <Route element={<AuthValidator />}>
+      <Routes>
+          <Route path={LOGIN_PATH} element={<AuthProvider><Login /></AuthProvider>}></Route>
+          <Route path={TESTIMONIAL_PATH} element={<NewTestimonial />} />
+          <Route element={<AuthProvider><AuthValidator /></AuthProvider>}>
             <Route path={ADMIN_PATH} element={<Admin />} />
             <Route path={EDITOR_PATH} element={<Editor />} />
-            <Route path={TESTIMONIAL_PATH} element={<NewTestimonial />} />
           </Route>
           <Route path={'*'} element={<NotFoundPage />} />
-        </Routes>
-      </AuthProvider>
+      </Routes>
     </BrowserRouter>
   );
 }

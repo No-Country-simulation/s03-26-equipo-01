@@ -6,7 +6,7 @@ export type Testimonial = {
     course: number | null,
     authorization: boolean,
     youtubeUrl?: string,
-    image?: string | null,
+    image?: File | null,
     rating: number | null,
     idEmbed?: number
 }
