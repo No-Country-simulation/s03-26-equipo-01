@@ -7,6 +7,7 @@ import com.cms.controller.dto.tag.TagSearchEditorDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 
 import com.cms.controller.dto.testimonial.TestimonialResponseSimpleDTO;
+import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.controller.dto.user.UserRequestSimpleDTO;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
@@ -130,6 +131,17 @@ public class EditorControllerREST {
             ) {
         List<com.cms.model.testimonial.Tag> tags = editorService.findTagsByNameForEditor(request.name(), editorId, request.testimonialId());
         return ResponseEntity.ok(tags.stream().map(TagResponseDto::fromEntity).toList());
+    }
+
+    @PutMapping("/testimonial/edit")
+    @EditorEndpoint
+    public ResponseEntity<TestimonialResponseDTO> updateTestimonial(
+            @RequestBody TestimonialUpdateDTO request,
+            @RequestAttribute("userId") Long editorId
+    ){
+        Testimonial testimonial = editorService.updateTestimonial(request, editorId);
+
+        return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
     }
 
 }

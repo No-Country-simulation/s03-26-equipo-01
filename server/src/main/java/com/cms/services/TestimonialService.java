@@ -21,7 +21,7 @@ public interface TestimonialService {
 
     Testimonial advanceByAdmin(Long idTestimonial);
 
-    void update(Testimonial recovered);
+    Testimonial update(Testimonial recovered);
 
     Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state);
 

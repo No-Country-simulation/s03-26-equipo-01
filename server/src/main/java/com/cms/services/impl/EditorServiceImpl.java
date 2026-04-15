@@ -1,5 +1,6 @@
 package com.cms.services.impl;
 
+import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
@@ -21,13 +22,11 @@ public class EditorServiceImpl implements EditorService {
 
     private final TestimonialService testimonialService;
 
-    private final TagService tagService;
 
     private final EditorSQLDAO editorSQLDAO;
 
-    public EditorServiceImpl(TestimonialService testimonialService, TagService tagService, EditorSQLDAO editorSQLDAO) {
+    public EditorServiceImpl(TestimonialService testimonialService, EditorSQLDAO editorSQLDAO) {
         this.testimonialService = testimonialService;
-        this.tagService = tagService;
         this.editorSQLDAO = editorSQLDAO;
     }
 
@@ -84,6 +83,19 @@ public class EditorServiceImpl implements EditorService {
         Editor editor = findById(editorId);
 
         return testimonialService.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId, name);
+    }
+
+    @Override
+    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId) {
+        Editor editor = findById(editorId);
+
+        editor.validateUpdateTestimonial(editorSQLDAO.containTestimonial(model.id(), editor));
+
+        Testimonial testimonial = testimonialService.findTestimonialById(model.id());
+
+        model.updateTestimonial(testimonial);
+
+        return testimonialService.update(testimonial);
     }
 
 

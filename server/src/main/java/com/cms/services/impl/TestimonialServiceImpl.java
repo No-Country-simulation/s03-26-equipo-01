@@ -1,6 +1,7 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Media;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
@@ -33,10 +34,11 @@ public class TestimonialServiceImpl implements TestimonialService {
     private final TagSQLDAO  tagDAO;
 
     private final TagRepository tagRepository;
+    private final CategoryService categoryService;
 
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
                                   MediaService mediaService,
-                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO, TagRepository tagRepository) {
+                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO, TagRepository tagRepository, CategoryService categoryService) {
 
         this.testimonialRepository = testimonialRepository;
 
@@ -46,6 +48,7 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         this.tagDAO = tagDAO;
         this.tagRepository = tagRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -95,8 +98,11 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public void update(Testimonial recovered) {
-        testimonialRepository.update(recovered);
+    public Testimonial update(Testimonial recovered) {
+        Category category = categoryService.findById(recovered.getCategory().getId());
+        recovered.setCategory(category);
+
+        return testimonialRepository.update(recovered);
     }
 
     @Override

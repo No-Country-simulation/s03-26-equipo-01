@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import org.springframework.data.domain.Page;
@@ -16,4 +17,6 @@ public interface EditorService {
     Testimonial findTestimonialByIdAndEditor(Long id, Long editorId);
 
     List<Tag> findTagsByNameForEditor(String name, Long editorId, Long testimonialId);
+
+    Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId);
 }
