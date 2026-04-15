@@ -2,9 +2,11 @@ package com.cms.controller;
 
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
+import com.cms.controller.dto.user.editor.EditorResponseSimpleDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
 import com.cms.controller.exception.ErrorResponseDTO;
 import com.cms.model.user.User;
+import com.cms.model.user.impl.Editor;
 import com.cms.services.UserService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -101,12 +103,13 @@ public class UserControllerREST {
             description = "Usuario no encontrado",
             content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
     )
-    public ResponseEntity<Void> deleteUser(
+    public ResponseEntity<EditorResponseSimpleDTO> deleteUser(
             @Parameter(description = "ID del usuario", example = "1")
             @PathVariable Long idUser) {
 
-        userService.disableUser(idUser);
-        return ResponseEntity.noContent().build();
+        Editor editor = userService.disableUser(idUser);
+        EditorResponseSimpleDTO dto = EditorResponseSimpleDTO.fromModel(editor);
+        return ResponseEntity.ok(dto);
     }
 
     @PatchMapping("/enable/{idUser}")
@@ -118,11 +121,12 @@ public class UserControllerREST {
             description = "Usuario no encontrado",
             content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
     )
-    public ResponseEntity<Void> enableUser(
+    public ResponseEntity<EditorResponseSimpleDTO> enableUser(
             @Parameter(description = "ID del usuario", example = "1")
             @PathVariable Long idUser) {
 
-        userService.enableUser(idUser);
-        return ResponseEntity.noContent().build();
+        Editor editor = userService.enableUser(idUser);
+        EditorResponseSimpleDTO dto = EditorResponseSimpleDTO.fromModel(editor);
+        return ResponseEntity.ok(dto);
     }
 }

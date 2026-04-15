@@ -8,7 +8,7 @@ import type { UsersTableProps } from "./user-table"
 
 const UsersTable = ({data, page, setPage, discharge, unsuscribe}: UsersTableProps) => {
 
-    const isUserActive = (id: number) => tableData(data).rows.find(row => row.id === id)?.fields.includes('Activo');
+    const isUserActive = (id: number) =>  data?.rows.find(row => row.id === id)?.data.enableName === 'Activo';
 
     return (
         <>
@@ -16,8 +16,8 @@ const UsersTable = ({data, page, setPage, discharge, unsuscribe}: UsersTableProp
                 tableData = {tableData(data)}>
                 {(id: number) => 
                     (isUserActive(id) ? 
-                        <DischargeButton onActive = {discharge} id = {id} /> : 
-                        <UnsuscribeButton onActive = {unsuscribe} id = {id} />)}
+                        <UnsuscribeButton onActive = {unsuscribe} id = {id} /> : 
+                        <DischargeButton onActive = {discharge} id = {id} />)}
             </TableEditData>
             <Paginator
                 totalPages={data.totalPages}
