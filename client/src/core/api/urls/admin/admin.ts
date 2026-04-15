@@ -1,6 +1,7 @@
 
 export const TESTIMONIAL_RESOURCES_API = '/admin/recursos'
 export const ADMIN_TESTIMONIALS_API = '/admin/testimonial';
+export const ADMIN_API_KEY_API = '/admin/api-key';
 export const TESTIMONIALS_ADVANCE_URL = (id: number) => `/admin/testimonials/${id}/advance`;
 export const ADMIN_USERS_CHARGE_API = '/admin/users'
 export const ADMIN_CREATED_USER_API = '/admin'

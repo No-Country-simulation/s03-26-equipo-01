@@ -10,15 +10,15 @@ const SubmitButton = ({isAvailable = false} : SubmitButtonProps) => {
     <Button
       type='submit'
       variant="contained" 
-      endIcon={<Send size = {22}/>} 
+      endIcon={<Send size = {20}/>} 
       disabled = {!isAvailable}
       sx={{
         alignSelf: 'center',
         width:'100%',
-        minHeight: '6vh',
+        minHeight: '3.75rem',
         fontSize:'1.5rem',
         fontWeight:'medium',
-        padding:'8px 22px', 
+        padding:'0.5rem 1.375rem', 
         backgroundColor: 'var(--secondary-color)',
         color: '#FFF'
       }}

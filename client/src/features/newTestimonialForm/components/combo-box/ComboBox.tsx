@@ -1,26 +1,46 @@
-import './styles/combo-box.css'
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
+import './styles/combo-box.css';
+import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
+} from 'react-hook-form';
 
-interface DataProps {
-  id: number,
-  label: string
+export interface DataProps {
+  id: number;
+  label: string;
 }
 
-interface ComboBoxProps <T extends FieldValues>{
-  name: Path<T>,
-  control: Control <T>,
-  label: string,
-  rules?: object,
-  placeholder?: string,
-  data: DataProps[]
+interface ComboBoxProps<T extends FieldValues> {
+  name: Path<T>;
+  control: Control<T>;
+  label: string;
+  rules?: object;
+  placeholder?: string;
+  data: DataProps[];
+  loading?: boolean;
+  onSearch?: (value: string) => void;
+  searchValue?: string;
 }
 
-const ComboBox = <T extends FieldValues>({name, control, label, rules, placeholder, data} : ComboBoxProps<T>) => {
+const ComboBox = <T extends FieldValues>({
+  name,
+  control,
+  label,
+  rules,
+  placeholder,
+  data,
+  loading = false,
+  onSearch,
+  searchValue = '',
+}: ComboBoxProps<T>) => {
   const id = `input-${name}`;
   return (
-    <div className="combo-box-container" >
+    <div className='combo-box-container'>
       <label htmlFor={id}>{label}</label>
       <Controller
         name={name}
@@ -28,27 +48,65 @@ const ComboBox = <T extends FieldValues>({name, control, label, rules, placehold
         rules={rules}
         render={({ field: { onChange, value } }) => (
           <Autocomplete
+            multiple
             id={id}
-            value={data.find((item) => item.id === value) || null}
+            inputValue={searchValue}
+            value={data.filter(
+              (item) => Array.isArray(value) && value.includes(item.id),
+            )}
             onChange={(_, newValue) => {
-              onChange(newValue ? newValue.id : null);
+              onChange(newValue.map((item) => item.id));
             }}
-            getOptionLabel={(option) => option.label || ""}
+            onInputChange={(_, newInputValue, reason) => {
+              if ((reason === 'input' || reason === 'clear') && onSearch) {
+                onSearch(newInputValue);
+              }
+            }}
+            getOptionLabel={(option) => option.label || ''}
             isOptionEqualToValue={(option, value) => option.id === value.id}
+            filterSelectedOptions
             forcePopupIcon={false}
             disablePortal
             options={data}
-            renderInput={(params) => <TextField variant="standard" {...params} label="" placeholder={placeholder}  slotProps={{
-            input: {
-              ...params.InputProps, 
-              sx: { fontSize: "var(--primary-font)" }
+            loading={loading}
+            renderTags={(selected, getTagProps) =>
+              selected.map((option, index) => (
+                <Chip
+                  {...getTagProps({ index })}
+                  key={option.id}
+                  label={option.label}
+                  size='small'
+                  avatar={
+                    <Avatar sx={{ width: 24, height: 24, fontSize: 12 }}>
+                      {option.label.charAt(0).toUpperCase()}
+                    </Avatar>
+                  }
+                  sx={{
+                    borderRadius: '999px',
+                    backgroundColor: 'rgba(45,45,45,0.08)',
+                  }}
+                />
+              ))
             }
-          }}/>}
+            renderInput={(params) => (
+              <TextField
+                variant='standard'
+                {...params}
+                label=''
+                placeholder={placeholder}
+                slotProps={{
+                  input: {
+                    ...params.InputProps,
+                    sx: { fontSize: 'var(--primary-font)' },
+                  },
+                }}
+              />
+            )}
           />
         )}
       />
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default ComboBox
+export default ComboBox;

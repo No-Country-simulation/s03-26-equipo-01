@@ -7,6 +7,7 @@ import com.cms.controller.dto.tag.TagRequestSearchDTO;
 import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.tag.TagUpdateRequestDTO;
 import com.cms.model.testimonial.Tag;
+import com.cms.model.user.impl.admin.Admin;
 import com.cms.services.TagService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -132,9 +134,11 @@ public class TagController {
 
     //USAR API PUBLICA
     @PostMapping("/search")
-    @SecurityRequirements()
-    public ResponseEntity<List<TagResponseDto>> findByNameTag(@RequestBody @Valid TagRequestSearchDTO request) {
-        List<Tag> tags = tagService.findTagsByName(request.name(), request.idAdmin());
+    public ResponseEntity<List<TagResponseDto>> findByNameTag(@RequestBody @Valid TagRequestSearchDTO request, HttpServletRequest httpRequest) {
+        Admin admin = (Admin) httpRequest.getAttribute("admin");
+
+
+        List<Tag> tags = tagService.findTagsByName(request.name(), admin.getId());
 
         List<TagResponseDto> response = tags.stream().map(TagResponseDto::fromEntity).toList();
 
