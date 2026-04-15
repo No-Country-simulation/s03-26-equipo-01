@@ -1,11 +1,13 @@
 import { Box, Typography, TextField } from '@mui/material';
 
 interface TestimonialSectionProps {
-  defaultValue: string;
+  value: string;
+  onChange: (val: string) => void;
 }
 
 export const TestimonialSection = ({
-  defaultValue,
+  value,
+  onChange,
 }: TestimonialSectionProps) => (
   <Box>
     <Typography variant='subtitle2' fontWeight={600} mb={1}>
@@ -19,7 +21,8 @@ export const TestimonialSection = ({
       multiline
       rows={5}
       variant='standard'
-      defaultValue={defaultValue}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
     />
   </Box>
 );
