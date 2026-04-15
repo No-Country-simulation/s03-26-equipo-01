@@ -1,12 +1,12 @@
 import api from '../../../core/api/api';
 import { CREATE_TESTIMONIAL_API } from '../../../core/api/urls/urls';
 import type { Testimonial } from '../models/testimonial';
-
-const TESTIMONIAL_API_KEY = 'vza_9e579029dbc34f74b2ac170f6a3cf86f';
+import getEmbedApiKey from './embed-api-key.service';
 
 async function createTestimonial(data: Testimonial) {
   if (data.rating === null) throw new Error('La valoración debe ser un entero');
-  if (!TESTIMONIAL_API_KEY)
+  const testimonialApiKey = getEmbedApiKey();
+  if (!testimonialApiKey)
     throw new Error('Falta configurar la API key del embed');
 
   try {
@@ -21,7 +21,7 @@ async function createTestimonial(data: Testimonial) {
 
     const response = await api.post(CREATE_TESTIMONIAL_API, formData, {
       headers: {
-        'X-Api-Key': TESTIMONIAL_API_KEY,
+        'X-Api-Key': testimonialApiKey,
       },
     });
     return response.data;

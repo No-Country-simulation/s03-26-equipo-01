@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import {
   EMBED_API_KEY,
   EMBED_INSTRUCTIONS,
-  EMBED_SNIPPETS,
+  getEmbedBaseUrl,
+  getEmbedSnippets,
 } from "../create-embed";
 
 const MASK_CHARACTER = "*";
@@ -46,10 +47,13 @@ const useCreateEmbed = () => {
     ? EMBED_API_KEY
     : MASK_CHARACTER.repeat(EMBED_API_KEY.length);
 
+  const embedBaseUrl = getEmbedBaseUrl();
+
   return {
     apiKey: EMBED_API_KEY,
     displayApiKey,
-    embedSnippets: EMBED_SNIPPETS,
+    embedBaseUrl,
+    embedSnippets: getEmbedSnippets(embedBaseUrl),
     handleCloseToast,
     instructions: EMBED_INSTRUCTIONS,
     isApiKeyVisible,

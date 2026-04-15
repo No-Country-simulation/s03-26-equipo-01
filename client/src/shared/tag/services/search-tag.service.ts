@@ -1,7 +1,6 @@
 import api from '../../../core/api/api';
 import { SEARCH_TAG_API } from '../../../core/api/urls/urls';
-
-const TAG_API_KEY = 'vza_9e579029dbc34f74b2ac170f6a3cf86f';
+import getEmbedApiKey from '../../testimonial/services/embed-api-key.service';
 
 type TagSearchRequest = {
   name: string;
@@ -15,7 +14,9 @@ export type TagSearchResponse = {
 };
 
 async function searchTagService(name: string): Promise<TagSearchResponse[]> {
-  if (!TAG_API_KEY)
+  const tagApiKey = getEmbedApiKey();
+
+  if (!tagApiKey)
     throw new Error('Falta configurar la API key para buscar tags');
 
   const payload: TagSearchRequest = {
@@ -27,7 +28,7 @@ async function searchTagService(name: string): Promise<TagSearchResponse[]> {
     payload,
     {
       headers: {
-        'X-Api-Key': TAG_API_KEY,
+        'X-Api-Key': tagApiKey,
       },
     },
   );

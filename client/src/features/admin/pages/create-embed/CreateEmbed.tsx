@@ -9,6 +9,7 @@ const CreateEmbed = () => {
   const {
     apiKey,
     displayApiKey,
+    embedBaseUrl,
     embedSnippets,
     handleCloseToast,
     instructions,
@@ -25,7 +26,7 @@ const CreateEmbed = () => {
         <div className="embed-admin-panel_container--info">
           <TitleContainer
             title="Codigos de embed"
-            text="Visualiza los codigos de prueba para evaluar la pantalla antes de integrar el widget real."
+            text={`Usá estos snippets para insertar el formulario real de testimonios desde ${embedBaseUrl}.`}
           />
           <section className="embed-instructions">
             <h3 className="embed-instructions_title">Instrucciones de instalacion</h3>
