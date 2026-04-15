@@ -1,6 +1,7 @@
 @media screen and (min-width: 1024px) {
 
     .commit-form_buttons {
+        flex-direction: row;
         min-width: 20vw;
         min-height: 5vh;
     }
@@ -8,5 +9,6 @@
     .commit-form_buttons button {
         min-width: 10vw;
         min-height: 6vh;
+        max-height: 20px;
     }
 }
