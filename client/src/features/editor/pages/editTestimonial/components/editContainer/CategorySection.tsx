@@ -30,8 +30,6 @@ export const CategorySection = ({
   const [query, setQuery] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Derivamos el valor: si está abierto y hay texto escrito, mostramos eso.
-  // Si no, mostramos lo que viene del padre (el objeto seleccionado).
   const displayValue = open && query !== '' ? query : value?.name || '';
 
   useEffect(() => {
@@ -88,13 +86,9 @@ export const CategorySection = ({
           <List dense>
             {options.map((option) => (
               <ListItem key={option.id} disablePadding>
-                {/* CAMBIO CLAVE: Usamos onMouseDown. 
-                  Esto se dispara ANTES que el onBlur del TextField, 
-                  evitando que el componente se cierre antes de capturar la opción.
-                */}
                 <ListItemButton
                   onMouseDown={(e) => {
-                    e.preventDefault(); // Evita que el input pierda el foco inmediatamente
+                    e.preventDefault();
                     onChange(option);
                     setQuery('');
                     setOpen(false);
