@@ -53,11 +53,43 @@ const useApi = <T extends object>() => {
         }
     }
 
+    async function patchWithBody<T>(execute: (id: number) => Promise<T>, id: number): Promise<T> {
+        try {
+            setIsLoading(true);
+            const newData = await execute(id);
+            refreshError();
+            return newData;
+        } 
+        catch (error) {
+            if (error instanceof ApiError) setError(error);
+            throw error;
+        }
+        finally {
+            setIsLoading(false)
+        }
+    }
+
     async function deleted(execute: (id: number) => Promise<void>, id: number): Promise<void> {
         try {
             setIsLoading(true);
             await execute(id);
             refreshError();
+        } 
+        catch (error) {
+            if (error instanceof ApiError) setError(error);
+            throw error;
+        }
+        finally {
+            setIsLoading(false)
+        }
+    }
+
+    async function deletedWithBody<T>(execute: (id: number) => Promise<T>, id: number): Promise<T> {
+        try {
+            setIsLoading(true);
+            const data = await execute(id);
+            refreshError();
+            return data;
         } 
         catch (error) {
             if (error instanceof ApiError) setError(error);
@@ -86,7 +118,7 @@ const useApi = <T extends object>() => {
 
     const refreshError = () => setError(null);
 
-    return {get, post, put, patch, deleted, error, refreshError, isLoading}
+    return {get, post, put, patch, patchWithBody, deleted, deletedWithBody, error, refreshError, isLoading}
 }
 
 export default useApi;

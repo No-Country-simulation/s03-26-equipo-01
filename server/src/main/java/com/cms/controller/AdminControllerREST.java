@@ -8,6 +8,7 @@ import com.cms.controller.dto.user.UserRequestSimpleDTO;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.controller.dto.user.editor.EditorResponseSimpleDTO;
 import com.cms.controller.dto.utils.table.TableResponseDTO;
+import com.cms.controller.exception.ErrorResponseDTO;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -16,6 +17,7 @@ import com.cms.services.AdminService;
 import com.cms.services.TestimonialService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -174,4 +176,40 @@ public class AdminControllerREST {
         );
     }
 
+    @PatchMapping("/{idTestimonial}")
+    @AdminEndpoint
+    @Operation(
+            summary = "Archivar un testimonial",
+            description = "Permite a un administrador archivar un testimonial existente mediante su ID"
+    )
+    @ApiResponse(
+            responseCode = "204",
+            description = "Testimonial archivado correctamente"
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "Testimonial no encontrado",
+            content = @Content(
+                    schema = @Schema(implementation = ErrorResponseDTO.class),
+                    examples = @ExampleObject(value = """
+                        {
+                          "timestamp": "2026-03-25T14:20:00",
+                          "status": 404,
+                          "error": "NOT_FOUND",
+                          "message": "Testimonial no encontrado",
+                          "path": "/testimonial/1"
+                        }
+                        """)
+            )
+    )
+    public ResponseEntity<Void> archiveTestimonial(
+            @Parameter(description = "ID del testimonial a archivar", example = "1")
+            @PathVariable Long idTestimonial,
+
+            @Parameter(hidden = true)
+            @RequestAttribute("userId") Long idAdmin
+    ){
+        adminService.archiveTestimonial(idTestimonial, idAdmin);
+        return ResponseEntity.noContent().build();
+    }
 }

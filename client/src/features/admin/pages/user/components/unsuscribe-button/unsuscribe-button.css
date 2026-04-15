@@ -1,0 +1,16 @@
+.unsuscribe-button {
+    width: 103px;
+    height: 30px;
+    font-weight: bold;
+    border: 1px solid #EA4A41;
+    border-radius: 4px;
+    color: #EA4A41;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.unsuscribe-button:hover {
+    color: #FFFFFF;
+    background-color: #EA4A41;
+}

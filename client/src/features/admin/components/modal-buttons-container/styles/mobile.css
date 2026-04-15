@@ -1,9 +1,10 @@
 .commit-form_buttons {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 2vw;
-    height: 16%;
-    max-height: 20px;
+    width: 100%;
 }
 
 .commit-form_buttons button {

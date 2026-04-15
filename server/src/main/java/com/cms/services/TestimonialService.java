@@ -29,4 +29,5 @@ public interface TestimonialService {
     Testimonial findByIdAndEditor(Long id, Editor editor);
 
     List<Tag> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId, String name);
+    Testimonial archiveTestimonial(Long idTestimonial, Admin admin);
 }

@@ -54,10 +54,12 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     @Query("SELECT t FROM Testimonial t WHERE t.state = :state AND t.admin = :admin AND t.editor IS NULL ORDER BY t.createdAt DESC")
     Page<Testimonial> findTopByState(@Param("state") StateTestimonial state, Pageable pageable, @Param("admin") Admin admin);
 
-    @Query("SELECT t FROM Testimonial t WHERE t.admin.id = :idAdmin AND t.state != :state")
+    @Query("SELECT t FROM Testimonial t WHERE t.admin.id = :idAdmin AND t.state != :state AND t.state != com.cms.model.testimonial.enums.StateTestimonial.ARCHIVED ")
     List<Testimonial> findByAdminIdAndNotDraft(
             @Param("idAdmin") Long idAdmin,
             @Param("state") StateTestimonial state);
+
+    Optional<Testimonial> findByIdAndAdmin(Long id, Admin admin);
 
     Optional<Testimonial> findByIdAndEditor(Long id, Editor editor);
 

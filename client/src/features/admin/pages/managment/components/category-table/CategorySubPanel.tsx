@@ -24,7 +24,7 @@ const CategorySubPanel = ({currentTab}: TabContent) => {
             <AddButton text = "CREAR CATEGORIA" onSubmit = {addActive.handleActive} />
             {addActive.isActive && <CategoryModalForm onSubmit = {addCategory} />}
             {editActive.isActive && <CategoryModalForm onSubmit = {(category) => editCategory(category, editActive.id)} />}
-            {deleteActive.isActive && <DeleteModal onDelete = {deleteCategory} id = {deleteActive.id}/>}
+            {deleteActive.isActive && <DeleteModal onDelete = {deleteCategory} id = {deleteActive.id as number}/>}
             <TableEditData 
                 tableData = {tableData(categories)}>
                 {(id: number) => <TableButtons onEdit={handleEdit} onDelete={handleDelete} id={id} />}

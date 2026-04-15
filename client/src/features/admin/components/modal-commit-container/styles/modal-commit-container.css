@@ -1,0 +1,19 @@
+.modal-commit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 400px;
+    height: 40%;
+    border-radius: 1vw;
+    background-color: #FFF;
+}
+
+.modal-commit-container div {
+    justify-self: center;
+    display: grid; 
+    place-items: center;
+    width: 90%;
+    height: 90%;
+    text-align: center;
+}

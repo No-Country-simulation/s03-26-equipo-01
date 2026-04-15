@@ -24,4 +24,6 @@ public interface TestimonialRepository {
     Testimonial findByIdAndEditor(Long id, Editor editor);
 
     List<Long> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId);
+
+    Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin);
 }

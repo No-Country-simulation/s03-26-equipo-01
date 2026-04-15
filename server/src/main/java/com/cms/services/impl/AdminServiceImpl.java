@@ -1,6 +1,7 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Testimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
@@ -8,6 +9,7 @@ import com.cms.model.user.impl.admin.ApiKey;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.services.AdminService;
 import com.cms.services.ApiKeyService;
+import com.cms.services.TestimonialService;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -25,10 +27,13 @@ public class AdminServiceImpl implements AdminService {
 
     private final ApiKeyService apiKeyService;
 
-    public AdminServiceImpl(AdminSQLDAO adminDAO, UserService userService, ApiKeyService apiKeyService) {
+    private final TestimonialService testimonialService;
+
+    public AdminServiceImpl(AdminSQLDAO adminDAO, UserService userService, ApiKeyService apiKeyService, TestimonialService testimonialService) {
         this.adminDAO = adminDAO;
         this.userService = userService;
         this.apiKeyService = apiKeyService;
+        this.testimonialService = testimonialService;
     }
 
 
@@ -72,6 +77,13 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Page<Editor> findAllEditors(Long idAdmin, int page, int size) {
         return adminDAO.findEditorsByAdmin(idAdmin, PageRequest.of(page, size));
+    }
+
+    @Override
+    public Testimonial archiveTestimonial(Long idTestimonial, Long idAdmin) {
+        Admin admin = getAdmin(idAdmin);
+
+        return testimonialService.archiveTestimonial(idTestimonial, admin);
     }
 
     @Override

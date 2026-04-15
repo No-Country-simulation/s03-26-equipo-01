@@ -114,6 +114,15 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
+    public Testimonial archiveTestimonial(Long idTestimonial, Admin admin) {
+        Testimonial testimonial = testimonialRepository.findTestimonialByIdAndAdmin(idTestimonial, admin);
+
+        testimonial.archived();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
     public Testimonial findByIdAndEditor(Long id, Editor editor) {
         return testimonialRepository.findByIdAndEditor(id, editor);
     }
