@@ -7,7 +7,7 @@ import {
   EDITOR_TESTIMONIAL,
   EDIT_TESTIMONIAL,
 } from '../../../core/routes/editor/editor';
-import EditTestimonial from '../pages/editTestimonial/editTestimonial.tsx';
+import EditTestimonial from '../pages/editTestimonial/EditTestimonial.tsx';
 
 const EditorRoutes = () => {
   return (

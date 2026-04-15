@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
 import { ArrowLeft } from 'lucide-react';
 import TitleContainer from '../../components/title-container/TitleContainer';
-import EditContainer from './components/editContainer/EditContainer';
 import './components/editContainer/styles/edit-container.css';
+import EditContainer from './components/editContainer/EditContainer';
 
 const EditTestimonial = () => {
   const navigate = useNavigate();

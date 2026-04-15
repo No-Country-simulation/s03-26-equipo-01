@@ -45,7 +45,7 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
 
     @Override
     public Testimonial findByIdAndEditor(Long id, Editor editor) {
-        return testimonialSQLDAO.findByIdAndEditor(id, editor);
+        return testimonialSQLDAO.findByIdAndEditor(id, editor).orElseThrow(()-> new EntityNotFoundException(Testimonial.class.getName(), id));
     }
 
     @Override

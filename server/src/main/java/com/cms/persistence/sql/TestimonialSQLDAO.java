@@ -4,6 +4,8 @@ import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
+import java.util.Optional;
+
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
@@ -56,5 +58,5 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
             @Param("idAdmin") Long idAdmin,
             @Param("state") StateTestimonial state);
 
-    Testimonial findByIdAndEditor(Long id, Editor editor);
+    Optional<Testimonial> findByIdAndEditor(Long id, Editor editor);
 }
