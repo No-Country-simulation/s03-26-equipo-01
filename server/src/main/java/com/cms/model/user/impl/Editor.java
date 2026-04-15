@@ -41,4 +41,8 @@ public class Editor extends User {
     public Integer getNroTestimonials() {
         return drafts.size();
     }
+
+    public void validateUpdateTestimonial(Boolean hasTestimonial) {
+        if(!hasTestimonial) throw new BusinessException("No puede editar un testimonio que no le pertenece");
+    }
 }

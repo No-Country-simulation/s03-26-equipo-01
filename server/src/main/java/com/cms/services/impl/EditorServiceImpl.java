@@ -1,21 +1,27 @@
 package com.cms.services.impl;
 
+import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.persistence.sql.EditorSQLDAO;
 import com.cms.services.EditorService;
+import com.cms.services.TagService;
 import com.cms.services.TestimonialService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
 public class EditorServiceImpl implements EditorService {
 
     private final TestimonialService testimonialService;
+
 
     private final EditorSQLDAO editorSQLDAO;
 
@@ -63,6 +69,33 @@ public class EditorServiceImpl implements EditorService {
         Editor editor = findById(idEditor);
 
         return testimonialService.findAllTestimonial(page, size, editor.getCreatedBy(), StateTestimonial.DRAFT);
+    }
+
+    @Override
+    public Testimonial findTestimonialByIdAndEditor(Long id, Long editorId) {
+        Editor editor = findById(editorId);
+
+        return testimonialService.findByIdAndEditor(id, editor);
+    }
+
+    @Override
+    public List<Tag> findTagsByNameForEditor(String name, Long editorId, Long testimonialId) {
+        Editor editor = findById(editorId);
+
+        return testimonialService.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId, name);
+    }
+
+    @Override
+    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId) {
+        Editor editor = findById(editorId);
+
+        editor.validateUpdateTestimonial(editorSQLDAO.containTestimonial(model.id(), editor));
+
+        Testimonial testimonial = testimonialService.findTestimonialById(model.id());
+
+        model.updateTestimonial(testimonial);
+
+        return testimonialService.update(testimonial);
     }
 
 
