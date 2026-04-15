@@ -1,5 +1,6 @@
 package com.cms.services;
 
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
@@ -26,4 +27,6 @@ public interface TestimonialService {
 
 
     Testimonial findByIdAndEditor(Long id, Editor editor);
+
+    List<Tag> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId, String name);
 }

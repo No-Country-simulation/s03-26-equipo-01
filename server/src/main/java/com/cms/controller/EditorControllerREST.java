@@ -2,6 +2,8 @@ package com.cms.controller;
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.annotations.EditorEndpoint;
 
+import com.cms.controller.dto.tag.TagResponseDto;
+import com.cms.controller.dto.tag.TagSearchEditorDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 
 import com.cms.controller.dto.testimonial.TestimonialResponseSimpleDTO;
@@ -118,6 +120,16 @@ public class EditorControllerREST {
             @RequestAttribute("userId") Long editorId) {
         Testimonial testimonial = editorService.findTestimonialByIdAndEditor(id, editorId);
         return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
+    }
+
+    @PostMapping("/tags/search")
+    @EditorEndpoint
+    public ResponseEntity<List<TagResponseDto>> findByName(
+            @RequestBody TagSearchEditorDTO request,
+            @RequestAttribute("userId") Long editorId
+            ) {
+        List<com.cms.model.testimonial.Tag> tags = editorService.findTagsByNameForEditor(request.name(), editorId, request.testimonialId());
+        return ResponseEntity.ok(tags.stream().map(TagResponseDto::fromEntity).toList());
     }
 
 }

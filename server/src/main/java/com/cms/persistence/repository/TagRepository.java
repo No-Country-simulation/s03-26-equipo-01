@@ -13,4 +13,6 @@ public interface TagRepository {
     Tag saveAndFlush(Tag tag);
 
     List<Tag> findTagsByName(String nameTag, Long idAdmin);
+
+    List<Tag> findTagsByNameExcludeIds(List<Long> ids, Long id, String name);
 }

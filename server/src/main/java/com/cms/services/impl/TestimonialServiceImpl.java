@@ -2,10 +2,12 @@ package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
 import com.cms.model.testimonial.Media;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.TagSQLDAO;
@@ -30,9 +32,11 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     private final TagSQLDAO  tagDAO;
 
+    private final TagRepository tagRepository;
+
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
                                   MediaService mediaService,
-                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO) {
+                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO, TagRepository tagRepository) {
 
         this.testimonialRepository = testimonialRepository;
 
@@ -41,6 +45,7 @@ public class TestimonialServiceImpl implements TestimonialService {
         this.adminSQLDAO = adminSQLDAO;
 
         this.tagDAO = tagDAO;
+        this.tagRepository = tagRepository;
     }
 
     @Override
@@ -102,5 +107,11 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     public Testimonial findByIdAndEditor(Long id, Editor editor) {
         return testimonialRepository.findByIdAndEditor(id, editor);
+    }
+
+    @Override
+    public List<Tag> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId, String name) {
+        List<Long> ids = testimonialRepository.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId);
+        return tagRepository.findTagsByNameExcludeIds(ids, editor.getCreatedBy().getId(), name);
     }
 }

@@ -1,7 +1,10 @@
 package com.cms.services;
 
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface EditorService {
     void asocTestimonial(Long idTestimonial, Long idEditor);
@@ -11,4 +14,6 @@ public interface EditorService {
     Page<Testimonial> getTestimonialsToBank(Long idEditor, int page, int size);
 
     Testimonial findTestimonialByIdAndEditor(Long id, Long editorId);
+
+    List<Tag> findTagsByNameForEditor(String name, Long editorId, Long testimonialId);
 }

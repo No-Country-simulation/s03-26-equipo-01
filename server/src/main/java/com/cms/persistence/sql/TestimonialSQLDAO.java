@@ -2,6 +2,7 @@ package com.cms.persistence.sql;
 
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
 import java.util.Optional;
@@ -59,4 +60,14 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
             @Param("state") StateTestimonial state);
 
     Optional<Testimonial> findByIdAndEditor(Long id, Editor editor);
+
+
+    @Query("""
+        SELECT Id(t.tags)
+        FROM Testimonial t
+        WHERE t.editor = :editor
+                AND t.id = :id
+    """)
+    List<Long> getTagsIdUsedInTestimonialAscoEditor(@Param("editor") Editor editor,
+                                                   @Param("id") Long testimonialId);
 }

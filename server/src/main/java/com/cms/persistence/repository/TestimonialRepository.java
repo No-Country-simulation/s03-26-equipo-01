@@ -1,5 +1,6 @@
 package com.cms.persistence.repository;
 
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
@@ -21,4 +22,6 @@ public interface TestimonialRepository {
     Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state);
 
     Testimonial findByIdAndEditor(Long id, Editor editor);
+
+    List<Long> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId);
 }

@@ -1,10 +1,14 @@
 package com.cms.controller;
 
+import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
+import com.cms.controller.annotations.EditorEndpoint;
+import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
 import com.cms.controller.exception.ErrorResponseDTO;
 import com.cms.model.user.User;
+import com.cms.services.TagService;
 import com.cms.services.UserService;
 import com.cms.utils.AuthUtils;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,10 +32,12 @@ public class UserControllerREST {
 
     private final UserService userService;
     private final AuthUtils authUtils;
+    private final TagService tagService;
 
-    public UserControllerREST(UserService userService, AuthUtils authUtils) {
+    public UserControllerREST(UserService userService, AuthUtils authUtils, TagService tagService) {
         this.userService = userService;
         this.authUtils = authUtils;
+        this.tagService = tagService;
     }
 
     @GetMapping("/detail")
@@ -125,4 +131,6 @@ public class UserControllerREST {
         userService.enableUser(idUser);
         return ResponseEntity.noContent().build();
     }
+
+
 }

@@ -130,6 +130,7 @@ public class TagController {
         return ResponseEntity.noContent().build();
     }
 
+    //USAR API PUBLICA
     @PostMapping("/search")
     @SecurityRequirements()
     public ResponseEntity<List<TagResponseDto>> findByNameTag(@RequestBody @Valid TagRequestSearchDTO request) {
