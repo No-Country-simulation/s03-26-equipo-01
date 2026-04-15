@@ -24,7 +24,7 @@ function adapterEditors(response: DataRow<EditableUserResponse>[]): DataRow<Edit
     })
 }
 
-function adapterEditor(response: EditableUserResponse): EditableUser {
+export function adapterEditor(response: EditableUserResponse): EditableUser {
     return {
         id: response.id, 
         email: response.mail, 

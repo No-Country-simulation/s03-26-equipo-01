@@ -1,6 +1,7 @@
 package com.cms.services;
 
 import com.cms.model.user.User;
+import com.cms.model.user.impl.Editor;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,11 +13,11 @@ public interface UserService {
 
     User save(User user);
 
-    void disableUser(Long idUser);
+    Editor disableUser(Long idUser);
 
     List<User> findAllEnabled(boolean enabled);
 
-    void enableUser(Long idUser);
+    Editor enableUser(Long idUser);
 
     User findById(Long idUser);
 
