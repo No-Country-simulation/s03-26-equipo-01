@@ -1,31 +1,46 @@
-import './styles/combo-box.css'
-import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
+import './styles/combo-box.css';
+import Avatar from '@mui/material/Avatar';
+import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
+} from 'react-hook-form';
 
 export interface DataProps {
-  id: number,
-  label: string
+  id: number;
+  label: string;
 }
 
-interface ComboBoxProps <T extends FieldValues>{
-  name: Path<T>,
-  control: Control <T>,
-  label: string,
-  rules?: object,
-  placeholder?: string,
-  data: DataProps[],
-  loading?: boolean,
-  onSearch?: (value: string) => void,
-  searchValue?: string
+interface ComboBoxProps<T extends FieldValues> {
+  name: Path<T>;
+  control: Control<T>;
+  label: string;
+  rules?: object;
+  placeholder?: string;
+  data: DataProps[];
+  loading?: boolean;
+  onSearch?: (value: string) => void;
+  searchValue?: string;
 }
 
-const ComboBox = <T extends FieldValues>({name, control, label, rules, placeholder, data, loading = false, onSearch, searchValue = ''} : ComboBoxProps<T>) => {
+const ComboBox = <T extends FieldValues>({
+  name,
+  control,
+  label,
+  rules,
+  placeholder,
+  data,
+  loading = false,
+  onSearch,
+  searchValue = '',
+}: ComboBoxProps<T>) => {
   const id = `input-${name}`;
   return (
-    <div className="combo-box-container" >
+    <div className='combo-box-container'>
       <label htmlFor={id}>{label}</label>
       <Controller
         name={name}
@@ -36,7 +51,9 @@ const ComboBox = <T extends FieldValues>({name, control, label, rules, placehold
             multiple
             id={id}
             inputValue={searchValue}
-            value={data.filter((item) => Array.isArray(value) && value.includes(item.id))}
+            value={data.filter(
+              (item) => Array.isArray(value) && value.includes(item.id),
+            )}
             onChange={(_, newValue) => {
               onChange(newValue.map((item) => item.id));
             }}
@@ -45,7 +62,7 @@ const ComboBox = <T extends FieldValues>({name, control, label, rules, placehold
                 onSearch(newInputValue);
               }
             }}
-            getOptionLabel={(option) => option.label || ""}
+            getOptionLabel={(option) => option.label || ''}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             filterSelectedOptions
             forcePopupIcon={false}
@@ -58,7 +75,7 @@ const ComboBox = <T extends FieldValues>({name, control, label, rules, placehold
                   {...getTagProps({ index })}
                   key={option.id}
                   label={option.label}
-                  size="small"
+                  size='small'
                   avatar={
                     <Avatar sx={{ width: 24, height: 24, fontSize: 12 }}>
                       {option.label.charAt(0).toUpperCase()}
@@ -71,17 +88,25 @@ const ComboBox = <T extends FieldValues>({name, control, label, rules, placehold
                 />
               ))
             }
-            renderInput={(params) => <TextField variant="standard" {...params} label="" placeholder={placeholder}  slotProps={{
-            input: {
-              ...params.InputProps, 
-              sx: { fontSize: "var(--primary-font)" }
-            }
-          }}/>}
+            renderInput={(params) => (
+              <TextField
+                variant='standard'
+                {...params}
+                label=''
+                placeholder={placeholder}
+                slotProps={{
+                  input: {
+                    ...params.InputProps,
+                    sx: { fontSize: 'var(--primary-font)' },
+                  },
+                }}
+              />
+            )}
           />
         )}
       />
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default ComboBox
+export default ComboBox;

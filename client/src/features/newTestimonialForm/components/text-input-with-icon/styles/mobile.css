@@ -1,10 +1,10 @@
 .new-testimonial_input-with-icon-container{
   width: 100%;
-  min-width: 275px;
+  min-width: 17.1875rem;
   display: flex;
   flex-direction: column; 
   justify-content: center;
-  gap:12px;
+  gap:0.75rem;
 }
 
 .new-testimonial_generic-icon-container{
@@ -20,6 +20,6 @@
 .new-testimonial_input-with-icon-action-group{
    display: flex;
    align-items: end;
-   gap: 16px;
+   gap: 1rem;
    width:100%
 }

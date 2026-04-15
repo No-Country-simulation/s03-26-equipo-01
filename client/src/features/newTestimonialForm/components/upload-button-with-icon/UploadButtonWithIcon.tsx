@@ -31,11 +31,13 @@ const UploadButtonWithIcon = <T extends FieldValues>({name, control, label, icon
                 tabIndex={-1}
                 sx={{
                   width:"auto",
-                  maxWidth:"219px", 
-                  maxHeight:"42px",
-                  padding:"0.4em 1.5em",
+                  minWidth:"14.5rem",
+                  maxWidth:"100%",
+                  minHeight:"2.625rem",
+                  padding:"0.4em 1.25em",
                   fontWeight: "Medium",
                   backgroundColor: "var(--secondary-color)",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <span className="new-testimonial-upload_text-button">SELECCIONAR ARCHIVO</span>

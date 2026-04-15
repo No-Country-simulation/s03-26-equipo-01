@@ -24,6 +24,7 @@ const Form = () => {
     control,
     formState: { isValid },
     handleSubmit,
+    watch,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -37,6 +38,22 @@ const Form = () => {
       rating: null,
     },
   });
+
+  const selectedImage = watch('image');
+  const youtubeUrl = watch('youtubeUrl');
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!selectedImage) {
+      setImagePreviewUrl(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(selectedImage);
+    setImagePreviewUrl(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [selectedImage]);
 
   useEffect(() => {
     const normalizedSearch = tagSearch.trim();
@@ -78,6 +95,11 @@ const Form = () => {
     }
   };
 
+  const youtubeVideoId = getYoutubeVideoId(youtubeUrl);
+  const youtubeThumbnailUrl = youtubeVideoId
+    ? `https://img.youtube.com/vi/${youtubeVideoId}/hqdefault.jpg`
+    : null;
+
   return (
     <section className='new-testimonial_form-container'>
       <form className='new-testimonial_form' onSubmit={handleSubmit(onSubmit)}>
@@ -110,10 +132,6 @@ const Form = () => {
           loading={isTagLoading}
           onSearch={setTagSearch}
           searchValue={tagSearch}
-          rules={{
-            validate: (value: number[]) =>
-              value.length > 0 || 'Seleccioná al menos un tag',
-          }}
         />
 
         <RatingPicker
@@ -138,20 +156,57 @@ const Form = () => {
           />
         </div>
 
-        <TextInputWithIcon
-          control={control}
-          label='Link video de Youtube (Opcional)'
-          name='youtubeUrl'
-          placeholder='https://www.youtube.com/watch...'
-          icon={<SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />}
-        />
+        <div className='full-row-grid new-testimonial_media-grid'>
+          <div className='new-testimonial_media-inputs'>
+            <TextInputWithIcon
+              control={control}
+              label='Link video de Youtube (Opcional)'
+              name='youtubeUrl'
+              placeholder='https://www.youtube.com/watch...'
+              icon={<SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />}
+            />
 
-        <UploadButtonWithIcon
-          control={control}
-          label='Añadir imagen (Opcional)'
-          name='image'
-          icon={<ImageUp className='icon' color={alpha('#2D2D2D', 0.5)} />}
-        />
+            <UploadButtonWithIcon
+              control={control}
+              label='Añadir imagen (Opcional)'
+              name='image'
+              icon={<ImageUp className='icon' color={alpha('#2D2D2D', 0.5)} />}
+            />
+          </div>
+
+          {(youtubeThumbnailUrl || imagePreviewUrl) && (
+            <div className='new-testimonial_media-previews'>
+              {youtubeThumbnailUrl && (
+                <div className='new-testimonial_preview-card'>
+                  <span className='new-testimonial_preview-label'>Vista previa del video</span>
+                  <a
+                    className='new-testimonial_preview-link'
+                    href={youtubeUrl}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    <img
+                      className='new-testimonial_preview-image'
+                      src={youtubeThumbnailUrl}
+                      alt='Miniatura del video de YouTube'
+                    />
+                  </a>
+                </div>
+              )}
+
+              {imagePreviewUrl && (
+                <div className='new-testimonial_preview-card'>
+                  <span className='new-testimonial_preview-label'>Vista previa de la imagen</span>
+                  <img
+                    className='new-testimonial_preview-image'
+                    src={imagePreviewUrl}
+                    alt='Vista previa de la imagen seleccionada'
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <div className='full-row-grid'>
           <AuthorizationCheckbox
@@ -171,5 +226,25 @@ const Form = () => {
     </section>
   );
 };
+
+function getYoutubeVideoId(url?: string) {
+  if (!url) return null;
+
+  try {
+    const parsedUrl = new URL(url);
+
+    if (parsedUrl.hostname.includes('youtu.be')) {
+      return parsedUrl.pathname.slice(1) || null;
+    }
+
+    if (parsedUrl.hostname.includes('youtube.com')) {
+      return parsedUrl.searchParams.get('v');
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
 
 export default Form;
