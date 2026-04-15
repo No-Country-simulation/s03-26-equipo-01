@@ -3,7 +3,7 @@ export type Testimonial = {
     fullName: string,
     email: string,
     testimonial: string,
-    tagId: number | null,
+    tagIds: number[],
     authorization: boolean,
     youtubeUrl?: string,
     image?: File | null,

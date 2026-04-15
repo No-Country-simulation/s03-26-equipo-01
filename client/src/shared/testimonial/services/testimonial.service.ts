@@ -15,7 +15,7 @@ async function createTestimonial(data: Testimonial) {
     formData.append('email', data.email);
     formData.append('testimonial', data.testimonial);
     formData.append('rating', data.rating.toString());
-    if (data.tagId !== null) formData.append('idTags', data.tagId.toString());
+    data.tagIds.forEach((tagId) => formData.append('idTags', tagId.toString()));
     if (data.youtubeUrl) formData.append('youtubeUrl', data.youtubeUrl);
     if (data.image) formData.append('image', data.image);
 

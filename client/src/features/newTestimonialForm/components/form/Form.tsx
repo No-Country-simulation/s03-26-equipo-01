@@ -30,7 +30,7 @@ const Form = () => {
       fullName: '',
       email: '',
       testimonial: '',
-      tagId: null,
+      tagIds: [],
       authorization: false,
       youtubeUrl: '',
       image: null,
@@ -42,7 +42,6 @@ const Form = () => {
     const normalizedSearch = tagSearch.trim();
 
     if (!normalizedSearch) {
-      setTagOptions([]);
       return;
     }
 
@@ -50,10 +49,18 @@ const Form = () => {
       try {
         setIsTagLoading(true);
         const tags = await searchTagService(normalizedSearch);
-        setTagOptions(tags.map((tag) => ({ id: tag.id, label: tag.name })));
+        setTagOptions((previousTags) => {
+          const nextTags = [...previousTags];
+
+          tags.forEach((tag) => {
+            if (nextTags.some((item) => item.id === tag.id)) return;
+            nextTags.push({ id: tag.id, label: tag.name });
+          });
+
+          return nextTags;
+        });
       } catch (error) {
         console.error('Error al buscar tags:', error);
-        setTagOptions([]);
       } finally {
         setIsTagLoading(false);
       }
@@ -97,13 +104,15 @@ const Form = () => {
         <ComboBox
           control={control}
           data={tagOptions}
-          label='Tag'
-          name='tagId'
-          placeholder='Buscá un tag'
+          label='Tags'
+          name='tagIds'
+          placeholder='Buscá y seleccioná tags'
           loading={isTagLoading}
           onSearch={setTagSearch}
+          searchValue={tagSearch}
           rules={{
-            required: 'El tag es necesario',
+            validate: (value: number[]) =>
+              value.length > 0 || 'Seleccioná al menos un tag',
           }}
         />
 
