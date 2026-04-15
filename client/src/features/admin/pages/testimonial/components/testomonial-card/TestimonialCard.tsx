@@ -68,7 +68,7 @@ const TestimonialCardContent = ({
       </article>
       {isState('Aprobado') && id && <AprobedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
       {isState('Publicado') && id && <PublishedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
-      {isState('Borrador') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Pendiente') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
       {isDiscart && id && <DeleteModal onDelete = {handleDiscartActive} onClose={refresh} id = {id} /> }
     </>
   );

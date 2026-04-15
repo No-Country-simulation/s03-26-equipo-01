@@ -11,9 +11,8 @@
 
 .modal-commit-container div {
     justify-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    display: grid; 
+    place-items: center;
     width: 90%;
     height: 90%;
     text-align: center;

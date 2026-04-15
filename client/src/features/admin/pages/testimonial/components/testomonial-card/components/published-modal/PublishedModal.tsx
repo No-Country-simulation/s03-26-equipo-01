@@ -4,7 +4,7 @@ import { ButtonsCommitContainer } from "../../../../../../components/modal-butto
 import ModalCommitContainer from "../../../../../../components/modal-commit-container/ModalCommitContainer";
 import ModalTitleContainer from "../../../../../../components/modal-title-form/ModalTitleContainer";
 import type { PublishedModalProps } from "./published-modal";
-
+import './published-modal.css';
 const PublishedModal = ({onClose, onChangeState, id}: PublishedModalProps) => {
 
     const {isActive, handleActive} = useActive();
@@ -16,7 +16,7 @@ const PublishedModal = ({onClose, onChangeState, id}: PublishedModalProps) => {
         <ModalContainer disable = {isActive}>
             <ModalCommitContainer>
                 <ModalTitleContainer title = "¿Publicar Testimonio?" />
-                <p>Este testimonio será visible para todos los lectores del sitio.</p>
+                <p className = 'published-modal-message'>Este testimonio será visible para todos los lectores del sitio.</p>
                 <ButtonsCommitContainer onClose = {handleClose} onAcept = {handleAcept} />
             </ModalCommitContainer>
         </ModalContainer>
