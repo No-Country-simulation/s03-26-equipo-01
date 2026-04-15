@@ -4,8 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record TagRequestSearchDTO(
         @NotNull
-        String name,
-        @NotNull
-        Long idAdmin
+        String name
 ) {
 }

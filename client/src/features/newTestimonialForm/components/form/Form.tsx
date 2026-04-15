@@ -1,9 +1,10 @@
 import './styles/form.css';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import SubmitButton from '../submit-button/SubmitButton';
 import { alpha } from '@mui/material/styles';
 import { ImageUp, SquarePlay } from 'lucide-react';
-import ComboBox from '../combo-box/ComboBox';
+import ComboBox, { type DataProps } from '../combo-box/ComboBox';
 import { TextInput } from '../text-input/TextInput';
 import AuthorizationCheckbox from '../authorization-checkbox/AuthorizationCheckbox';
 import UploadButtonWithIcon from '../upload-button-with-icon/UploadButtonWithIcon';
@@ -12,16 +13,13 @@ import { MultitextInput } from '../multitext-input/MultiTextInput';
 import RatingPicker from '../rating-picker/RatingPicker';
 import createTestimonial from '../../../../shared/testimonial/services/testimonial.service';
 import type { Testimonial } from '../../../../shared/testimonial/models/testimonial';
-
-//Datos de ejemplo hasta integrar la API
-const courses = [
-  { label: 'Photoshop', id: 0 },
-  { label: 'Diseño Web', id: 1 },
-  { label: 'Canva', id: 2 },
-  { label: 'Edición de video', id: 3 },
-];
+import searchTagService from '../../../../shared/tag/services/search-tag.service';
 
 const Form = () => {
+  const [tagOptions, setTagOptions] = useState<DataProps[]>([]);
+  const [tagSearch, setTagSearch] = useState('');
+  const [isTagLoading, setIsTagLoading] = useState(false);
+
   const {
     control,
     formState: { isValid },
@@ -32,13 +30,37 @@ const Form = () => {
       fullName: '',
       email: '',
       testimonial: '',
-      course: null,
+      tagId: null,
       authorization: false,
       youtubeUrl: '',
       image: null,
       rating: null,
     },
   });
+
+  useEffect(() => {
+    const normalizedSearch = tagSearch.trim();
+
+    if (!normalizedSearch) {
+      setTagOptions([]);
+      return;
+    }
+
+    const timeoutId = window.setTimeout(async () => {
+      try {
+        setIsTagLoading(true);
+        const tags = await searchTagService(normalizedSearch);
+        setTagOptions(tags.map((tag) => ({ id: tag.id, label: tag.name })));
+      } catch (error) {
+        console.error('Error al buscar tags:', error);
+        setTagOptions([]);
+      } finally {
+        setIsTagLoading(false);
+      }
+    }, 300);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [tagSearch]);
 
   const onSubmit = async (data: Testimonial) => {
     try {
@@ -74,12 +96,14 @@ const Form = () => {
 
         <ComboBox
           control={control}
-          data={courses}
-          label='Curso o programa realizado'
-          name='course'
-          placeholder='Indica nombre'
+          data={tagOptions}
+          label='Tag'
+          name='tagId'
+          placeholder='Buscá un tag'
+          loading={isTagLoading}
+          onSearch={setTagSearch}
           rules={{
-            required: 'El curso o programa realizado es necesario',
+            required: 'El tag es necesario',
           }}
         />
 

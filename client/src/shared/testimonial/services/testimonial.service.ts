@@ -2,7 +2,7 @@ import api from '../../../core/api/api';
 import { CREATE_TESTIMONIAL_API } from '../../../core/api/urls/urls';
 import type { Testimonial } from '../models/testimonial';
 
-const TESTIMONIAL_API_KEY = 'vza_fa46ad2fc07a4b6088eb25e617b73c13';
+const TESTIMONIAL_API_KEY = 'vza_9e579029dbc34f74b2ac170f6a3cf86f';
 
 async function createTestimonial(data: Testimonial) {
   if (data.rating === null) throw new Error('La valoración debe ser un entero');
@@ -15,6 +15,7 @@ async function createTestimonial(data: Testimonial) {
     formData.append('email', data.email);
     formData.append('testimonial', data.testimonial);
     formData.append('rating', data.rating.toString());
+    if (data.tagId !== null) formData.append('idTags', data.tagId.toString());
     if (data.youtubeUrl) formData.append('youtubeUrl', data.youtubeUrl);
     if (data.image) formData.append('image', data.image);
 

@@ -66,7 +66,7 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain apiKeyFilterChain(HttpSecurity http, ApiKeyAuthFilter apiKeyAuthFilter) throws Exception {
         http
-                .securityMatcher("/testimonial", "/testimonial/**", "/embed/published", "/embed/published/**")
+                .securityMatcher("/testimonial", "/testimonial/**", "/embed/published", "/embed/published/**","/tags/search")
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(sess ->
