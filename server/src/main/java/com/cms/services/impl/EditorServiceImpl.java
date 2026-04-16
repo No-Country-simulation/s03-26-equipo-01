@@ -2,13 +2,15 @@ package com.cms.services.impl;
 
 import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
+import com.cms.persistence.repository.MediaRepository;
 import com.cms.persistence.sql.EditorSQLDAO;
+import com.cms.services.CategoryService;
 import com.cms.services.EditorService;
-import com.cms.services.TagService;
 import com.cms.services.TestimonialService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -22,12 +24,17 @@ public class EditorServiceImpl implements EditorService {
 
     private final TestimonialService testimonialService;
 
+    private final CategoryService categoryService;
 
     private final EditorSQLDAO editorSQLDAO;
+    
+    private final MediaRepository mediaRepository;
 
-    public EditorServiceImpl(TestimonialService testimonialService, EditorSQLDAO editorSQLDAO) {
+    public EditorServiceImpl(TestimonialService testimonialService, CategoryService categoryService, EditorSQLDAO editorSQLDAO, MediaRepository mediaRepository) {
         this.testimonialService = testimonialService;
+        this.categoryService = categoryService;
         this.editorSQLDAO = editorSQLDAO;
+        this.mediaRepository = mediaRepository;
     }
 
     @Override
@@ -57,8 +64,6 @@ public class EditorServiceImpl implements EditorService {
 
         testimonial = testimonialService.advanceByEditor(idTestimonial);
 
-        editor.removeDraft(testimonial);
-
         editorSQLDAO.save(editor);
 
         return testimonial;
@@ -86,16 +91,41 @@ public class EditorServiceImpl implements EditorService {
     }
 
     @Override
-    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId) {
+    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId, Long categoryId) {
+        Category category = categoryService.findById(categoryId);
         Editor editor = findById(editorId);
 
         editor.validateUpdateTestimonial(editorSQLDAO.containTestimonial(model.id(), editor));
 
         Testimonial testimonial = testimonialService.findTestimonialById(model.id());
 
+        // Guardar el mediaId para poder actualizar MongoDB por ID (que es único)
+        String mediaId = testimonial.getMedia() != null ? testimonial.getMedia().getId() : null;
+
         model.updateTestimonial(testimonial);
 
-        return testimonialService.update(testimonial);
+        testimonial.setCategory(category);
+
+        Testimonial updated = testimonialService.update(testimonial);
+
+        // Limpiar campos en MongoDB usando mediaId (que SÍ es único)
+        if (mediaId != null) {
+            if (!model.displayOptions().showVideo()) {
+                mediaRepository.clearVideoFieldByMediaId(mediaId);
+            }
+
+            if (!model.displayOptions().showImage()) {
+                mediaRepository.clearImageFieldsByMediaId(mediaId);
+            }
+        }
+
+        return updated;
+    }
+
+    @Override
+    public Page<Testimonial> getDrafts(Long idEditor, int page, int size) {
+        Editor editor = findById(idEditor);
+        return testimonialService.getTestimonialsByEditor(editor, page, size);
     }
 
 

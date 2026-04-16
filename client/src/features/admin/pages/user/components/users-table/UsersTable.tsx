@@ -5,7 +5,6 @@ import UnsuscribeButton from "../unsuscribe-button/UnsuscribeButton"
 import tableData from "./table-data"
 import type { UsersTableProps } from "./user-table"
 
-
 const UsersTable = ({data, page, setPage, discharge, unsuscribe}: UsersTableProps) => {
 
     const isUserActive = (id: number) =>  data?.rows.find(row => row.id === id)?.data.enableName === 'Activo';

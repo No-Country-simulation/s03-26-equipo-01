@@ -60,6 +60,27 @@ public class MediaRepositoryImpl implements MediaRepository {
             mediaMongoDAO.save(media);
         });
     }
+    
+    @Override
+    public void clearVideoFieldByMediaId(String mediaId) {
+        mediaMongoDAO.findById(mediaId).ifPresent(media -> {
+            media.setVideoId(null);
+            media.setVideoUrl(null);
+            media.setVideoTitle(null);
+            media.setThumbnailUrl(null);
+            media.setChannelName(null);
+            mediaMongoDAO.save(media);
+        });
+    }
+    
+    @Override
+    public void clearImageFieldsByMediaId(String mediaId) {
+        mediaMongoDAO.findById(mediaId).ifPresent(media -> {
+            media.setImageUrl(null);
+            media.setImagePublicId(null);
+            mediaMongoDAO.save(media);
+        });
+    }
 
 
 }

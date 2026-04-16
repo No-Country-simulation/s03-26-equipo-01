@@ -30,4 +30,6 @@ public interface TestimonialService {
 
     List<Tag> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId, String name);
     Testimonial archiveTestimonial(Long idTestimonial, Admin admin);
+
+    Page<Testimonial> getTestimonialsByEditor(Editor editor, int page, int size);
 }

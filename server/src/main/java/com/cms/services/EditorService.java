@@ -18,5 +18,7 @@ public interface EditorService {
 
     List<Tag> findTagsByNameForEditor(String name, Long editorId, Long testimonialId);
 
-    Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId);
+    Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId, Long categoryId);
+
+    Page<Testimonial> getDrafts(Long idEditor, int page, int size);
 }

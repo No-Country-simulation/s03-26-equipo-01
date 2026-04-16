@@ -1,0 +1,22 @@
+.testimonial-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: start;
+  width: 100%;
+}
+
+.testimonial-tag-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  min-width: fit-content;
+  height: 24px;
+  font-size: 0.85rem;
+  border: 1px solid #1e308a;
+  border-radius: 16px;
+  color: #1e308a;
+  background-color: #fff;
+  white-space: nowrap;
+}

@@ -119,7 +119,6 @@ public class DataSeederImpl implements DataSeeder {
                         .testimonial("El producto superó mis expectativas.")
                         .witness("Robert3")
                         .rating(5)
-                        .category(category)
                         .email("lucia@gmail.com")
                         .state(StateTestimonial.DRAFT)
                         .build(),

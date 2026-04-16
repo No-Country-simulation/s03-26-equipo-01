@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  width: 100vw;
 }
 
 .embed-admin-panel_container {
@@ -204,6 +204,12 @@
   .embed-button-primary,
   .embed-button-icon {
     justify-content: center;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .embed-admin-panel {
     width: 100%;
   }
 }

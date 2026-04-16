@@ -99,12 +99,6 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     @Override
     public Testimonial update(Testimonial recovered) {
-        if(recovered.getCategory() != null){
-            Category category = categoryService.findById(recovered.getCategory().getId());
-            recovered.setCategory(category);
-        }
-
-
         return testimonialRepository.update(recovered);
     }
 
@@ -120,6 +114,11 @@ public class TestimonialServiceImpl implements TestimonialService {
         testimonial.archived();
 
         return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Page<Testimonial> getTestimonialsByEditor(Editor editor, int page, int size) {
+        return testimonialRepository.getDraftsByEditor(editor, PageRequest.of(page, size));
     }
 
     @Override

@@ -4,3 +4,4 @@ export const TESTIMONIAL_ASOC = (id: number) =>
 export const EDITOR_TESTIMONIAL = (id: number) => `editor/testimonial/${id}`;
 export const UPDATE_TESTIMONIAL = 'editor/testimonial/edit';
 export const GET_TAGS_BY_NAME = 'editor/tags/search';
+export const MY_TESTIMONIALS_URL = 'editor/misTestimonios';
