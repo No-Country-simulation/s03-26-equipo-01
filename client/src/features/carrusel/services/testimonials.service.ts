@@ -2,7 +2,7 @@ import api from '../../../core/api/api';
 import { TESTIMONIAL_CARRUSEL } from '../../../core/routes/routes';
 //import getEmbedApiKey from '../../../shared/testimonial/services/embed-api-key.service';
 
-const testimonialApiKey = 'vza_7f0f97dbc6e04adb9d0a131d3c7f25c6';
+const testimonialApiKey = 'vza_0a590875892e477bbad69caa32b61520';
 
 export const getPublicTestimonials = async () => {
   try {
