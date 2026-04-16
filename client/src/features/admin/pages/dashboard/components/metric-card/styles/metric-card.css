@@ -4,21 +4,20 @@
     align-items: center;
     width: 90%;
     max-width: 360px;
-    height: 256px;
+    height: 156px;
     margin: 15px;
     border: 1px solid #E0E0E0;
     border-radius: 12px;
     box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.08), 0px 4px 8px -2px rgba(0, 0, 0, 0.04);
-    background-color: var(--light-background);
+    background-color: #FFF;
 }
 
 .metric-card_title {
     justify-self: center;
     display: flex;
     align-items: center;
-    width: 70%;
     height: 40%;
-    font-size: var(--medium-font);
+    font-size: var(--medium-font-title);
 }
 
 .metric-card_testionial-data {
@@ -31,7 +30,6 @@
 }
 
 .metric-card_testionial-data--title {
-    text-align: end;
     color: #111;
     opacity: 0.5;
 }
@@ -39,6 +37,5 @@
 .metric-card_testionial-data--count {
     font-size: var(--large-font);
     font-weight: bold;
-    text-align: end;
     color: #505EA4;
 }
