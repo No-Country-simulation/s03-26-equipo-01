@@ -2,13 +2,14 @@ package com.cms.services.impl;
 
 import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.persistence.sql.EditorSQLDAO;
+import com.cms.services.CategoryService;
 import com.cms.services.EditorService;
-import com.cms.services.TagService;
 import com.cms.services.TestimonialService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -22,11 +23,13 @@ public class EditorServiceImpl implements EditorService {
 
     private final TestimonialService testimonialService;
 
+    private final CategoryService categoryService;
 
     private final EditorSQLDAO editorSQLDAO;
 
-    public EditorServiceImpl(TestimonialService testimonialService, EditorSQLDAO editorSQLDAO) {
+    public EditorServiceImpl(TestimonialService testimonialService, CategoryService categoryService, EditorSQLDAO editorSQLDAO) {
         this.testimonialService = testimonialService;
+        this.categoryService = categoryService;
         this.editorSQLDAO = editorSQLDAO;
     }
 
@@ -86,7 +89,8 @@ public class EditorServiceImpl implements EditorService {
     }
 
     @Override
-    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId) {
+    public Testimonial updateTestimonial(TestimonialUpdateDTO model, Long editorId, Long categoryId) {
+        Category category = categoryService.findById(categoryId);
         Editor editor = findById(editorId);
 
         editor.validateUpdateTestimonial(editorSQLDAO.containTestimonial(model.id(), editor));
@@ -94,6 +98,8 @@ public class EditorServiceImpl implements EditorService {
         Testimonial testimonial = testimonialService.findTestimonialById(model.id());
 
         model.updateTestimonial(testimonial);
+
+        testimonial.setCategory(category);
 
         return testimonialService.update(testimonial);
     }

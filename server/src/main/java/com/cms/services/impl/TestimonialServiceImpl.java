@@ -99,12 +99,6 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     @Override
     public Testimonial update(Testimonial recovered) {
-        if(recovered.getCategory() != null){
-            Category category = categoryService.findById(recovered.getCategory().getId());
-            recovered.setCategory(category);
-        }
-
-
         return testimonialRepository.update(recovered);
     }
 

@@ -139,7 +139,7 @@ public class EditorControllerREST {
             @RequestBody TestimonialUpdateDTO request,
             @RequestAttribute("userId") Long editorId
     ){
-        Testimonial testimonial = editorService.updateTestimonial(request, editorId);
+        Testimonial testimonial = editorService.updateTestimonial(request, editorId, request.categoryId());
 
         return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
     }
