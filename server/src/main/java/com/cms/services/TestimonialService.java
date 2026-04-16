@@ -32,4 +32,6 @@ public interface TestimonialService {
     Testimonial archiveTestimonial(Long idTestimonial, Admin admin);
 
     Page<Testimonial> getTestimonialsByEditor(Editor editor, int page, int size);
+
+    List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial);
 }

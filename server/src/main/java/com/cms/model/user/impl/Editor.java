@@ -31,7 +31,7 @@ public class Editor extends User {
     }
 
     public void validateAdvance(Testimonial testimonial) {
-        if(!isContains(testimonial)) throw new BusinessException("El testimonio no pertenece al editor!");
+        if(!isContains(testimonial) || !testimonial.hasCategory()) throw new BusinessException("El testimonio no pertenece al editor!");
     }
 
     public boolean isContains(Testimonial testimonial) {
