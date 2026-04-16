@@ -23,6 +23,7 @@ const useAdminUser = () => {
 
   const created = async (createdUser: CreatedUser) => {
     await createService(createdUser);
+    fetchData();
   }
 
   return { created, discharge, unsuscribe, data, page, setPage };
