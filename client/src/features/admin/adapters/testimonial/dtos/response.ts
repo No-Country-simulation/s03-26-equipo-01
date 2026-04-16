@@ -14,5 +14,5 @@ export interface TestimonialResponse {
     createdAt: Date
     category: CategoryResponse
     tags: TagResponse[]
-    media: MediaResponse
+    media?: MediaResponse
 }

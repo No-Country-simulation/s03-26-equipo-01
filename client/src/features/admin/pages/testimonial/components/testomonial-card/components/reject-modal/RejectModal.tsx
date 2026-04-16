@@ -15,7 +15,7 @@ const RejectModal = ({onChangeState, onClose, id}: RejectModalProps) => {
     return (
         <ModalContainer disable = {isActive}>
             <ModalCommitContainer>
-                <ModalTitleContainer title = "Testimonio Rechazado" />
+                <ModalTitleContainer title = "¿Rechazar Testimonio?" />
                 <ButtonsCommitContainer onClose = {handleClose} onAcept = {handleAcept} />
             </ModalCommitContainer>
         </ModalContainer>

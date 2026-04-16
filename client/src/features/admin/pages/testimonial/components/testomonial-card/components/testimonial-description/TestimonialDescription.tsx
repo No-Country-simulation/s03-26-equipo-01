@@ -5,7 +5,7 @@ import './testimonial-description.css';
 const TestimonialDescription = ({testimonial}: TestimonialDescriptionProps) => {
     return (
         <section className = 'testimonial-admin-description'>
-            <Rating name = "testimonial-ranting" defaultValue = {testimonial.rating} precision = {1} />
+            <Rating name = "testimonial-ranting" defaultValue = {testimonial.rating} precision = {0.5} readOnly />
             <p>{testimonial.testimonial}</p>
         </section>
     )
