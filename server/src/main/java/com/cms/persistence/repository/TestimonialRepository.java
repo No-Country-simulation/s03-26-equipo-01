@@ -29,4 +29,6 @@ public interface TestimonialRepository {
     Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin);
 
     Page<Testimonial> getDraftsByEditor(Editor editor, Pageable pageable);
+
+    List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial);
 }

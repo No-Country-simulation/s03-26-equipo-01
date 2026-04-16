@@ -85,4 +85,10 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
             Pageable pageable
     );
 
+    @Query("""
+            SELECT t
+                FROM Testimonial t
+                WHERE t.state = :state AND t.admin = :admin ORDER BY t.createdAt DESC
+    """)
+    List<Testimonial> findAllTestimonialPublished(@Param("admin") Admin admin, @Param("state") StateTestimonial stateTestimonial);
 }
