@@ -1,0 +1,16 @@
+.actions-testimony-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .actions-testimony-container {
+    flex-wrap: wrap;
+  }
+
+  .actions-testimony-container button {
+    font-size: 0.75rem;
+  }
+}

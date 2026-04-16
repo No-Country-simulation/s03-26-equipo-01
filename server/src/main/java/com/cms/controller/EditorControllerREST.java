@@ -8,6 +8,7 @@ import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 
 import com.cms.controller.dto.testimonial.TestimonialResponseSimpleDTO;
 import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
+import com.cms.controller.dto.testimonial.TestimonilasToEditorDTO;
 import com.cms.controller.dto.user.UserRequestSimpleDTO;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
@@ -144,4 +145,22 @@ public class EditorControllerREST {
         return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
     }
 
+    @GetMapping("/misTestimonios")
+    @EditorEndpoint
+    public ResponseEntity<TableResponseDTO<TestimonilasToEditorDTO>> getMyDrafts(
+            @RequestAttribute("userId") Long idEditor,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        Page<Testimonial> testimonialPage = editorService.getDrafts(idEditor,page,size);
+
+        Page<TestimonilasToEditorDTO> testimonialDTO = testimonialPage.map(TestimonilasToEditorDTO::fromModel);
+
+        return ResponseEntity.ok(
+                TableResponseDTO.fromPage(
+                        List.of("Nº", "TESTIMONIO","VIDEO", "IMAGEN","CATEGORIA","ESTADO"),
+                        testimonialDTO,
+                        TestimonilasToEditorDTO::id
+                )
+        );
+    }
 }
