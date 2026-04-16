@@ -12,5 +12,5 @@ export interface Testimonial {
     createdAt: Date
     category?: Category
     tags: Tag[]
-    media: Media
+    media?: Media
 }
