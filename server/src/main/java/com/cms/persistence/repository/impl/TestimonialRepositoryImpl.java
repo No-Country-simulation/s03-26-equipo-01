@@ -70,6 +70,11 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     }
 
     @Override
+    public List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial) {
+        return testimonialSQLDAO.findAllTestimonialPublished(admin, stateTestimonial);
+    }
+
+    @Override
     public Testimonial findById(Long id) {
         Testimonial testimonial = testimonialSQLDAO.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), id));

@@ -5,11 +5,11 @@ const MetricCard = ({metric}: MetricCardProps) => {
     return (
         <article className = 'metric-card-container'>
             <div className = 'metric-card_title'>
-                <h4>{metric.name}</h4>
+                <p>{metric.name}</p>
             </div >
             <div className = 'metric-card_testionial-data'>
-                <p className = 'metric-card_testionial-data--title'>Testimonios</p>
                 <p className = 'metric-card_testionial-data--count'>{metric.testimonialsCount}</p>
+                <p className = 'metric-card_testionial-data--title'>Testimonios</p>
             </div>
         </article>
     )

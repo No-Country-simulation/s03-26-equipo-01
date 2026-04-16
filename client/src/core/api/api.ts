@@ -9,6 +9,10 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
+if (API_BASE_URL.includes('ngrok')) {
+  api.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
+}
+
 api.interceptors.request.use(
   (request) => sendToken(request),
   (error: AxiosError) => handleErrors(error),

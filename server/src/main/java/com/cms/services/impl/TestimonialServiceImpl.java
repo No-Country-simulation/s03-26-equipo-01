@@ -122,6 +122,11 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
+    public List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial) {
+        return testimonialRepository.findAllTestimonialPublished(admin, stateTestimonial);
+    }
+
+    @Override
     public Testimonial findByIdAndEditor(Long id, Editor editor) {
         return testimonialRepository.findByIdAndEditor(id, editor);
     }

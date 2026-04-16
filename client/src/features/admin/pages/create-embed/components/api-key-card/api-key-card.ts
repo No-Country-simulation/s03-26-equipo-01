@@ -4,4 +4,6 @@ export type ApiKeyCardProps = {
   isVisible: boolean;
   onCopy: (value: string, label: string) => Promise<void>;
   onToggleVisibility: () => void;
+  title?: string;
+  warningText?: string;
 };

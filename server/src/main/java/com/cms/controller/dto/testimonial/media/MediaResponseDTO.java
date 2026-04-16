@@ -30,7 +30,6 @@ public record MediaResponseDTO(
         String channelName
 ) {
     public static MediaResponseDTO fromModel(Media media) {
-        if (media == null) return null;
         return new MediaResponseDTO(
                 media.getUrl(),
                 media.getPublicId(),

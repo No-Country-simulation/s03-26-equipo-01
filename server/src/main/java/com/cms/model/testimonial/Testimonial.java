@@ -75,4 +75,8 @@ public class Testimonial {
         this.testimonialState = new ArchivedState();
         this.state = StateTestimonial.fromState(this.testimonialState);
     }
+
+    public boolean hasCategory() {
+        return category != null;
+    }
 }

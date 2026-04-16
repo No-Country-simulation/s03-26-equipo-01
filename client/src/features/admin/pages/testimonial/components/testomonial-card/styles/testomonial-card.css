@@ -1,3 +1,5 @@
+@import '../../../../../../../shared/animations/show-container.css';
+
 .testimonial-admin-card-container {
     display: grid;
     width: 100%;

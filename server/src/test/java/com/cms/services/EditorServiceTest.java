@@ -1,6 +1,7 @@
 package com.cms.services;
 
 import com.cms.exception.business.BusinessException;
+import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
@@ -84,11 +85,18 @@ public class EditorServiceTest {
 
         editorService.asocTestimonial(testimonial.getId(), editor.getId());
 
+        testimonial.setCategory(Category.builder().name("gola").build());
+
+        testimonialService.update(testimonial);
+
+        Editor editorRecovered = editorSQLDAO.findById(editor.getId()).orElseThrow();
+
+
         Testimonial advanced = editorService.advanceByEditor(testimonial.getId(), editor.getId());
 
         assertEquals(StateTestimonial.PENDING, advanced.getState());
 
-        Editor editorRecovered = editorSQLDAO.findById(editor.getId()).orElseThrow();
+        editorRecovered = editorSQLDAO.findById(editor.getId()).orElseThrow();
         assertFalse(editorRecovered.isContains(testimonial));
 
         assertThrows(BusinessException.class, () -> editorService.advanceByEditor(testimonial.getId(), editor.getId()));

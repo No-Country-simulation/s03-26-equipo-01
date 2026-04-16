@@ -51,7 +51,7 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     @Query("SELECT COUNT(t.id) FROM Testimonial t WHERE t.category.id = :categoryId")
     long countTestimonialsByCategoryId(@Param("categoryId") Long categoryId);
 
-    @Query("SELECT t FROM Testimonial t WHERE t.state = :state AND t.admin = :admin AND t.editor IS NULL ORDER BY t.createdAt DESC")
+    @Query("SELECT t FROM Testimonial t WHERE t.state = :state AND t.admin = :admin ORDER BY t.createdAt DESC")
     Page<Testimonial> findTopByState(@Param("state") StateTestimonial state, Pageable pageable, @Param("admin") Admin admin);
 
     @Query("SELECT t FROM Testimonial t WHERE t.admin.id = :idAdmin AND t.state != :state AND t.state != com.cms.model.testimonial.enums.StateTestimonial.ARCHIVED ")
@@ -85,4 +85,10 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
             Pageable pageable
     );
 
+    @Query("""
+            SELECT t
+                FROM Testimonial t
+                WHERE t.state = :state AND t.admin = :admin ORDER BY t.createdAt DESC
+    """)
+    List<Testimonial> findAllTestimonialPublished(@Param("admin") Admin admin, @Param("state") StateTestimonial stateTestimonial);
 }
