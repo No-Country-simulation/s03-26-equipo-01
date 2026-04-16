@@ -1,17 +1,17 @@
 .testimonial-admin-tags {
   justify-self: center;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(70px, 20%));
-  gap: 1vw;
+  display: flex;
+  gap: 10px;
   width: 92%;
-  height: 100%;
+  overflow-y: scroll;
 }
 
 .testimonial-admin-tag-container {
   display: grid;
   place-items: center;
-  min-width: 70px;
   height: 4vh;
+  padding-left: 5px;
+  padding-right: 5px;
   font-size: var(--medium-font);
   border: 1px solid #1e308a;
   border-radius: 90px;
