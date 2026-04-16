@@ -8,17 +8,22 @@ import unsuscribeService from '../service/unsuscribe.service';
 import createService from '../service/create-user.service';
 
 const useAdminUser = () => {
-  const { deleted, patch } = useApi();
-  const { data, page, setPage, addRow, fetchData } =
-    usePaginator<EditableUser>(getUsers);
+  const { deletedWithBody, patchWithBody } = useApi();
+  const { data, page, setPage, fetchData } = usePaginator<EditableUser>(getUsers);
 
-  const discharge = async (id: number) => await patch(dischargeService, id);
-  const unsuscribe = async (id: number) => await deleted(unsuscribeService, id);
-  const created = async (createdUser: CreatedUser) => {
-    const newUser = await createService(createdUser);
-    addRow(newUser, newUser.id);
+  const discharge = async (id: number) => {
+    await patchWithBody(dischargeService, id);
     fetchData();
-  };
+  }
+
+  const unsuscribe = async (id: number) => {
+    await deletedWithBody(unsuscribeService, id);
+    fetchData();
+  }
+
+  const created = async (createdUser: CreatedUser) => {
+    await createService(createdUser);
+  }
 
   return { created, discharge, unsuscribe, data, page, setPage };
 };

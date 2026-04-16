@@ -13,4 +13,6 @@ public interface CategoryService {
     Category update(Long id, Category categoryData);
 
     void deleteById(Long id);
+
+    List<Category> findByName(String name, Long editorId);
 }

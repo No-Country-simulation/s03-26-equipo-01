@@ -53,5 +53,13 @@ public class TagRepositoryImpl implements TagRepository {
         return elastics.stream().map(tagMapper::fromElastic).toList();
     }
 
+    @Override
+    public List<Tag> findTagsByNameExcludeIds(List<Long> ids, Long idAdmin, String name) {
+        List<String> idsString = ids.stream().map(Object::toString).toList();
+        List<TagElastic> elastics = tagElasticDAO.findAllByNameAndIdAdminExcludeIdsString(name, idAdmin.toString(), idsString);
+
+        return elastics.stream().map(tagMapper::fromElastic).toList();
+    }
+
 
 }

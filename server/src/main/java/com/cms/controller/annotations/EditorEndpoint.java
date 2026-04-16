@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @PreAuthorize("hasRole('EDITOR')")
 @SecurityRequirement(name = "bearerAuth")
-@Operation(description = "Requiere rol ADMIN o EDITOR")
+@Operation(description = "Requiere rol EDITOR")
 @ApiResponse(
         responseCode = "401",
         description = "No autenticado",

@@ -5,13 +5,16 @@ import MyTestimonials from '../pages/testimonial/MyTestimonial.tsx';
 import {
   EDITOR_TESTIMONIAL_BANK,
   EDITOR_TESTIMONIAL,
+  EDIT_TESTIMONIAL,
 } from '../../../core/routes/editor/editor';
+import EditTestimonial from '../pages/editTestimonial/EditTestimonial.tsx';
 
 const EditorRoutes = () => {
   return (
     <Routes>
       <Route path={EDITOR_TESTIMONIAL_BANK} element={<TestimonialBank />} />
       <Route path={EDITOR_TESTIMONIAL} element={<MyTestimonials />} />
+      <Route path={EDIT_TESTIMONIAL} element={<EditTestimonial />} />
     </Routes>
   );
 };

@@ -1,6 +1,8 @@
 package com.cms.controller;
 
+import com.cms.controller.annotations.AdminEditorEndpoint;
 import com.cms.controller.annotations.AdminEndpoint;
+import com.cms.controller.annotations.EditorEndpoint;
 import com.cms.controller.dto.category.CreateCategoryDto;
 import com.cms.controller.dto.category.CategoryResponseDto;
 import com.cms.controller.dto.category.UpdateCategoryDto;
@@ -16,14 +18,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/categories")
@@ -65,6 +60,20 @@ public class CategoryController {
                 .toList();
 
         return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/search")
+    @EditorEndpoint
+    public ResponseEntity<List<CategoryResponseDto>> findByName(
+            @RequestParam(required = false) String name,
+            @RequestAttribute("userId") Long editorId) {
+        List<Category> categories = categoryService.findByName(name, editorId);
+
+        List<CategoryResponseDto> categoryResponseDtos = categories.stream()
+                .map(CategoryResponseDto::fromModel)
+                .toList();
+
+        return ResponseEntity.ok(categoryResponseDtos);
     }
 
     @GetMapping("/{id}")

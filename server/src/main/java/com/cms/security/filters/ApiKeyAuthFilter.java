@@ -64,12 +64,19 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
+        String method = request.getMethod();
+
+        if (method.equalsIgnoreCase("OPTIONS")) {
+            return true;
+        }
+
         boolean isPublicPath = path.startsWith("/swagger-ui") ||
                 path.startsWith("/v3/api-docs") ||
                 path.startsWith("/auth/") ||
                 path.startsWith("/error");
 
-        boolean isApiKeyPath = path.startsWith("/testimonial");
+        boolean isApiKeyPath = path.startsWith("/testimonial") ||
+                path.startsWith("/tags/search");
 
         return isPublicPath || !isApiKeyPath;
     }

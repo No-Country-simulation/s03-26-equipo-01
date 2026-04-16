@@ -85,6 +85,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> findTagsByName(String nameTag, Long idAdmin) {
         getAdmin(idAdmin);
+        if (nameTag.isEmpty() || nameTag.equals("")) {
+            return tagRepository.findAllByActiveTrueAndCreatorIdOrderByNameAsc(idAdmin);
+        }
 
         return tagRepository.findTagsByName(nameTag, idAdmin);
     }

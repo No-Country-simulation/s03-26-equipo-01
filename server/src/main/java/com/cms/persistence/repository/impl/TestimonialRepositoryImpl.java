@@ -1,8 +1,10 @@
 package com.cms.persistence.repository.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.MediaRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
@@ -40,6 +42,20 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     @Override
     public Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state) {
         return testimonialSQLDAO.findTopByState(state, of, admin);
+    }
+
+    @Override
+    public Testimonial findByIdAndEditor(Long id, Editor editor) {
+        return testimonialSQLDAO.findByIdAndEditor(id, editor).orElseThrow(()-> new EntityNotFoundException(Testimonial.class.getName(), id));
+    }
+
+
+    @Override
+    public List<Long> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId) {
+        Testimonial testimonial = testimonialSQLDAO.findById(testimonialId)
+                .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), testimonialId));
+
+        return testimonialSQLDAO.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId);
     }
 
     @Override

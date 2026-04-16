@@ -3,6 +3,8 @@ package com.cms.services.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateEmailException;
 import com.cms.model.user.User;
+import com.cms.model.user.impl.Editor;
+import com.cms.persistence.sql.EditorSQLDAO;
 import com.cms.persistence.sql.UserSQLDAO;
 import com.cms.services.UserService;
 import jakarta.transaction.Transactional;
@@ -25,11 +27,13 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserSQLDAO userSQLDAO;
+    private final EditorSQLDAO editorSQLDAO;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserSQLDAO userSQLDAO, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserSQLDAO userSQLDAO, EditorSQLDAO editorSQLDAO, PasswordEncoder passwordEncoder) {
         this.userSQLDAO = userSQLDAO;
         this.passwordEncoder = passwordEncoder;
+        this.editorSQLDAO = editorSQLDAO;
     }
 
     @Override
@@ -52,14 +56,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void disableUser(Long idUser) {
-        User user = findById(idUser);
-
+    public Editor disableUser(Long idUser) {
+        Editor user = findEditorById(idUser);
         user.disable();
+        return editorSQLDAO.save(user);
     }
 
     public User findById(Long idUser) {
         return userSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(User.class.getName(), idUser));
+    }
+
+    private Editor findEditorById(Long idUser) {
+        return editorSQLDAO.findById(idUser).orElseThrow(() -> new EntityNotFoundException(Editor.class.getName(), idUser));
     }
 
     @Override
@@ -74,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void enableUser(Long idUser) {
-        User user = findById(idUser);
-
+    public Editor enableUser(Long idUser) {
+        Editor user = findEditorById(idUser);
         user.enable();
+        return editorSQLDAO.save(user);
     }
 }

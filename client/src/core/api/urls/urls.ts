@@ -4,3 +4,4 @@ export * from './admin/admin';
 export * from './tag/tag';
 export * from './category/category';
 export * from './editor/editor';
+export * from './testimonial/testimonial';

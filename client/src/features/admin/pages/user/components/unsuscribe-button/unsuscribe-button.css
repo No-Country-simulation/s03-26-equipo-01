@@ -4,7 +4,7 @@
     font-weight: bold;
     border: 1px solid #EA4A41;
     border-radius: 4px;
-    color: var(--primary-blue);
+    color: #EA4A41;
     background-color: #FFFFFF;
     cursor: pointer;
     transition: color 0.2s;

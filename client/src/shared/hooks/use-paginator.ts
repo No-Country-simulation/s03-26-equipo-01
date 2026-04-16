@@ -20,14 +20,7 @@ const usePaginator = <T>(
     fetchData();
   }, [page]);
 
-  const addRow = (row: T, id: number) => {
-    setData(prev => prev ? {
-      ...prev,
-      rows: [...prev.rows, { id, data: row }]
-    } : prev);
-  };
-
-  return { data, page, setPage, addRow, fetchData };
+  return { data, page, setPage, fetchData };
 };
 
 export default usePaginator;
