@@ -15,7 +15,7 @@ const TableEditData = ({
 }: TableContainerProps) => {
   return (
     <div className='table-data-container'>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{overflow: 'auto'}}>
         <Table>
           <HeaderTable tableData={tableData} />
           {customBody ?? (

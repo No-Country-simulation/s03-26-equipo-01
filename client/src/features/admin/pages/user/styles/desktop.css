@@ -1,0 +1,5 @@
+@media screen and (min-width: 1024px) {
+    .users-admin-panel_container {
+        overflow-x: initial;
+    }
+}
