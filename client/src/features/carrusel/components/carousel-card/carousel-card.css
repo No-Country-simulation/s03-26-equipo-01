@@ -1,0 +1,123 @@
+.carousel-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+  height: 100%;
+  min-width: 260px;
+  max-width: 340px;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(70, 70, 70, 0.22);
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  animation: slideIn 0.3s ease-out;
+  flex-shrink: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.carousel-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.carousel-card-name {
+  font-size: var(--medium-font-title);
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+.carousel-card-rating {
+  display: flex;
+  align-items: center;
+  font-size: var(--primary-font);
+  color: var(--secondary-color-text);
+}
+
+.carousel-card-description {
+  font-size: var(--primary-font);
+  line-height: 1.6;
+  color: var(--secondary-color-text);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.carousel-card-tags-wrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.carousel-card-media-container {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--light-background);
+}
+
+.carousel-card-image-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-card-video-wrapper {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+}
+
+.carousel-card-video {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.carousel-card-video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 155, 113, 0.1);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .carousel-card {
+    max-width: 100%;
+    min-width: 260px;
+  }
+
+  .carousel-card-description {
+    -webkit-line-clamp: 3;
+  }
+}

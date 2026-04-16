@@ -53,12 +53,12 @@ const TestimonialCardContent = ({
 
   return (
     <>
-      <article className='testimonial-admin-card-container'>
+      <article className='testimonial-admin-card-container falling-container'>
       <TestimonialHeader testimonial={testimonial} />
       <TestimonialState testimonial={testimonial} />
       <TestimonialDescription testimonial={testimonial} />
       <TestimonialTags tags={testimonial.tags} />
-      <MultimediaContent testimonial={testimonial} />
+      {testimonial.media && <MultimediaContent testimonial={testimonial} />}
       <StateButtonContainer
         changeStateButtons={
           buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]
@@ -68,7 +68,7 @@ const TestimonialCardContent = ({
       </article>
       {isState('Aprobado') && id && <AprobedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
       {isState('Publicado') && id && <PublishedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
-      {isState('Pendiente') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
+      {isState('Borrador') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
       {isDiscart && id && <DeleteModal onDelete = {handleDiscartActive} onClose={refresh} id = {id} /> }
     </>
   );

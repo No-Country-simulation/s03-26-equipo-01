@@ -1,6 +1,5 @@
 .tabs-admin-container {
     display: grid;
-    grid-template-rows: 0.1fr 1fr;
     gap: 2vh;
     width: 100%;
 }

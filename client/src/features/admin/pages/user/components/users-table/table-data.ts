@@ -7,7 +7,7 @@ const tableData = (table: TablePaginator<EditableUser>): TableDataContent => {
         rows: table.rows.map(row => {
             return {
                 id: row.id,
-                fields: Object.values(row.data)
+                fields: [row.data.id, row.data.email, row.data.rol, row.data.testimonialsNumber, row.data.enableName].map(value => value.toString())
             }
         })
     }

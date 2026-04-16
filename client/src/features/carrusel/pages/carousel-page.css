@@ -1,0 +1,96 @@
+.carousel-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 60vh;
+  padding: 2rem 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 155, 113, 0.05) 0%,
+    rgba(30, 48, 138, 0.05) 100%
+  );
+}
+
+.carousel-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 120rem;
+  align-items: center;
+}
+
+.carousel-page-title {
+  font-size: var(--large-font);
+  font-weight: 700;
+  color: var(--secondary-color);
+  text-align: center;
+  margin: 0;
+}
+
+.carousel-page-subtitle {
+  font-size: var(--medium-font);
+  color: var(--secondary-color-text);
+  text-align: center;
+  margin: 0;
+  max-width: 50rem;
+}
+
+.carousel-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 3rem 1rem;
+  font-size: var(--medium-font);
+  color: var(--secondary-color-text);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.carousel-page-error {
+  background-color: rgba(179, 38, 30, 0.1);
+}
+
+.carousel-page-error p {
+  color: var(--error-color);
+  font-size: var(--medium-font);
+  text-align: center;
+  margin: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .carousel-page {
+    min-height: 70vh;
+    padding: 3rem 2rem;
+  }
+
+  .carousel-page-container {
+    gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .carousel-page {
+    min-height: 80vh;
+    padding: 4rem 3rem;
+  }
+
+  .carousel-page-title {
+    font-size: clamp(2rem, 1vw + 2rem, 3.5rem);
+  }
+
+  .carousel-page-subtitle {
+    font-size: var(--medium-font);
+  }
+}
