@@ -7,6 +7,6 @@
 
 .dashboard-admin-panel_container {
     display: grid;
+    margin-top: 20px;
     width: 90%;
-    height: 90%;
 }

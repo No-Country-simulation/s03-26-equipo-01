@@ -16,15 +16,13 @@ const DashboardPanel = () => {
     return (
         <section className = 'dashboard-admin-panel'>
             <div className = 'dashboard-admin-panel_container'>
-                <div className = 'dashboard-admin-panel_container--info'>
-                    <TitleContainer 
+                <TitleContainer 
                         title = {`Bienvenido ${user?.firstName + ' ' + user?.lastName}`}
                     />
-                    <TabContainer onTab = {handleTab}>
-                        <CategoryDashboard currentTab = {tabName} metrics = {categoriesMetrics} />
-                        <TagDashboard currentTab = {tabName} metrics = {tagsMetrics} />
-                    </TabContainer>
-                </div>
+                <TabContainer onTab = {handleTab}>
+                    <CategoryDashboard currentTab = {tabName} metrics = {categoriesMetrics} />
+                    <TagDashboard currentTab = {tabName} metrics = {tagsMetrics} />
+                </TabContainer>
             </div>
         </section>
     )
