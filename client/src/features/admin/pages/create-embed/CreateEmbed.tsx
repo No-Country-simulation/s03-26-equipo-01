@@ -1,15 +1,14 @@
-import TitleContainer from "../../components/title-container/TitleContainer";
-import Toast from "../../../../shared/components/toast/Toast";
-import ApiKeyCard from "./components/api-key-card/ApiKeyCard";
-import EmbedCodeCard from "./components/embed-code-card/EmbedCodeCard";
-import useCreateEmbed from "./hooks/use-create-embed";
-import "./styles/create-embed.css";
+import TitleContainer from '../../components/title-container/TitleContainer';
+import Toast from '../../../../shared/components/toast/Toast';
+import ApiKeyCard from './components/api-key-card/ApiKeyCard';
+import EmbedCodeCard from './components/embed-code-card/EmbedCodeCard';
+import useCreateEmbed from './hooks/use-create-embed';
+import './styles/create-embed.css';
 
 const CreateEmbed = () => {
   const {
     apiKey,
     displayApiKey,
-    embedBaseUrl,
     embedSnippets,
     handleCloseToast,
     instructions,
@@ -21,22 +20,24 @@ const CreateEmbed = () => {
   } = useCreateEmbed();
 
   return (
-    <section className="embed-admin-panel">
-      <div className="embed-admin-panel_container">
-        <div className="embed-admin-panel_container--info">
+    <section className='embed-admin-panel'>
+      <div className='embed-admin-panel_container'>
+        <div className='embed-admin-panel_container--info'>
           <TitleContainer
-            title="Codigos de embed"
-            text={`Usá estos snippets para insertar el formulario real de testimonios desde ${embedBaseUrl}.`}
+            title='Embed para el formulario'
+            text={`Integrá en tu sitio externo el formulario para poder recolectar los testimonios de tus usuarios `}
           />
-          <section className="embed-instructions">
-            <h3 className="embed-instructions_title">Instrucciones de instalacion</h3>
-            <ul className="embed-instructions_list">
+          <section className='embed-instructions'>
+            <h3 className='embed-instructions_title'>
+              Instrucciones de instalacion
+            </h3>
+            <ul className='embed-instructions_list'>
               {instructions.map((instruction) => (
                 <li key={instruction}>{instruction}</li>
               ))}
             </ul>
           </section>
-          <div className="embed-cards">
+          <div className='embed-cards'>
             {embedSnippets.map((snippet) => (
               <EmbedCodeCard
                 key={snippet.id}
@@ -60,7 +61,7 @@ const CreateEmbed = () => {
           onClose={handleCloseToast}
           content={
             <>
-              <strong>{toastType === "success" ? "Listo!" : "Error"}</strong>
+              <strong>{toastType === 'success' ? 'Listo!' : 'Error'}</strong>
               <p>{toastMessage}</p>
             </>
           }

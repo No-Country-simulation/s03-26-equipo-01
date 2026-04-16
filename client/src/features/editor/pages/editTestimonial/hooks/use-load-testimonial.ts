@@ -35,7 +35,7 @@ export const useLoadTestimonial = (
     getTestimonialService(Number(id))
       .then((data) => {
         setTestimonial(data);
-        initTags(data.tags);
+        initTags(data.tags || []);
         setCategory(data.category || null);
         setTestimonialText(data.testimonial || '');
         setShowVideo(false);

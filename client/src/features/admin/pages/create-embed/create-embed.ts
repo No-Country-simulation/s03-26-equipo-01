@@ -10,11 +10,10 @@ const DEFAULT_SITE_URL = 'http://localhost:5173';
 const EMBED_API_KEY_PLACEHOLDER = 'YOUR_API_KEY';
 
 export const EMBED_INSTRUCTIONS = [
-  'Copiá el HTML del formulario.',
-  'Reemplazá YOUR_API_KEY por la clave API del cliente que va a enviar testimonios.',
-  'Pegalo directo en la página donde querés mostrar el formulario.',
-  'Publicá el frontend y actualizá la URL base si el formulario vive en otro dominio.',
-  'Si hace falta, ajustá el alto, el borde y el ancho del iframe según el diseño del sitio.',
+  'Copia el código del widget que deseas usar',
+  'Reemplazá YOUR_API_KEY con tu clave API',
+  'Pega el código en tu página HTML donde quieras mostrar los testimonios',
+  'Personaliza los parámetros según tus necesidades',
 ];
 
 function sanitizeBaseUrl(baseUrl: string) {
@@ -27,18 +26,20 @@ function buildEmbedUrl(baseUrl: string, apiKey = EMBED_API_KEY_PLACEHOLDER) {
   return `${testimonialUrl}?${query.toString()}`;
 }
 
-export function getEmbedSnippets(baseUrl: string, apiKey = EMBED_API_KEY_PLACEHOLDER): EmbedSnippet[] {
+export function getEmbedSnippets(
+  baseUrl: string,
+  apiKey = EMBED_API_KEY_PLACEHOLDER,
+): EmbedSnippet[] {
   const iframeUrl = buildEmbedUrl(baseUrl, apiKey);
 
   return [
     {
       id: 'html',
-      title: 'HTML del formulario',
+      title: 'Formulario',
       description:
-        'Fragmento listo para pegar en una página y mostrar el formulario real de testimonios.',
+        'Testimonios en formato carrusel con reproducción automática.',
       copyLabel: 'Código HTML',
-      code: `<!-- Formulario de testimonios Voz Activa -->
-<iframe
+      code: `<iframe
   src="${iframeUrl}"
   title="Formulario de testimonios"
   width="100%"
