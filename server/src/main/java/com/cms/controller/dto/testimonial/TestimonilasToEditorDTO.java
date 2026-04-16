@@ -1,6 +1,7 @@
 package com.cms.controller.dto.testimonial;
 
 import com.cms.controller.dto.category.CategoryResponseDto;
+import com.cms.controller.dto.category.CategoryResponseSimpleDTO;
 import com.cms.controller.dto.tag.TagResponseDto;
 import com.cms.controller.dto.testimonial.media.MediaResponseDTO;
 import com.cms.model.testimonial.Testimonial;
@@ -23,15 +24,17 @@ public record TestimonilasToEditorDTO(
         MediaResponseDTO media,
 
         @Schema(description = "Categoria asociada al testimonio")
-        CategoryResponseDto category
+        CategoryResponseSimpleDTO category
 ) {
     public static TestimonilasToEditorDTO fromModel(Testimonial testimonial){
+        CategoryResponseSimpleDTO category = testimonial.getCategory() == null ? null : CategoryResponseSimpleDTO.fromModel(testimonial.getCategory());
+
         return new TestimonilasToEditorDTO(
                 testimonial.getId(),
                 testimonial.getTestimonial(),
                 testimonial.getState(),
                 MediaResponseDTO.fromModel(testimonial.getMedia()),
-                CategoryResponseDto.fromModel(testimonial.getCategory())
+                category
         );
     }
 }

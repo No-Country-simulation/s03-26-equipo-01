@@ -1,11 +1,11 @@
 export interface TableDataContent {
-    headers: string[]
-    rows: Row[]
+  headers: string[];
+  rows: Row[];
 }
 
 interface Row {
-    id: number 
-    fields: string[]
+  id: number;
+  fields: string[];
 }
 
 export interface TablePaginator<T> {
@@ -21,4 +21,5 @@ export interface TablePaginator<T> {
 export interface DataRow<T> {
   id: number;
   data: T;
+  actions?: React.ReactNode;
 }

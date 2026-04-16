@@ -77,8 +77,8 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     SELECT t
     FROM Testimonial t
     WHERE t.editor = :editor
-        AND t.state = com.cms.model.testimonial.enums.StateTestimonial.DRAFT
-            AND t.state = com.cms.model.testimonial.enums.StateTestimonial.PENDING
+    AND (t.state = com.cms.model.testimonial.enums.StateTestimonial.DRAFT
+         OR t.state = com.cms.model.testimonial.enums.StateTestimonial.PENDING)
     """)
     Page<Testimonial> findDraftsByEditor(
             @Param("editor") Editor editor,
