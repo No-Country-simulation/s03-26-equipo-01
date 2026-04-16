@@ -7,11 +7,13 @@ const ApiKeyCard = ({
   isVisible,
   onCopy,
   onToggleVisibility,
+  title = 'Clave API',
+  warningText = 'Manten tu clave API segura. No la compartas publicamente.',
 }: ApiKeyCardProps) => {
   return (
     <article className='embed-card'>
       <div className='embed-card_header embed-card_header-simple'>
-        <h3 className='embed-card_title'>Clave API</h3>
+        <h3 className='embed-card_title'>{title}</h3>
       </div>
       <div className='embed-card_body'>
         <div className='embed-api-key'>
@@ -30,16 +32,14 @@ const ApiKeyCard = ({
           </button>
           <button
             type='button'
-            onClick={() => onCopy(apiKey, 'Clave API')}
+            onClick={() => onCopy(apiKey, title)}
             className='embed-button embed-button-primary'
           >
             <Copy size={16} />
             Copiar
           </button>
         </div>
-        <p className='embed-api-key_warning'>
-          Mantén tu clave API segura. No la compartas públicamente.
-        </p>
+        <p className='embed-api-key_warning'>{warningText}</p>
       </div>
     </article>
   );

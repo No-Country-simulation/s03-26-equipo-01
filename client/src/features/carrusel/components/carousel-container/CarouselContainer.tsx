@@ -17,14 +17,71 @@ const CarouselContainer = ({
 }: CarouselContainerProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [slideMetrics, setSlideMetrics] = useState({
+    visibleSlides: 1,
+    slideWidth: 0,
+    gap: 16,
+  });
   const carouselRef = useRef<HTMLDivElement>(null);
   const autoPlayIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const slideCount = testimonials.length;
+  const canNavigate = slideCount > slideMetrics.visibleSlides;
+  const maxIndex = Math.max(slideCount - slideMetrics.visibleSlides, 0);
+
+  useEffect(() => {
+    const updateSlideMetrics = () => {
+      if (!carouselRef.current) {
+        return;
+      }
+
+      const firstSlide = carouselRef.current.querySelector<HTMLElement>('.carousel-slide');
+      const track = carouselRef.current.querySelector<HTMLElement>('.carousel-track');
+
+      if (!firstSlide || !track) {
+        return;
+      }
+
+      const containerStyles = window.getComputedStyle(carouselRef.current);
+      const paddingLeft = Number.parseFloat(containerStyles.paddingLeft || '0') || 0;
+      const paddingRight = Number.parseFloat(containerStyles.paddingRight || '0') || 0;
+      const containerWidth =
+        carouselRef.current.clientWidth - paddingLeft - paddingRight;
+      const slideWidth = firstSlide.offsetWidth;
+      const gap = Number.parseFloat(window.getComputedStyle(track).gap || '16') || 16;
+      const visibleSlides = Math.max(
+        1,
+        Math.floor((containerWidth + gap) / (slideWidth + gap)),
+      );
+
+      setSlideMetrics({ visibleSlides, slideWidth, gap });
+    };
+
+    updateSlideMetrics();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateSlideMetrics();
+    });
+
+    if (carouselRef.current) {
+      resizeObserver.observe(carouselRef.current);
+    }
+
+    window.addEventListener('resize', updateSlideMetrics);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateSlideMetrics);
+    };
+  }, [slideCount]);
+
+  useEffect(() => {
+    setCurrentIndex((prev) => Math.min(prev, maxIndex));
+  }, [maxIndex]);
 
   // Auto-play logic
   useEffect(() => {
-    if (autoPlay && slideCount > 1) {
+    if (autoPlay && canNavigate) {
       autoPlayIntervalRef.current = setInterval(() => {
         handleNext();
       }, autoPlayInterval);
@@ -35,7 +92,7 @@ const CarouselContainer = ({
         }
       };
     }
-  }, [autoPlay, autoPlayInterval, slideCount]);
+  }, [autoPlay, autoPlayInterval, canNavigate]);
 
   // Detener auto-play cuando el usuario interactúa
   const stopAutoPlay = () => {
@@ -45,19 +102,19 @@ const CarouselContainer = ({
   };
 
   const handleNext = () => {
-    if (!isTransitioning) {
+    if (!isTransitioning && canNavigate) {
       stopAutoPlay();
       setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev + 1) % slideCount);
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
       setTimeout(() => setIsTransitioning(false), 300);
     }
   };
 
   const handlePrev = () => {
-    if (!isTransitioning) {
+    if (!isTransitioning && canNavigate) {
       stopAutoPlay();
       setIsTransitioning(true);
-      setCurrentIndex((prev) => (prev - 1 + slideCount) % slideCount);
+      setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
       setTimeout(() => setIsTransitioning(false), 300);
     }
   };
@@ -86,7 +143,7 @@ const CarouselContainer = ({
         <div
           className='carousel-track'
           style={{
-            transform: `translateX(calc(-${currentIndex} * (100% + 1rem)))`,
+            transform: `translateX(-${currentIndex * (slideMetrics.slideWidth + slideMetrics.gap)}px)`,
           }}
         >
           {testimonials.map((testimonial) => (
@@ -97,7 +154,7 @@ const CarouselContainer = ({
         </div>
 
         {/* Botones de navegación */}
-        {slideCount > 1 && (
+        {canNavigate && (
           <>
             <button
               className='carousel-button carousel-button-prev'
@@ -120,9 +177,9 @@ const CarouselContainer = ({
       </div>
 
       {/* Indicadores de puntos */}
-      {slideCount > 1 && (
+      {canNavigate && (
         <div className='carousel-indicators'>
-          {testimonials.map((_, index) => (
+          {Array.from({ length: maxIndex + 1 }).map((_, index) => (
             <button
               key={index}
               className={`carousel-dot ${index === currentIndex ? 'active' : ''}`}

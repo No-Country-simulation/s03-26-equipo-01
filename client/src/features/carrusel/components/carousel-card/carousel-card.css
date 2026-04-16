@@ -95,10 +95,30 @@
   position: relative;
 }
 
+.carousel-card-video-link {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: relative;
+}
+
 .carousel-card-video {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.carousel-card-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 24, 69, 0.1) 0%,
+    rgba(15, 24, 69, 0.45) 100%
+  );
 }
 
 .carousel-card-video-placeholder {

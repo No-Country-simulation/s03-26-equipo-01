@@ -11,6 +11,9 @@ interface CarouselCardProps {
 
 const CarouselCard = ({ testimonial }: CarouselCardProps) => {
   const hasMedia = testimonial.youtubeUrl || testimonial.image;
+  const youtubeHref = testimonial.videoId
+    ? `https://www.youtube.com/watch?v=${testimonial.videoId}`
+    : testimonial.youtubeUrl;
 
   return (
     <article className='carousel-card'>
@@ -35,20 +38,29 @@ const CarouselCard = ({ testimonial }: CarouselCardProps) => {
       {/* Contenedor de multimedia */}
       {hasMedia && (
         <div className='carousel-card-media-container'>
-          {testimonial.image ? (
-            <div className='carousel-card-image-wrapper'>
-              <img
-                src={testimonial.image}
-                alt={testimonial.fullName}
-                className='carousel-card-image'
-              />
-            </div>
-          ) : testimonial.youtubeUrl ? (
+          {testimonial.youtubeUrl ? (
             <div className='carousel-card-video-wrapper'>
-              {testimonial.idEmbed ? (
+              {testimonial.youtubeThumbnail ? (
+                <a
+                  href={youtubeHref}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='carousel-card-video-link'
+                  aria-label={`Ver video de ${testimonial.fullName} en YouTube`}
+                >
+                  <img
+                    src={testimonial.youtubeThumbnail}
+                    alt={`Miniatura del video de ${testimonial.fullName}`}
+                    className='carousel-card-image'
+                  />
+                  <span className='carousel-card-video-overlay'>
+                    <Play size={32} color='#ffffff' fill='#ffffff' />
+                  </span>
+                </a>
+              ) : testimonial.videoId ? (
                 <iframe
                   className='carousel-card-video'
-                  src={`https://www.youtube.com/embed/${testimonial.idEmbed}`}
+                  src={`https://www.youtube.com/embed/${testimonial.videoId}`}
                   title={`Testimonio de ${testimonial.fullName}`}
                   allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
                   allowFullScreen
@@ -58,6 +70,14 @@ const CarouselCard = ({ testimonial }: CarouselCardProps) => {
                   <Play size={32} color='#FF9B71' fill='#FF9B71' />
                 </div>
               )}
+            </div>
+          ) : testimonial.image ? (
+            <div className='carousel-card-image-wrapper'>
+              <img
+                src={testimonial.image}
+                alt={testimonial.fullName}
+                className='carousel-card-image'
+              />
             </div>
           ) : null}
         </div>

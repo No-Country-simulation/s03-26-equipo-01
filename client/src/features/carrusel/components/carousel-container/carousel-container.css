@@ -12,6 +12,9 @@
   height: auto;
   overflow: hidden;
   background-color: transparent;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 3.25rem;
 }
 
 .carousel-track {
@@ -78,11 +81,11 @@
 }
 
 .carousel-button-prev {
-  left: 0.5rem;
+  left: 0.75rem;
 }
 
 .carousel-button-next {
-  right: 0.5rem;
+  right: 0.75rem;
 }
 
 /* Indicadores de puntos */
@@ -135,20 +138,16 @@
     padding: 2rem;
   }
 
-  .carousel-container {
-    padding: 0 3rem;
-  }
-
   .carousel-button {
     width: 3rem;
     height: 3rem;
   }
 
   .carousel-button-prev {
-    left: -1.5rem;
+    left: 1rem;
   }
 
   .carousel-button-next {
-    right: -1.5rem;
+    right: 1rem;
   }
 }

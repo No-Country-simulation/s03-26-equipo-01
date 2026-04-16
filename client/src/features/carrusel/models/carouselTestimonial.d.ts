@@ -7,6 +7,7 @@ export interface CarouselTestimonial {
   rating: number;
   tags: Tag[];
   youtubeUrl?: string;
+  youtubeThumbnail?: string;
   image?: string;
-  idEmbed?: number;
+  videoId?: string;
 }

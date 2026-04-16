@@ -40,8 +40,11 @@ export const adaptTestimonialToCarousel = (
     rating: testimonial.rating,
     tags: testimonial.tags || [],
     youtubeUrl: testimonial.media?.videoUrl,
-    image: testimonial.media?.thumbnailUrl || testimonial.media?.imageUrl,
-    idEmbed: testimonial.idEmbed || parseInt(testimonial.media?.videoId || '0'),
+    youtubeThumbnail: testimonial.media?.thumbnailUrl,
+    image: testimonial.media?.imageUrl,
+    videoId:
+      testimonial.media?.videoId ||
+      (testimonial.idEmbed ? String(testimonial.idEmbed) : undefined),
   };
 };
 
