@@ -53,7 +53,7 @@ const TestimonialCardContent = ({
 
   return (
     <>
-      <article className='testimonial-admin-card-container'>
+      <article className='testimonial-admin-card-container falling-container'>
       <TestimonialHeader testimonial={testimonial} />
       <TestimonialState testimonial={testimonial} />
       <TestimonialDescription testimonial={testimonial} />
