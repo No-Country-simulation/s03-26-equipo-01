@@ -16,10 +16,9 @@ export function adminTestimonialAdapter(testimonial: TestimonialResponse): Testi
         witness: testimonial.witness,
         state: testimonial.state,
         createdAt: testimonial.createdAt,
-        media: mediaAdapter(testimonial.media),
+        media: testimonial.media && mediaAdapter(testimonial.media),
         category: categoryAdapter(testimonial.category),
         tags: tagsAdapter(testimonial.tags),
-
     }
 }
 

@@ -8,7 +8,7 @@ const TestimonialPanel = () => {
 
     const {adminResources, testimonials, sendFilter} = useTestimonialPanel();
     
-    return (
+    return adminResources && testimonials && (
         <section className = 'testimonial-admin-panel'>
             <div className = 'testimonial-admin-panel_container'>
                 <div className = 'testimonial-admin-panel_container--info'>

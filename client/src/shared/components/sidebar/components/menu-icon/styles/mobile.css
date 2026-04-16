@@ -11,3 +11,13 @@
     margin-left: 1vh;
     cursor: pointer;
 }
+
+.sidebar-menu-icon_disable img {
+    transform: rotateY(0deg);
+    transition: transform 0.4s;
+}
+
+.sidebar-menu-icon_container img {
+    transform: rotateY(180deg);
+    transition: transform 0.4s;
+}

@@ -12,7 +12,7 @@ const FiltersContainer = ({adminResources, onFilter}: FiltersContainerProps) => 
     const handleFilter = (value: string, type: keyof FilterData) => onFilter(addData(value, type));
     
     return (
-        <section className = 'admin-filters-container'>
+        <section className = 'admin-filters-container falling-container'>
             <h3>filtrar por</h3>
             <form>
                 {selectInputData.map(selectInputData => 

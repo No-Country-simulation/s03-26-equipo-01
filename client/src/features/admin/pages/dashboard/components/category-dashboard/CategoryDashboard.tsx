@@ -6,7 +6,7 @@ import './styles/category-dashboard.css';
 const CategoryDashboard = ({currentTab, metrics}: CategoryDashboardProps) => {    
     return (
             currentTab === TabValues.CATEGORIA && 
-            <section className = 'category-dashboard-container'>
+            <section className = 'category-dashboard-container falling-container'>
                 {metrics.map(metric =>
                     <MetricCard 
                         key = {metric.id} 
