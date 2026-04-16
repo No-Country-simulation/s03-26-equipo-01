@@ -18,6 +18,7 @@ const ActionsTestimony = ({
   isLoading = false,
 }: ActionsTestimonyProps) => {
   const isDraft = state.toLowerCase().includes('draft');
+  const isPending = state.toLowerCase().includes('pending');
   const canAdvance = isDraft;
 
   return (
@@ -27,7 +28,7 @@ const ActionsTestimony = ({
         size='small'
         startIcon={<Edit size={16} />}
         onClick={() => onEdit(id)}
-        disabled={isLoading}
+        disabled={isLoading || isPending}
         sx={{ mr: 1 }}
       >
         EDITAR
