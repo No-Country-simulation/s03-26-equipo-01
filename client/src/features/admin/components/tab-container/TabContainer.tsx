@@ -3,6 +3,7 @@ import type { TabContainerProps } from "./tab-container";
 import { useState } from "react";
 import { TabValues } from "./tab-values";
 import './styles/tab-container.css';
+
 const TabContainer = ({children, onTab}: TabContainerProps) => {
     
     const [index, setIndex] = useState<number>(0);

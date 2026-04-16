@@ -25,6 +25,7 @@
 
     --primary-font: clamp(1vh, 0.8197vw + 2.8565rem, 2vh);
     --medium-font: clamp(2vh, 0.8197vw + 2.8565rem, 2.4vh);
+    --medium-font-title: clamp(2.3vh, 0.8197vw + 2.8565rem, 3.7vh);
     --large-font: clamp(2.5vh, 0.8197vw + 2.8565rem, 4.5vh);
 }
 
