@@ -99,8 +99,8 @@ public class EditorServiceImpl implements EditorService {
 
         Testimonial testimonial = testimonialService.findTestimonialById(model.id());
 
-        String previousVideoId = testimonial.getMedia() != null ? testimonial.getMedia().getVideoId() : null;
-        String previousImagePublicId = testimonial.getMedia() != null ? testimonial.getMedia().getPublicId() : null;
+        // Guardar el mediaId para poder actualizar MongoDB por ID (que es único)
+        String mediaId = testimonial.getMedia() != null ? testimonial.getMedia().getId() : null;
 
         model.updateTestimonial(testimonial);
 
@@ -108,12 +108,15 @@ public class EditorServiceImpl implements EditorService {
 
         Testimonial updated = testimonialService.update(testimonial);
 
-        if (!model.displayOptions().showVideo() && previousVideoId != null) {
-            mediaRepository.clearVideoField(previousVideoId);
-        }
-        
-        if (!model.displayOptions().showImage() && previousImagePublicId != null) {
-            mediaRepository.clearImageFields(previousImagePublicId);
+        // Limpiar campos en MongoDB usando mediaId (que SÍ es único)
+        if (mediaId != null) {
+            if (!model.displayOptions().showVideo()) {
+                mediaRepository.clearVideoFieldByMediaId(mediaId);
+            }
+
+            if (!model.displayOptions().showImage()) {
+                mediaRepository.clearImageFieldsByMediaId(mediaId);
+            }
         }
 
         return updated;

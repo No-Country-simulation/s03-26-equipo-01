@@ -80,7 +80,11 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
       {columns.includes('VIDEO') && (
         <TableCell>
           <MediaIcon
-            url={row.data.media?.videoUrl}
+            url={
+              row.data.media?.videoUrl && row.data.media.videoUrl.trim()
+                ? row.data.media.videoUrl
+                : undefined
+            }
             IconOn={Video}
             IconOff={VideoOff}
           />
@@ -90,7 +94,14 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
       {columns.includes('IMAGEN') && (
         <TableCell>
           <MediaIcon
-            url={row.data.media?.imageUrl || row.data.media?.thumbnailUrl}
+            url={
+              row.data.media?.imageUrl && row.data.media.imageUrl.trim()
+                ? row.data.media.imageUrl
+                : row.data.media?.thumbnailUrl &&
+                    row.data.media.thumbnailUrl.trim()
+                  ? row.data.media.thumbnailUrl
+                  : undefined
+            }
             IconOn={Image}
             IconOff={ImageOff}
           />
