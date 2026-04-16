@@ -2,7 +2,6 @@ package com.cms.persistence.sql;
 
 import com.cms.controller.dto.metrics.CategoryMetricDTO;
 import com.cms.controller.dto.metrics.TagMetricDTO;
-import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +10,7 @@ import com.cms.model.testimonial.enums.StateTestimonial;
 import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -72,4 +72,17 @@ public interface TestimonialSQLDAO extends JpaRepository<Testimonial, Long> {
     """)
     List<Long> getTagsIdUsedInTestimonialAscoEditor(@Param("editor") Editor editor,
                                                    @Param("id") Long testimonialId);
+
+    @Query("""
+    SELECT t
+    FROM Testimonial t
+    WHERE t.editor = :editor
+        AND t.state = com.cms.model.testimonial.enums.StateTestimonial.DRAFT
+            AND t.state = com.cms.model.testimonial.enums.StateTestimonial.PENDING
+    """)
+    Page<Testimonial> findDraftsByEditor(
+            @Param("editor") Editor editor,
+            Pageable pageable
+    );
+
 }

@@ -7,6 +7,7 @@ import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface TestimonialRepository {
     List<Long> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId);
 
     Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin);
+
+    Page<Testimonial> getDraftsByEditor(Editor editor, Pageable pageable);
 }

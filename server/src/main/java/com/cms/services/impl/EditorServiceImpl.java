@@ -104,5 +104,11 @@ public class EditorServiceImpl implements EditorService {
         return testimonialService.update(testimonial);
     }
 
+    @Override
+    public Page<Testimonial> getDrafts(Long idEditor, int page, int size) {
+        Editor editor = findById(idEditor);
+        return testimonialService.getTestimonialsByEditor(editor, page, size);
+    }
+
 
 }

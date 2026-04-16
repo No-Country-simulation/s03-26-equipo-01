@@ -11,6 +11,7 @@ import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.persistence.repository.TestimonialRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -61,6 +62,11 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     @Override
     public Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin) {
         return testimonialSQLDAO.findByIdAndAdmin(idTestimonial, admin).orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), idTestimonial));
+    }
+
+    @Override
+    public Page<Testimonial> getDraftsByEditor(Editor editor, Pageable pageable) {
+        return testimonialSQLDAO.findDraftsByEditor(editor, pageable);
     }
 
     @Override

@@ -117,6 +117,11 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
+    public Page<Testimonial> getTestimonialsByEditor(Editor editor, int page, int size) {
+        return testimonialRepository.getDraftsByEditor(editor, PageRequest.of(page, size));
+    }
+
+    @Override
     public Testimonial findByIdAndEditor(Long id, Editor editor) {
         return testimonialRepository.findByIdAndEditor(id, editor);
     }
