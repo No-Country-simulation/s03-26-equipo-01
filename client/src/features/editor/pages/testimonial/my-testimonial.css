@@ -1,0 +1,12 @@
+.my-testimonial-container {
+  padding: 20px 10px 0 0px;
+  height: 100%;
+  display: grid;
+  align-items: start;
+}
+
+.my-testimonial-container_info {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+}

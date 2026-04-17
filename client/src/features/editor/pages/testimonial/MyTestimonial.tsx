@@ -12,6 +12,7 @@ import GenericTable from '../../../../shared/components/table-container/componen
 import BodyTestimony from '../../../../shared/components/table-container/components/body-testimony/BodyTestimony';
 import Paginator from '../../../../shared/components/pagination/Paginator';
 import { editTestimonialPath } from '../../../../core/routes/routes';
+import './my-testimonial.css';
 
 interface ToastState {
   content: ReactNode;
@@ -74,38 +75,44 @@ const MyTestimonials = () => {
     })) || [];
 
   return (
-    <section>
-      {toast && (
-        <Toast content={toast.content} type={toast.type} onClose={closeToast} />
-      )}
-
-      <TitleContainer
-        title='Mis testimonios'
-        text='Aquí puedes editar, moderar y enviar tus testimonios a revisión.'
-      />
-
-      {data && (
-        <>
-          <GenericTable
-            data={data}
-            renderBody={
-              <BodyTestimony
-                rows={rowsWithActions}
-                currentPage={data.page}
-                pageSize={data.size}
-                columns={data.headers}
-              />
-            }
+    <section className='my-testimonial-container'>
+      <div className='my-testimonial-container_info'>
+        {toast && (
+          <Toast
+            content={toast.content}
+            type={toast.type}
+            onClose={closeToast}
           />
-          <Paginator
-            totalPages={data.totalPages}
-            currentPage={page}
-            onPageChange={setPage}
-            totalElements={data.totalElements}
-            pageSize={data.size}
-          />
-        </>
-      )}
+        )}
+
+        <TitleContainer
+          title='Mis testimonios'
+          text='Aquí puedes editar, moderar y enviar tus testimonios a revisión.'
+        />
+
+        {data && (
+          <>
+            <GenericTable
+              data={data}
+              renderBody={
+                <BodyTestimony
+                  rows={rowsWithActions}
+                  currentPage={data.page}
+                  pageSize={data.size}
+                  columns={data.headers}
+                />
+              }
+            />
+            <Paginator
+              totalPages={data.totalPages}
+              currentPage={page}
+              onPageChange={setPage}
+              totalElements={data.totalElements}
+              pageSize={data.size}
+            />
+          </>
+        )}
+      </div>
     </section>
   );
 };
