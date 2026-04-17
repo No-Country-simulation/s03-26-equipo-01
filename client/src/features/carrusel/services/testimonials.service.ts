@@ -1,14 +1,17 @@
 import api from '../../../core/api/api';
 import { TESTIMONIAL_CARRUSEL } from '../../../core/routes/routes';
-//import getEmbedApiKey from '../../../shared/testimonial/services/embed-api-key.service';
+import getEmbedApiKey from '../../../shared/testimonial/services/embed-api-key.service';
 
-const testimonialApiKey = 'vza_0a590875892e477bbad69caa32b61520';
+/**
+ * Request public testimonials. The apiKey should come from the embed (query param, window, or import.meta).
+ */
+export const getPublicTestimonials = async (apiKey?: string) => {
+  const keyToUse = apiKey || getEmbedApiKey();
 
-export const getPublicTestimonials = async () => {
   try {
     const response = await api.post(TESTIMONIAL_CARRUSEL, null, {
       headers: {
-        'X-Api-Key': testimonialApiKey,
+        'X-Api-Key': keyToUse,
       },
     });
     return response.data;
@@ -18,11 +21,16 @@ export const getPublicTestimonials = async () => {
   }
 };
 
-export const getPublishedTestimonials = async () => {
+/**
+ * Request published testimonials. The apiKey should come from the embed (query param, window, or import.meta).
+ */
+export const getPublishedTestimonials = async (apiKey?: string) => {
+  const keyToUse = apiKey || getEmbedApiKey();
+
   try {
     const response = await api.post(TESTIMONIAL_CARRUSEL, null, {
       headers: {
-        'X-Api-Key': testimonialApiKey,
+        'X-Api-Key': keyToUse,
       },
     });
     return response.data;

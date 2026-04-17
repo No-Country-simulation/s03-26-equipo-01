@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { CarouselTestimonial } from '../models/carouselTestimonial';
 import { getPublishedTestimonials } from '../services/testimonials.service';
 import { adaptTestimonials } from '../adapters/testimonial.adapter';
+import getEmbedApiKey from '../../../shared/testimonial/services/embed-api-key.service';
 
 interface UseCarouselTestimonialsResult {
   testimonials: CarouselTestimonial[];
@@ -18,22 +19,15 @@ export const useCarouselTestimonials = (): UseCarouselTestimonialsResult => {
     const fetchTestimonials = async () => {
       try {
         setIsLoading(true);
-        const data = await getPublishedTestimonials();
-        
-        // Debug: loguear qué recibimos de la API
-        console.log('Datos crudos de API:', data);
-        console.log('Tipo de datos:', typeof data);
-        console.log('Es array:', Array.isArray(data));
+        const apiKey = getEmbedApiKey();
+        const data = await getPublishedTestimonials(apiKey || undefined);
 
         const adaptedData = adaptTestimonials(data);
-        
-        console.log('Datos adaptados:', adaptedData);
-        console.log('Cantidad de testimonios:', adaptedData.length);
-
         setTestimonials(adaptedData);
         setError(null);
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Error desconocido';
+        const errorMessage =
+          err instanceof Error ? err.message : 'Error desconocido';
         console.error('Error en useCarouselTestimonials:', err);
         setError(new Error(`Error al cargar testimonios: ${errorMessage}`));
         setTestimonials([]);

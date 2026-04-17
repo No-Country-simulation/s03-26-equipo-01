@@ -14,6 +14,7 @@ import RatingPicker from '../rating-picker/RatingPicker';
 import createTestimonial from '../../../../shared/testimonial/services/testimonial.service';
 import type { Testimonial } from '../../../../shared/testimonial/models/testimonial';
 import searchTagService from '../../../../shared/tag/services/search-tag.service';
+import getEmbedApiKey from '../../../../shared/testimonial/services/embed-api-key.service';
 
 const Form = () => {
   const [tagOptions, setTagOptions] = useState<DataProps[]>([]);
@@ -88,7 +89,8 @@ const Form = () => {
 
   const onSubmit = async (data: Testimonial) => {
     try {
-      await createTestimonial(data);
+      const apiKey = getEmbedApiKey();
+      await createTestimonial(data, apiKey || undefined);
       console.log('¡Testimonio guardado con éxito!');
     } catch (error) {
       console.error(error);
@@ -163,7 +165,9 @@ const Form = () => {
               label='Link video de Youtube (Opcional)'
               name='youtubeUrl'
               placeholder='https://www.youtube.com/watch...'
-              icon={<SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />}
+              icon={
+                <SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />
+              }
             />
 
             <UploadButtonWithIcon
@@ -178,7 +182,9 @@ const Form = () => {
             <div className='new-testimonial_media-previews'>
               {youtubeThumbnailUrl && (
                 <div className='new-testimonial_preview-card'>
-                  <span className='new-testimonial_preview-label'>Vista previa del video</span>
+                  <span className='new-testimonial_preview-label'>
+                    Vista previa del video
+                  </span>
                   <a
                     className='new-testimonial_preview-link'
                     href={youtubeUrl}
@@ -196,7 +202,9 @@ const Form = () => {
 
               {imagePreviewUrl && (
                 <div className='new-testimonial_preview-card'>
-                  <span className='new-testimonial_preview-label'>Vista previa de la imagen</span>
+                  <span className='new-testimonial_preview-label'>
+                    Vista previa de la imagen
+                  </span>
                   <img
                     className='new-testimonial_preview-image'
                     src={imagePreviewUrl}

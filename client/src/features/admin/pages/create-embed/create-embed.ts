@@ -48,15 +48,13 @@ function buildIframeSnippet(url: string, title: string, height: string) {
   title="${title}"
   frameBorder="0"
   loading="lazy"
-  style="width: 100%; min-height: ${height}; border: 0;"
+  style={{ width: "100%", minHeight: "${height}", border: "none" }}
 ></iframe>`;
 }
 
-export function getFormEmbedSnippets(
-  baseUrl: string,
-  apiKey = EMBED_API_KEY_PLACEHOLDER,
-): EmbedSnippet[] {
-  const iframeUrl = buildEmbedUrl(baseUrl, '/testimonial', apiKey);
+export function getFormEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  // Always use placeholder in snippets; real API key shown separately in ApiKeyCard
+  const iframeUrl = buildEmbedUrl(baseUrl, '/testimonial');
 
   return [
     {
@@ -74,11 +72,9 @@ export function getFormEmbedSnippets(
   ];
 }
 
-export function getCarouselEmbedSnippets(
-  baseUrl: string,
-  apiKey = EMBED_API_KEY_PLACEHOLDER,
-): EmbedSnippet[] {
-  const carouselUrl = buildEmbedUrl(baseUrl, '/testimonial/published', apiKey);
+export function getCarouselEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  // Always use placeholder in snippets; real API key shown separately in ApiKeyCard
+  const carouselUrl = buildEmbedUrl(baseUrl, '/testimonial/published');
 
   return [
     {
@@ -96,26 +92,19 @@ export function getCarouselEmbedSnippets(
   ];
 }
 
-export function getFormEmbedContent(
-  baseUrl: string,
-  apiKey = EMBED_API_KEY_PLACEHOLDER,
-): EmbedPageContent {
+export function getFormEmbedContent(baseUrl: string): EmbedPageContent {
   return {
     title: 'Embed para el formulario',
-    text:
-      'Integra en tu sitio externo el formulario para poder recolectar los testimonios de tus usuarios.',
+    text: 'Integra en tu sitio externo el formulario para poder recolectar los testimonios de tus usuarios.',
     instructionsTitle: 'Instrucciones de instalacion',
     instructions: EMBED_INSTRUCTIONS,
     apiKeyTitle: 'Clave API',
     apiKeyWarning: 'Manten tu clave API segura. No la compartas publicamente.',
-    snippets: getFormEmbedSnippets(baseUrl, apiKey),
+    snippets: getFormEmbedSnippets(baseUrl),
   };
 }
 
-export function getCarouselEmbedContent(
-  baseUrl: string,
-  apiKey = EMBED_API_KEY_PLACEHOLDER,
-): EmbedPageContent {
+export function getCarouselEmbedContent(baseUrl: string): EmbedPageContent {
   return {
     title: 'Embed para publicar testimonios',
     text: 'Integra tus testimonios en tu sitio web con estos codigos.',
@@ -123,15 +112,12 @@ export function getCarouselEmbedContent(
     instructions: EMBED_INSTRUCTIONS,
     apiKeyTitle: 'Tu Clave API',
     apiKeyWarning: 'Manten tu clave API segura. No la compartas publicamente.',
-    snippets: getCarouselEmbedSnippets(baseUrl, apiKey),
+    snippets: getCarouselEmbedSnippets(baseUrl),
   };
 }
 
-export function getEmbedSnippets(
-  baseUrl: string,
-  apiKey = EMBED_API_KEY_PLACEHOLDER,
-): EmbedSnippet[] {
-  return getFormEmbedSnippets(baseUrl, apiKey);
+export function getEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  return getFormEmbedSnippets(baseUrl);
 }
 
 export function getEmbedBaseUrl() {
