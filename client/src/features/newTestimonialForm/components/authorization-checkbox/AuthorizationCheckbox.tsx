@@ -19,7 +19,14 @@ const AuthorizationCheckbox = <T extends FieldValues>({name, control, text, rule
       render={({ field }) => (
         <FormControl sx={{display:"flex", flexDirection:"row"  }}>
           <Box component="label" sx={{display:"flex", alignItems:"center"}}>
-            <Checkbox {...field} sx={{ width:"42px", height:"42px" , flexShrink:"0"}} size="large"/>
+            <Checkbox
+              checked={Boolean(field.value)}
+              onChange={(_, checked) => field.onChange(checked)}
+              onBlur={field.onBlur}
+              inputRef={field.ref}
+              sx={{ width:"2.625rem", height:"2.625rem" , flexShrink:"0"}}
+              size="large"
+            />
             <Typography
               variant="body1"
               sx={{

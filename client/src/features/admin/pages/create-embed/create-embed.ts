@@ -1,0 +1,122 @@
+export type EmbedSnippet = {
+  code: string;
+  copyLabel: string;
+  description: string;
+  id: string;
+  title: string;
+};
+
+export type EmbedPageContent = {
+  apiKeyTitle: string;
+  apiKeyWarning: string;
+  instructions: string[];
+  instructionsTitle: string;
+  snippets: EmbedSnippet[];
+  text: string;
+  title: string;
+};
+
+const DEFAULT_SITE_URL = 'http://localhost:5173';
+const EMBED_API_KEY_PLACEHOLDER = 'YOUR_API_KEY';
+
+export const EMBED_INSTRUCTIONS = [
+  'Copia el codigo del widget que deseas usar',
+  'Reemplaza YOUR_API_KEY con tu clave API',
+  'Pega el codigo en tu pagina HTML donde quieras mostrar los testimonios',
+  'Personaliza los parametros segun tus necesidades',
+];
+
+function sanitizeBaseUrl(baseUrl: string) {
+  return baseUrl.replace(/\/+$/, '');
+}
+
+function buildEmbedUrl(
+  baseUrl: string,
+  path: string,
+  apiKey = EMBED_API_KEY_PLACEHOLDER,
+) {
+  const testimonialUrl = `${sanitizeBaseUrl(baseUrl)}${path}`;
+  const query = new URLSearchParams({ apiKey });
+  return `${testimonialUrl}?${query.toString()}`;
+}
+
+function buildIframeSnippet(url: string, title: string) {
+  return `<iframe
+  src="${url}"
+  title="${title}"
+  frameBorder="0"
+  loading="lazy"
+        style={{
+          width: "100%",
+          minHeight: "100vh",
+          height: "auto",
+          border: "none",
+        }}
+></iframe>`;
+}
+
+export function getFormEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  // Always use placeholder in snippets; real API key shown separately in ApiKeyCard
+  const iframeUrl = buildEmbedUrl(baseUrl, '/testimonial');
+
+  return [
+    {
+      id: 'html',
+      title: 'Formulario',
+      description:
+        'Formulario embebido para recolectar testimonios desde tu sitio.',
+      copyLabel: 'Codigo HTML',
+      code: buildIframeSnippet(iframeUrl, 'Formulario de testimonios'),
+    },
+  ];
+}
+
+export function getCarouselEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  // Always use placeholder in snippets; real API key shown separately in ApiKeyCard
+  const carouselUrl = buildEmbedUrl(baseUrl, '/testimonial/published');
+
+  return [
+    {
+      id: 'carousel',
+      title: 'Carrusel',
+      description:
+        'Testimonios en formato carrusel con reproduccion automatica.',
+      copyLabel: 'Codigo HTML',
+      code: buildIframeSnippet(carouselUrl, 'Carrusel de testimonios'),
+    },
+  ];
+}
+
+export function getFormEmbedContent(baseUrl: string): EmbedPageContent {
+  return {
+    title: 'Embed para el formulario',
+    text: 'Integra en tu sitio externo el formulario para poder recolectar los testimonios de tus usuarios.',
+    instructionsTitle: 'Instrucciones de instalacion',
+    instructions: EMBED_INSTRUCTIONS,
+    apiKeyTitle: 'Clave API',
+    apiKeyWarning: 'Manten tu clave API segura. No la compartas publicamente.',
+    snippets: getFormEmbedSnippets(baseUrl),
+  };
+}
+
+export function getCarouselEmbedContent(baseUrl: string): EmbedPageContent {
+  return {
+    title: 'Embed para publicar testimonios',
+    text: 'Integra tus testimonios en tu sitio web con estos codigos.',
+    instructionsTitle: 'Instrucciones de instalacion',
+    instructions: EMBED_INSTRUCTIONS,
+    apiKeyTitle: 'Tu Clave API',
+    apiKeyWarning: 'Manten tu clave API segura. No la compartas publicamente.',
+    snippets: getCarouselEmbedSnippets(baseUrl),
+  };
+}
+
+export function getEmbedSnippets(baseUrl: string): EmbedSnippet[] {
+  return getFormEmbedSnippets(baseUrl);
+}
+
+export function getEmbedBaseUrl() {
+  if (typeof window === 'undefined') return DEFAULT_SITE_URL;
+
+  return window.location.origin || DEFAULT_SITE_URL;
+}

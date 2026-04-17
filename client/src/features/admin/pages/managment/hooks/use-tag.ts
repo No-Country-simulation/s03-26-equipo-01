@@ -24,13 +24,13 @@ const useTag = () => {
         return newTag;
     }
 
-    const editTag = async (tag: CreatedTag, id: number | undefined): Promise<Tag> => {
+    const editTag = async (tag: CreatedTag, id: number | undefined) => {
         const editTag = await put<CreatedTag>(editTagService, tag, id);
         setTags(prev => prev.map(tag => tag.id === editTag.id ? editTag : tag))
         return editTag;
     }
 
-    const deleteTag = async (id?: number): Promise<void> => {
+    const deleteTag = async (id: number) => {
         await deleted(deleteTagService, id);
         setTags(prev => removeTag(prev, id));
     }

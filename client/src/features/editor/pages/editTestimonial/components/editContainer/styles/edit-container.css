@@ -1,0 +1,7 @@
+.edit-page-container {
+  width: 100%;
+  padding: 40px 60px;
+  box-sizing: border-box;
+  background-color: #fcfcfc;
+  min-height: 100vh;
+}

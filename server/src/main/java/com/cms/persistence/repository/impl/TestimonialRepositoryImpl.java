@@ -1,14 +1,17 @@
 package com.cms.persistence.repository.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.repository.MediaRepository;
 import com.cms.persistence.sql.TestimonialSQLDAO;
 import com.cms.persistence.repository.TestimonialRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,6 +43,35 @@ public class TestimonialRepositoryImpl implements TestimonialRepository {
     @Override
     public Page<Testimonial> findAllTestimonial(PageRequest of, Admin admin, StateTestimonial state) {
         return testimonialSQLDAO.findTopByState(state, of, admin);
+    }
+
+    @Override
+    public Testimonial findByIdAndEditor(Long id, Editor editor) {
+        return testimonialSQLDAO.findByIdAndEditor(id, editor).orElseThrow(()-> new EntityNotFoundException(Testimonial.class.getName(), id));
+    }
+
+
+    @Override
+    public List<Long> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId) {
+        Testimonial testimonial = testimonialSQLDAO.findById(testimonialId)
+                .orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), testimonialId));
+
+        return testimonialSQLDAO.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId);
+    }
+
+    @Override
+    public Testimonial findTestimonialByIdAndAdmin(Long idTestimonial, Admin admin) {
+        return testimonialSQLDAO.findByIdAndAdmin(idTestimonial, admin).orElseThrow(() -> new EntityNotFoundException(Testimonial.class.getName(), idTestimonial));
+    }
+
+    @Override
+    public Page<Testimonial> getDraftsByEditor(Editor editor, Pageable pageable) {
+        return testimonialSQLDAO.findDraftsByEditor(editor, pageable);
+    }
+
+    @Override
+    public List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial) {
+        return testimonialSQLDAO.findAllTestimonialPublished(admin, stateTestimonial);
     }
 
     @Override

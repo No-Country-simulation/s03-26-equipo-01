@@ -13,11 +13,12 @@ public interface CategorySQLDAO extends JpaRepository<Category, Long> {
 
     List<Category> findAllByDeletedFalse();
 
+    List<Category> findAllByCreatorIdAndDeletedFalse(Long creatorId);
+
     Optional<Category> findByIdAndDeletedFalse(Long id);
 
     @Query("FROM Category c WHERE c.id = :categoryId AND c.creator.id = :adminId AND c.deleted = false")
     Optional<Category> findByIdAndAdminId(@Param("categoryId") Long categoryId, @Param("adminId") Long adminId);
 
-    @Query("FROM Category c WHERE c.creator = :admin AND c.deleted = false")
-    List<Category> findAllByCreator(@Param("admin") Admin admin);
+    List<Category> findByNameContainingIgnoreCaseAndCreator(String name, Admin createdBy);
 }

@@ -1,0 +1,18 @@
+.dischard-button {
+    width: 103px;
+    height: 30px;
+    font-weight: bold;
+    border: 1px solid var(--primary-blue);
+    border-radius: 4px;
+    color: var(--primary-blue);
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.dischard-button:hover {
+    color: #FFFFFF;
+    background-color: var(--primary-blue);
+}
+
+

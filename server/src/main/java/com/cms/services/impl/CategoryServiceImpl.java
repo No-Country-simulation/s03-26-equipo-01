@@ -3,9 +3,11 @@ package com.cms.services.impl;
 import com.cms.exception.EntityNotFoundException;
 import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Category;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.CategorySQLDAO;
+import com.cms.persistence.sql.EditorSQLDAO;
 import com.cms.services.CategoryService;
 import jakarta.transaction.Transactional;
 import java.util.List;
@@ -19,10 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategorySQLDAO categorySQLDAO;
     private final AdminSQLDAO adminSQLDAO;
+    private final EditorSQLDAO editorSQLDAO;
 
-    public CategoryServiceImpl(CategorySQLDAO categorySQLDAO, AdminSQLDAO adminSQLDAO) {
+    public CategoryServiceImpl(CategorySQLDAO categorySQLDAO, AdminSQLDAO adminSQLDAO, EditorSQLDAO editorSQLDAO) {
         this.categorySQLDAO = categorySQLDAO;
         this.adminSQLDAO = adminSQLDAO;
+        this.editorSQLDAO = editorSQLDAO;
     }
 
     @Override
@@ -41,8 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        return categorySQLDAO.findAllByDeletedFalse();
+    public List<Category> findAll(Long idAdmin) {
+        return categorySQLDAO.findAllByCreatorIdAndDeletedFalse(idAdmin);
     }
 
     @Override
@@ -75,5 +79,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = findById(id);
         category.setDeleted(true);
         categorySQLDAO.save(category);
+    }
+
+    public List<Category> findByName(String name, Long editorId) {
+        Editor editor = editorSQLDAO.findById(editorId).orElseThrow(() -> new EntityNotFoundException(Editor.class.getName(), editorId));
+        if (name == null || name.isBlank()) {
+            return findAll(editor.getCreatedBy().getId());
+        }
+        return categorySQLDAO.findByNameContainingIgnoreCaseAndCreator(name, editor.getCreatedBy());
     }
 }

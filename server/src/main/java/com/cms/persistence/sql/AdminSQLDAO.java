@@ -4,6 +4,7 @@ import com.cms.model.user.impl.admin.Admin;
 import com.cms.model.user.impl.admin.AdminResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,10 +24,9 @@ public interface AdminSQLDAO extends JpaRepository<Admin, Long> {
     """)
     Boolean hasNameTagInListAdmin(String name, Long idAdmin);
 
-    @Query("""
-            SELECT a.editors
-            FROM Admin a
-            WHERE a.id = :idAdmin
-    """)
-    Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, PageRequest of);
+    @Query(
+            value = "SELECT e FROM Editor e WHERE e.createdBy.id = :idAdmin ORDER BY e.id",
+            countQuery = "SELECT COUNT(e) FROM Editor e WHERE e.createdBy.id = :idAdmin"
+    )
+    Page<Editor> findEditorsByAdmin(@Param("idAdmin") Long idAdmin, Pageable pageable);
 }

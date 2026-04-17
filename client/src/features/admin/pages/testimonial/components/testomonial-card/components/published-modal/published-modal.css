@@ -1,0 +1,6 @@
+.published-modal-message {
+    margin-bottom: 10px;
+    font-size: var(--medium-font);
+    text-align: start;
+    color: var(--secondary-color-text);
+}

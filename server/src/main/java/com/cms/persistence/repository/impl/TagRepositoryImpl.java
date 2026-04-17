@@ -1,13 +1,11 @@
 package com.cms.persistence.repository.impl;
 
-import com.cms.exception.business.impl.DuplicateResourceException;
 import com.cms.model.testimonial.Tag;
 import com.cms.persistence.elastic.TagElasticDAO;
 import com.cms.persistence.elastic.entity.TagElastic;
 import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.repository.mapper.TagMapper;
 import com.cms.persistence.sql.TagSQLDAO;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,8 +27,8 @@ public class TagRepositoryImpl implements TagRepository {
     }
 
     @Override
-    public List<Tag> findAllByActiveTrueOrderByNameAsc() {
-        return tagSQLDAO.findAllByActiveTrueOrderByNameAsc();
+    public List<Tag> findAllByActiveTrueAndCreatorIdOrderByNameAsc(Long adminId) {
+        return tagSQLDAO.findAllByActiveTrueAndCreatorIdOrderByNameAsc(adminId);
     }
 
     @Override
@@ -51,6 +49,14 @@ public class TagRepositoryImpl implements TagRepository {
     @Override
     public List<Tag> findTagsByName(String nameTag, Long idAdmin) {
         List<TagElastic> elastics = tagElasticDAO.findAllByNameAndIdAdmin(nameTag, idAdmin.toString());
+
+        return elastics.stream().map(tagMapper::fromElastic).toList();
+    }
+
+    @Override
+    public List<Tag> findTagsByNameExcludeIds(List<Long> ids, Long idAdmin, String name) {
+        List<String> idsString = ids.stream().map(Object::toString).toList();
+        List<TagElastic> elastics = tagElasticDAO.findAllByNameAndIdAdminExcludeIdsString(name, idAdmin.toString(), idsString);
 
         return elastics.stream().map(tagMapper::fromElastic).toList();
     }

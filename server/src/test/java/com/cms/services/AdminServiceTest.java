@@ -351,6 +351,44 @@ public class AdminServiceTest {
         assertNotEquals(firstPage.getContent().get(0), secondPage.getContent().get(0));
     }
 
+    @Test
+    public void archiveTestimonial_shouldChangeStateToArchived() {
+        Testimonial saved = testimonialService.save(
+                testimonial, admin, null,
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        Testimonial archived = adminService.archiveTestimonial(saved.getId(), admin.getId());
+
+        assertEquals(StateTestimonial.ARCHIVED, archived.getState());
+    }
+
+    @Test
+    public void archiveTestimonial_withNonExistentAdmin_shouldThrowEntityNotFoundException() {
+        Testimonial saved = testimonialService.save(
+                testimonial, admin, null,
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        long nonExistentAdminId = -999L;
+
+        assertThrows(EntityNotFoundException.class, () ->
+                adminService.archiveTestimonial(saved.getId(), nonExistentAdminId)
+        );
+    }
+
+    @Test
+    public void archiveTestimonial_withTestimonialOfAnotherAdmin_shouldThrowException() {
+        Testimonial saved = testimonialService.save(
+                testimonial, admin, null,
+                "https://www.youtube.com/watch?v=KhXTwEypI6c", tagIds
+        );
+
+        assertThrows(Exception.class, () ->
+                adminService.archiveTestimonial(saved.getId(), otroAdmin.getId())
+        );
+    }
+
     @AfterEach
     public void tearDown() {
         resetService.resetAll();

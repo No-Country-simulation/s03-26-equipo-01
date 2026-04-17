@@ -3,10 +3,10 @@ export type Testimonial = {
     fullName: string,
     email: string,
     testimonial: string,
-    course: number | null,
+    tagIds: number[],
     authorization: boolean,
     youtubeUrl?: string,
-    image?: string | null,
+    image?: File | null,
     rating: number | null,
     idEmbed?: number
 }

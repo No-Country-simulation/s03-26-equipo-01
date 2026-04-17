@@ -1,10 +1,14 @@
 package com.cms.services.impl;
 
 import com.cms.exception.EntityNotFoundException;
+import com.cms.model.testimonial.Category;
 import com.cms.model.testimonial.Media;
+import com.cms.model.testimonial.Tag;
 import com.cms.model.testimonial.Testimonial;
 import com.cms.model.testimonial.enums.StateTestimonial;
+import com.cms.model.user.impl.Editor;
 import com.cms.model.user.impl.admin.Admin;
+import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.repository.TestimonialRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.persistence.sql.TagSQLDAO;
@@ -29,9 +33,12 @@ public class TestimonialServiceImpl implements TestimonialService {
 
     private final TagSQLDAO  tagDAO;
 
+    private final TagRepository tagRepository;
+    private final CategoryService categoryService;
+
     public TestimonialServiceImpl(TestimonialRepository testimonialRepository,
                                   MediaService mediaService,
-                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO) {
+                                  AdminSQLDAO adminSQLDAO, TagSQLDAO tagDAO, TagRepository tagRepository, CategoryService categoryService) {
 
         this.testimonialRepository = testimonialRepository;
 
@@ -40,6 +47,8 @@ public class TestimonialServiceImpl implements TestimonialService {
         this.adminSQLDAO = adminSQLDAO;
 
         this.tagDAO = tagDAO;
+        this.tagRepository = tagRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -48,7 +57,7 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         model.setAdmin(admin);
         model.setMedia(media);
-        model.agregarTags(tagDAO.findAllById(idTags));
+        if(idTags != null)        model.agregarTags(tagDAO.findAllById(idTags));
 
         Testimonial testimonial = testimonialRepository.save(model);
 
@@ -89,12 +98,42 @@ public class TestimonialServiceImpl implements TestimonialService {
     }
 
     @Override
-    public void update(Testimonial recovered) {
-        testimonialRepository.update(recovered);
+    public Testimonial update(Testimonial recovered) {
+        return testimonialRepository.update(recovered);
     }
 
     @Override
     public Page<Testimonial> findAllTestimonial(int pageNumber, int size, Admin admin, StateTestimonial state) {
         return testimonialRepository.findAllTestimonial(PageRequest.of(pageNumber, size), admin, state);
+    }
+
+    @Override
+    public Testimonial archiveTestimonial(Long idTestimonial, Admin admin) {
+        Testimonial testimonial = testimonialRepository.findTestimonialByIdAndAdmin(idTestimonial, admin);
+
+        testimonial.archived();
+
+        return testimonialRepository.update(testimonial);
+    }
+
+    @Override
+    public Page<Testimonial> getTestimonialsByEditor(Editor editor, int page, int size) {
+        return testimonialRepository.getDraftsByEditor(editor, PageRequest.of(page, size));
+    }
+
+    @Override
+    public List<Testimonial> findAllTestimonialPublished(Admin admin, StateTestimonial stateTestimonial) {
+        return testimonialRepository.findAllTestimonialPublished(admin, stateTestimonial);
+    }
+
+    @Override
+    public Testimonial findByIdAndEditor(Long id, Editor editor) {
+        return testimonialRepository.findByIdAndEditor(id, editor);
+    }
+
+    @Override
+    public List<Tag> getTagsIdUsedInTestimonialAscoEditor(Editor editor, Long testimonialId, String name) {
+        List<Long> ids = testimonialRepository.getTagsIdUsedInTestimonialAscoEditor(editor, testimonialId);
+        return tagRepository.findTagsByNameExcludeIds(ids, editor.getCreatedBy().getId(), name);
     }
 }

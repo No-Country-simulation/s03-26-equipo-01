@@ -11,9 +11,9 @@
 
 .delete-modal_container div {
     justify-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    display: grid;
+    grid-template-rows: 60% 40%;
+    place-items: center;
     width: 90%;
     height: 90%;
 }

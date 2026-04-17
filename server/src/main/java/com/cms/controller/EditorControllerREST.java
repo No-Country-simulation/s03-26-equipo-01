@@ -2,9 +2,13 @@ package com.cms.controller;
 import com.cms.controller.annotations.AdminEndpoint;
 import com.cms.controller.annotations.EditorEndpoint;
 
+import com.cms.controller.dto.tag.TagResponseDto;
+import com.cms.controller.dto.tag.TagSearchEditorDTO;
 import com.cms.controller.dto.testimonial.TestimonialResponseDTO;
 
 import com.cms.controller.dto.testimonial.TestimonialResponseSimpleDTO;
+import com.cms.controller.dto.testimonial.TestimonialUpdateDTO;
+import com.cms.controller.dto.testimonial.TestimonilasToEditorDTO;
 import com.cms.controller.dto.user.UserRequestSimpleDTO;
 import com.cms.controller.dto.user.UserResponseSimpleDTO;
 import com.cms.controller.dto.utils.PageResponseDTO;
@@ -110,5 +114,53 @@ public class EditorControllerREST {
         );
     }
 
+    @GetMapping("/testimonial/{id}")
+    @EditorEndpoint
+    @Operation(summary = "Obtener testimonio del editor por ID")
+    public ResponseEntity<TestimonialResponseDTO> getById(
+            @PathVariable Long id,
+            @RequestAttribute("userId") Long editorId) {
+        Testimonial testimonial = editorService.findTestimonialByIdAndEditor(id, editorId);
+        return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
+    }
 
+    @PostMapping("/tags/search")
+    @EditorEndpoint
+    public ResponseEntity<List<TagResponseDto>> findByName(
+            @RequestBody TagSearchEditorDTO request,
+            @RequestAttribute("userId") Long editorId
+            ) {
+        List<com.cms.model.testimonial.Tag> tags = editorService.findTagsByNameForEditor(request.name(), editorId, request.testimonialId());
+        return ResponseEntity.ok(tags.stream().map(TagResponseDto::fromEntity).toList());
+    }
+
+    @PutMapping("/testimonial/edit")
+    @EditorEndpoint
+    public ResponseEntity<TestimonialResponseDTO> updateTestimonial(
+            @RequestBody TestimonialUpdateDTO request,
+            @RequestAttribute("userId") Long editorId
+    ){
+        Testimonial testimonial = editorService.updateTestimonial(request, editorId, request.categoryId());
+
+        return ResponseEntity.ok(TestimonialResponseDTO.fromModel(testimonial));
+    }
+
+    @GetMapping("/misTestimonios")
+    @EditorEndpoint
+    public ResponseEntity<TableResponseDTO<TestimonilasToEditorDTO>> getMyDrafts(
+            @RequestAttribute("userId") Long idEditor,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size){
+        Page<Testimonial> testimonialPage = editorService.getDrafts(idEditor,page,size);
+
+        Page<TestimonilasToEditorDTO> testimonialDTO = testimonialPage.map(TestimonilasToEditorDTO::fromModel);
+
+        return ResponseEntity.ok(
+                TableResponseDTO.fromPage(
+                        List.of("Nº", "TESTIMONIO","VIDEO", "IMAGEN","CATEGORIA","ESTADO"),
+                        testimonialDTO,
+                        TestimonilasToEditorDTO::id
+                )
+        );
+    }
 }

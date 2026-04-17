@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TagRepository {
-    List<Tag> findAllByActiveTrueOrderByNameAsc();
+    List<Tag> findAllByActiveTrueAndCreatorIdOrderByNameAsc(Long adminId);
 
     Optional<Tag> findByIdAndActiveTrue(Long id);
 
     Tag saveAndFlush(Tag tag);
 
     List<Tag> findTagsByName(String nameTag, Long idAdmin);
+
+    List<Tag> findTagsByNameExcludeIds(List<Long> ids, Long id, String name);
 }

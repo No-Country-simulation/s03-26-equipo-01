@@ -1,11 +1,11 @@
-.new-testimonial-page{
+.new-testimonial-page {
   height: auto;
   min-height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-color: var(--light-background);
-  padding:4em 0;
+  padding: 4em 0;
 }

@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/testimonial")
 @Tag(name = "Testimonio", description = "Endpoints para la gestión de testimonios")
@@ -55,16 +57,14 @@ public class TestimonialControllerREST {
             @ApiResponse(responseCode = "404", description = "testimonio no encontrado ")
     })
     @PostMapping("/published")
-    public ResponseEntity<PageResponseDTO<TestimonialPublicDTO>> testimonialPublished(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "5") int size,
+    public ResponseEntity<List<TestimonialPublicDTO>> testimonialPublished(
             HttpServletRequest httpRequest
     ){
         Admin admin = (Admin) httpRequest.getAttribute("admin");
 
-        PageResponseDTO<TestimonialPublicDTO> response = PageResponseDTO.from(
-                testimonialService.findAllTestimonial(page,size, admin, StateTestimonial.PUBLISHED).map(TestimonialPublicDTO::fromModel)
-        );
+        List<Testimonial> testimonials = testimonialService.findAllTestimonialPublished(admin, StateTestimonial.PUBLISHED);
+
+        List<TestimonialPublicDTO> response = testimonials.stream().map(TestimonialPublicDTO::fromModel).toList();
         return ResponseEntity.ok(response);
     }
 }

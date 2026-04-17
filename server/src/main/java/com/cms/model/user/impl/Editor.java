@@ -32,6 +32,7 @@ public class Editor extends User {
 
     public void validateAdvance(Testimonial testimonial) {
         if(!isContains(testimonial)) throw new BusinessException("El testimonio no pertenece al editor!");
+        if(!testimonial.hasCategory()) throw new BusinessException("El testimonio no tiene categoria");
     }
 
     public boolean isContains(Testimonial testimonial) {
@@ -40,5 +41,9 @@ public class Editor extends User {
 
     public Integer getNroTestimonials() {
         return drafts.size();
+    }
+
+    public void validateUpdateTestimonial(Boolean hasTestimonial) {
+        if(!hasTestimonial) throw new BusinessException("No puede editar un testimonio que no le pertenece");
     }
 }
