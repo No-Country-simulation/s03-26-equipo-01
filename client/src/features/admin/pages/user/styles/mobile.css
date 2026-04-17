@@ -17,3 +17,23 @@
     display: grid;
     gap: 20px
 }
+
+.users-admin-panel_container--info .table-header .MuiTableCell-root {
+    font-size: clamp(1rem, 0.2vw + 0.95rem, 1.125rem);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+.users-admin-panel_container--info .MuiTableBody-root .MuiTableCell-root {
+    font-size: clamp(0.98rem, 0.15vw + 0.93rem, 1.05rem);
+    line-height: 1.45;
+}
+
+.users-admin-panel_container--info .unsuscribe-button,
+.users-admin-panel_container--info .dischard-button {
+    min-width: 118px;
+    height: 36px;
+    padding: 0 14px;
+    font-size: 1rem;
+    line-height: 1;
+}

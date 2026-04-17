@@ -2,4 +2,19 @@
     .users-admin-panel_container {
         overflow-x: initial;
     }
+
+    .users-admin-panel_container--info .table-header .MuiTableCell-root {
+        font-size: clamp(1.08rem, 0.4vw + 0.92rem, 1.25rem);
+    }
+
+    .users-admin-panel_container--info .MuiTableBody-root .MuiTableCell-root {
+        font-size: clamp(1rem, 0.3vw + 0.9rem, 1.125rem);
+    }
+
+    .users-admin-panel_container--info .unsuscribe-button,
+    .users-admin-panel_container--info .dischard-button {
+        min-width: 128px;
+        height: 40px;
+        font-size: 1.05rem;
+    }
 }
