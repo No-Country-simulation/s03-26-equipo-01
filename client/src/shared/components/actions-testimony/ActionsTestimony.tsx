@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { Edit, Send } from 'lucide-react';
+import { Edit, Download } from 'lucide-react';
 import './actions-testimony.css';
 
 interface ActionsTestimonyProps {
@@ -36,14 +36,21 @@ const ActionsTestimony = ({
 
       {canAdvance && (
         <Button
-          variant='contained'
+          variant='outlined'
           size='small'
-          startIcon={<Send size={16} />}
+          startIcon={<Download size={14} />}
           onClick={() => onAdvance(id)}
           disabled={isLoading}
           sx={{
-            backgroundColor: '#f57c00',
-            '&:hover': { backgroundColor: '#e65100' },
+            color: '#3f51b5',
+            borderColor: '#3f51b5',
+            '&:hover': {
+              borderColor: '#3f51b5',
+              backgroundColor: 'rgba(63, 81, 181, 0.04)',
+            },
+            padding: '4px 8px',
+            fontSize: '0.75rem',
+            minWidth: 'auto',
           }}
         >
           ENVIAR A REVISIÓN

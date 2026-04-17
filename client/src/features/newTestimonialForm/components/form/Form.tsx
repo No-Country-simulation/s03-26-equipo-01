@@ -14,17 +14,25 @@ import RatingPicker from '../rating-picker/RatingPicker';
 import createTestimonial from '../../../../shared/testimonial/services/testimonial.service';
 import type { Testimonial } from '../../../../shared/testimonial/models/testimonial';
 import searchTagService from '../../../../shared/tag/services/search-tag.service';
+import getEmbedApiKey from '../../../../shared/testimonial/services/embed-api-key.service';
+import Toast from '../../../../shared/components/toast/Toast';
 
 const Form = () => {
   const [tagOptions, setTagOptions] = useState<DataProps[]>([]);
   const [tagSearch, setTagSearch] = useState('');
   const [isTagLoading, setIsTagLoading] = useState(false);
 
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>(
+    'success',
+  );
+
   const {
     control,
     formState: { isValid },
     handleSubmit,
     watch,
+    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -86,11 +94,29 @@ const Form = () => {
     return () => window.clearTimeout(timeoutId);
   }, [tagSearch]);
 
+  useEffect(() => {
+    if (!toastMessage) return;
+
+    const timeoutId = window.setTimeout(() => setToastMessage(''), 2500);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toastMessage]);
+
   const onSubmit = async (data: Testimonial) => {
     try {
-      await createTestimonial(data);
-      console.log('¡Testimonio guardado con éxito!');
+      const apiKey = getEmbedApiKey();
+      await createTestimonial(data, apiKey || undefined);
+      setToastType('success');
+      setToastMessage('¡Testimonio guardado con éxito!');
+      reset();
+      setImagePreviewUrl(null);
+      setTagSearch('');
+      setTagOptions([]);
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Error desconocido';
+      setToastType('error');
+      setToastMessage(errorMessage);
       console.error(error);
     }
   };
@@ -163,7 +189,9 @@ const Form = () => {
               label='Link video de Youtube (Opcional)'
               name='youtubeUrl'
               placeholder='https://www.youtube.com/watch...'
-              icon={<SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />}
+              icon={
+                <SquarePlay className='icon' color={alpha('#2D2D2D', 0.5)} />
+              }
             />
 
             <UploadButtonWithIcon
@@ -178,7 +206,9 @@ const Form = () => {
             <div className='new-testimonial_media-previews'>
               {youtubeThumbnailUrl && (
                 <div className='new-testimonial_preview-card'>
-                  <span className='new-testimonial_preview-label'>Vista previa del video</span>
+                  <span className='new-testimonial_preview-label'>
+                    Vista previa del video
+                  </span>
                   <a
                     className='new-testimonial_preview-link'
                     href={youtubeUrl}
@@ -196,7 +226,9 @@ const Form = () => {
 
               {imagePreviewUrl && (
                 <div className='new-testimonial_preview-card'>
-                  <span className='new-testimonial_preview-label'>Vista previa de la imagen</span>
+                  <span className='new-testimonial_preview-label'>
+                    Vista previa de la imagen
+                  </span>
                   <img
                     className='new-testimonial_preview-image'
                     src={imagePreviewUrl}
@@ -223,6 +255,18 @@ const Form = () => {
           <SubmitButton isAvailable={isValid} />
         </div>
       </form>
+      {toastMessage && (
+        <Toast
+          type={toastType}
+          onClose={() => setToastMessage('')}
+          content={
+            <>
+              <strong>{toastType === 'success' ? '¡Listo!' : 'Error'}</strong>
+              <p>{toastMessage}</p>
+            </>
+          }
+        />
+      )}
     </section>
   );
 };

@@ -6,10 +6,11 @@ import adminApiKeyService from '../../../services/api-key/admin-api-key.service'
 const MASK_CHARACTER = '*';
 const COPY_SUCCESS_MESSAGE = 'Texto copiado al portapapeles';
 const COPY_ERROR_MESSAGE = 'No se pudo copiar el texto al portapapeles.';
-const API_KEY_ERROR_MESSAGE = 'No se pudo obtener la API key del administrador.';
+const API_KEY_ERROR_MESSAGE =
+  'No se pudo obtener la API key del administrador.';
 
 type UseCreateEmbedParams = {
-  getPageContent: (baseUrl: string, apiKey?: string) => EmbedPageContent;
+  getPageContent: (baseUrl: string) => EmbedPageContent;
 };
 
 const useCreateEmbed = ({ getPageContent }: UseCreateEmbedParams) => {
@@ -61,7 +62,7 @@ const useCreateEmbed = ({ getPageContent }: UseCreateEmbedParams) => {
     : MASK_CHARACTER.repeat(apiKey.length);
 
   const embedBaseUrl = getEmbedBaseUrl();
-  const pageContent = getPageContent(embedBaseUrl, apiKey || undefined);
+  const pageContent = getPageContent(embedBaseUrl);
 
   return {
     apiKey,

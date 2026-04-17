@@ -46,7 +46,9 @@ const BodyBankAction = ({
         rows.map((row, index) => (
           <TableRow key={row.id} className={classColor(index)}>
             <TableCell>{currentPage * pageSize + index + 1}</TableCell>
-            <TableCell>{row.data.testimonial}</TableCell>
+            <TableCell className='truncated-text'>
+              {row.data.testimonial}
+            </TableCell>
 
             <TableCell>
               <MediaIcon

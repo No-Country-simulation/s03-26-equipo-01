@@ -1,0 +1,40 @@
+.my-testimonial-filters-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 12px 0;
+}
+
+.my-testimonial-filters-container label {
+  font-weight: 500;
+  color: #333;
+  white-space: nowrap;
+}
+
+.filters-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filters-group .MuiFormControl-root {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .my-testimonial-filters-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filters-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .filters-group .MuiFormControl-root {
+    min-width: 120px;
+  }
+}
