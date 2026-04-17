@@ -75,7 +75,7 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
   return (
     <TableRow className={classColor(index)}>
       <TableCell>{rowNumber}</TableCell>
-      <TableCell>{row.data.testimonial}</TableCell>
+      <TableCell className='truncated-text'>{row.data.testimonial}</TableCell>
 
       {columns.includes('VIDEO') && (
         <TableCell>
