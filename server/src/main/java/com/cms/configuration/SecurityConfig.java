@@ -42,7 +42,7 @@ public class SecurityConfig {
 
     private final AccessDeniedHandler accessDeniedHandler;
 
-    @Value("${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,https://*.ngrok-free.dev,https://*.ngrok.app}")
+    @Value("${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,https://*.ngrok-free.dev,https://*.ngrok.app,https://s03-26-equipo-01-delta.vercel.app,https://unostensive-coverless-mozella.ngrok-free.dev}")
     private String corsAllowedOrigins;
 
     @Bean
