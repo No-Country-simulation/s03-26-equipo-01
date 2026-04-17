@@ -1,0 +1,5 @@
+@media screen and (min-width: 1024px) {
+    .sidebar-dropdown-subitem, .sidebar-dropdown-subitem--selected {
+        width: 100%;
+    }
+}

@@ -7,7 +7,7 @@ import type { HeaderContainerProps, PageContainerProps, PageContentProps } from 
 
 const PageContainer = ({children, itemsData, basePath}: PageContainerProps) => {
 
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(true);
         
     const handleActive = () => setIsActive(!isActive);
     
