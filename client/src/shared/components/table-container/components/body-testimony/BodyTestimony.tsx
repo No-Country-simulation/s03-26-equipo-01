@@ -75,7 +75,7 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
   return (
     <TableRow className={classColor(index)}>
       <TableCell>{rowNumber}</TableCell>
-      <TableCell>{row.data.testimonial}</TableCell>
+      <TableCell className='truncated-text'>{row.data.testimonial}</TableCell>
 
       {columns.includes('VIDEO') && (
         <TableCell>
@@ -97,10 +97,7 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
             url={
               row.data.media?.imageUrl && row.data.media.imageUrl.trim()
                 ? row.data.media.imageUrl
-                : row.data.media?.thumbnailUrl &&
-                    row.data.media.thumbnailUrl.trim()
-                  ? row.data.media.thumbnailUrl
-                  : undefined
+                : undefined
             }
             IconOn={Image}
             IconOff={ImageOff}

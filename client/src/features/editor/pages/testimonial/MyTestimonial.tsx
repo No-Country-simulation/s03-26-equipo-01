@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 import TitleContainer from '../../components/title-container/TitleContainer';
 
@@ -12,6 +13,7 @@ import GenericTable from '../../../../shared/components/table-container/componen
 import BodyTestimony from '../../../../shared/components/table-container/components/body-testimony/BodyTestimony';
 import Paginator from '../../../../shared/components/pagination/Paginator';
 import { editTestimonialPath } from '../../../../core/routes/routes';
+import './my-testimonial.css';
 
 interface ToastState {
   content: ReactNode;
@@ -43,14 +45,12 @@ const MyTestimonials = () => {
       });
       await refetch();
     } catch (error) {
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        'Error al enviar el testimonio a revisión. Por favor intenta de nuevo.';
       setToast({
         type: 'error',
-        content: (
-          <span>
-            Error al enviar el testimonio a revisión. Por favor intenta de
-            nuevo.
-          </span>
-        ),
+        content: errorMessage,
       });
       console.error('Error advancing testimonial:', error);
     }
@@ -74,38 +74,44 @@ const MyTestimonials = () => {
     })) || [];
 
   return (
-    <section>
-      {toast && (
-        <Toast content={toast.content} type={toast.type} onClose={closeToast} />
-      )}
-
-      <TitleContainer
-        title='Mis testimonios'
-        text='Aquí puedes editar, moderar y enviar tus testimonios a revisión.'
-      />
-
-      {data && (
-        <>
-          <GenericTable
-            data={data}
-            renderBody={
-              <BodyTestimony
-                rows={rowsWithActions}
-                currentPage={data.page}
-                pageSize={data.size}
-                columns={data.headers}
-              />
-            }
+    <section className='my-testimonial-container'>
+      <div className='my-testimonial-container_info'>
+        {toast && (
+          <Toast
+            content={toast.content}
+            type={toast.type}
+            onClose={closeToast}
           />
-          <Paginator
-            totalPages={data.totalPages}
-            currentPage={page}
-            onPageChange={setPage}
-            totalElements={data.totalElements}
-            pageSize={data.size}
-          />
-        </>
-      )}
+        )}
+
+        <TitleContainer
+          title='Mis testimonios'
+          text='Aquí puedes editar, moderar y enviar tus testimonios a revisión.'
+        />
+
+        {data && (
+          <>
+            <GenericTable
+              data={data}
+              renderBody={
+                <BodyTestimony
+                  rows={rowsWithActions}
+                  currentPage={data.page}
+                  pageSize={data.size}
+                  columns={data.headers}
+                />
+              }
+            />
+            <Paginator
+              totalPages={data.totalPages}
+              currentPage={page}
+              onPageChange={setPage}
+              totalElements={data.totalElements}
+              pageSize={data.size}
+            />
+          </>
+        )}
+      </div>
     </section>
   );
 };
