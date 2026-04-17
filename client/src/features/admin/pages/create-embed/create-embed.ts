@@ -18,8 +18,6 @@ export type EmbedPageContent = {
 
 const DEFAULT_SITE_URL = 'http://localhost:5173';
 const EMBED_API_KEY_PLACEHOLDER = 'YOUR_API_KEY';
-const DEFAULT_FORM_HEIGHT = '58.75rem';
-const DEFAULT_CAROUSEL_HEIGHT = '40rem';
 
 export const EMBED_INSTRUCTIONS = [
   'Copia el codigo del widget que deseas usar',
@@ -42,13 +40,18 @@ function buildEmbedUrl(
   return `${testimonialUrl}?${query.toString()}`;
 }
 
-function buildIframeSnippet(url: string, title: string, height: string) {
+function buildIframeSnippet(url: string, title: string) {
   return `<iframe
   src="${url}"
   title="${title}"
   frameBorder="0"
   loading="lazy"
-  style={{ width: "100%", minHeight: "${height}", border: "none" }}
+        style={{
+          width: "100%",
+          minHeight: "100vh",
+          height: "auto",
+          border: "none",
+        }}
 ></iframe>`;
 }
 
@@ -63,11 +66,7 @@ export function getFormEmbedSnippets(baseUrl: string): EmbedSnippet[] {
       description:
         'Formulario embebido para recolectar testimonios desde tu sitio.',
       copyLabel: 'Codigo HTML',
-      code: buildIframeSnippet(
-        iframeUrl,
-        'Formulario de testimonios',
-        DEFAULT_FORM_HEIGHT,
-      ),
+      code: buildIframeSnippet(iframeUrl, 'Formulario de testimonios'),
     },
   ];
 }
@@ -83,11 +82,7 @@ export function getCarouselEmbedSnippets(baseUrl: string): EmbedSnippet[] {
       description:
         'Testimonios en formato carrusel con reproduccion automatica.',
       copyLabel: 'Codigo HTML',
-      code: buildIframeSnippet(
-        carouselUrl,
-        'Carrusel de testimonios',
-        DEFAULT_CAROUSEL_HEIGHT,
-      ),
+      code: buildIframeSnippet(carouselUrl, 'Carrusel de testimonios'),
     },
   ];
 }

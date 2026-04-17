@@ -15,17 +15,24 @@ import createTestimonial from '../../../../shared/testimonial/services/testimoni
 import type { Testimonial } from '../../../../shared/testimonial/models/testimonial';
 import searchTagService from '../../../../shared/tag/services/search-tag.service';
 import getEmbedApiKey from '../../../../shared/testimonial/services/embed-api-key.service';
+import Toast from '../../../../shared/components/toast/Toast';
 
 const Form = () => {
   const [tagOptions, setTagOptions] = useState<DataProps[]>([]);
   const [tagSearch, setTagSearch] = useState('');
   const [isTagLoading, setIsTagLoading] = useState(false);
 
+  const [toastMessage, setToastMessage] = useState('');
+  const [toastType, setToastType] = useState<'success' | 'error' | 'info'>(
+    'success',
+  );
+
   const {
     control,
     formState: { isValid },
     handleSubmit,
     watch,
+    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -87,12 +94,29 @@ const Form = () => {
     return () => window.clearTimeout(timeoutId);
   }, [tagSearch]);
 
+  useEffect(() => {
+    if (!toastMessage) return;
+
+    const timeoutId = window.setTimeout(() => setToastMessage(''), 2500);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [toastMessage]);
+
   const onSubmit = async (data: Testimonial) => {
     try {
       const apiKey = getEmbedApiKey();
       await createTestimonial(data, apiKey || undefined);
-      console.log('¡Testimonio guardado con éxito!');
+      setToastType('success');
+      setToastMessage('¡Testimonio guardado con éxito!');
+      reset();
+      setImagePreviewUrl(null);
+      setTagSearch('');
+      setTagOptions([]);
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Error desconocido';
+      setToastType('error');
+      setToastMessage(errorMessage);
       console.error(error);
     }
   };
@@ -231,6 +255,18 @@ const Form = () => {
           <SubmitButton isAvailable={isValid} />
         </div>
       </form>
+      {toastMessage && (
+        <Toast
+          type={toastType}
+          onClose={() => setToastMessage('')}
+          content={
+            <>
+              <strong>{toastType === 'success' ? '¡Listo!' : 'Error'}</strong>
+              <p>{toastMessage}</p>
+            </>
+          }
+        />
+      )}
     </section>
   );
 };
