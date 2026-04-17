@@ -3,9 +3,12 @@ import { CREATE_TESTIMONIAL_API } from '../../../core/api/urls/urls';
 import type { Testimonial } from '../models/testimonial';
 import getEmbedApiKey from './embed-api-key.service';
 
-async function createTestimonial(data: Testimonial) {
+/**
+ * Create a testimonial. The apiKey should come from the embed (query param, window, or import.meta).
+ */
+async function createTestimonial(data: Testimonial, apiKey?: string) {
   if (data.rating === null) throw new Error('La valoración debe ser un entero');
-  const testimonialApiKey = getEmbedApiKey();
+  const testimonialApiKey = apiKey || getEmbedApiKey();
   if (!testimonialApiKey)
     throw new Error('Falta configurar la API key del embed');
 
