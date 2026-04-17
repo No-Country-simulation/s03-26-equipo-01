@@ -97,10 +97,7 @@ const TestimonyRow = <T extends TestimonialData = TestimonialData>({
             url={
               row.data.media?.imageUrl && row.data.media.imageUrl.trim()
                 ? row.data.media.imageUrl
-                : row.data.media?.thumbnailUrl &&
-                    row.data.media.thumbnailUrl.trim()
-                  ? row.data.media.thumbnailUrl
-                  : undefined
+                : undefined
             }
             IconOn={Image}
             IconOff={ImageOff}
