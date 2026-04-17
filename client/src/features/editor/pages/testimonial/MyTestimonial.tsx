@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 import TitleContainer from '../../components/title-container/TitleContainer';
 
@@ -44,14 +45,12 @@ const MyTestimonials = () => {
       });
       await refetch();
     } catch (error) {
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        'Error al enviar el testimonio a revisión. Por favor intenta de nuevo.';
       setToast({
         type: 'error',
-        content: (
-          <span>
-            Error al enviar el testimonio a revisión. Por favor intenta de
-            nuevo.
-          </span>
-        ),
+        content: errorMessage,
       });
       console.error('Error advancing testimonial:', error);
     }
