@@ -20,7 +20,7 @@ const CategorySubPanel = ({currentTab}: TabContent) => {
             <AddButton text = "CREAR CATEGORIA" onSubmit = {add.handle} />
             {add.isActive && <CategoryModalForm onSubmit = {addCategory} onClose = {add.onClose} />}
             {edit.isActive && <CategoryModalForm onSubmit = {(category) => editCategory(category, edit.id)} onClose = {edit.onClose} />}
-            {deleted.isActive && <DeleteModal onDelete = {deleteCategory} onClose = {deleted.onClose} id = {deleted.id as number} />}
+            {deleted.isActive && <DeleteModal onDelete = {() => deleteCategory(deleted.id)} onClose = {deleted.onClose} />}
             <TableEditData 
                 tableData = {tableData(categories)}>
                 {(id: number) => <TableButtons onEdit={edit.handle} onDelete={deleted.handle} id={id} />}

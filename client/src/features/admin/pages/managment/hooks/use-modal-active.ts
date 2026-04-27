@@ -22,7 +22,7 @@ const useModalActive = () => {
             isActive: deleteActive.isActive,
             handle: deleteActive.handleActive,
             onClose: deleteActive.handleActive,
-            id: deleteActive.id
+            id: deleteActive.id as number
         }
     }
 

@@ -20,7 +20,7 @@ const TagSubPanel = ({currentTab}: TabContent) => {
             <AddButton text = "CREAR TAG" onSubmit = {add.handle} />
             {add.isActive && <TagModalForm onSubmit = {addTag} onClose = {add.onClose} />}
             {edit.isActive && <TagModalForm onSubmit = {(tag) => editTag(tag, edit.id)} onClose = {edit.onClose} />}
-            {deleted.isActive && <DeleteModal onDelete = {deleteTag} onClose = {deleted.onClose} id = {deleted.id as number} />}
+            {deleted.isActive && <DeleteModal onDelete = {() => deleteTag(deleted.id)} onClose = {deleted.onClose} />}
             <TableEditData 
                 tableData = {tableData(tags)}>
                 {(id: number) => <TableButtons onEdit={edit.handle} onDelete={deleted.handle} id={id} />}
