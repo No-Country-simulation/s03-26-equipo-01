@@ -7,7 +7,7 @@ const useActive = () => {
     
     const handleActive = (id?: number) => {
         setId(id);
-        setIsActive(!isActive);
+        setIsActive(prev => !prev);
     }
 
     const isElementActive = (elementId: number) => id === elementId;
