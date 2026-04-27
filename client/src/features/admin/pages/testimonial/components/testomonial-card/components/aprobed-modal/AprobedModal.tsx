@@ -13,8 +13,11 @@ const AprobedModal = ({onChangeState, onClose}: AprobedModalProps) => {
         handleActive();
         onClose();
     }
-    
-    const handleAcept = () => onChangeState()
+
+    const handleAcept = () => {
+        onChangeState();
+        onClose();
+    }
     
     return (
         <ModalContainer disable = {isActive}>

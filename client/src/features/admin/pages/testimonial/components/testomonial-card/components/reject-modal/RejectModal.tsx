@@ -13,7 +13,10 @@ const RejectModal = ({onChangeState, onClose}: RejectModalProps) => {
         handleActive();
         onClose();
     }
-    const handleAcept = () => onChangeState()
+    const handleAcept = () => {
+        onChangeState();
+        onClose();
+    }
     
     return (
         <ModalContainer disable = {isActive}>

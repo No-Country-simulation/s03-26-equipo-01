@@ -8,7 +8,12 @@ import './styles/delete-modal.css';
 const DeleteModal = ({onDelete, onClose}: DeleteModalProps) => {
 
     const {isActive, handleActive} = useActive();
-    const handleCommit = () => onDelete();
+
+    const handleCommit = () => {
+        onDelete();
+        onClose();
+    };
+
     const handleClose = () => {
         handleActive();
         onClose();

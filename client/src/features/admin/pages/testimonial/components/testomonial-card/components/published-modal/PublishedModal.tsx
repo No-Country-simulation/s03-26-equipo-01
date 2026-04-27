@@ -13,7 +13,10 @@ const PublishedModal = ({onClose, onChangeState}: PublishedModalProps) => {
         handleActive();
         onClose();
     }
-    const handleAcept = () => onChangeState()
+    const handleAcept = () => {
+        onChangeState();
+        onClose();
+    }
     
     return (
         <ModalContainer disable = {isActive}>
