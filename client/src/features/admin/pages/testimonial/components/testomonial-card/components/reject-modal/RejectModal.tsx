@@ -5,12 +5,15 @@ import ModalCommitContainer from "../../../../../../components/modal-commit-cont
 import ModalTitleContainer from "../../../../../../components/modal-title-form/ModalTitleContainer";
 import type { RejectModalProps } from "./reject-modal";
 
-const RejectModal = ({onChangeState, onClose, id}: RejectModalProps) => {
+const RejectModal = ({onChangeState, onClose}: RejectModalProps) => {
 
     const {isActive, handleActive} = useActive();
 
-    const handleClose = () => onClose(handleActive)
-    const handleAcept = () => onChangeState(id, handleActive)
+    const handleClose = () => {
+        handleActive();
+        onClose();
+    }
+    const handleAcept = () => onChangeState()
     
     return (
         <ModalContainer disable = {isActive}>

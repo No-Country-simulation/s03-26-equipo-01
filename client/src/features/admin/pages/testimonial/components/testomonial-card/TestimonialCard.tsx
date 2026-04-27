@@ -24,9 +24,9 @@ const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   return (
     updateTestimonial && (
       <TestimonialCardContent
-        testimonial={updateTestimonial}
-        advance={advance}
-        deleted={deleted}
+        testimonial = {updateTestimonial}
+        advance = {advance}
+        deleted = {deleted}
       />
     )
   );
@@ -40,36 +40,25 @@ const TestimonialCardContent = ({
 
   const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh } = useChangeState();
 
-  const handleAdvanceActive = (id: number, close: () => void) => {
-    advance(id)
-    close();
-    refresh();
-  }
-  const handleDiscartActive = (id: number, close: () => void) => {
-    deleted(id)
-    close();
-    refresh();
-  }
-
   return (
     <>
       <article className='testimonial-admin-card-container falling-container'>
-      <TestimonialHeader testimonial={testimonial} />
-      <TestimonialState testimonial={testimonial} />
-      <TestimonialDescription testimonial={testimonial} />
-      <TestimonialTags tags={testimonial.tags} />
-      {testimonial.media && <MultimediaContent testimonial={testimonial} />}
-      <StateButtonContainer
-        changeStateButtons={
-          buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]
-        }
-        testimonial={testimonial}
-        />
+        <TestimonialHeader testimonial={testimonial} />
+        <TestimonialState testimonial={testimonial} />
+        <TestimonialDescription testimonial={testimonial} />
+        <TestimonialTags tags={testimonial.tags} />
+        {testimonial.media && <MultimediaContent testimonial={testimonial} />}
+        <StateButtonContainer
+          changeStateButtons={
+            buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]
+          }
+          testimonial={testimonial}
+          />
       </article>
-      {isState('Aprobado') && id && <AprobedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
-      {isState('Publicado') && id && <PublishedModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
-      {isState('Borrador') && id && <RejectModal onChangeState = {handleAdvanceActive} onClose = {refresh} id = {id} /> }
-      {isDiscart && id && <DeleteModal onDelete = {handleDiscartActive} onClose={refresh} id = {id} /> }
+      {isState('Aprobado') && id && <AprobedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
+      {isState('Publicado') && id && <PublishedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
+      {isState('Borrador') && id && <RejectModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
+      {isDiscart && id && <DeleteModal onDelete = {() => deleted(id)} onClose = {refresh} /> }
     </>
   );
 };
