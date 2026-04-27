@@ -4,7 +4,7 @@ import type { DropdownNavegationItemData } from "../../../../../../types/navegat
 export interface DropDownItemProps {
     item: DropdownNavegationItemData
     navegate: (url : string) => void
-    onActive: (id: number) => void
+    isRouteActive: (routePage: string) => boolean
 }
 
 export interface DropDownContainerProps {
@@ -15,6 +15,6 @@ export interface DropDownContainerProps {
 export interface DropDownListProps {
     item: DropdownNavegationItemData
     navegate: (url : string) => void
-    onActive: (id: number) => void
+    isRouteActive: (routePage: string) => boolean
 }
 

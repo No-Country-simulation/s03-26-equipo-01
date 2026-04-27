@@ -5,20 +5,18 @@ import type { SimpleNavegationItemData } from "../../../../types/navegation-item
 export interface NavegationItemProps {
     item: NavegationItemData
     urlBase: string
-    handleActive: (id: number) => void
-    isElementActive: (id: number) =>boolean
+    isRouteActive: (routePage: string) => boolean
 }
 
 export interface SimpleNavItemProps {
     item: SimpleNavegationItemData
     handleNavegate: (url: string) => void
-    handleActive: (id: number) => void
-    isElementActive: (id: number) =>boolean
+    isSelected: boolean
 }
 
 export interface DropNavItemProps {
     item: DropdownNavegationItemData
     handleNavegate: (url: string) => void
-    handleActive: (id: number) => void
-    isElementActive: (id: number) => boolean
+    isRouteActive: (routePage: string) => boolean
+    isSelected: boolean
 }

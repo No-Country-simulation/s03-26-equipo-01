@@ -3,5 +3,5 @@ import type { SimpleNavegationItemData } from "../../../../../../types/navegatio
 export interface SimpleItemProps {
     item: SimpleNavegationItemData
     navegate: (url : string) => void
-    handleActive: (id: number) => void
+    handleActive?: (id: number) => void
 }
