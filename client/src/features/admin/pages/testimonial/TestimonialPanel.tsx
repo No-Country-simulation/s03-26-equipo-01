@@ -16,12 +16,11 @@ const TestimonialPanel = () => {
                         title = 'Testimonios'
                         text = 'Administra qué testimonios se publican: apruébalos, envíalos a edición o retíralos cuando quieras.'    
                     />
-                    {adminResources && <FiltersContainer 
+                    <FiltersContainer 
                         adminResources = {adminResources} 
                         onFilter = {sendFilter} />
-                    }
                 </div>
-                {testimonials && <TestimonialsList testimonials = {testimonials} />}
+                <TestimonialsList testimonials = {testimonials} />
             </div>
         </section>
     )
