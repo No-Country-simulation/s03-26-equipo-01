@@ -1,32 +1,31 @@
 # Etapa 1: Build con Maven
 FROM maven:3.9-eclipse-temurin-21 AS build
 
-WORKDIR /app
+WORKDIR /workspace
 
-# Copiar pom.xml primero para cachear dependencias
-COPY pom.xml .
-RUN mvn dependency:go-offline -B
+# Instalar primero la libreria externa en el repositorio Maven local del contenedor
+COPY media/pom.xml ./media/pom.xml
+COPY media/src ./media/src
+RUN mvn -f media/pom.xml install -DskipTests -B
 
-# Copiar el código fuente y construir
-COPY src ./src
-RUN mvn clean package -DskipTests -B
+# Copiar el build del CMS y cachear dependencias
+COPY CMS/server/pom.xml ./CMS/server/pom.xml
+COPY CMS/server/cms-server/pom.xml ./CMS/server/cms-server/pom.xml
+RUN mvn -f CMS/server/pom.xml -pl cms-server dependency:go-offline -B
+
+# Copiar el codigo fuente del CMS y construir
+COPY CMS/server/src ./CMS/server/src
+RUN mvn -f CMS/server/pom.xml -pl cms-server -am clean package -DskipTests -B
 
 
 # Etapa 2: Desarrollo / tests
-FROM maven:3.9-eclipse-temurin-21 AS development
+FROM build AS development
 
-WORKDIR /app
-
-COPY --from=build /app/pom.xml .
-COPY --from=build /app/src ./src
-COPY --from=build /app/target/*.jar app.jar
-
-# Cachear dependencias también acá
-RUN mvn dependency:go-offline -B
+WORKDIR /workspace/CMS/server
 
 EXPOSE 8080
 
-ENTRYPOINT ["sh", "-c", "if [ \"$1\" = 'test' ]; then mvn test; else java -jar app.jar; fi", "--"]
+ENTRYPOINT ["sh", "-c", "if [ \"$1\" = 'test' ]; then mvn -pl cms-server -am test; else java -jar cms-server/target/*.jar; fi", "--"]
 
 
 # Etapa 3: Producción liviana
@@ -34,7 +33,7 @@ FROM eclipse-temurin:21-jre-jammy AS production
 
 WORKDIR /app
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /workspace/CMS/server/cms-server/target/*.jar app.jar
 
 EXPOSE 8080
 

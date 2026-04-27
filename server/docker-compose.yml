@@ -4,7 +4,8 @@ services:
   app:
     container_name: cms-app
     build:
-      context: .
+      context: ../..
+      dockerfile: CMS/server/Dockerfile
       target: production
     env_file:
       - .env
