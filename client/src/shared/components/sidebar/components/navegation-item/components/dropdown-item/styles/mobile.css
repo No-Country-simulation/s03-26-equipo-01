@@ -82,21 +82,10 @@
 }
 
 .sidebar-dropdown-subitem, .sidebar-dropdown-subitem--selected {
-    display: grid;
-    grid-template-columns: 2% 98%;
-    align-items: center;
     width: calc(100% - 26px);
     min-height: 6vh;
     border-radius: 5px;
     transition: background-color 0.2s;
-}
-
-.sidebar-dropdown-subitem:hover {
-    background: rgba(77, 120, 173, 0.22);
-}
-
-.sidebar-dropdown-subitem--selected {
-    background: rgba(77, 120, 173, 0.22);
 }
 
 .sidebar-dropdown-subitem_indicator {
