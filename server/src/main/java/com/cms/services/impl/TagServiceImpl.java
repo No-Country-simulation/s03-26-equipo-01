@@ -8,6 +8,8 @@ import com.cms.persistence.repository.TagRepository;
 import com.cms.persistence.sql.AdminSQLDAO;
 import com.cms.services.TagService;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
 
-    public TagServiceImpl(AdminSQLDAO adminSQLDAO, TagRepository tagRepository) {
+    public TagServiceImpl(AdminSQLDAO adminSQLDAO, @Qualifier("tagRepositorySQLImpl")TagRepository tagRepository) {
         this.adminSQLDAO = adminSQLDAO;
         this.tagRepository = tagRepository;
     }

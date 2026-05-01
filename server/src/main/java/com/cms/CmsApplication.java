@@ -8,10 +8,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "com.cms.persistence.sql")
-// Escaneo de MongoDB
 @EnableMongoRepositories(basePackages = "com.cms.persistence.mongo")
-// Escaneo de Elasticsearch - ESTA ES LA QUE FALTA O ESTÁ MAL
-@EnableElasticsearchRepositories(basePackages = "com.cms.persistence.elastic")
+//@EnableElasticsearchRepositories(basePackages = "com.cms.persistence.elastic")
 public class CmsApplication {
 
 	public static void main(String[] args) {

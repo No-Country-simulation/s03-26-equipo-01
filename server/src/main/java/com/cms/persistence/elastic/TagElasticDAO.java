@@ -1,5 +1,7 @@
 package com.cms.persistence.elastic;
 
+// DESHABILITADO: Usando TagRepositorySQLImpl en su lugar
+/*
 import com.cms.persistence.elastic.entity.TagElastic;
 import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
@@ -27,3 +29,4 @@ public interface TagElasticDAO extends ElasticsearchRepository<TagElastic, Strin
     """)
     List<TagElastic> findAllByNameAndIdAdminExcludeIdsString(String name, String string, List<String> idsString);
 }
+*/

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.support.HttpHeaders;
-
+/*
 @Configuration
 public class ElasticSearchConfig extends ElasticsearchConfiguration {
 
@@ -44,4 +44,4 @@ public class ElasticSearchConfig extends ElasticsearchConfiguration {
                 }})
                 .build();
     }
-}
+}*/

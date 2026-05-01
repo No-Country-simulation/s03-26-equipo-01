@@ -1,5 +1,7 @@
 package com.cms.persistence.repository.impl;
 
+// DESHABILITADO: Usando TagRepositorySQLImpl en su lugar
+/*
 import com.cms.model.testimonial.Tag;
 import com.cms.persistence.elastic.TagElasticDAO;
 import com.cms.persistence.elastic.entity.TagElastic;
@@ -63,3 +65,4 @@ public class TagRepositoryImpl implements TagRepository {
 
 
 }
+*/

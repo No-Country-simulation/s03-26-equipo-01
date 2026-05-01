@@ -1,5 +1,7 @@
 package com.cms.persistence.repository.mapper.impl;
 
+// @Component - DESHABILITADO: No se usa en la versión SQL
+/*
 import com.cms.model.testimonial.Tag;
 import com.cms.persistence.elastic.entity.TagElastic;
 import com.cms.persistence.repository.mapper.TagMapper;
@@ -24,3 +26,4 @@ public class TagMapperImpl implements TagMapper {
                 .build();
     }
 }
+*/

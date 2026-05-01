@@ -1,5 +1,7 @@
 package com.cms.persistence.elastic.entity;
 
+// DESHABILITADO: Usando entidad SQL Tag en su lugar
+/*
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,3 +26,4 @@ public class TagElastic {
 
     private String idAdmin;
 }
+*/
