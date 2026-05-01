@@ -2,8 +2,8 @@ package com.cms.services.impl;
 
 import com.cms.services.ResetService;
 import org.bson.Document;
-import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
+// import org.springframework.data.elasticsearch.core.ElasticsearchOperations; - DESHABILITADO
+// import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates; - DESHABILITADO
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityManager;
@@ -22,18 +22,18 @@ public class ResetServiceImpl implements ResetService {
     private EntityManager entityManager;
 
     private final MongoTemplate mongoTemplate;
-    private final ElasticsearchOperations elasticsearchOperations;
+    // private final ElasticsearchOperations elasticsearchOperations; - DESHABILITADO: No se usa en SQL
 
-    public ResetServiceImpl(MongoTemplate mongoTemplate, ElasticsearchOperations elasticsearchOperations) {
+    public ResetServiceImpl(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
-        this.elasticsearchOperations = elasticsearchOperations;
+        // this.elasticsearchOperations = elasticsearchOperations; - DESHABILITADO
     }
 
     @Override
     public void resetAll() {
         resetSQL();
         resetMongo();
-        resetElastic();
+        // resetElastic(); - DESHABILITADO: Elasticsearch no se usa en la versión SQL
     }
 
     private void resetSQL() {
@@ -54,9 +54,12 @@ public class ResetServiceImpl implements ResetService {
         );
     }
 
+    // DESHABILITADO: Elasticsearch no se usa en la versión SQL
+    /*
     private void resetElastic() {
         elasticsearchOperations.indexOps(IndexCoordinates.of("tag")).delete();
     }
+    */
 
     private Set<String> obtenerTablasExistentes() {
         Set<String> tablas = new HashSet<>();

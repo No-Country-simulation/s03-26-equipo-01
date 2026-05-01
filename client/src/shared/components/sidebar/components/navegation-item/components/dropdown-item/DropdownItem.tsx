@@ -4,17 +4,18 @@ import './styles/dropdown-item.css';
 import dropBoxIcon from '../../../../../../../assets/dropbox-icon.svg';
 import useActive from "../../../../../../hooks/use-active";
 
-const DropDownItem = ({item, navegate, onActive}: DropDownItemProps) => {
+const DropDownItem = ({item, navegate, isRouteActive}: DropDownItemProps) => {
 
     const {isActive, handleActive} = useActive();
+    const isExpanded = isActive || item.subRoutes.some(subRoute => isRouteActive(subRoute.routePage));
     
     return (
         <div className = 'sidebar-dropdown-item sidebar-item' onClick = {() => handleActive(item.id)}>
             <DropDownContainer 
-                isActive = {isActive} 
+                isActive = {isExpanded} 
                 item = {item}
             />
-            {isActive && <DropDownList item = {item} navegate = {navegate} onActive = {onActive} />}
+            {isExpanded && <DropDownList item = {item} navegate = {navegate} isRouteActive = {isRouteActive} />}
         </div>
     )
 }
@@ -37,16 +38,19 @@ const DropDownContainer = ({item, isActive}: DropDownContainerProps) => {
     )
 }
 
-const DropDownList = ({item, navegate, onActive}: DropDownListProps) => {
+const DropDownList = ({item, navegate, isRouteActive}: DropDownListProps) => {
     return (
         <section className = 'sidebar-dropdown-subitems-container'>
                 {item.subRoutes.map(subRoute => 
-                    <SimpleItem 
-                        navegate = {navegate}
-                        key = {subRoute.id} 
-                        item = {subRoute} 
-                        handleActive = {onActive}
-                    />
+                    <section
+                        className = {isRouteActive(subRoute.routePage) ? 'sidebar-dropdown-subitem sidebar-dropdown-subitem--selected' : 'sidebar-dropdown-subitem'}
+                        key = {subRoute.id}
+                    >
+                        <SimpleItem 
+                            navegate = {navegate}
+                            item = {subRoute} 
+                        />
+                    </section>
                 )}
         </section>
     )

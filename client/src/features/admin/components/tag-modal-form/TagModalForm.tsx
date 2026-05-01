@@ -11,14 +11,18 @@ import inputTextData from "./types/input-text-data";
 import type { CreatedTag } from "../../adapters/tag/dtos/create-tag";
 import './styles/tag-modal-form.css';
 
-const TagModalForm = ({onSubmit}: TagModalFormProps) => {
+const TagModalForm = ({onSubmit, onClose}: TagModalFormProps) => {
 
     const {register, handleSubmit, formState: {errors}} = useForm<CreatedTag>({
         resolver: yupResolver(schema)
     });
     const handleClick = (categoryCreated: CreatedTag) => onSubmit(categoryCreated);
     const {isActive, handleActive} = useActive();
-
+    const handleClose = () => {
+        handleActive();
+        onClose();
+    }
+    
     return (
         <ModalContainer disable = {isActive}>
             <form onSubmit = {handleSubmit(handleClick)} className = 'tag-modal-form-container'>
@@ -30,7 +34,7 @@ const TagModalForm = ({onSubmit}: TagModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Usa palabras que tu cliente usaría."
                     />
-                    <ButtonsCommitContainer onClose = {handleActive} />
+                    <ButtonsCommitContainer onClose = {handleClose} />
                 </div>
             </form>
         </ModalContainer>

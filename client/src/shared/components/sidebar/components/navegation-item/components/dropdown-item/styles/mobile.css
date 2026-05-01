@@ -76,8 +76,38 @@
     display: grid;
     grid-template-rows: repeat(auto-fill, 8vh);
     width: 100%;
+    gap: 6px;
     padding-left: 26px;
     animation: show-sublist 0.5s forwards; 
+}
+
+.sidebar-dropdown-subitem, .sidebar-dropdown-subitem--selected {
+    width: calc(100% - 26px);
+    min-height: 6vh;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.sidebar-dropdown-subitem_indicator {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.sidebar-dropdown-subitem_indicator--selected {
+    opacity: 1;
+    background-color: var(--selected-color);
+}
+
+.sidebar-dropdown-subitem .sidebar-item {
+    min-width: 0;
+    max-width: none;
+    max-height: none;
+    padding-left: 0;
+}
+
+.sidebar-dropdown-subitem .sidebar-simple-item .sidebar-simple-item_button .sidebar-simple-item_button_container {
+    width: 100%;
 }
 
 @keyframes show-sublist {

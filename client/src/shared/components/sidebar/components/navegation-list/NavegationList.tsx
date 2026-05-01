@@ -1,4 +1,4 @@
-import useActive from '../../../../hooks/use-active';
+import { useLocation } from 'react-router-dom';
 import NavegationItem from '../navegation-item/NavegationItem';
 import type { NavegationListProps } from './navegation-list';
 import './navegation-list.css';
@@ -6,7 +6,9 @@ import './navegation-list.css';
 
 const NavegationList = ({ itemsData, urlBase }: NavegationListProps) => {
 
-    const {isElementActive, handleActive} = useActive();
+    const location = useLocation();
+    const currentPath = location.pathname.replace(/\/+$/, '');
+    const isRouteActive = (routePage: string) => currentPath === `/${urlBase}/${routePage}`;
 
     return (
         <div className = 'home-sidebar-navegation-list'>
@@ -14,8 +16,7 @@ const NavegationList = ({ itemsData, urlBase }: NavegationListProps) => {
                 <ul>
                     {itemsData.map(item => 
                         <NavegationItem 
-                            isElementActive = {isElementActive}
-                            handleActive = {handleActive}
+                            isRouteActive = {isRouteActive}
                             key = {item.id} 
                             item = {item} 
                             urlBase = {urlBase} 
