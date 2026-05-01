@@ -46,7 +46,6 @@ const DropDownList = ({item, navegate, isRouteActive}: DropDownListProps) => {
                         className = {isRouteActive(subRoute.routePage) ? 'sidebar-dropdown-subitem sidebar-dropdown-subitem--selected' : 'sidebar-dropdown-subitem'}
                         key = {subRoute.id}
                     >
-                        <div className = {isRouteActive(subRoute.routePage) ? 'sidebar-dropdown-subitem_indicator sidebar-dropdown-subitem_indicator--selected' : 'sidebar-dropdown-subitem_indicator'} />
                         <SimpleItem 
                             navegate = {navegate}
                             item = {subRoute} 
