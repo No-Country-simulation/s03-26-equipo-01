@@ -2,4 +2,5 @@ import type { CategoryCreated } from "../../adapters/category/dtos/category-crea
 
 export interface CategoryModalFormProps {
     onSubmit: (categoryCreated: CategoryCreated) => void
+    onClose: () => void
 }

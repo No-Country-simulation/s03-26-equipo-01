@@ -11,13 +11,17 @@ import ModalTitleContainer from "../modal-title-form/ModalTitleContainer";
 import ModalInputsContainer from "../modal-input-container/ModalInputContainer";
 import {ButtonsCommitContainer} from "../modal-buttons-container/ModalButtonsContainer";
 
-const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
+const CategoryModalForm = ({onSubmit, onClose}: CategoryModalFormProps) => {
 
     const {register, handleSubmit, formState: {errors}} = useForm<CategoryCreated>({
         resolver: yupResolver(schema)
     });
     const handleClick = (categoryCreated: CategoryCreated) => onSubmit(categoryCreated);
     const {isActive, handleActive} = useActive();
+    const handleClose = () => {
+        handleActive();
+        onClose();
+    }
 
     return (
         <ModalContainer disable = {isActive}>
@@ -30,7 +34,7 @@ const CategoryModalForm = ({onSubmit}: CategoryModalFormProps) => {
                         inputTextData = {inputTextData}
                         warningText = "Crea categorias amplias, no específicas."
                     />
-                    <ButtonsCommitContainer onClose = {handleActive} />
+                    <ButtonsCommitContainer onClose = {handleClose} />
                 </div>
             </form>
         </ModalContainer>

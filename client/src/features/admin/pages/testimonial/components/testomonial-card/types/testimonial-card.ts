@@ -6,6 +6,8 @@ export interface TestimonialCardProps {
 
 export interface TestimonialCardContentProps {
     testimonial: Testimonial
-    advance: (id: number) => void 
-    deleted: (id: number) => void
+    changeToDiscart: (id: number) => void
+    changeToPublished: (id: number) => void
+    changeToAproved: (id: number) => void
+    changeToDraft: (id: number) => void
 }

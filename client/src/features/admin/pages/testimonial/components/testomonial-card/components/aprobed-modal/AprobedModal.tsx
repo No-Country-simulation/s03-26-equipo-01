@@ -5,12 +5,19 @@ import ModalCommitContainer from "../../../../../../components/modal-commit-cont
 import ModalTitleContainer from "../../../../../../components/modal-title-form/ModalTitleContainer";
 import type { AprobedModalProps } from "./aproved-modal";
 
-const AprobedModal = ({onChangeState, onClose, id}: AprobedModalProps) => {
+const AprobedModal = ({onChangeState, onClose}: AprobedModalProps) => {
 
     const {isActive, handleActive} = useActive();
 
-    const handleClose = () => onClose(handleActive)
-    const handleAcept = () => onChangeState(id, handleActive)
+    const handleClose = () => {
+        handleActive();
+        onClose();
+    }
+
+    const handleAcept = () => {
+        onChangeState();
+        onClose();
+    }
     
     return (
         <ModalContainer disable = {isActive}>
