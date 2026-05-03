@@ -20,4 +20,23 @@ const Toast = ({ content, type, onClose }: ToastProps) => {
   );
 };
 
+interface ToastContainerProps {
+  message: string;
+  type: 'success' | 'error' | 'info';
+  onClose: () => void;
+}
+
+export const ToastContainer = ({ message, type, onClose }: ToastContainerProps) => {
+  return (
+    <section className={`toast-container toast--${type}`}>
+      <div className='toast__status-bar'></div>
+      <div className='toast__content'>{message}</div>
+      <div className='toast__close'>
+        <img src={closeIcon} alt='Cerrar' onClick={onClose} />
+      </div>
+    </section>
+  );
+};
+
+
 export default Toast;

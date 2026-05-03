@@ -11,7 +11,7 @@ import './styles/testomonial-card.css';
 import StateButtonContainer from '../state-buttons-container/StateButtonContainer';
 import buttonsStateData from './types/buttons-data';
 import useTestimonialState from '../../hooks/use-testimonial-state';
-import useChangeState from './hooks/use-modal-state';
+import useSelectState from './hooks/use-modal-state';
 import AprobedModal from './components/aprobed-modal/AprobedModal';
 import DeleteModal from '../../../../components/delete-modal/DeleteModal';
 import PublishedModal from './components/published-modal/PublishedModal';
@@ -20,21 +20,21 @@ import RejectModal from './components/reject-modal/RejectModal';
 const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
   
   const { updateTestimonial, advance, deleted } = useTestimonialState(testimonial);
-  const { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh } = useChangeState();
+  const { id, isState, selectTo, refresh } = useSelectState();
 
   return (updateTestimonial && (
     <>
-      <CardContent testimonial={updateTestimonial} changeToAproved={changeToAproved} changeToDiscart={changeToDiscart} changeToDraft={changeToDraft} changeToPublished={changeToPublished}/>
+      <CardContent testimonial={updateTestimonial} selectTo={selectTo} />
       {isState('Aprobado') && id && <AprobedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
       {isState('Publicado') && id && <PublishedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
       {isState('Borrador') && id && <RejectModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
-      {isDiscart && id && <DeleteModal onDelete = {() => deleted(id)} onClose = {refresh} /> }
+      {isState('Eliminado') && id && <DeleteModal onDelete = {() => deleted(id)} onClose = {refresh} /> }
     </>
     )
   );
 };
 
-const CardContent = ({testimonial, changeToDiscart, changeToPublished, changeToAproved, changeToDraft}: TestimonialCardContentProps) => {
+const CardContent = ({testimonial, selectTo}: TestimonialCardContentProps) => {
 
   return (
     <article className='testimonial-admin-card-container falling-container'>
@@ -44,7 +44,7 @@ const CardContent = ({testimonial, changeToDiscart, changeToPublished, changeToA
       <TestimonialTags tags={testimonial.tags} />
       {testimonial.media && <MultimediaContent testimonial={testimonial} />}
       <StateButtonContainer
-        changeStateButtons={buttonsStateData({changeToDiscart, changeToPublished, changeToAproved, changeToDraft })[testimonial.state]}
+        changeStateButtons={buttonsStateData(selectTo)[testimonial.state]}
         testimonial={testimonial}
       />
     </article>

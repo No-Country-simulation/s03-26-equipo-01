@@ -1,43 +1,38 @@
-import type { ChangeStateButtons } from "../../../../../../../shared/types/change-state-button-data/change-state-button"
+import type { SelectStateButtons } from "../../../../../../../shared/types/change-state-button-data/change-state-button"
 import type { AdminTestimonialState } from "../../../../../models/state"
+import type { SelectState } from "./select-state"
 
-interface ButtonsStateData {
-    changeToDiscart: (id: number) => void,
-    changeToPublished: (id: number) => void,
-    changeToAproved: (id: number) => void,
-    changeToDraft: (id: number) => void
-}
 
-const buttonsStateData = ({changeToDiscart, changeToPublished, changeToAproved, changeToDraft}: ButtonsStateData): Record<AdminTestimonialState, ChangeStateButtons> => {
+const buttonsStateData = (selectTo: (id: number, state: SelectState) => void): Record<AdminTestimonialState, SelectStateButtons> => {
     return {
         Aprobado: {
             nextState: {
                 textButton: 'PUBLICAR',
-                event: changeToPublished
+                event: (id: number) => selectTo(id, 'Publicado')
             },
             discartTestimonial: {
                 textButton: 'ELIMINAR',
-                event: changeToDiscart
+                event: (id: number) => selectTo(id, 'Eliminado')
             }
         },
         Pendiente: {
             nextState: {
                 textButton: 'APROBAR',
-                event: changeToAproved
+                event: (id: number) => selectTo(id, 'Aprobado')
             },
             discartTestimonial: {
                 textButton: 'RECHAZAR',
-                event: changeToDraft
+                event: (id: number) => selectTo(id, 'Borrador')
             }
         },
         Publicado: {
             nextState: {
                 textButton: 'DESPUBLICAR',
-                event: changeToAproved
+                event: (id: number) => selectTo(id, 'Aprobado')
             },
             discartTestimonial: {
                 textButton: 'ELIMINAR',
-                event: changeToDiscart
+                event: (id: number) => selectTo(id, 'Eliminado')
             }  
         }
     }
