@@ -21,6 +21,12 @@
   align-self: stretch;
 }
 
+.toast--error .toast__status-bar {
+  background-color: var(--error-color);
+  width: 6px;
+  align-self: stretch;
+}
+
 .toast__content strong {
   color: #000;
   font-weight: 700;
