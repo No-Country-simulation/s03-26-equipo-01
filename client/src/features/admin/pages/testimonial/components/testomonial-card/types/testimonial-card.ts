@@ -1,8 +1,10 @@
 import type { Testimonial } from "../../../../../models/testimonial";
-import type { SelectState } from "./select-state";
+import type { ChangeStateResult } from "../../testimonials-container/types/change-state-result";
+import type { SelectState } from "../../testimonials-container/types/select-state";
 
 export interface TestimonialCardProps {
     testimonial: Testimonial
+    onChangeState: (result: ChangeStateResult) => void
 }
 
 export interface TestimonialCardContentProps {

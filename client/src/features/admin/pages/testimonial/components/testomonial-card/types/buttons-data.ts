@@ -1,6 +1,6 @@
 import type { SelectStateButtons } from "../../../../../../../shared/types/change-state-button-data/change-state-button"
 import type { AdminTestimonialState } from "../../../../../models/state"
-import type { SelectState } from "./select-state"
+import type { SelectState } from "../../testimonials-container/types/select-state"
 
 
 const buttonsStateData = (selectTo: (id: number, state: SelectState) => void): Record<AdminTestimonialState, SelectStateButtons> => {

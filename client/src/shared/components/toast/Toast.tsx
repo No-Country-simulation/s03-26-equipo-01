@@ -1,6 +1,7 @@
 import './styles/toast.css';
 import closeIcon from '../../../assets/close-icon.svg';
 import type { ReactNode } from 'react';
+import type { ToastData } from '../../types/toast-data/toast-data';
 
 export interface ToastProps {
   content: ReactNode;
@@ -21,16 +22,15 @@ const Toast = ({ content, type, onClose }: ToastProps) => {
 };
 
 interface ToastContainerProps {
-  message: string;
-  type: 'success' | 'error' | 'info';
+  data: ToastData
   onClose: () => void;
 }
 
-export const ToastContainer = ({ message, type, onClose }: ToastContainerProps) => {
+export const ToastContainer = ({ data, onClose }: ToastContainerProps) => {
   return (
-    <section className={`toast-container toast--${type}`}>
+    <section className={`toast-container toast--${data.type}`}>
       <div className='toast__status-bar'></div>
-      <div className='toast__content'>{message}</div>
+      <div className='toast__content'>{data.message}</div>
       <div className='toast__close'>
         <img src={closeIcon} alt='Cerrar' onClick={onClose} />
       </div>

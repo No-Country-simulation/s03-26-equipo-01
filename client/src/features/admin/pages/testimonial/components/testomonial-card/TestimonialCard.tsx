@@ -16,19 +16,22 @@ import AprobedModal from './components/aprobed-modal/AprobedModal';
 import DeleteModal from '../../../../components/delete-modal/DeleteModal';
 import PublishedModal from './components/published-modal/PublishedModal';
 import RejectModal from './components/reject-modal/RejectModal';
+import type { ChangeStateResult } from '../testimonials-container/types/change-state-result';
 
-const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
+const TestimonialCard = ({ testimonial, onChangeState }: TestimonialCardProps) => {
   
   const { updateTestimonial, advance, deleted } = useTestimonialState(testimonial);
   const { id, isState, selectTo, refresh } = useSelectState();
 
+  const handleChange = async (execute: () => Promise<ChangeStateResult>) => onChangeState(await execute());
+
   return (updateTestimonial && (
     <>
-      <CardContent testimonial={updateTestimonial} selectTo={selectTo} />
-      {isState('Aprobado') && id && <AprobedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
-      {isState('Publicado') && id && <PublishedModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
-      {isState('Borrador') && id && <RejectModal onChangeState = {() => advance(id)} onClose = {refresh} /> }
-      {isState('Eliminado') && id && <DeleteModal onDelete = {() => deleted(id)} onClose = {refresh} /> }
+      <CardContent testimonial = {updateTestimonial} selectTo = {selectTo} />
+      {isState('Aprobado') && id && <AprobedModal onChangeState = {() => handleChange(() => advance(id))} onClose = {refresh} /> }
+      {isState('Publicado') && id && <PublishedModal onChangeState = {() => handleChange(() => advance(id))} onClose = {refresh} /> }
+      {isState('Borrador') && id && <RejectModal onChangeState = {() => handleChange(() => advance(id))} onClose = {refresh} /> }
+      {isState('Eliminado') && id && <DeleteModal onDelete = {() => handleChange(() => deleted(id))} onClose = {refresh} /> }
     </>
     )
   );
