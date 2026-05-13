@@ -1,41 +1,24 @@
 import { useState } from "react";
-import type { StateTestimonial } from "../../../../../models/state";
+import type { SelectState } from "../../testimonials-container/types/select-state";
 
-const useChangeState = () => {
+const useSelectState = () => {
     
     const [id, setId] = useState<number | null>(null);
-    const [state, setState] = useState<StateTestimonial | null>(null);
-    const [isDiscart, setIsDiscart] = useState<boolean>(false);
+    const [selectedState, setState] = useState<SelectState | null>(null);
 
-    const changeToAproved = (id: number) => {
+    const selectTo = (id: number, state: SelectState) => {
         setId(id);
-        setState('Aprobado');
-    }
-
-    const changeToDraft = (id: number) => {
-        setId(id);
-        setState('Borrador');
-    }
-
-    const changeToPublished = (id: number) => {
-        setId(id);
-        setState('Publicado');
-    }
-
-    const changeToDiscart = (id: number) => {
-        setId(id);
-        setIsDiscart(true);
+        setState(state);
     }
 
     const refresh = () => {
         setId(null);
         setState(null)
-        setIsDiscart(false)
     }
 
-    const isState = (adminState: StateTestimonial) => state === adminState;
+    const isState = (adminState: SelectState) => selectedState === adminState;
 
-    return { id, isDiscart, isState, changeToDiscart, changeToPublished, changeToAproved, changeToDraft, refresh }
+    return { id, selectedState, isState, selectTo, refresh }
 }
 
-export default useChangeState;
+export default useSelectState;

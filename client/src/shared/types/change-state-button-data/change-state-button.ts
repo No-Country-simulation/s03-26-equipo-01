@@ -1,6 +1,6 @@
-import type { ChangeStateButtonsData } from "./change-state-button-date"
+import type { SelectStateButtonsData } from "./change-state-button-date"
 
-export interface ChangeStateButtons {
-    nextState: ChangeStateButtonsData
-    discartTestimonial: ChangeStateButtonsData
+export interface SelectStateButtons {
+    nextState: SelectStateButtonsData
+    discartTestimonial: SelectStateButtonsData
 }
