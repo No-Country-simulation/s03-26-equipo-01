@@ -28,9 +28,12 @@ interface ToastContainerProps {
 
 export const ToastContainer = ({ data, onClose }: ToastContainerProps) => {
   return (
-    <section className={`toast-container toast--${data.type}`}>
+    <section className={`toast-container toast--${data.type} falling-container`}>
       <div className='toast__status-bar'></div>
-      <div className='toast__content'>{data.message}</div>
+      <div className='toast__content-container'>
+        <p>¡Listo!</p>
+        <div className='toast__content'>{data.message}</div>
+      </div>
       <div className='toast__close'>
         <img src={closeIcon} alt='Cerrar' onClick={onClose} />
       </div>
