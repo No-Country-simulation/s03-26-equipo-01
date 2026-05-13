@@ -9,7 +9,7 @@ const TestimonialHeader = ({testimonial}: TestimonialHeaderProps) => {
                 <p className = 'testimonial-admin-header_editor-name'>{testimonial.witness}</p>
             </section>
             <section className = 'testimonial-admin-header-category'>
-                <p>{testimonial.category.name}</p>
+                <p>{testimonial?.category?.name}</p>
             </section>
         </header>
     )
